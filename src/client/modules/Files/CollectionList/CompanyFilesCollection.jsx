@@ -74,16 +74,16 @@ const CompanyFilesCollection = ({
               }
               addItemButtons={[
                 {
-                  text: 'Add SharePoint link',
-                  url: company.archived
-                    ? null
-                    : `/files/create?related_object_id=${companyId}&related_object_type=${RELATED_OBJECT_TYPES.COMPANY}&document_type=${DOCUMENT_TYPES.SHAREPOINT.type}`,
-                },
-                {
                   text: 'Upload file',
                   url: company.archived
                     ? null
                     : `/files/create?company=${company.id}`,
+                },
+                {
+                  text: 'Add SharePoint link',
+                  url: company.archived
+                    ? null
+                    : `/files/create?related_object_id=${companyId}&related_object_type=${RELATED_OBJECT_TYPES.COMPANY}&document_type=${DOCUMENT_TYPES.SHAREPOINT.type}`,
                 },
               ]}
               entityName="file"

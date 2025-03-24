@@ -19,6 +19,11 @@ const StyledActions = styled('div')`
   width: 100%;
   margin-top: ${SPACING.SCALE_2};
 
+  a {
+    margin-left: 10px;
+    white-space: nowrap;
+  }
+
   ${MEDIA_QUERIES.TABLET} {
     margin-top: 0;
     margin-left: ${SPACING.SCALE_1};
@@ -36,24 +41,16 @@ const CollectionHeaderRow = ({
   children,
   ...rest
 }) => {
-  if (!actionsList) {
-    return (
-      <StyledRowWrapper primary={primary} {...rest}>
-        {children}
-
-        {actions && <StyledActions>{actions}</StyledActions>}
-      </StyledRowWrapper>
-    )
-  } else {
-    return (
-      <StyledRowWrapper primary={primary} {...rest}>
-        {children}
-
-        {actionsList && <StyledActions>{actionsList[0]}</StyledActions>}
-        {actionsList && <StyledActions>{actionsList[1]}</StyledActions>}
-      </StyledRowWrapper>
-    )
-  }
+  return (
+    <StyledRowWrapper primary={primary} {...rest}>
+      {children}
+      {actions && (
+        <StyledActions>
+          {actionsList?.length ? actionsList : actions}
+        </StyledActions>
+      )}
+    </StyledRowWrapper>
+  )
 }
 
 CollectionHeaderRow.propTypes = {
