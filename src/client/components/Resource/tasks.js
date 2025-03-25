@@ -100,6 +100,7 @@ import ProjectAuditHistory from './ProjectAuditHistory'
 import WinUKRegions from './WinUKRegions'
 import Referral from './Referral'
 import EYBLeadAuditHistory from './EYBLeadAuditHistory'
+import File from './File'
 
 export default {
   ...AssociatedProgramme.tasks,
@@ -204,4 +205,5 @@ export default {
   ...ProjectAuditHistory.tasks,
   ...Referral.tasks,
   ...EYBLeadAuditHistory.tasks,
+  ...File.tasks,
 }
