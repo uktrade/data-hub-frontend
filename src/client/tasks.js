@@ -154,6 +154,7 @@ import {
 } from './modules/Contacts/CollectionList/tasks'
 import { getFiles } from './modules/Files/CollectionList/tasks'
 import { createFile } from './modules/Files/CreateFile/tasks.js'
+import { deleteFile } from './modules/Files/DeleteFile/tasks.js'
 import {
   getInteractions,
   getInteractionsMetadata,
@@ -186,6 +187,7 @@ import {
 
 import { TASK_GET_FILES_LIST } from './modules/Files/CollectionList/state'
 import { TASK_CREATE_FILE } from './modules/Files/CreateFile/state'
+import { TASK_DELETE_FILE } from './modules/Files/DeleteFile/state'
 
 import {
   TASK_GET_INTERACTIONS_LIST,
@@ -539,6 +541,7 @@ export const tasks = {
   [TASK_GET_CONTACTS_LIST]: getContacts,
   [TASK_GET_FILES_LIST]: getFiles,
   [TASK_CREATE_FILE]: createFile,
+  [TASK_DELETE_FILE]: deleteFile,
   [TASK_GET_CONTACTS_METADATA]: getContactsMetadata,
   [TASK_GET_INTERACTIONS_LIST]: getInteractions,
   [TASK_GET_INTERACTIONS_ADVISER_NAME]: getAdviserNames,
