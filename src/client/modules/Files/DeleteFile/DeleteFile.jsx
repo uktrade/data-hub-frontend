@@ -40,27 +40,29 @@ const documentTypeText = {
   sharePoint: 'Delete SharePoint link',
 }
 
-const SharePointForm = ({ relatedObjectId }) => {
+const SharePointForm = ({ file }) => {
+  console.log(file)
   return (
     <Form
-      id="add-sharepoint-link-form"
+      id="delete-sharepoint-link-form"
       submissionTaskName={TASK_DELETE_FILE}
       analyticsFormName="deleteSharePointLink"
-      redirectTo={() => urls.companies.files(relatedObjectId)}
+      redirectTo={() => urls.companies.files(file?.related_object_id)}
       flashMessage={() => 'SharePoint link successfully deleted'}
       submitButtonLabel="Delete SharePoint link"
       cancelButtonLabel="Cancel"
-      cancelRedirectTo={() => urls.companies.files(relatedObjectId)}
+      cancelRedirectTo={() => urls.companies.files(file?.related_object_id)}
       transformPayload={(values) =>
       ({
         values,
-        relatedObjectId,
+        fileId: file?.related_object_id,
       })
       }
     >
 
       <H4>Are you sure you want to permanently delete this SharePoint link? </H4>
       <p>
+        <a href="file">(file.url)</a>
         Are you sure you want to permanently delete this SharePoint link?
 
         { }
@@ -76,38 +78,38 @@ const SharePointForm = ({ relatedObjectId }) => {
 const DeleteFile = () => {
   const { fileId } = useParams()
 
-  return (
-    <DefaultLayout>
-      <CompanyResource id='008ba003-b528-4e79-b209-49fcfcceb371'>
-        {(file) => (
-          // I will be rendered only when the "get something" task resolves
-          <pre>{JSON.stringify(file)}</pre>
-        )}
-      </CompanyResource>
-      <FileResource id={fileId}>
-        {(file) => (
-          // I will be rendered only when the "get something" task resolves
-          <pre>{JSON.stringify(file)}</pre>
-        )}
+  // return (
+  //   <DefaultLayout>
+  //     <CompanyResource id='008ba003-b528-4e79-b209-49fcfcceb371'>
+  //       {(file) => (
+  //         // I will be rendered only when the "get something" task resolves
+  //         <pre>{JSON.stringify(file)}</pre>
+  //       )}
+  //     </CompanyResource>
+  //     <FileResource id={fileId}>
+  //       {(file) => (
+  //         // I will be rendered only when the "get something" task resolves
+  //         <pre>{JSON.stringify(file)}</pre>
+  //       )}
 
-        {/* {(file) => (
-        <DefaultLayout
-          // pageTitle={pageTitle}
-          // heading={heading}
-          // breadcrumbs={breadcrumbs}
-        >{console.log(file)}
-          {/* <FormLayout setWidth={FORM_LAYOUT.TWO_THIRDS}>
-            <SharePointForm relatedObjectId={relatedObjectId} />
-          </FormLayout> */}
-        {/*</FileResource>        </DefaultLayout>
-      )} */}
-      </FileResource>
-    </DefaultLayout>
-  )
+  //       {/* {(file) => (
+  //       <DefaultLayout
+  //         // pageTitle={pageTitle}
+  //         // heading={heading}
+  //         // breadcrumbs={breadcrumbs}
+  //       >{console.log(file)}
+  //         {/* <FormLayout setWidth={FORM_LAYOUT.TWO_THIRDS}>
+  //           <SharePointForm relatedObjectId={relatedObjectId} />
+  //         </FormLayout> */}
+  //       {/*</FileResource>        </DefaultLayout>
+  //     )} */}
+  //     </FileResource>
+  //   </DefaultLayout>
+  // )
 
   console.log(fileId)
-  documentInfo = getDocument(fileId)
-  console.log(documentInfo)
+  // documentInfo = getDocument(fileId)
+  // console.log(documentInfo)
   const [searchParams] = useSearchParams()
   const relatedObjectId = searchParams.get('related_object_id')
   const relatedObjectType = searchParams.get('related_object_type')
@@ -119,7 +121,7 @@ const DeleteFile = () => {
 
   if (relatedObjectType === RELATED_OBJECT_TYPES.COMPANY) {
     pageTitle = `${DOCUMENT_TYPES.SHAREPOINT.label} - Files - ${(<CompanyName id={relatedObjectId} />)} - Companies`
-    heading = DOCUMENT_TYPES.SHAREPOINT.label
+    heading = `Delete a ${DOCUMENT_TYPES.SHAREPOINT.label}`
     breadcrumbs.push(
       { link: urls.companies.index(), text: 'Companies' },
       {
@@ -146,7 +148,14 @@ const DeleteFile = () => {
       breadcrumbs={breadcrumbs}
     >
       <FormLayout setWidth={FORM_LAYOUT.TWO_THIRDS}>
-        <SharePointForm relatedObjectId={relatedObjectId} />
+       <FileResource id={fileId}>
+      {(file) => (
+          <>
+              <SharePointForm file={file} />
+            <pre>{JSON.stringify(file)}</pre>
+          </>
+        )}
+        </FileResource>
       </FormLayout>
     </DefaultLayout>
   )

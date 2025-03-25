@@ -95,7 +95,7 @@ const CreateFile = () => {
 
   if (relatedObjectType === RELATED_OBJECT_TYPES.COMPANY) {
     pageTitle = `${DOCUMENT_TYPES.SHAREPOINT.label} - Files - ${(<CompanyName id={relatedObjectId} />)} - Companies`
-    heading = DOCUMENT_TYPES.SHAREPOINT.label
+    heading = `Add a ${DOCUMENT_TYPES.SHAREPOINT.label}`
     breadcrumbs.push(
       { link: urls.companies.index(), text: 'Companies' },
       {
