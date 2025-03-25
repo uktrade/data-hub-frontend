@@ -43,7 +43,7 @@ describe('Generic Documents / Files Collections for company', () => {
   })
 
   it('should display multiple buttons', () => {
-    assertMultipleAddItemButtons('Upload file', 'Add SharePoint link')
+    assertMultipleAddItemButtons(1)
   })
 
   context('SharePoint type documents / files', () => {

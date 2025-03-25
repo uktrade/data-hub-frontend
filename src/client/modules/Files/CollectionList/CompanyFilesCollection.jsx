@@ -73,12 +73,15 @@ const CompanyFilesCollection = ({
                   : `/files/create?related_object_id=${companyId}&related_object_type=${RELATED_OBJECT_TYPES.COMPANY}&document_type=${DOCUMENT_TYPES.SHAREPOINT.type}`
               }
               addItemButtons={[
-                {
-                  text: 'Upload file',
-                  url: company.archived
-                    ? null
-                    : `/files/create?company=${company.id}`,
-                },
+                // Un-comment when upload file screen has been implemented
+                /* eslint-disable */
+                // {
+                //   text: 'Upload file',
+                //   url: company.archived
+                //     ? null
+                //     : `/files/create?company=${company.id}`,
+                // },
+                /* eslint-enable */
                 {
                   text: 'Add SharePoint link',
                   url: company.archived
