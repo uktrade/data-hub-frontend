@@ -1,3 +1,4 @@
+import urls from '../../../../lib/urls'
 import {
   formatDate,
   DATE_FORMAT_MEDIUM_WITH_TIME,
@@ -26,8 +27,8 @@ export const transformFileToListItem = () => (file) => {
           text: 'View file (opens in new tab)',
           url: file.document.url,
           attrs: { target: '_blank', rel: 'noopener noreferrer' },
-        }
-        // { text: 'Delete', url: '#' } removed for now as functionality missing
+        },
+        { text: 'Delete', url: urls.files.delete(file.id) },
       )
 
       // Add summary rows for SharePoint document

@@ -387,6 +387,9 @@ module.exports = {
       attendees: url('/events', '/stova/:stovaEventId/attendees'),
     },
   },
+  files: {
+    delete: url('/files', '/:fileId/delete'),
+  },
   search: {
     index: url('/search'),
     type: url('/search', '/:searchPath?'),

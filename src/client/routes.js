@@ -114,6 +114,7 @@ import ContactDetails from './modules/Contacts/ContactDetails/ContactDetails'
 import ContactActivity from './modules/Contacts/ContactActivity/ContactActivity'
 import ContactAuditHistory from './modules/Contacts/ContactAuditHistory/ContactAuditHistory'
 import CannotFindMatch from './modules/Companies/MatchCompany/CannotFindMatch'
+import DeleteFile from './modules/Files/DeleteFile/DeleteFile'
 
 function Routes() {
   const routes = useRoutes([
@@ -395,6 +396,14 @@ function Routes() {
       element: (
         <ProtectedRoute module={'datahub:companies'}>
           <CreateFile />
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: '/files/:fileId/delete',
+      element: (
+        <ProtectedRoute module={'datahub:companies'}>
+          <DeleteFile />
         </ProtectedRoute>
       ),
     },
