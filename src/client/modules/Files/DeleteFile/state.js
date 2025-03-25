@@ -1,0 +1,1 @@
+export const TASK_DELETE_FILE = 'TASK_DELETE_FILE'
