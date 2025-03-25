@@ -42,11 +42,10 @@ const assertAddItemButtonNotPresent = () => {
   cy.get('[data-test="add-collection-item-button"]').should('not.exist')
 }
 
-const assertMultipleAddItemButtons = (buttonText) => {
+const assertMultipleAddItemButtons = (buttonLength) => {
   cy.get('[data-test="add-collection-item-button"]')
-    .should('have.length.greaterThan', 0)
     .should('exist')
-    .should('contain', buttonText)
+    .should('have.length', buttonLength)
 }
 
 const assertBadge = (item, badgeText) => {
