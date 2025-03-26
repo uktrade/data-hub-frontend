@@ -20,10 +20,6 @@ const CompanyName = ({ id }) => (
   </CompanyResource.Inline>
 )
 
-const documentTypeText = {
-  sharePoint: 'Delete SharePoint link',
-}
-
 const SharePointForm = ({ file }) => {
   return (
     <Form
@@ -32,7 +28,7 @@ const SharePointForm = ({ file }) => {
       analyticsFormName="deleteSharePointLink"
       redirectTo={() => urls.companies.files(file?.relatedObjectId)}
       flashMessage={() => 'SharePoint link successfully deleted'}
-      submitButtonLabel="Delete SharePoint link"
+      submitButtonLabel={`Delete ${DOCUMENT_TYPES.SHAREPOINT.label}`}
       cancelButtonLabel="Cancel"
       submitButtonColour={RED}
       cancelRedirectTo={() => urls.companies.files(file?.relatedObjectId)}
@@ -83,7 +79,7 @@ const DeleteFile = () => {
       {
         text:
           documentType === DOCUMENT_TYPES.SHAREPOINT.type
-            ? documentTypeText.sharePoint
+            ? `Delete ${DOCUMENT_TYPES.SHAREPOINT.label}`
             : 'Empty',
       }
     )
