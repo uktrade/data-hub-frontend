@@ -78,9 +78,8 @@ const DeleteFile = () => {
       },
       {
         text:
-          documentType === DOCUMENT_TYPES.SHAREPOINT.type
-            ? `Delete ${DOCUMENT_TYPES.SHAREPOINT.label}`
-            : 'Empty',
+          documentType === DOCUMENT_TYPES.SHAREPOINT.type &&
+          `Delete ${DOCUMENT_TYPES.SHAREPOINT.label}`,
       }
     )
   }
