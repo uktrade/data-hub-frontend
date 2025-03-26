@@ -1,6 +1,6 @@
 import React from 'react'
 import { useParams, useSearchParams } from 'react-router-dom'
-import { H4 } from 'govuk-react'
+import { H2 } from 'govuk-react'
 
 import { DefaultLayout, Form, FormLayout } from '../../../components'
 import { CompanyResource, FileResource } from '../../../components/Resource'
@@ -38,9 +38,9 @@ const SharePointForm = ({ file }) => {
       cancelRedirectTo={() => urls.companies.files(file?.relatedObjectId)}
       transformPayload={() => file?.id}
     >
-      <H4>
+      <H2>
         Are you sure you want to permanently delete this SharePoint link?{' '}
-      </H4>
+      </H2>
       <p>
         <a className="govuk-link" href={file.document.url}>
           {file.document.url}

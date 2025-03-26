@@ -1,4 +1,3 @@
-import urls from '../../../../lib/urls'
 import {
   formatDate,
   DATE_FORMAT_MEDIUM_WITH_TIME,
@@ -30,7 +29,7 @@ export const transformFileToListItem = () => (file) => {
         },
         {
           text: 'Delete',
-          url: `${urls.files.delete(file.id)}?related_object_id=${file.related_object_id}&related_object_type=${file.related_object_type}&document_type=${file.document_type}`,
+          url: `files/${file.id}/delete?related_object_id=${file.related_object_id}&related_object_type=${file.related_object_type}&document_type=${file.document_type}`,
         }
       )
 
