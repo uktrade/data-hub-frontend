@@ -28,7 +28,10 @@ export const transformFileToListItem = () => (file) => {
           url: file.document.url,
           attrs: { target: '_blank', rel: 'noopener noreferrer' },
         },
-        { text: 'Delete', url: `${urls.files.delete(file.id)}?related_object_id=${file.related_object_id}&related_object_type=${file.related_object_type}&document_type=${file.document_type}` },
+        {
+          text: 'Delete',
+          url: `${urls.files.delete(file.id)}?related_object_id=${file.related_object_id}&related_object_type=${file.related_object_type}&document_type=${file.document_type}`,
+        }
       )
 
       // Add summary rows for SharePoint document

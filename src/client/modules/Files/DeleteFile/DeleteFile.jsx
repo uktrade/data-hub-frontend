@@ -2,11 +2,9 @@ import React from 'react'
 import { useParams, useSearchParams } from 'react-router-dom'
 import { H4 } from 'govuk-react'
 
-import { FileResource } from '../../../components/Resource/index'
-
 import { DefaultLayout, Form, FormLayout } from '../../../components'
+import { CompanyResource, FileResource } from '../../../components/Resource'
 import urls from '../../../../lib/urls'
-import { CompanyResource } from '../../../components/Resource'
 
 import { FORM_LAYOUT } from '../../../../common/constants'
 import { TASK_DELETE_FILE } from './state'
