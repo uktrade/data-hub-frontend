@@ -147,9 +147,14 @@ describe('Create Export project interaction', () => {
     })
 
     it('should offer selection of interaction or service delivery only', () => {
-      cy.get('[data-test="field-kind"]')
-        .should('contain', 'What would you like to record?')
-        .should('not.contain', 'What is this regarding?')
+      cy.get('[data-test="field-theme"]')
+        .should('contain', 'What is this regarding?')
+        .should('contain', 'Export')
+        .should('not.contain', 'Investment')
+      cy.get('[data-test="field-kind"]').should(
+        'contain',
+        'What would you like to record?'
+      )
     })
 
     it('should continue to second page and add interaction', () => {
