@@ -41,13 +41,14 @@ const CollectionHeaderRow = ({
   children,
   ...rest
 }) => {
+  //
   return (
     <StyledRowWrapper primary={primary} {...rest}>
       {children}
-      {actions && (
-        <StyledActions>
-          {actionsList?.length ? actionsList : actions}
-        </StyledActions>
+      {actionsList?.length ? (
+        <StyledActions> {actionsList} </StyledActions>
+      ) : (
+        actions && <StyledActions> {actions} </StyledActions>
       )}
     </StyledRowWrapper>
   )
