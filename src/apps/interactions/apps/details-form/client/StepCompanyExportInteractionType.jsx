@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
+import InsetText from '@govuk-react/inset-text'
 import { omitBy, isUndefined } from 'lodash'
 
 import { useFormContext } from '../../../../../client/components/Form/hooks'
-import { FieldRadios } from '../../../../../client/components'
-import { KINDS } from '../../../constants'
+import { FieldRadios, NewWindowLink } from '../../../../../client/components'
+import { THEMES, KINDS } from '../../../constants'
+import urls from '../../../../../lib/urls'
 
 const StepCompanyExportInteractionType = () => {
   const { resetFields, getFieldState } = useFormContext()
@@ -31,21 +33,48 @@ const StepCompanyExportInteractionType = () => {
 
   return (
     <>
+      <InsetText data-test="trade-agreement-guide">
+        Select 'trade agreement' if your interaction deals with a named trade
+        agreement.
+        <br />
+        <br />
+        For more information see{' '}
+        <NewWindowLink href={urls.external.helpCentre.tradeAgreementGuidance}>
+          recording trade agreement activity
+        </NewWindowLink>
+        .{' '}
+      </InsetText>
+
       <FieldRadios
-        label="What would you like to record?"
-        name="kind"
-        dataTestPrefix="export"
+        name="theme"
+        label="What is this regarding?"
         required="Select interaction type"
+        initialValue={THEMES.EXPORT}
+        data-test="field-theme"
         options={[
           {
-            label: 'A standard interaction',
-            hint: 'For example, an email, phone call or meeting',
-            value: KINDS.INTERACTION,
-          },
-          {
-            label: 'A service you have provided',
-            hint: 'For example, a significant assist or event',
-            value: KINDS.SERVICE_DELIVERY,
+            label: 'Export',
+            value: THEMES.EXPORT,
+            children: (
+              <FieldRadios
+                label="What would you like to record?"
+                name="kind"
+                dataTestPrefix="export"
+                required="Select interaction type"
+                options={[
+                  {
+                    label: 'A standard interaction',
+                    hint: 'For example, an email, phone call or meeting',
+                    value: KINDS.INTERACTION,
+                  },
+                  {
+                    label: 'A service you have provided',
+                    hint: 'For example, a significant assist or event',
+                    value: KINDS.SERVICE_DELIVERY,
+                  },
+                ]}
+              />
+            ),
           },
         ]}
       />
