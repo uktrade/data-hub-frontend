@@ -1,11 +1,12 @@
 import { companies } from '../../../../../src/lib/urls'
+import { companyFaker } from '../../fakers/companies'
 import { genericDocumentsListFaker } from '../../fakers/generic-documents'
 
 describe('Files Collections Sort', () => {
   const genericDocumentsList = [...genericDocumentsListFaker(3)]
-  const relatedObjectId = '4cd4128b-1bad-4f1e-9146-5d4678c6a018'
-  const defaultSortApiUrl = `/api-proxy/v4/document/?related_object_id=${relatedObjectId}&limit=10&offset=0&sortby=-created_on`
-  const oldestFirstSortApiUrl = `/api-proxy/v4/document/?related_object_id=${relatedObjectId}&limit=10&offset=0&sortby=created_on`
+  const company = companyFaker()
+  const defaultSortApiUrl = `/api-proxy/v4/document/?related_object_id=${company.id}&limit=10&offset=0&sortby=-created_on`
+  const oldestFirstSortApiUrl = `/api-proxy/v4/document/?related_object_id=${company.id}&limit=10&offset=0&sortby=created_on`
 
   context('Default sort', () => {
     beforeEach(() => {
@@ -15,7 +16,7 @@ describe('Files Collections Sort', () => {
           results: genericDocumentsList,
         },
       }).as('apiRequest')
-      cy.visit(companies.files(relatedObjectId), {
+      cy.visit(companies.files(company.id), {
         qs: { sortby: '-created_on' },
       })
     })
@@ -35,7 +36,7 @@ describe('Files Collections Sort', () => {
           results: genericDocumentsList,
         },
       }).as('apiRequest')
-      cy.visit(companies.files(relatedObjectId), {
+      cy.visit(companies.files(company.id), {
         qs: { sortby: 'created_on' },
       })
     })

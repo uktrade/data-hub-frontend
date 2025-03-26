@@ -147,6 +147,7 @@ const reactRoutes = [
   '/contacts/:contactId/interactions',
   '/contacts/:contactId/audit',
   '/companies/:companyId/match/cannot-find',
+  '/files/:fileId/delete',
 ]
 
 reactRoutes.forEach((path) => {

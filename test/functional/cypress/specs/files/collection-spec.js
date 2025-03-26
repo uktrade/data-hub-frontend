@@ -10,12 +10,13 @@ import {
   formatDate,
   DATE_FORMAT_MEDIUM_WITH_TIME,
 } from '../../../../../src/client/utils/date-utils'
+import { companyFaker } from '../../fakers/companies'
 import { genericDocumentsListFaker } from '../../fakers/generic-documents'
 
 describe('Generic Documents / Files Collections for company', () => {
-  const relatedObjectId = '4cd4128b-1bad-4f1e-9146-5d4678c6a018'
+  const company = companyFaker()
   const genericDocumentsList = [...genericDocumentsListFaker(3)]
-  const apiUrl = `/api-proxy/v4/document/?related_object_id=${relatedObjectId}&limit=10&offset=0&sortby=-created_on`
+  const apiUrl = `/api-proxy/v4/document/?related_object_id=${company.id}&limit=10&offset=0&sortby=-created_on`
 
   // Helper function to intercept the API request
   const interceptApiRequest = () => {
@@ -29,7 +30,7 @@ describe('Generic Documents / Files Collections for company', () => {
 
   beforeEach(() => {
     interceptApiRequest()
-    cy.visit(companies.files(relatedObjectId), {
+    cy.visit(companies.files(company.id), {
       qs: { sortby: '-created_on' },
     })
     cy.wait('@apiRequest')

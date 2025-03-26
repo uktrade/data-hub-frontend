@@ -6,7 +6,7 @@ export const SORT_OPTIONS = [
 export const DOCUMENT_TYPES = {
   SHAREPOINT: {
     type: 'documents.sharepointdocument',
-    label: 'Add a new SharePoint link',
+    label: 'SharePoint link',
   },
   UPLOADABLE: { type: 'documents.uploadable', label: 'Upload a new doucment' },
 }

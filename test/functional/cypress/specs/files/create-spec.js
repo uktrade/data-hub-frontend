@@ -12,15 +12,16 @@ import {
   DOCUMENT_TYPES,
   RELATED_OBJECT_TYPES,
 } from '../../../../../src/client/modules/Files/CollectionList/constants'
+import { companyFaker } from '../../fakers/companies'
 
 describe('SharePoint link file create for company', () => {
-  const companyId = '4cd4128b-1bad-4f1e-9146-5d4678c6a018'
+  const company = companyFaker()
   beforeEach(() => {
     cy.intercept('POST', '/api-proxy/v4/document', {
       statusCode: 201,
     }).as('fileHttpRequest')
     cy.visit(
-      `/files/create?related_object_id=${companyId}&related_object_type=${RELATED_OBJECT_TYPES.COMPANY}&document_type=${DOCUMENT_TYPES.SHAREPOINT.type}`
+      `/files/create?related_object_id=${company.id}&related_object_type=${RELATED_OBJECT_TYPES.COMPANY}&document_type=${DOCUMENT_TYPES.SHAREPOINT.type}`
     )
   })
 
@@ -32,8 +33,8 @@ describe('SharePoint link file create for company', () => {
     assertBreadcrumbs({
       Home: '/',
       Companies: urls.companies.index(),
-      'Zboncak Group|271eb29e-425b-4cd8-b386-3208c3a5f978': `/companies/${companyId}`,
-      Files: `/companies/${companyId}/files`,
+      'Zboncak Group|271eb29e-425b-4cd8-b386-3208c3a5f978': `/companies/${company.id}`,
+      Files: `/companies/${company.id}/files`,
       'Add a new SharePoint link': null,
     })
   })
@@ -62,7 +63,7 @@ describe('SharePoint link file create for company', () => {
       cy.contains('button', 'Add SharePoint link').click()
 
       const expectedBody = {
-        related_object_id: companyId,
+        related_object_id: company.id,
         related_object_type: RELATED_OBJECT_TYPES.COMPANY,
         document_type: DOCUMENT_TYPES.SHAREPOINT.type,
         document_data: {
@@ -73,7 +74,7 @@ describe('SharePoint link file create for company', () => {
 
       cy.wait('@fileHttpRequest').then((xhr) => {
         expect(xhr.request.body).to.deep.equal(expectedBody)
-        assertUrl(urls.companies.files(companyId))
+        assertUrl(urls.companies.files(company.id))
         assertTextVisible(`SharePoint link added successfully`)
       })
     })
@@ -82,7 +83,7 @@ describe('SharePoint link file create for company', () => {
   context('when a user cancels', () => {
     it('should return without saving and return to the correct endpoint', () => {
       cy.contains('Cancel').click()
-      assertUrl(urls.companies.files(companyId))
+      assertUrl(urls.companies.files(company.id))
     })
   })
 })
