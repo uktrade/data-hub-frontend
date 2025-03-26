@@ -5,6 +5,7 @@ import {
   assertSummaryCardLinks,
   assertSummaryCardList,
   assertMultipleAddItemButtons,
+  assertMultipleAddItemButtonsText,
 } from '../../support/collection-list-assertions'
 import { companies } from '../../../../../src/lib/urls'
 import {
@@ -42,8 +43,12 @@ describe('Generic Documents / Files Collections for company', () => {
     assertListLength(genericDocumentsList)
   })
 
-  it('should display multiple buttons', () => {
+  it('should render the correct amount of buttons', () => {
     assertMultipleAddItemButtons(1)
+  })
+
+  it('should render buttons with the correct text', () => {
+    assertMultipleAddItemButtonsText(0, 'Add SharePoint link')
   })
 
   context('SharePoint type documents / files', () => {

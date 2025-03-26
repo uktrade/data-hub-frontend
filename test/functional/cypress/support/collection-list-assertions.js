@@ -48,6 +48,12 @@ const assertMultipleAddItemButtons = (buttonLength) => {
     .should('have.length', buttonLength)
 }
 
+const assertMultipleAddItemButtonsText = (index, buttonText) => {
+  cy.get('[data-test="add-collection-item-button"]')
+    .eq(index)
+    .should('contain.text', buttonText)
+}
+
 const assertBadge = (item, badgeText) => {
   cy.get(item).find('[data-test="badge"]').should('contain', badgeText)
 }
@@ -227,4 +233,5 @@ module.exports = {
   assertSummaryCardLinks,
   assertSummaryCardList,
   assertMultipleAddItemButtons,
+  assertMultipleAddItemButtonsText,
 }
