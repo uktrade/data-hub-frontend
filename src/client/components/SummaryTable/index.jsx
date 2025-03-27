@@ -68,6 +68,14 @@ const StyledTableRow = styled(Table.Row)`
     `}
 `
 
+const StyledTableHeaderCell = styled(Table.CellHeader)({
+  padding: '10px 0px',
+})
+
+const StyledTableCell = styled(Table.Cell)({
+  padding: '10px',
+})
+
 SummaryTable.Row = ({ heading, children, hideWhenEmpty, flag, ...props }) => {
   if (hideWhenEmpty && isEmpty(children)) {
     return null
@@ -91,8 +99,8 @@ SummaryTable.Row = ({ heading, children, hideWhenEmpty, flag, ...props }) => {
 
   return (
     <StyledTableRow invalid={flag} {...props}>
-      {heading && <Table.CellHeader>{heading}</Table.CellHeader>}
-      <Table.Cell>{renderChildren()}</Table.Cell>
+      {heading && <StyledTableHeaderCell>{heading}</StyledTableHeaderCell>}
+      <StyledTableCell>{renderChildren()}</StyledTableCell>
     </StyledTableRow>
   )
 }
