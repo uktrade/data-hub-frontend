@@ -124,7 +124,7 @@
     "react-lines-ellipsis": "^0.15.4",
     "react-markdown": "^10.1.0",
     "react-redux": "^9.2.0",
-    "react-router-dom": "^7.3.0",
+    "react-router-dom": "^7.4.1",
     "react-string-replace": "^1.1.1",
     "react-to-print": "^3.0.5",
     "react-use": "^17.6.0",
