@@ -6,19 +6,28 @@ import {
   assertSummaryCardList,
   assertMultipleAddItemButtons,
   assertMultipleAddItemButtonsText,
+  assertAddItemButton,
 } from '../../support/collection-list-assertions'
 import { companies } from '../../../../../src/lib/urls'
 import {
   formatDate,
   DATE_FORMAT_MEDIUM_WITH_TIME,
 } from '../../../../../src/client/utils/date-utils'
+
 import { companyFaker } from '../../fakers/companies'
 import { genericDocumentsListFaker } from '../../fakers/generic-documents'
 
 describe('Generic Documents / Files Collections for company', () => {
-  const company = companyFaker()
   const genericDocumentsList = [...genericDocumentsListFaker(3)]
   const apiUrl = `/api-proxy/v4/document/?related_object_id=${company.id}&limit=10&offset=0&sortby=-created_on`
+
+  const company = companyFaker({
+    id: relatedObjectId,
+    archived: true,
+    archived_on: '2017-03-14T14:49:17',
+    archived_by: 'Sam Smith',
+    archived_reason: 'Left job',
+  })
 
   // Helper function to intercept the API request
   const interceptApiRequest = () => {
@@ -31,11 +40,13 @@ describe('Generic Documents / Files Collections for company', () => {
   }
 
   beforeEach(() => {
+    const linkUrl = `/api-proxy/v4/company/${company.id}`
     interceptApiRequest()
+    cy.intercept('GET', linkUrl, company).as('companyRequest')
     cy.visit(companies.files(company.id), {
       qs: { sortby: '-created_on' },
     })
-    cy.wait('@apiRequest')
+    cy.wait(['@companyRequest', '@apiRequest'])
     getCollectionList()
   })
 
@@ -43,12 +54,22 @@ describe('Generic Documents / Files Collections for company', () => {
     assertListLength(genericDocumentsList)
   })
 
-  it('should render the correct amount of buttons', () => {
-    assertMultipleAddItemButtons(1)
-  })
+  context('SharePoint header buttons', () => {
+    it('if url not set, return page url', () => {
+      // Should button not be shown if no url is set?
+      assertAddItemButton(
+        'Add SharePoint link',
+        companies.files(relatedObjectId)
+      )
+    })
 
-  it('should render buttons with the correct text', () => {
-    assertMultipleAddItemButtonsText(0, 'Add SharePoint link')
+    it('should render the correct amount of buttons', () => {
+      assertMultipleAddItemButtons(1)
+    })
+
+    it('should render buttons with the correct text', () => {
+      assertMultipleAddItemButtonsText(0, 'Add SharePoint link')
+    })
   })
 
   context('SharePoint type documents / files', () => {
