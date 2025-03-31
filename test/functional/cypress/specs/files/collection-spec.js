@@ -22,7 +22,7 @@ describe('Generic Documents / Files Collections for company', () => {
   const apiUrl = `/api-proxy/v4/document/?related_object_id=${company.id}&limit=10&offset=0&sortby=-created_on`
 
   const company = companyFaker({
-    id: relatedObjectId,
+    id: '4cd4128b-1bad-4f1e-9146-5d4678c6a018',
     archived: true,
     archived_on: '2017-03-14T14:49:17',
     archived_by: 'Sam Smith',
@@ -57,10 +57,7 @@ describe('Generic Documents / Files Collections for company', () => {
   context('SharePoint header buttons', () => {
     it('if url not set, return page url', () => {
       // Should button not be shown if no url is set?
-      assertAddItemButton(
-        'Add SharePoint link',
-        companies.files(relatedObjectId)
-      )
+      assertAddItemButton('Add SharePoint link', companies.files(company.id))
     })
 
     it('should render the correct amount of buttons', () => {
