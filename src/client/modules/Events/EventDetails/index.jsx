@@ -46,7 +46,13 @@ const Attendees = ({ eventId, isDisabled }) => (
       {(page) => (
         <ul>
           {page.map(
-            ({ contacts: [contact], companies: [company], date, service }) => (
+            ({
+              id,
+              contacts: [contact],
+              companies: [company],
+              date,
+              service,
+            }) => (
               <CollectionItem
                 headingText={contact?.name || 'Not available'}
                 headingUrl={contact && `/contacts/${contact?.id}`}
@@ -70,9 +76,7 @@ const Attendees = ({ eventId, isDisabled }) => (
                   {
                     label: 'Service delivery',
                     value: (
-                      <Link href={`/companies/${service.id}`}>
-                        {service.name}
-                      </Link>
+                      <Link href={`/interactions/${id}`}>{service.name}</Link>
                     ),
                   },
                 ]}
