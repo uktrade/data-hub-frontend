@@ -18,9 +18,6 @@ import { companyFaker } from '../../fakers/companies'
 import { genericDocumentsListFaker } from '../../fakers/generic-documents'
 
 describe('Generic Documents / Files Collections for company', () => {
-  const genericDocumentsList = [...genericDocumentsListFaker(3)]
-  const apiUrl = `/api-proxy/v4/document/?related_object_id=${company.id}&limit=10&offset=0&sortby=-created_on`
-
   const company = companyFaker({
     id: '4cd4128b-1bad-4f1e-9146-5d4678c6a018',
     archived: true,
@@ -28,6 +25,8 @@ describe('Generic Documents / Files Collections for company', () => {
     archived_by: 'Sam Smith',
     archived_reason: 'Left job',
   })
+  const genericDocumentsList = [...genericDocumentsListFaker(3)]
+  const apiUrl = `/api-proxy/v4/document/?related_object_id=${company.id}&limit=10&offset=0&sortby=-created_on`
 
   // Helper function to intercept the API request
   const interceptApiRequest = () => {
