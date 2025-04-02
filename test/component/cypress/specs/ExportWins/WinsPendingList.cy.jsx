@@ -7,6 +7,7 @@ import { exportWinsFaker } from '../../../../functional/cypress/fakers/export-wi
 import { currencyGBP } from '../../../../../src/client/utils/number-utils'
 import {
   formatDate,
+  DATE_FORMAT_MEDIUM,
   DATE_FORMAT_MEDIUM_WITH_TIME,
 } from '../../../../../src/client/utils/date-utils'
 import { exportWinsData } from './export-wins-data'
@@ -89,7 +90,7 @@ describe('WinsPendingList', () => {
         .eq(3)
         .should(
           'have.text',
-          `Date modified: ${formatDate(exportWin.modified_on)}`
+          `Date modified: ${formatDate(exportWin.modified_on, DATE_FORMAT_MEDIUM)}`
         )
       cy.get(items)
         .eq(4)
@@ -134,5 +135,42 @@ describe('WinsPendingList', () => {
         }
       }
     )
+  })
+
+  it('should render heading without Company profile link into Datahub - Legacy Wins', () => {
+    const exportWin = {
+      ...exportWinsFaker(),
+      company: null,
+      company_name: 'Legacy Company Ltd',
+    }
+    const exportWinsList = [exportWin, exportWinsFaker(), exportWinsFaker()]
+
+    const Provider = createTestProvider({
+      'Export Wins': () => Promise.resolve(exportWinsList),
+      Company: () => Promise.resolve({ id: 123 }),
+      TASK_GET_REMINDER_SUMMARY: () => Promise.resolve(),
+    })
+
+    cy.mount(
+      <Provider>
+        <WinsPendingList exportWins={exportWinsList} />
+      </Provider>
+    )
+
+    cy.get('[data-test="collection-item"]').as('collectionItems')
+    cy.get('@collectionItems').eq(0).as('firstItem')
+
+    cy.get('@collectionItems').should('have.length', 3)
+
+    cy.get('@firstItem').within(() => {
+      cy.get('h3').should(
+        'have.text',
+        `${exportWin.name_of_export} to ${exportWin.country.name}`
+      )
+      cy.get('h3 a').should('not.exist')
+
+      cy.get('h4').should('have.text', exportWin.company_name)
+      cy.get('h4 a').should('not.exist')
+    })
   })
 })

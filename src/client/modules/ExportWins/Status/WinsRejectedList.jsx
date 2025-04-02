@@ -11,8 +11,12 @@ import { CollectionItem } from '../../../components'
 import { sumExportValues, createRoleTags } from './utils'
 import { SORT_OPTIONS, WIN_STATUS } from './constants'
 import State from '../../../components/State'
-import urls from '../../../../lib/urls'
 import Contact from './Contact'
+import {
+  getHeadingUrl,
+  getSubHeading,
+  getSubHeadingUrl,
+} from './WinsPendingList'
 
 export const WinsRejectedList = ({ exportWins, currentAdviserId }) => {
   return exportWins.length === 0 ? null : (
@@ -21,12 +25,9 @@ export const WinsRejectedList = ({ exportWins, currentAdviserId }) => {
         <CollectionItem
           key={item.id}
           headingText={`${item.name_of_export} to ${item?.country?.name}`}
-          headingUrl={urls.companies.exportWins.editSummary(
-            item.company.id,
-            item.id
-          )}
-          subheading={item.company.name}
-          subheadingUrl={urls.companies.overview.index(item.company.id)}
+          headingUrl={getHeadingUrl(item)}
+          subheading={getSubHeading(item)}
+          subheadingUrl={getSubHeadingUrl(item)}
           tags={createRoleTags(item, currentAdviserId)}
           metadata={[
             {

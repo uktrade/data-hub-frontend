@@ -115,4 +115,41 @@ describe('WinsConfirmedList', () => {
       }
     )
   })
+
+  it('should render heading without Company profile link into Datahub - Legacy Wins', () => {
+    const exportWin = {
+      ...exportWinsFaker(),
+      company: null,
+      company_name: 'Legacy Company Ltd',
+    }
+    const exportWinsList = [exportWin, exportWinsFaker(), exportWinsFaker()]
+
+    const Provider = createTestProvider({
+      'Export Wins': () => Promise.resolve(exportWinsList),
+      Company: () => Promise.resolve({ id: '222' }),
+      TASK_GET_REMINDER_SUMMARY: () => Promise.resolve(),
+    })
+
+    cy.mount(
+      <Provider>
+        <WinsConfirmedList exportWins={exportWinsList} currentAdviserId="888" />
+      </Provider>
+    )
+
+    cy.get('[data-test="collection-item"]').as('collectionItems')
+    cy.get('@collectionItems').eq(0).as('firstItem')
+
+    cy.get('@collectionItems').should('have.length', 3)
+
+    cy.get('@firstItem').within(() => {
+      cy.get('h3').should(
+        'have.text',
+        `${exportWin.name_of_export} to ${exportWin.country.name}`
+      )
+      cy.get('h3 a').should('not.exist')
+
+      cy.get('h4').should('have.text', exportWin.company_name)
+      cy.get('h4 a').should('not.exist')
+    })
+  })
 })

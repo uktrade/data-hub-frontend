@@ -15,6 +15,22 @@ import { sumExportValues, createRoleTags } from './utils'
 import { SORT_OPTIONS, WIN_STATUS } from './constants'
 import State from '../../../components/State'
 import urls from '../../../../lib/urls'
+import { NOT_SET_TEXT } from '../../../../apps/companies/constants'
+
+export const getHeadingUrl = (item) =>
+  item.company?.id
+    ? urls.companies.exportWins.editSummary(item.company.id, item.id)
+    : null
+
+export const getSubHeading = (item) =>
+  item.company?.name
+    ? item.company.name
+    : item?.company_name
+      ? item.company_name
+      : NOT_SET_TEXT
+
+export const getSubHeadingUrl = (item) =>
+  item.company?.id ? urls.companies.overview.index(item.company.id) : null
 
 export const WinsPendingList = ({ exportWins = [], currentAdviserId }) => {
   return exportWins.length === 0 ? null : (
@@ -23,12 +39,9 @@ export const WinsPendingList = ({ exportWins = [], currentAdviserId }) => {
         <CollectionItem
           key={item.id}
           headingText={`${item.name_of_export} to ${item?.country?.name}`}
-          headingUrl={urls.companies.exportWins.editSummary(
-            item.company.id,
-            item.id
-          )}
-          subheading={item.company.name}
-          subheadingUrl={urls.companies.overview.index(item.company.id)}
+          headingUrl={getHeadingUrl(item)}
+          subheading={getSubHeading(item)}
+          subheadingUrl={getSubHeadingUrl(item)}
           tags={createRoleTags(item, currentAdviserId)}
           metadata={[
             ...(item.company_contacts[0]
