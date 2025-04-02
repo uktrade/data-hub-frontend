@@ -16,7 +16,7 @@ const assertTradeAgreementArticle = (articleElement) => {
     .parent()
     .contains('Select a trade agreement and then a related event.')
   assertTextVisible(
-    'Find more information about selecting trade agreements.This will open in a new window'
+    'Find more information (opens in a new tab) about selecting trade agreements.'
   )
   cy.contains('more information')
     .should('have.attr', 'href')
@@ -27,7 +27,7 @@ const assertTradeAgreementArticle = (articleElement) => {
   cy.contains('more information').should(
     'have.attr',
     'aria-label',
-    'This will open in a new window'
+    'more information (opens in a new tab)'
   )
 }
 
