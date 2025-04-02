@@ -42,6 +42,18 @@ const assertAddItemButtonNotPresent = () => {
   cy.get('[data-test="add-collection-item-button"]').should('not.exist')
 }
 
+const assertMultipleAddItemButtons = (buttonLength) => {
+  cy.get('[data-test="add-collection-item-button"]')
+    .should('exist')
+    .should('have.length', buttonLength)
+}
+
+const assertMultipleAddItemButtonsText = (index, buttonText) => {
+  cy.get('[data-test="add-collection-item-button"]')
+    .eq(index)
+    .should('contain.text', buttonText)
+}
+
 const assertBadge = (item, badgeText) => {
   cy.get(item).find('[data-test="badge"]').should('contain', badgeText)
 }
@@ -220,4 +232,6 @@ module.exports = {
   assertSummaryCardTitle,
   assertSummaryCardLinks,
   assertSummaryCardList,
+  assertMultipleAddItemButtons,
+  assertMultipleAddItemButtonsText,
 }

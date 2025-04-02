@@ -19,6 +19,11 @@ const StyledActions = styled('div')`
   width: 100%;
   margin-top: ${SPACING.SCALE_2};
 
+  a {
+    margin-left: 10px;
+    white-space: nowrap;
+  }
+
   ${MEDIA_QUERIES.TABLET} {
     margin-top: 0;
     margin-left: ${SPACING.SCALE_1};
@@ -29,12 +34,22 @@ const StyledActions = styled('div')`
   }
 `
 
-const CollectionHeaderRow = ({ primary, actions, children, ...rest }) => {
+const CollectionHeaderRow = ({
+  primary,
+  actions,
+  actionsList,
+  children,
+  ...rest
+}) => {
+  //
   return (
     <StyledRowWrapper primary={primary} {...rest}>
       {children}
-
-      {actions && <StyledActions>{actions}</StyledActions>}
+      {actionsList?.length ? (
+        <StyledActions> {actionsList} </StyledActions>
+      ) : (
+        actions && <StyledActions> {actions} </StyledActions>
+      )}
     </StyledRowWrapper>
   )
 }

@@ -98,7 +98,23 @@ function FilteredCollectionHeader({
   selectedFilters,
   hasFilters,
   useReactRouter = false,
+  addItemButtons = [],
 }) {
+  let actionsList = []
+  for (const actionsItem of addItemButtons) {
+    actionsList.push(
+      <Button
+        id={Math.random()}
+        as={StyledReactRouterLink}
+        to={actionsItem.url}
+        buttonColour={GREY_3}
+        buttonTextColour={BLACK}
+        data-test="add-collection-item-button"
+      >
+        {actionsItem.text}
+      </Button>
+    )
+  }
   const formattedTotal = decimal(totalItems)
   const counterSuffix = pluralize(collectionName, totalItems)
   const actions =
@@ -129,7 +145,7 @@ function FilteredCollectionHeader({
 
   return (
     <CollectionHeaderRowContainer>
-      <CollectionHeaderRow actions={actions}>
+      <CollectionHeaderRow actions={actions} actionsList={actionsList}>
         <StyledDiv role="status">
           <StyledHeaderText>
             <StyledResultCount data-test="collectionCount">
