@@ -76,6 +76,7 @@ function CompanySearchStep({
         name="dnbCompany"
         country={countryName}
         entityRenderer={DnbCompanyRenderer}
+        csrfToken={csrfToken}
         onCannotFind={() => {
           // The CompanyNotFoundStep where the user manually adds a company to Data Hub via
           // a form was being skipped altogether throwing out the sequencing of form steps.
