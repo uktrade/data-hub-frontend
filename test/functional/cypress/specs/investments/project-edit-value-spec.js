@@ -27,7 +27,7 @@ const setup = (project) => {
     'editValueSubmissionRequest'
   )
   cy.visit(investments.projects.editValue(project.id))
-  cy.wait('@getProjectDetails')
+  // cy.wait('@getProjectDetails')
 }
 
 const setupProjectFaker = (overrides) =>
@@ -624,7 +624,7 @@ describe('Edit the value details of a project', () => {
       cy.wait('@editValueSubmissionRequest')
         .its('request.body')
         .should('include', {
-          number_new_jobs: `${nonCapitalOnlyFDIProject.number_new_jobs}`,
+          number_new_jobs: nonCapitalOnlyFDIProject.number_new_jobs,
           average_salary: `${nonCapitalOnlyFDIProject.average_salary.id}`,
           number_safeguarded_jobs: `${nonCapitalOnlyFDIProject.number_safeguarded_jobs}`,
         })
@@ -1412,39 +1412,86 @@ describe('Edit the value details of a project', () => {
 
   context('Number of jobs error handling', () => {
     context('When editing an expansion project', () => {
-      const expansionProject = setupProjectFaker({
-        stage: INVESTMENT_PROJECT_STAGES.active,
-        fdi_type: {
-          name: 'Expansion of existing site or activity',
-          id: '8dc41652-12bc-4ecf-8e60-bdb6dfd5eab1',
-        },
-      })
-      beforeEach(() => {
-        setup(expansionProject)
-      })
+      context('With involvement', () => {
+        const expansionProject = setupProjectFaker({
+          stage: INVESTMENT_PROJECT_STAGES.active,
+          fdi_type: {
+            name: 'Expansion of existing site or activity',
+            id: '8dc41652-12bc-4ecf-8e60-bdb6dfd5eab1',
+          },
+          level_of_involvement: {
+            name: 'Foo',
+            id: 'bar',
+          },
+        })
+        beforeEach(() => {
+          setup(expansionProject)
+        })
 
-      it('should show the hint text for the number of new jobs input', () => {
-        cy.get('[data-test="field-number_new_jobs"]').then((element) => {
-          assertFieldInput({
-            element,
-            label: 'Number of new jobs (required for next stage)',
-            hint: 'An expansion project must always have at least 1 new job',
+        it('should show the hint text for the number of new jobs input', () => {
+          cy.get('[data-test="field-number_new_jobs"]').then((element) => {
+            assertFieldInput({
+              element,
+              label: 'Number of new jobs (required for next stage)',
+              hint: 'An expansion project must always have at least 1 new job',
+            })
           })
         })
+        it('should show an error if the number of new jobs is empty', () => {
+          cy.get('[data-test="submit-button"]').click()
+          assertErrorSummary(['Value for number of new jobs is required'])
+        })
+        it('should show an error if the number of new jobs is 0', () => {
+          cy.get('[data-test="number-new-jobs-input"]').type(0)
+          cy.get('[data-test="submit-button"]').click()
+          assertErrorSummary(['Number of new jobs must be greater than 0'])
+        })
+        it('should not show an error if the number of new jobs is 1', () => {
+          cy.get('[data-test="number-new-jobs-input"]').type(1)
+          cy.get('[data-test="submit-button"]').click()
+          assertNotExists('[data-test="summary-form-errors"]')
+        })
       })
-      it('should show an error if the number of new jobs is empty', () => {
-        cy.get('[data-test="submit-button"]').click()
-        assertErrorSummary(['Value for number of new jobs is required'])
-      })
-      it('should show an error if the number of new jobs is 0', () => {
-        cy.get('[data-test="number-new-jobs-input"]').type(0)
-        cy.get('[data-test="submit-button"]').click()
-        assertErrorSummary(['Number of new jobs must be greater than 0'])
-      })
-      it('should not show an error if the number of new jobs is 1', () => {
-        cy.get('[data-test="number-new-jobs-input"]').type(1)
-        cy.get('[data-test="submit-button"]').click()
-        assertNotExists('[data-test="summary-form-errors"]')
+
+      context('With no involvement', () => {
+        const expansionProject = setupProjectFaker({
+          stage: INVESTMENT_PROJECT_STAGES.active,
+          fdi_type: {
+            name: 'Expansion of existing site or activity',
+            id: '8dc41652-12bc-4ecf-8e60-bdb6dfd5eab1',
+          },
+          level_of_involvement: null,
+        })
+        beforeEach(() => {
+          setup(expansionProject)
+        })
+
+        it('should not show the hint text for the number of new jobs input', () => {
+          cy.get('[data-test="field-number_new_jobs"]').then((element) => {
+            assertFieldInput({
+              element,
+              label: 'Number of new jobs (optional)',
+            })
+          })
+        })
+        it('should not show an error if the number of new jobs is empty', () => {
+          cy.get('[data-test="submit-button"]').click()
+          cy.contains('Value for number of new jobs is required').should(
+            'not.exist'
+          )
+        })
+        it('should not show an error if the number of new jobs is 0', () => {
+          cy.get('[data-test="number-new-jobs-input"]').type(0)
+          cy.get('[data-test="submit-button"]').click()
+          cy.contains('Number of new jobs must be greater than 0').should(
+            'not.exist'
+          )
+        })
+        it('should not show an error if the number of new jobs is 1', () => {
+          cy.get('[data-test="number-new-jobs-input"]').type(1)
+          cy.get('[data-test="submit-button"]').click()
+          assertNotExists('[data-test="summary-form-errors"]')
+        })
       })
     })
 
