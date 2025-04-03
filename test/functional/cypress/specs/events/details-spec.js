@@ -43,6 +43,11 @@ describe('Event Details', () => {
       'href',
       urls.events.edit(fixtures.event.oneDayExhibition.id)
     )
+
+    cy.title().should(
+      'eq',
+      'Details - One-day exhibition - Events - DBT Data Hub'
+    )
   })
 
   it('should display one day event details with no teams', () => {
