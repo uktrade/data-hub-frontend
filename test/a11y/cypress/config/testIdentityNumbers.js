@@ -23,6 +23,7 @@ export const testIdentityNumbers = {
   ':eybLeadId': '45122997-f323-4161-9ea4-2babe305b598',
   ':globalHqId': '3e6debb4-1596-40c5-aa25-f00da0e05af9',
   ':interactionId': 'd14abf23-7f07-4640-8908-cb6b40dc3ce3',
+  ':exportId': 'f5bc555e-0eba-4a7e-abe9-db89a78afc5c',
   ':investmentId': investment.id,
   ':listId': '75e14e32-292e-4d1b-a361-992d548251f7',
   ':opportunityId': 'a84f8405-c419-40a6-84c8-642b7c3209b2',

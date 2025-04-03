@@ -17,7 +17,14 @@ const transformServiceToOption = (service) => ({
 
 async function renderInteractionDetailsForm(req, res, next) {
   try {
-    const { company, interaction, referral, investment, contact } = res.locals
+    const {
+      company,
+      interaction,
+      referral,
+      investment,
+      contact,
+      companyExport,
+    } = res.locals
     const { user } = req.session
     const [
       services,
@@ -37,12 +44,41 @@ async function renderInteractionDetailsForm(req, res, next) {
       getOptions(req, 'export-barrier', { sorted: false }),
     ])
 
+    const exportLinkText = companyExport
+      ? `${companyExport.title} to ${companyExport.destination_country.name}`
+      : null
+    const companyLinkText = company.name
+    const companyLinkHref = urls.companies.detail(company.id)
+
+    let breadcrumb = []
+    let props = {}
+    if (companyExport) {
+      breadcrumb.push(
+        {
+          text: exportLinkText,
+          href: urls.exportPipeline.details(companyExport.id),
+        },
+        {
+          text: `Interactions`,
+          href: urls.exportPipeline.interactions.index(companyExport.id),
+        }
+      )
+      props = {
+        preHeading: `<a href="${companyLinkHref}">${companyLinkText}</a>`,
+      }
+    } else {
+      breadcrumb.push({
+        text: `${company.name}`,
+        href: urls.companies.detail(company.id),
+      })
+      props = {
+        subHeading: companyLinkText,
+      }
+    }
+
     res
       .breadcrumb([
-        {
-          text: `${company.name}`,
-          href: urls.companies.detail(company.id),
-        },
+        ...breadcrumb,
         {
           text: `${interaction ? 'Edit' : 'Add'} interaction`,
         },
@@ -51,6 +87,7 @@ async function renderInteractionDetailsForm(req, res, next) {
         props: {
           companyId: get(company, 'id'),
           investmentId: get(investment, 'id'),
+          companyExportId: get(companyExport, 'id'),
           referral,
           contactId: get(contact, 'id'),
           contacts: company.contacts
@@ -59,12 +96,13 @@ async function renderInteractionDetailsForm(req, res, next) {
           services,
           serviceDeliveryStatuses,
           communicationChannels,
-          subHeading: company.name,
+          heading: exportLinkText,
           countries,
           relatedTradeAgreements,
           exportBarrier,
           interactionId: get(interaction, 'id'),
           user,
+          ...props,
         },
       })
   } catch (error) {

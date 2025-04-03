@@ -1,0 +1,64 @@
+{
+    "id": "f5bc555e-0eba-4a7e-abe9-db89a78afc5c",
+    "company": {
+        "name": "Venus Ltd",
+        "id": "0f5216e0-849f-11e6-ae22-56b6b6499611"
+    },
+    "owner": {
+        "name": "John Doe",
+        "first_name": "John",
+        "last_name": "Doe",
+        "dit_team": {
+            "name": "Agricultural Engineers Association Ltd",
+            "id": "d2f02898-9698-e211-a939-e4115bead28a"
+        },
+        "id": "c0e09068-ce3e-4798-9437-2d258d83881e"
+    },
+    "team_members": [
+        {
+            "name": "Puck Head",
+            "id": "e83a608e-84a4-11e6-ae22-56b6b6499611"
+        },
+        {
+            "name": "Jacob Webster",
+            "id": "b4848b30-f532-4cfc-a063-b064d8435b65"
+        }
+    ],
+    "contacts": [
+        {
+            "name": "Johnny Cakeman",
+            "email": "johnny@cakeman.com",
+            "id": "9b1138ab-ec7b-497f-b8c3-27fed21694ef"
+        }
+    ],
+    "destination_country": {
+        "name": "Åland Islands",
+        "id": "ff996375-8adf-459a-b2a6-a477b66c7c6a"
+    },
+    "sector": {
+        "name": "Advanced engineering : Metallurgical process plant",
+        "id": "a422c9d2-5f95-e211-a939-e4115bead28a"
+    },
+    "exporter_experience": {
+        "name": "Exported in the last 12 months, but has not won an export order by having an export plan",
+        "id": "8937c359-157e-41dd-8520-679383847ea0"
+    },
+    "estimated_win_date": "2025-03-01",
+    "estimated_export_value_amount": "500000",
+    "estimated_export_value_years": {
+        "name": "4 years",
+        "id": "3f289d56-aec1-4472-a046-10828cad4992"
+    },
+    "export_potential": "high",
+    "created_on": "2025-01-15T10:38:12.694291Z",
+    "modified_on": "2025-01-15T10:40:30.928565Z",
+    "archived": false,
+    "archived_on": null,
+    "archived_reason": "",
+    "title": "Export Project",
+    "status": "active",
+    "notes": "",
+    "created_by": "c0e09068-ce3e-4798-9437-2d258d83881e",
+    "modified_by": "c0e09068-ce3e-4798-9437-2d258d83881e",
+    "archived_by": null
+}
