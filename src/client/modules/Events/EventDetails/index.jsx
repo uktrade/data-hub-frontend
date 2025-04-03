@@ -171,7 +171,7 @@ const EventDetails = ({ name, ...props }) => {
       {({ flashMessages }) => (
         <DefaultLayout
           heading={name}
-          pageTitle="Events"
+          pageTitle={`Details - ${name} - Events`}
           flashMessages={{
             ...flashMessages,
             info: [

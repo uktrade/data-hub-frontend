@@ -33,6 +33,10 @@ describe('Event edit', () => {
     })
   })
 
+  it('should render a meta title', () => {
+    cy.title().should('eq', 'Edit event - Events - DBT Data Hub')
+  })
+
   context('when loading in a valid event form', () => {
     it('should render expected form fields with original values ', () => {
       cy.wait('@getEventHttpRequest')

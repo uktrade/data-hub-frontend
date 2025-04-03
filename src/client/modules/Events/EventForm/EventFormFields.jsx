@@ -28,13 +28,11 @@ export const EventFormFields = ({ values }) => (
         <Link
           href={urls.external.helpCentre.tradeAgreementGuidance}
           target="_blank"
-          aria-label="This will open in a new window"
+          aria-label="more information (opens in a new tab)"
         >
-          more information
+          more information (opens in a new tab)
         </Link>{' '}
         about selecting trade agreements.
-        <br />
-        This will open in a new window.
       </p>
     </article>
     <FieldRadios

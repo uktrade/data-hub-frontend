@@ -43,7 +43,7 @@ const EventForm = () => {
   return (
     <DefaultLayout
       heading={id ? DISPLAY_EDIT_EVENT : DISPLAY_ADD_EVENT}
-      pageTitle={id ? DISPLAY_EDIT_EVENT : DISPLAY_ADD_EVENT}
+      pageTitle={`${id ? DISPLAY_EDIT_EVENT : DISPLAY_ADD_EVENT} - Events`}
       breadcrumbs={breadcrumbs}
       useReactRouter={true}
     >

@@ -42,6 +42,10 @@ describe('Event create', () => {
     assertLocalHeader('Add event')
   })
 
+  it('should render a meta title', () => {
+    cy.title().should('eq', 'Add event - Events - DBT Data Hub')
+  })
+
   it('should render add event breadcrumb', () => {
     assertBreadcrumbs({
       Home: '/',
