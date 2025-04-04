@@ -1,20 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { throttle, compact, isEmpty } from 'lodash'
+import { throttle, compact } from 'lodash'
 import axios from 'axios'
 
 import { getCompanyAddress } from '../../../../utils/addresses'
 import FieldTypeahead from '../FieldTypeahead'
 import { getDnbEntityText } from '../../../../../apps/companies/apps/add-company/client/CompanySearchStep'
-
-function getTradingNames(dnb_company) {
-  return isEmpty(dnb_company.trading_names)
-    ? null
-    : {
-        label: 'Trading name(s)',
-        value: dnb_company.trading_names.join(', '),
-      }
-}
 
 function getAddress(dnb_company) {
   return {
@@ -54,10 +45,7 @@ const FieldCompanyDnBTypeahead = ({
                 label: result.dnb_company.primary_name,
                 value: result.dnb_company.duns_number,
                 id: result.dnb_company.duns_number,
-                meta: compact([
-                  getTradingNames(result.dnb_company),
-                  getAddress(result.dnb_company),
-                ]),
+                meta: compact([getAddress(result.dnb_company)]),
                 insetText: getDnbEntityText(
                   result.datahub_company?.id,
                   result.dnb_company.is_out_of_business,
