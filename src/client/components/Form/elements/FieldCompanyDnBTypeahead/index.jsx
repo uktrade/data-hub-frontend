@@ -41,6 +41,7 @@ const FieldCompanyDnBTypeahead = ({
             })
             .then(({ data }) =>
               data.results.map((result) => ({
+                dnb_company: result.dnb_company,
                 chipLabel: result.dnb_company.primary_name,
                 label: result.dnb_company.primary_name,
                 value: result.dnb_company.duns_number,

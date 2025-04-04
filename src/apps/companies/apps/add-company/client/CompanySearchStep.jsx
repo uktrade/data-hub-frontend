@@ -76,6 +76,11 @@ function CompanySearchStep({
         name="dnbCompany"
         country={countryName}
         entityRenderer={DnbCompanyRenderer}
+        onCompanySelect={(dnb_company) => {
+          setFieldValue('cannotFind', false)
+          setFieldValue('dnbCompany', dnb_company)
+          goForward()
+        }}
         csrfToken={csrfToken}
         onCannotFind={() => {
           // The CompanyNotFoundStep where the user manually adds a company to Data Hub via
