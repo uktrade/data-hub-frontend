@@ -380,7 +380,11 @@ const Typeahead = ({
                       <span>
                         <OptionContent option={option} searchString={input} />
                         {showMetaData && option.meta ? (
-                          <Metadata key={label} rows={option.meta} />
+                          <Metadata
+                            active={index === activeIndex}
+                            key={label}
+                            rows={option.meta}
+                          />
                         ) : null}
                         {showInsetText && option.insetText ? (
                           <StyledInsetText

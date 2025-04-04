@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { FONT_SIZE } from '@govuk-react/constants'
 
 import MetadataItem from './MetadataItem'
-import { WHITE, TEXT_COLOUR } from '../../utils/colours'
+import { TEXT_COLOUR, WHITE } from '../../utils/colours'
 
 const StyledMetadataWrapper = styled('div')((props) => ({
   fontSize: FONT_SIZE.SIZE_16,
@@ -16,9 +16,9 @@ const StyledMetadataWrapper = styled('div')((props) => ({
 
 const Metadata = ({ rows, active = false }) =>
   rows && (
-    <StyledMetadataWrapper active={active} data-test="metadata">
+    <StyledMetadataWrapper data-test="metadata">
       {rows.map(({ label, value, key }) => (
-        <MetadataItem key={key ? key : label} label={label}>
+        <MetadataItem active={active} key={key ? key : label} label={label}>
           {value}
         </MetadataItem>
       ))}
