@@ -4,21 +4,19 @@ import PropTypes from 'prop-types'
 import { FONT_SIZE } from '@govuk-react/constants'
 
 import MetadataItem from './MetadataItem'
+import { WHITE, TEXT_COLOUR } from '../../utils/colours'
 
-const StyledMetadataWrapper = styled('dl')`
-  font-size: ${FONT_SIZE.SIZE_16};
-  line-height: ${FONT_SIZE.SIZE_27};
-  display: block;
-  overflow: hidden;
+const StyledMetadataWrapper = styled('div')((props) => ({
+  fontSize: FONT_SIZE.SIZE_16,
+  lineHeight: FONT_SIZE.SIZE_27,
+  display: 'block',
+  overflow: 'hidden',
+  color: props.active ? WHITE : TEXT_COLOUR,
+}))
 
-  & > * {
-    margin-bottom: 0px;
-  }
-`
-
-const Metadata = ({ rows }) =>
+const Metadata = ({ rows, active = false }) =>
   rows && (
-    <StyledMetadataWrapper data-test="metadata">
+    <StyledMetadataWrapper active={active} data-test="metadata">
       {rows.map(({ label, value, key }) => (
         <MetadataItem key={key ? key : label} label={label}>
           {value}
@@ -34,6 +32,7 @@ Metadata.propTypes = {
       value: PropTypes.node,
     })
   ),
+  active: PropTypes.bool,
 }
 
 export default Metadata

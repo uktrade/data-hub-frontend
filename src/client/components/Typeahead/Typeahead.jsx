@@ -2,8 +2,10 @@ import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { FOCUSABLE, SPACING } from '@govuk-react/constants'
+import InsetText from '@govuk-react/inset-text'
 import Label from '@govuk-react/label'
 
+import Metadata from '../../components/Metadata/'
 import {
   BLACK,
   BLUE,
@@ -85,6 +87,13 @@ const ListboxOption = styled('div')((props) => ({
     borderRight: `3px solid ${TEXT_COLOUR}`,
     borderBottom: `3px solid ${TEXT_COLOUR}`,
     transform: 'translate(0, -50%) rotate(45deg)',
+  },
+}))
+
+const StyledInsetText = styled(InsetText)((props) => ({
+  '&': {
+    marginTop: SPACING.SCALE_1,
+    color: props.active ? WHITE : TEXT_COLOUR,
   },
 }))
 
@@ -175,6 +184,8 @@ const Typeahead = ({
   onOptionsClear,
   onMenuClose,
   onMenuOpen,
+  showMetaData = false,
+  showInsetText = false,
   onChange = () => {},
   'data-test': testId,
   OptionContent = TypeaheadOptionContent,
@@ -368,6 +379,17 @@ const Typeahead = ({
                     >
                       <span>
                         <OptionContent option={option} searchString={input} />
+                        {showMetaData && option.meta ? (
+                          <Metadata key={label} rows={option.meta} />
+                        ) : null}
+                        {showInsetText && option.insetText ? (
+                          <StyledInsetText
+                            active={index === activeIndex}
+                            key={label}
+                          >
+                            {option.insetText}
+                          </StyledInsetText>
+                        ) : null}
                       </span>
                     </ListboxOption>
                   ))}
@@ -401,6 +423,10 @@ Typeahead.propTypes = {
   error: PropTypes.string,
   closeMenuOnSelect: PropTypes.bool,
   isMulti: PropTypes.bool,
+  // Whether to show extra meta data on each option.
+  showMetaData: PropTypes.bool,
+  // Whether to show inset text for an option.
+  showInsetText: PropTypes.bool,
   noOptionsMessage: PropTypes.string,
   defaultValue: PropTypes.oneOfType([
     keyPairPropType,

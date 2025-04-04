@@ -5,6 +5,7 @@ import axios from 'axios'
 
 import { getCompanyAddress } from '../../../../utils/addresses'
 import FieldTypeahead from '../FieldTypeahead'
+import { getDnbEntityText } from '../../../../../apps/companies/apps/add-company/client/CompanySearchStep'
 
 function getTradingNames(dnb_company) {
   return isEmpty(dnb_company.trading_names)
@@ -38,8 +39,10 @@ const FieldCompanyDnBTypeahead = ({
       placeholder={placeholder}
       noOptionsMessage="Type to search for companies"
       required={required}
+      showMetaData={true}
+      showInsetText={true}
       loadOptions={throttle((searchString) => {
-        if (searchString.length > 2) {
+        if (searchString.length > 1) {
           return axios
             .post(`/companies/create/dnb/company-search?_csrf=${csrfToken}`, {
               search_term: searchString,
@@ -55,7 +58,11 @@ const FieldCompanyDnBTypeahead = ({
                   getTradingNames(result.dnb_company),
                   getAddress(result.dnb_company),
                 ]),
-                data: result,
+                insetText: getDnbEntityText(
+                  result.datahub_company?.id,
+                  result.dnb_company.is_out_of_business,
+                  result.dnb_company.primary_name
+                ),
               }))
             )
         } else {

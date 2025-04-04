@@ -104,7 +104,6 @@ const FieldDnbCompany = ({
           aria-label="Search a company"
           label="Company Name"
           required="Search a company"
-          isMulti={true}
           csrfToken={csrfToken}
         />
 
