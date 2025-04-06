@@ -170,7 +170,7 @@
     "@storybook/addon-essentials": "^8.6.11",
     "@storybook/addon-webpack5-compiler-babel": "^3.0.6",
     "@storybook/manager-api": "^8.6.11",
-    "@storybook/react": "^8.6.11",
+    "@storybook/react": "^8.6.12",
     "@storybook/react-webpack5": "^8.6.11",
     "@storybook/test": "^8.6.11",
     "babel-loader": "^9.2.1",
