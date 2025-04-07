@@ -60,7 +60,7 @@ describe('Delete SharePoint link from company', () => {
       cy.contains('button', 'Delete SharePoint link').click()
 
       cy.wait('@fileHttpRequest').then(() => {
-        assertUrl(urls.companies.files(company.id))
+        assertUrl(urls.companies.files.index(company.id))
         assertTextVisible(`SharePoint link successfully deleted`)
       })
     })
@@ -69,7 +69,7 @@ describe('Delete SharePoint link from company', () => {
   context('when a user cancels', () => {
     it('should return without saving and return to the correct endpoint', () => {
       cy.contains('Cancel').click()
-      assertUrl(urls.companies.files(company.id))
+      assertUrl(urls.companies.files.index(company.id))
     })
   })
 })

@@ -41,11 +41,11 @@ const SharePointForm = ({ relatedObjectId }) => {
       id="add-sharepoint-link-form"
       submissionTaskName={TASK_CREATE_FILE}
       analyticsFormName="addSharePointLink"
-      redirectTo={() => urls.companies.files(relatedObjectId)}
+      redirectTo={() => urls.companies.files.index(relatedObjectId)}
       flashMessage={() => 'SharePoint link added successfully'}
       submitButtonLabel="Add SharePoint link"
       cancelButtonLabel="Cancel"
-      cancelRedirectTo={() => urls.companies.files(relatedObjectId)}
+      cancelRedirectTo={() => urls.companies.files.index(relatedObjectId)}
       transformPayload={(values) =>
         transformFileForApi({
           relatedObjectId,
@@ -103,7 +103,7 @@ const CreateFile = () => {
         text: <CompanyName id={relatedObjectId} />,
       },
       {
-        link: urls.companies.files(relatedObjectId),
+        link: urls.companies.files.index(relatedObjectId),
         text: 'Files',
       },
       {

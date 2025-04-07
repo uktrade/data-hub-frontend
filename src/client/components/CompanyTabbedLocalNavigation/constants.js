@@ -30,7 +30,7 @@ export const localNavItems = (companyId) => {
     },
     {
       path: 'files',
-      url: urls.companies.files(companyId),
+      url: urls.companies.files.index(companyId),
       label: 'Files',
       ariaDescription: 'Files',
     },
