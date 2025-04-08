@@ -69,7 +69,7 @@ const FieldDnbCompany = ({
           name="companyDnB"
           aria-label="Search a company"
           label="Company Name"
-          required="Search a company"
+          required="Search for and select a company."
           postcode={values.dnbPostalCode}
           country={queryParams.address_country}
           csrfToken={csrfToken}
@@ -78,6 +78,9 @@ const FieldDnbCompany = ({
         <FormActions>
           <Button
             onClick={() => {
+              if (!values.companyDnB) {
+                return
+              }
               onCompanySelect(values.companyDnB.dnb_company)
             }}
           >
