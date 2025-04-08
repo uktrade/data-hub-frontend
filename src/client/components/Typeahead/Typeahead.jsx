@@ -12,6 +12,7 @@ import {
   FOCUS_COLOUR,
   GREY_1,
   GREY_2,
+  LINK_COLOUR,
   RED,
   TEXT_COLOUR,
   WHITE,
@@ -94,6 +95,9 @@ const StyledInsetText = styled(InsetText)((props) => ({
   '&': {
     marginTop: SPACING.SCALE_1,
     color: props.active ? WHITE : TEXT_COLOUR,
+  },
+  'div > a': {
+    color: props.active ? `${GREY_2} !important` : `${LINK_COLOUR} !important`,
   },
 }))
 
