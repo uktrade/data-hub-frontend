@@ -26,12 +26,12 @@ const SharePointForm = ({ file }) => {
       id="delete-sharepoint-link-form"
       submissionTaskName={TASK_DELETE_FILE}
       analyticsFormName="deleteSharePointLink"
-      redirectTo={() => urls.companies.files(file?.relatedObjectId)}
+      redirectTo={() => urls.companies.files.index(file?.relatedObjectId)}
       flashMessage={() => 'SharePoint link successfully deleted'}
       submitButtonLabel={`Delete ${DOCUMENT_TYPES.SHAREPOINT.label}`}
       cancelButtonLabel="Cancel"
       submitButtonColour={RED}
-      cancelRedirectTo={() => urls.companies.files(file?.relatedObjectId)}
+      cancelRedirectTo={() => urls.companies.files.index(file?.relatedObjectId)}
       transformPayload={() => file?.id}
     >
       <H2>
@@ -73,7 +73,7 @@ const DeleteFile = () => {
         text: <CompanyName id={relatedObjectId} />,
       },
       {
-        link: urls.companies.files(relatedObjectId),
+        link: urls.companies.files.index(relatedObjectId),
         text: 'Files',
       },
       {

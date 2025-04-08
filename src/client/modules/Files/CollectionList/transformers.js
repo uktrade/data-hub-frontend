@@ -3,6 +3,7 @@ import {
   DATE_FORMAT_MEDIUM_WITH_TIME,
 } from '../../../utils/date-utils'
 import { DOCUMENT_TYPES } from './constants'
+import urls from '../../../../lib/urls'
 
 export const transformFileToListItem = () => (file) => {
   let title = ''
@@ -29,7 +30,7 @@ export const transformFileToListItem = () => (file) => {
         },
         {
           text: 'Delete',
-          url: `files/${file.id}/delete?related_object_id=${file.related_object_id}&related_object_type=${file.related_object_type}&document_type=${file.document_type}`,
+          url: `${urls.companies.files.delete(file.id)}?related_object_id=${file.related_object_id}&related_object_type=${file.related_object_type}&document_type=${file.document_type}`,
         }
       )
 

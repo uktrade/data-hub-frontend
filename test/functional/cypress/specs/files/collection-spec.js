@@ -8,6 +8,7 @@ import {
   assertMultipleAddItemButtonsText,
   assertAddItemButton,
 } from '../../support/collection-list-assertions'
+import { assertUrl } from '../../support/assertions'
 import { companies } from '../../../../../src/lib/urls'
 import {
   formatDate,
@@ -42,7 +43,7 @@ describe('Generic Documents / Files Collections for company', () => {
     const linkUrl = `/api-proxy/v4/company/${company.id}`
     interceptApiRequest()
     cy.intercept('GET', linkUrl, company).as('companyRequest')
-    cy.visit(companies.files(company.id), {
+    cy.visit(companies.files.index(company.id), {
       qs: { sortby: '-created_on' },
     })
     cy.wait(['@companyRequest', '@apiRequest'])
@@ -56,7 +57,10 @@ describe('Generic Documents / Files Collections for company', () => {
   context('SharePoint header buttons', () => {
     it('if url not set, return page url', () => {
       // Should button not be shown if no url is set?
-      assertAddItemButton('Add SharePoint link', companies.files(company.id))
+      assertAddItemButton(
+        'Add SharePoint link',
+        companies.files.index(company.id)
+      )
     })
 
     it('should render the correct amount of buttons', () => {
@@ -87,6 +91,13 @@ describe('Generic Documents / Files Collections for company', () => {
         ['Added by', genericDocumentsList[0].created_by.name],
         ['SharePoint url', genericDocumentsList[0].document.url],
       ])
+    })
+
+    it('should link to the delete confirmation page url', () => {
+      cy.get('@firstListItem').within(() => {
+        cy.get('span').eq(1).should('contain', 'Delete').click()
+      })
+      assertUrl(companies.files.delete(genericDocumentsList[0].id))
     })
   })
 
