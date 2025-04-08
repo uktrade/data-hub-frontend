@@ -74,7 +74,7 @@ describe('SharePoint link file create for company', () => {
 
       cy.wait('@fileHttpRequest').then((xhr) => {
         expect(xhr.request.body).to.deep.equal(expectedBody)
-        assertUrl(urls.companies.files(company.id))
+        assertUrl(urls.companies.files.index(company.id))
         assertTextVisible(`SharePoint link added successfully`)
       })
     })
@@ -83,7 +83,7 @@ describe('SharePoint link file create for company', () => {
   context('when a user cancels', () => {
     it('should return without saving and return to the correct endpoint', () => {
       cy.contains('Cancel').click()
-      assertUrl(urls.companies.files(company.id))
+      assertUrl(urls.companies.files.index(company.id))
     })
   })
 })

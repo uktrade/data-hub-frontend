@@ -14,6 +14,7 @@ export const urlTestExclusions = [
   { url: '/search/:searchPath?' },
   { url: '/tasks/:taskId/edit' },
   { url: '/companies/:companyId/overview' },
+  { url: '/files/:fileId/delete' },
   // 404 errors and or no sandbox data available
   { url: '/companies/:companyId/audit' },
   { url: '/companies/:companyId/archive' },

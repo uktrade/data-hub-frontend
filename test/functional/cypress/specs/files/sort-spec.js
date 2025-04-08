@@ -16,7 +16,7 @@ describe('Files Collections Sort', () => {
           results: genericDocumentsList,
         },
       }).as('apiRequest')
-      cy.visit(companies.files(company.id), {
+      cy.visit(companies.files.index(company.id), {
         qs: { sortby: '-created_on' },
       })
     })
@@ -36,7 +36,7 @@ describe('Files Collections Sort', () => {
           results: genericDocumentsList,
         },
       }).as('apiRequest')
-      cy.visit(companies.files(company.id), {
+      cy.visit(companies.files.index(company.id), {
         qs: { sortby: 'created_on' },
       })
     })
