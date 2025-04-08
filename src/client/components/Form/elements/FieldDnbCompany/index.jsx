@@ -37,6 +37,7 @@ const FieldDnbCompany = ({
   onCannotFind,
   csrfToken,
   features,
+  queryParams,
 }) => {
   const { values, goBack, setIsLoading } = useFormContext()
   const { findCompany } = useDnbSearch(apiEndpoint, features)
@@ -69,6 +70,8 @@ const FieldDnbCompany = ({
           aria-label="Search a company"
           label="Company Name"
           required="Search a company"
+          postcode={values.dnbPostalCode}
+          country={queryParams.address_country}
           csrfToken={csrfToken}
         />
 

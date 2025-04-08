@@ -21,6 +21,8 @@ const FieldCompanyDnBTypeahead = ({
   placeholder = 'Type to search for companies',
   loadOptions,
   csrfToken,
+  postcode,
+  country,
   ...props
 }) => {
   return (
@@ -34,11 +36,18 @@ const FieldCompanyDnBTypeahead = ({
       showInsetText={true}
       loadOptions={throttle((searchString) => {
         if (searchString.length > 1) {
+          const post_data = {
+            search_term: searchString,
+            address_country: country,
+          }
+          if (postcode) {
+            post_data.postal_code = postcode
+          }
           return axios
-            .post(`/companies/create/dnb/company-search?_csrf=${csrfToken}`, {
-              search_term: searchString,
-              address_country: 'GB',
-            })
+            .post(
+              `/companies/create/dnb/company-search?_csrf=${csrfToken}`,
+              post_data
+            )
             .then(({ data }) =>
               data.results.map((result) => ({
                 dnb_company: result.dnb_company,
