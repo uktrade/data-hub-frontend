@@ -1,9 +1,15 @@
 import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
+import styled from 'styled-components'
 
-import { WIDTHS } from '@govuk-react/constants'
+import { WIDTHS, SPACING } from '@govuk-react/constants'
 import Button from '@govuk-react/button'
+import Details from '@govuk-react/details'
+import ListItem from '@govuk-react/list-item'
+import Paragraph from '@govuk-react/paragraph'
+import UnorderedList from '@govuk-react/unordered-list'
 
+import ButtonLink from '../../../ButtonLink'
 import { useFormContext } from '../../hooks'
 import FieldWrapper from '../FieldWrapper'
 import FieldUneditable from '../FieldUneditable'
@@ -15,6 +21,11 @@ import FormActions from '../FormActions'
 import FormLayout from '../../../Layout/FormLayout'
 import { FORM_LAYOUT } from '../../../../../common/constants'
 
+const StyledUnorderedList = styled(UnorderedList)`
+  list-style-type: disc;
+  padding-left: ${SPACING.SCALE_5};
+`
+
 const FieldDnbCompany = ({
   name,
   label,
@@ -23,6 +34,7 @@ const FieldDnbCompany = ({
   country,
   apiEndpoint,
   onCompanySelect,
+  onCannotFind,
   csrfToken,
   features,
 }) => {
@@ -69,6 +81,28 @@ const FieldDnbCompany = ({
             Select company
           </Button>
         </FormActions>
+
+        <Details summary="I can't find what I'm looking for">
+          <Paragraph>Try:</Paragraph>
+
+          <StyledUnorderedList>
+            <ListItem>checking or removing the postcode</ListItem>
+            <ListItem>removing &quot;limited&quot; or &quot;ltd&quot;</ListItem>
+            <ListItem>checking for spelling errors</ListItem>
+            {country && (
+              <ListItem>checking if the right country was selected</ListItem>
+            )}
+            <ListItem>
+              check you&apos;re using the company&apos;s registered name
+            </ListItem>
+          </StyledUnorderedList>
+
+          {onCannotFind && (
+            <ButtonLink onClick={onCannotFind}>
+              I still can&apos;t find what I&apos;m looking for
+            </ButtonLink>
+          )}
+        </Details>
       </FieldWrapper>
     </FormLayout>
   )
