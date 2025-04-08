@@ -61,6 +61,11 @@ const FieldCompanyDnBTypeahead = ({
                   result.dnb_company.is_out_of_business,
                   result.dnb_company.primary_name
                 ),
+                isDisabled:
+                  result.datahub_company?.id ||
+                  result.dnb_company.is_out_of_business
+                    ? true
+                    : false,
               }))
             )
         } else {

@@ -356,6 +356,9 @@ const Typeahead = ({
                       aria-setsize={filteredOptions.length}
                       aria-posinset={index}
                       onClick={() => {
+                        if (option.isDisabled) {
+                          return
+                        }
                         inputRef.current && inputRef.current.select()
                         onOptionToggle(option)
                         onChange(
