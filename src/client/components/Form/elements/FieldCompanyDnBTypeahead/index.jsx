@@ -34,6 +34,7 @@ const FieldCompanyDnBTypeahead = ({
       required={required}
       showMetaData={true}
       showInsetText={true}
+      isMulti={false}
       loadOptions={throttle((searchString) => {
         if (searchString.length > 1) {
           const post_data = {
@@ -72,7 +73,6 @@ const FieldCompanyDnBTypeahead = ({
           return Promise.resolve([])
         }
       }, 500)}
-      isMulti={false}
       {...props}
     />
   )
