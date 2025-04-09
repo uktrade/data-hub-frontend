@@ -60,6 +60,7 @@ const ListboxOption = styled('div')((props) => ({
   cursor: 'pointer',
   backgroundColor: props.active ? BLUE : WHITE,
   color: props.active ? WHITE : TEXT_COLOUR,
+  cursor: props.isDisabled ? 'not-allowed' : 'pointer',
 
   '&:last-child': {
     borderBottom: 'none',
@@ -238,6 +239,9 @@ const Typeahead = ({
       case menuActions.closeSelect:
         event.preventDefault()
         if (filteredOptions[activeIndex]) {
+          if (filteredOptions[activeIndex].isDisabled) {
+            return
+          }
           onOptionToggle(filteredOptions[activeIndex])
           onChange(
             getNewSelectedOptions({
@@ -349,6 +353,8 @@ const Typeahead = ({
                       id={`${name}-${option.value}`}
                       key={option.value}
                       active={index === activeIndex}
+                      isDisabled={option.isDisabled}
+                      aria-disabled={option.isDisabled}
                       focussed={index === focusIndex}
                       isMulti={isMulti}
                       role="option"
