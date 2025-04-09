@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
-import { FONT_SIZE, SPACING } from '@govuk-react/constants'
+import { FONT_SIZE } from '@govuk-react/constants'
 
 import MetadataItem from './MetadataItem'
 
@@ -11,7 +11,7 @@ const StyledMetadataWrapper = styled('div')`
   display: grid;
 
   & > * {
-    margin-bottom: ${SPACING.SCALE_1};
+    margin-bottom: 0px;
   }
 `
 

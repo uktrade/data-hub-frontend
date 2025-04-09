@@ -17,6 +17,7 @@ const GlobalStyles = createGlobalStyle`
 `
 
 const DefaultLayout = ({
+  superheading,
   heading,
   headingLink,
   subheading,
@@ -48,6 +49,7 @@ const DefaultLayout = ({
         localHeader
       ) : (
         <LocalHeader
+          superheading={superheading}
           heading={heading}
           headingLink={headingLink}
           subheading={subheading}
@@ -71,6 +73,7 @@ const DefaultLayout = ({
 }
 
 DefaultLayout.propTypes = {
+  superheading: PropTypes.node,
   heading: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   headingLink: PropTypes.shape({
     url: PropTypes.string.isRequired,
