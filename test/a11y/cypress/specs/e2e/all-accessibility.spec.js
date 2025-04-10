@@ -5,7 +5,10 @@ import { cleanseArrayOfUrls, createArrayOfUrls } from '../config/utils'
 
 const arrayOfUrls = createArrayOfUrls(urls)
 
-const filteredArrayOfUrls = cleanseArrayOfUrls(arrayOfUrls, urlTestExclusions)
+let filteredArrayOfUrls = cleanseArrayOfUrls(arrayOfUrls, urlTestExclusions)
+// console.log(filteredArrayOfUrls)
+// TODO remove limited tests
+// filteredArrayOfUrls = [filteredArrayOfUrls[26]]
 
 filteredArrayOfUrls.map((path) => {
   describe(`${path}`, () => {
