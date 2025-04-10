@@ -1,7 +1,6 @@
 export const urlTestExclusions = [
   // A11y errors
   { url: '/investment-projects/' },
-  { url: '/companies/:companyId/edit-history' },
   { url: '/companies/:companyId/exports' },
   { url: '/exportwins/' },
   { url: '/companies/:companyId/investments/large-capital-profile' },
