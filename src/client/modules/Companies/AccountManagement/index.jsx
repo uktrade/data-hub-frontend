@@ -1,11 +1,12 @@
 import React from 'react'
-import { H3, H4, Link, GridCol, GridRow } from 'govuk-react'
+import { H2, H3, Link, GridCol, GridRow } from 'govuk-react'
 import { FONT_SIZE, SPACING } from '@govuk-react/constants'
 import Button from '@govuk-react/button'
 import Details from '@govuk-react/details'
 import styled from 'styled-components'
 import { useParams } from 'react-router-dom'
 import { connect } from 'react-redux'
+import { typography } from '@govuk-react/lib'
 
 import { Metadata, NewWindowLink } from '../../../components'
 import CompanyLayout from '../../../components/Layout/CompanyLayout'
@@ -48,6 +49,16 @@ const StyledLink = styled(Link)`
   padding-right: ${SPACING.SCALE_5};
 `
 
+const StyledH2 = styled(H2)`
+  ${typography.font({ size: 24, weight: 'bold' })};
+  margin-bottom: ${SPACING.SCALE_2};
+`
+
+const StyledH3 = styled(H3)`
+  ${typography.font({ size: 19, weight: 'bold' })};
+  margin-bottom: ${SPACING.SCALE_2};
+`
+
 const SectionGridRow = styled(GridRow)`
   padding-bottom: ${SPACING.SCALE_2};
   padding-top: ${SPACING.SCALE_2};
@@ -67,7 +78,7 @@ const DataWorkspaceAccountPlan = ({ company }) => (
     <GridCol>
       <GridRow>
         <GridCol>
-          <H3>Account plan</H3>
+          <StyledH2>Account plan</StyledH2>
         </GridCol>
       </GridRow>
       <GridCol>
@@ -92,7 +103,7 @@ const Strategy = ({ company }) => (
     <GridCol>
       <GridRow>
         <GridCol>
-          <H3>DBT Strategy</H3>
+          <StyledH2>DBT Strategy</StyledH2>
         </GridCol>
         {company.strategy && (
           <StyledLink
@@ -149,7 +160,7 @@ const Objectives = ({ company }) => (
     {({ results }) => (
       <SectionGridRow data-test="objectives-row">
         <GridCol>
-          <H3>Current objectives</H3>
+          <StyledH2>Current objectives</StyledH2>
           {results.map((objective, index) => (
             <BorderContainer
               key={`objective_${index}`}
@@ -160,7 +171,7 @@ const Objectives = ({ company }) => (
             >
               <GridRow>
                 <GridCol>
-                  <H4>{objective.subject}</H4>
+                  <StyledH3>{objective.subject}</StyledH3>
                 </GridCol>
                 <StyledLink
                   href={urls.companies.accountManagement.objectives.edit(
