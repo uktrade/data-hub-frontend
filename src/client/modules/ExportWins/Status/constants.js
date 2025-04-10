@@ -22,10 +22,3 @@ export const ADVISER_ROLES = {
   TEAM_MEMBER: 'team member',
   CONTRIBUTING_OFFICER: 'contributing officer',
 }
-
-export const HISTORIC_WINS_ALERT_MESSAGE = {
-  ELEMENT: 'Historic export wins have now moved to Data Hub,',
-  URI_ELEMENT: 'see the export wins announcement',
-  URI_LINK:
-    'https://data-services-help.trade.gov.uk/data-hub/updates/announcements/historic-export-wins-are-now-on-data-hub/',
-}
