@@ -8,12 +8,14 @@ import { SPACING, SPACING_POINTS } from '@govuk-react/constants'
 
 import {
   FieldAdvisersTypeahead,
+  FieldCurrency,
   FieldDate,
   FieldInput,
   FieldRadios,
   FieldSelect,
   FieldTextarea,
   FieldTypeahead,
+  FieldUneditable,
 } from '../../../components'
 import {
   BusinessActivitiesResource,
@@ -34,7 +36,11 @@ import {
   transformAndFilterArrayForTypeahead,
 } from './transformers'
 import { GREY_2 } from '../../../utils/colours'
-import { OPTIONS_YES_NO, OPTION_NO } from '../../../../common/constants'
+import {
+  OPTIONS_YES_NO,
+  OPTION_NO,
+  OPTION_YES,
+} from '../../../../common/constants'
 import { idNamesToValueLabels } from '../../../utils'
 import { validateIfDateInPast } from '../../../components/Form/validators'
 import { FDI_TYPES } from './constants'
@@ -43,6 +49,9 @@ import {
   isFieldRequiredForStage,
   validateFieldForStage,
 } from './validators'
+import { capitalExpenditureValidator } from './Details/validators'
+import { currencyGBP } from '../../../utils/number-utils'
+import { setGVAMessage } from './Details//transformers'
 
 const StyledReferralSourceWrapper = styled.div`
   margin-bottom: ${SPACING_POINTS[6]}px;
@@ -406,5 +415,58 @@ export const FieldSpecificProgramme = ({ initialValue = null, project }) => (
         'Select a specific programme'
       )
     }}
+  />
+)
+
+export const FieldExpenditureProgramme = ({ initialValue = '', project }) => (
+  <FieldRadios
+    type="text"
+    name="expenditure_programme"
+    label="Can client provide capital expenditure value?"
+    hint="Foreign equity only, excluding operational and R&D expenditure"
+    initialValue={initialValue || ''}
+    options={OPTIONS_YES_NO.map((option) => ({
+      ...option,
+      ...(option.value === OPTION_YES && {
+        children: (
+          <>
+            <FieldCurrency
+              name="foreign_equity_investment"
+              label="Capital expenditure value"
+              hint="Enter the total number of GB pounds"
+              initialValue={''}
+              type="text"
+              required="Enter the capital expenditure"
+              validate={(value) => {
+                return project.fdiType?.name === 'Capital only'
+                  ? capitalExpenditureValidator(value)
+                  : null
+              }}
+            />
+            {project.investmentType.name === 'FDI' &&
+              project.gvaMultiplier?.sectorClassificationGvaMultiplier ===
+                'capital' && (
+                <FieldUneditable
+                  label="Gross value added (GVA)"
+                  name="gross_value_added_capital"
+                >
+                  <>
+                    {project.grossValueAdded
+                      ? currencyGBP(project.grossValueAdded)
+                      : setGVAMessage(project)}
+                  </>
+                </FieldUneditable>
+              )}
+          </>
+        ),
+      }),
+    }))}
+    // validate={(values, field, formFields) => {
+    //   return validateFieldForStage(
+    //     field,
+    //     formFields,
+    //     'Select whether client can provide capital expenditure value'
+    //   )
+    // }}
   />
 )
