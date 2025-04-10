@@ -10,6 +10,7 @@ export const TASK_SAVE_ONE_LIST_DETAILS = 'TASK_SAVE_ONE_LIST_DETAILS'
 export const TASK_GET_ONE_LIST_DETAILS = 'TASK_GET_ONE_LIST_DETAILS'
 
 export const state2props = (state) => {
+  const { currentAdviserId } = state
   return {
     ...state[ID],
     globalAccountManager: transformAdviserData(
@@ -18,5 +19,6 @@ export const state2props = (state) => {
     oneListTiers: transformOneListTiers(state[ID].oneListTiers),
     oneListTeam: transformTeamMembers(state[ID].oneListTeam),
     userPermissions: state.userPermissions,
+    currentAdviserId: currentAdviserId,
   }
 }

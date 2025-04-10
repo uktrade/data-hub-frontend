@@ -317,9 +317,9 @@ export const companyNoGlobalUltimateAllDetails = companyFaker({
   ukRegion: {
     name: 'South East',
   },
-  oneListGroupGlobalAccountManager: {
+  oneListGroupGlobalAccountManager: adviserFaker({
     name: 'Billy Bob',
-  },
+  }),
   oneListGroupTier: {
     name: 'Tier D - International Trade Adviser Accounts',
     id: '1929c808-99b4-4abf-a891-45f2e187b410',
