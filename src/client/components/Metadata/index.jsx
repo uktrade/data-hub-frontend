@@ -15,11 +15,11 @@ const StyledMetadataWrapper = styled('div')`
   }
 `
 
-const Metadata = ({ rows }) =>
+const Metadata = ({ rows, active = false }) =>
   rows && (
     <StyledMetadataWrapper data-test="metadata">
       {rows.map(({ label, value, key }) => (
-        <MetadataItem key={key ? key : label} label={label}>
+        <MetadataItem active={active} key={key ? key : label} label={label}>
           {value}
         </MetadataItem>
       ))}
@@ -33,6 +33,7 @@ Metadata.propTypes = {
       value: PropTypes.node,
     })
   ),
+  active: PropTypes.bool,
 }
 
 export default Metadata
