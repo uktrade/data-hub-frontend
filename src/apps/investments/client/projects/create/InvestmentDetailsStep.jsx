@@ -16,6 +16,7 @@ import {
   FieldBusinessActivity,
   FieldClientContacts,
   FieldEstimatedLandDate,
+  FieldExpenditureProgramme,
   FieldInvestmentInvestorType,
   FieldLevelOfInvolvement,
   FieldLikelihoodOfLanding,
@@ -135,6 +136,7 @@ const InvestmentDetailsStep = ({ values, company }) => {
         )}
         <FieldLevelOfInvolvement />
         <FieldSpecificProgramme />
+        <FieldExpenditureProgramme project={values} />
       </Step>
     </FormLayout>
   )
