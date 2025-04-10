@@ -15,6 +15,10 @@ export const state2props = (state) => {
   return { objectiveItem }
 }
 
-export const state2propsMainTab = (state) => ({
-  permissions: state.userPermissions,
-})
+export const state2propsMainTab = (state) => {
+  const { currentAdviserId } = state
+  return {
+    permissions: state.userPermissions,
+    currentAdviserId: currentAdviserId,
+  }
+}

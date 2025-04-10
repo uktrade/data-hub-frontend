@@ -16,6 +16,7 @@ import {
 } from '../../../components'
 import urls from '../../../../lib/urls'
 import { FORM_LAYOUT } from '../../../../common/constants'
+import { isOneListAccountOwner } from '../CompanyBusinessDetails/utils'
 
 const EditOneListForm = ({
   company,
@@ -23,6 +24,7 @@ const EditOneListForm = ({
   formInitialValues,
   returnUrl,
   userPermissions,
+  currentAdviserId,
 }) => (
   <Form
     id="edit-one-list"
@@ -58,17 +60,18 @@ const EditOneListForm = ({
         {values.one_list_tier !== NONE && (
           <FormLayout setWidth={FORM_LAYOUT.THREE_QUARTERS}>
             <Step name="oneListAdvisers">
-              {userPermissions &&
-                userPermissions.includes('company.change_company') &&
-                userPermissions.includes(
-                  'company.change_one_list_tier_and_global_account_manager'
-                ) && (
-                  <FieldAdvisersTypeahead
-                    name={ACCOUNT_MANAGER_FIELD_NAME}
-                    label="Global Account Manager"
-                    required="Select at least one adviser"
-                  />
-                )}
+              {(isOneListAccountOwner(company, currentAdviserId) ||
+                (userPermissions &&
+                  userPermissions.includes('company.change_company') &&
+                  userPermissions.includes(
+                    'company.change_one_list_tier_and_global_account_manager'
+                  ))) && (
+                <FieldAdvisersTypeahead
+                  name={ACCOUNT_MANAGER_FIELD_NAME}
+                  label="Global Account Manager"
+                  required="Select at least one adviser"
+                />
+              )}
               <FieldAdvisersTypeahead
                 name={ONE_LIST_TEAM_FIELD_NAME}
                 label="Advisers on the core team (optional)"
