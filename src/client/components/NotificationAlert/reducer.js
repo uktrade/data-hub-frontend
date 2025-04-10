@@ -17,6 +17,7 @@ export const INITIAL_STATE = {
     task_amended_by_others: 0,
     task_overdue: 0,
     task_completed: 0,
+    task_deleted_by_others: 0,
   },
 }
 
