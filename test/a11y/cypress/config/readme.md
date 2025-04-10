@@ -33,3 +33,22 @@ If you have failing **a11y_tests** in Circle CI following changes it's possible 
 Data, Export data points are excluded as a default.
 
 New tests will automatically appear when added to **src/lib/urls.js**.
+
+## 🧩 Component Accessibility Testing
+
+Component-level a11y tests are also supported.
+
+These tests are located in: test/a11y/cypress/specs/component/
+
+To run component tests in GUI mode (console):
+
+```bash
+npx cypress open --component --config-file=cypress.a11y.config.js
+```
+When the Cypress UI opens, choose Component Testing, then select a test under the component/ directory.
+
+To run component tests in headless mode (console):
+
+```bash
+npx cypress run --component --config-file=cypress.a11y.config.js
+```
