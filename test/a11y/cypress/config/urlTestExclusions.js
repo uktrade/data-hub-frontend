@@ -1,20 +1,8 @@
 export const urlTestExclusions = [
   // A11y errors
-  { url: '/investment-projects/' },
-  { url: '/companies/:companyId/edit-history' },
-  { url: '/companies/:companyId/exports' },
-  { url: '/exportwins/' },
-  { url: '/companies/:companyId/investments/large-capital-profile' },
-  { url: '/companies/:companyId/account-management' },
-  { url: '/events/:eventId/attendees/find-new' },
-  { url: '/companies/:companyId/interactions/create' },
-  { url: '/companies/:companyId/interactions' },
-  { url: '/companies/:companyId/hierarchies/ghq/search' },
   { url: '/search/' },
   { url: '/search/:searchPath?' },
-  { url: '/tasks/:taskId/edit' },
   { url: '/companies/:companyId/overview' },
-  { url: '/files/:fileId/delete' },
   // 404 errors and or no sandbox data available
   { url: '/companies/:companyId/audit' },
   { url: '/companies/:companyId/archive' },

@@ -1,14 +1,28 @@
 import urls from '../../../../src/lib/urls'
+import { initialiseTests } from '../config/initialiseTests'
 import { urlTestExclusions } from '../config/urlTestExclusions'
 import { cleanseArrayOfUrls, createArrayOfUrls } from '../config/utils'
 
 const arrayOfUrls = createArrayOfUrls(urls)
 
-const filteredArrayOfUrls = cleanseArrayOfUrls(arrayOfUrls, urlTestExclusions)
+let filteredArrayOfUrls = cleanseArrayOfUrls(arrayOfUrls, urlTestExclusions)
+// // TODO remove limited tests
+// console.log(filteredArrayOfUrls)
+// filteredArrayOfUrls = [
+//   filteredArrayOfUrls[31],
+//   filteredArrayOfUrls[32],
+//   filteredArrayOfUrls[34],
+//   filteredArrayOfUrls[33],
+//   filteredArrayOfUrls[50],
+// ]
 
 filteredArrayOfUrls.map((path) => {
   describe(`${path}`, () => {
     before(() => {
+      if (initialiseTests[path]) {
+        path = initialiseTests[path]()
+      }
+
       cy.visit(path, { timeout: 20000 })
       // Wait until page has loaded first
       cy.initA11y()

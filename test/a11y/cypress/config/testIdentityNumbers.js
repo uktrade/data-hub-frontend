@@ -35,6 +35,8 @@ export const testIdentityNumbers = {
   ':subsidiaryCompanyId': 'cc7e2f19-7251-4a41-a27a-f98437720532',
   ':taskId': '162ba2d6-8b78-4720-b644-626b010be30b',
   ':winId': '1',
+  ':fileId': '75e14e32-292e4720-b644-626b010be30b',
+
   // Missing ID numbers
   ':theme': doNotHave,
   ':kind': doNotHave,
