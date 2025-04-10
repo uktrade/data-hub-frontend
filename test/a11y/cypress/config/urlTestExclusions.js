@@ -1,9 +1,7 @@
 export const urlTestExclusions = [
   // A11y errors
-  { url: '/exportwins/' },
   { url: '/search/' },
   { url: '/search/:searchPath?' },
-  { url: '/tasks/:taskId/edit' },
   { url: '/companies/:companyId/overview' },
   // 404 errors and or no sandbox data available
   { url: '/companies/:companyId/audit' },
