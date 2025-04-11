@@ -7,7 +7,10 @@ function CompaniesCollectionHtmx() {
   const [isLoaded, setIsLoaded] = useState(false)
 
   useEffect(() => {
-    fetch('/api-proxy/v4/company/htmx')
+    fetch('/api-proxy/v4/search/company', {
+      method: 'POST',
+      headers: { Accept: 'text/html' },
+    })
       .then((res) => res.text())
       .then((html) => {
         setIsLoaded(true)
