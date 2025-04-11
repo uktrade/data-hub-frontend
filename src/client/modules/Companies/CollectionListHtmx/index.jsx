@@ -7,8 +7,7 @@ function CompaniesCollectionHtmx() {
   const [isLoaded, setIsLoaded] = useState(false)
 
   useEffect(() => {
-    fetch('/api-proxy/v4/search/company', {
-      method: 'POST',
+    fetch('/api-proxy/v4/company-filters', {
       headers: { Accept: 'text/html' },
     })
       .then((res) => res.text())
@@ -30,8 +29,6 @@ function CompaniesCollectionHtmx() {
     <DefaultLayout heading="Companies HTMX" pageTitle="Companies HTMX">
       {/* Where to put HTML response from API for the filters */}
       <div id="target">{isLoaded ? <div /> : <div>Loading...</div>}</div>
-      {/* Where to put the HTML response companies list */}
-      <div id="resultTarget"></div>
     </DefaultLayout>
   )
 }
