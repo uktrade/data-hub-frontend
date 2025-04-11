@@ -53,13 +53,13 @@ export const bothGoodsAndServices = {
 }
 
 export const STEP_TO_EXCLUDED_FIELDS_MAP = {
-  [steps.OFFICER_DETAILS]: ['lead officer name.'],
-  [steps.CUSTOMER_DETAILS]: ['export experience.'],
+  [steps.OFFICER_DETAILS]: ['Lead officer name'],
+  [steps.CUSTOMER_DETAILS]: ['Export experience'],
   [steps.WIN_DETAILS]: [
-    'summary of the support given',
-    'destination country',
-    'date won',
-    'type of win and value.',
+    'Summary of the support given',
+    'Destination country',
+    'Date won',
+    'Type of win and Value',
   ],
 }
 
