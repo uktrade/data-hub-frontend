@@ -49,7 +49,7 @@ const testInputFilter = ({ selector, text, expectedNumberOfResults }) => {
     beforeEach(() => {
       cy.visit(urls.investments.profiles.index())
       expandToggleSections()
-      cy.get(selector).within((e) => cy.wrap(e).type(text).blur())
+      cy.get(selector).within((e) => cy.wrap(e).type(`${text}{enter}`))
     })
 
     it(`There should be ${expectedNumberOfResults} items found`, () => {
