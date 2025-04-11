@@ -56,9 +56,6 @@ const RoutedInput = ({
           writeQs(e.target.value)
         }
       }}
-      onBlur={(e) => {
-        writeQs(e.target.value)
-      }}
     />
   )
 }
