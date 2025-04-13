@@ -165,7 +165,7 @@
     "@eslint/eslintrc": "^3.3.0",
     "@eslint/js": "^9.24.0",
     "@faker-js/faker": "^9.6.0",
-    "@pmmmwh/react-refresh-webpack-plugin": "^0.5.15",
+    "@pmmmwh/react-refresh-webpack-plugin": "^0.5.16",
     "@storybook/addon-a11y": "^8.6.12",
     "@storybook/addon-essentials": "^8.6.12",
     "@storybook/addon-webpack5-compiler-babel": "^3.0.6",
