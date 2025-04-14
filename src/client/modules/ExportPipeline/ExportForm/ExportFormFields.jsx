@@ -1,7 +1,5 @@
 import React from 'react'
-import { FONT_WEIGHTS } from '@govuk-react/constants'
-import Label from '@govuk-react/label'
-import { HintText } from 'govuk-react'
+
 import PropTypes from 'prop-types'
 import { isEmpty } from 'lodash'
 
@@ -16,6 +14,7 @@ import {
   FieldCurrency,
   FieldTypeahead,
   FieldTextarea,
+  FieldWrapper,
   ContactInformation,
 } from '../../../../client/components'
 import {
@@ -88,18 +87,13 @@ const ExportFormFields = ({
                   isMulti={true}
                   validate={validateTeamMembers}
                 />
-
-                <Label
-                  style={{ fontWeight: FONT_WEIGHTS.bold }}
-                  htmlFor="field-estimated_export"
+                <FieldWrapper
+                  name="estimated_export"
+                  label="Total estimated export value"
+                  boldLabel={true}
+                  labelFor="estimated_export_value_years"
+                  hint="Select the year(s) and the total value. For example 3 years, £1,000,000"
                 >
-                  Total estimated export value
-                </Label>
-                <HintText>
-                  Select the year(s) and the total value. For example 3 years,
-                  £1,000,000
-                </HintText>
-                <div id="field-estimated_export">
                   <ResourceOptionsField
                     resource={ExportYearsResource}
                     field={FieldSelect}
@@ -109,6 +103,7 @@ const ExportFormFields = ({
                     required={ERROR_MESSAGES.estimated_export_value_years}
                     boldLabel={false}
                   />
+
                   <FieldCurrency
                     name="estimated_export_value_amount"
                     label="Estimated value in GBP"
@@ -126,7 +121,7 @@ const ExportFormFields = ({
                       }
                     }}
                   />
-                </div>
+                </FieldWrapper>
                 <FieldDate
                   name="estimated_win_date"
                   format="short"
