@@ -64,24 +64,26 @@ const CollectionList = ({
             />
           )}
           <ol aria-live="polite">
-            {items.map((item, index) =>
-              collectionItemTemplate ? (
-                collectionItemTemplate(item)
-              ) : (
-                <CollectionItem
-                  key={[count, activePage, index].join('-')}
-                  headingUrl={item.headingUrl}
-                  headingText={item.headingText}
-                  subheading={item.subheading}
-                  badges={item.badges}
-                  metadata={item.metadata}
-                  metadataRenderer={metadataRenderer}
-                  buttons={item.buttons}
-                  footerRenderer={footerRenderer}
-                  footerdata={item.footerdata}
-                />
-              )
-            )}
+            <li>
+              {items.map((item, index) =>
+                collectionItemTemplate ? (
+                  collectionItemTemplate(item)
+                ) : (
+                  <CollectionItem
+                    key={[count, activePage, index].join('-')}
+                    headingUrl={item.headingUrl}
+                    headingText={item.headingText}
+                    subheading={item.subheading}
+                    badges={item.badges}
+                    metadata={item.metadata}
+                    metadataRenderer={metadataRenderer}
+                    buttons={item.buttons}
+                    footerRenderer={footerRenderer}
+                    footerdata={item.footerdata}
+                  />
+                )
+              )}
+            </li>
           </ol>
           {taskProps && (
             <Task.Status {...taskProps}>
@@ -89,9 +91,11 @@ const CollectionList = ({
                 isComplete && (
                   <>
                     <ol>
-                      {results.map((item, i) => (
-                        <CollectionItem {...item} key={i} />
-                      ))}
+                      <li>
+                        {results.map((item, i) => (
+                          <CollectionItem {...item} key={i} />
+                        ))}
+                      </li>
                     </ol>
                   </>
                 )
