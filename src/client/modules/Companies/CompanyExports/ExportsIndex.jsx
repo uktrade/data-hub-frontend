@@ -21,7 +21,6 @@ import {
   transformExportCountries,
 } from './transformers'
 import DefaultLayoutBase from '../../../components/Layout/DefaultLayoutBase'
-import { HistoricWinsAlertBanner } from '../../ExportWins/Status/ExportWinsTabNav'
 
 const StyledSummaryTable = styled(SummaryTable)`
   margin-top: 0;
@@ -42,7 +41,6 @@ const ExportsIndex = () => {
             company={company}
             breadcrumbs={[{ text: 'Exports' }]}
             pageTitle="Export"
-            flashMessages={[[HistoricWinsAlertBanner]]}
           >
             <SummaryTable
               caption="Exports"
