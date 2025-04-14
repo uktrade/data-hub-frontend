@@ -1,21 +1,27 @@
 import { omit } from 'lodash'
 
-import { winTypeId } from '../../../../../src/client/modules/ExportWins/Form/constants'
+import {
+  ERROR_MESSAGES,
+  winTypeId,
+} from '../../../../../src/client/modules/ExportWins/Form/constants'
 import { exportWinsFaker } from '../../fakers/export-wins'
 import { contactFaker } from '../../fakers/contacts'
 import urls from '../../../../../src/lib/urls'
-
+import { clickBackButton, clickContinueButton } from '../../support/actions'
 import {
   assertBreadcrumbs,
+  assertFieldError,
+  assertFieldErrorMessage,
   assertLocalHeader,
   assertSummaryTable,
 } from '../../support/assertions'
-
+import { fillTypeahead } from '../../support/form-fillers'
 import {
   fillWinDetails,
   fillOfficerDetails,
   fillCustomerDetails,
   fillSupportProvided,
+  fillAnotherCreditForThisWin,
   fillCreditForThisWin,
   clickContinueAndAssertUrl,
   getDateWithinLastTwelveMonths,
@@ -351,4 +357,160 @@ describe('Adding an export win', () => {
       })
     }
   )
+
+  context('When the export win form has errors and is submitted', () => {
+    beforeEach(() => cy.visit(officerDetailsStep))
+    it('should prevent lead officer from being a team member', () => {
+      fillOfficerDetails({
+        leadOfficer: 'David',
+        teamType: 'Investment (ITFG or IG)',
+        hqTeam: 'ITFG - E-Business Projects Team',
+      })
+      fillTypeahead(formFields.officerDetails.teamMembers, 'David Meyer')
+
+      clickContinueButton()
+
+      assertFieldError(
+        cy.get(formFields.officerDetails.teamMembers),
+        ERROR_MESSAGES.lead_officer_team_member
+      )
+    })
+
+    it('should prevent lead officer from being a contributing officer', () => {
+      fillOfficerDetails({
+        leadOfficer: 'David',
+        teamType: 'Investment (ITFG or IG)',
+        hqTeam: 'ITFG - E-Business Projects Team',
+      })
+
+      clickContinueButton()
+
+      fillCreditForThisWin({
+        contributingOfficer: 'David Meyer',
+        teamType: 'Trade (TD or ST)',
+        hqTeam: 'TD - Events - Education',
+      })
+
+      clickContinueButton()
+
+      assertFieldErrorMessage(
+        cy.get(formFields.creditForThisWin.contributingOfficer),
+        ERROR_MESSAGES.lead_officer_contributor
+      )
+    })
+
+    it('should prevent duplicate contributing officers', () => {
+      fillOfficerDetails({
+        leadOfficer: 'John',
+        teamType: 'Investment (ITFG or IG)',
+        hqTeam: 'ITFG - E-Business Projects Team',
+      })
+
+      clickContinueButton()
+
+      fillCreditForThisWin({
+        contributingOfficer: 'David Meyer',
+        teamType: 'Trade (TD or ST)',
+        hqTeam: 'TD - Events - Education',
+      })
+
+      cy.get(formFields.creditForThisWin.addAnother).click()
+
+      fillAnotherCreditForThisWin({
+        contributingOfficer: 'David Meyer',
+        teamType: 'Trade (TD or ST)',
+        hqTeam: 'TD - Events - Education',
+      })
+
+      clickContinueButton()
+
+      assertFieldErrorMessage(
+        cy.get(formFields.creditForThisWin.contributingOfficer1),
+        ERROR_MESSAGES.contributing_officer_duplicate
+      )
+    })
+
+    it('should prevent contributing officer from being a team member', () => {
+      fillOfficerDetails({
+        leadOfficer: 'David',
+        teamType: 'Investment (ITFG or IG)',
+        hqTeam: 'ITFG - E-Business Projects Team',
+      })
+
+      fillTypeahead(formFields.officerDetails.teamMembers, 'John Smith')
+
+      clickContinueButton()
+
+      fillCreditForThisWin({
+        contributingOfficer: 'John Smith',
+        teamType: 'Trade (TD or ST)',
+        hqTeam: 'TD - Events - Education',
+      })
+
+      clickContinueButton()
+
+      assertFieldErrorMessage(
+        cy.get(formFields.creditForThisWin.contributingOfficer),
+        ERROR_MESSAGES.contributing_officer_team_member
+      )
+    })
+
+    it('should prevent team member from being a contributing officer', () => {
+      fillOfficerDetails({
+        leadOfficer: 'David',
+        teamType: 'Investment (ITFG or IG)',
+        hqTeam: 'ITFG - E-Business Projects Team',
+      })
+
+      clickContinueButton()
+
+      fillCreditForThisWin({
+        contributingOfficer: 'John Smith',
+        teamType: 'Trade (TD or ST)',
+        hqTeam: 'TD - Events - Education',
+      })
+
+      clickBackButton()
+
+      fillTypeahead(formFields.officerDetails.teamMembers, 'John Smith')
+
+      clickContinueButton()
+
+      assertFieldError(
+        cy.get(formFields.officerDetails.teamMembers),
+        ERROR_MESSAGES.team_member_contributor
+      )
+    })
+
+    it('should prevent lead officer from being a contributing officer', () => {
+      fillOfficerDetails({
+        leadOfficer: 'David',
+        teamType: 'Investment (ITFG or IG)',
+        hqTeam: 'ITFG - E-Business Projects Team',
+      })
+
+      clickContinueButton()
+
+      fillCreditForThisWin({
+        contributingOfficer: 'John Smith',
+        teamType: 'Trade (TD or ST)',
+        hqTeam: 'TD - Events - Education',
+      })
+
+      clickBackButton()
+
+      fillOfficerDetails({
+        leadOfficer: 'John Smith',
+        teamType: 'Investment (ITFG or IG)',
+        hqTeam: 'ITFG - E-Business Projects Team',
+      })
+
+      clickContinueButton()
+
+      assertFieldErrorMessage(
+        cy.get(formFields.officerDetails.leadOfficer),
+        ERROR_MESSAGES.lead_officer_contributor
+      )
+    })
+  })
 })

@@ -36,6 +36,21 @@ export const fillCreditForThisWin = ({
   hqTeam && cy.get(creditForThisWin.hqTeam).selectTypeaheadOption(hqTeam)
 }
 
+export const fillAnotherCreditForThisWin = ({
+  contributingOfficer,
+  teamType,
+  hqTeam,
+}) => {
+  const { creditForThisWin } = formFields
+  cy.get(creditForThisWin.radiosBtnYes).check()
+  contributingOfficer &&
+    cy
+      .get(creditForThisWin.contributingOfficer1)
+      .selectTypeaheadOption(contributingOfficer)
+  teamType && cy.get(creditForThisWin.teamType1).selectTypeaheadOption(teamType)
+  hqTeam && cy.get(creditForThisWin.hqTeam1).selectTypeaheadOption(hqTeam)
+}
+
 export const fillCustomerDetails = ({
   contact,
   location,

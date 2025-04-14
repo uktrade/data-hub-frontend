@@ -64,3 +64,12 @@ export const STEP_TO_EXCLUDED_FIELDS_MAP = {
 }
 
 export const EMAIL = 'exportwins@businessandtrade.gov.uk'
+
+export const ERROR_MESSAGES = {
+  lead_officer_contributor: 'Lead officer cannot be a contributing officer',
+  lead_officer_team_member: 'Lead officer cannot be a team member',
+  team_member_contributor: 'Team member cannot be a contributing officer',
+  contributing_officer_team_member:
+    'Contributing officer cannot be a team member',
+  contributing_officer_duplicate: 'Contributing officer has already been added',
+}

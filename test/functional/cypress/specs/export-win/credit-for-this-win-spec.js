@@ -48,7 +48,7 @@ describe('Credit for this win', () => {
 
   it('should render a legend and hint text', () => {
     cy.get(creditForThisWin.radiosBtnYes).check()
-    cy.get(creditForThisWin.addAnother)
+    cy.get(creditForThisWin.fieldAddAnother)
       .find('legend')
       .eq(0)
       .should('have.text', 'Contributing advisers')

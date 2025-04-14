@@ -152,6 +152,13 @@ export const clickContinueButton = () => {
 }
 
 /**
+ * Click on a Back button
+ */
+export const clickBackButton = () => {
+  cy.get('[data-test="back"]').click()
+}
+
+/**
  * Click on a Submit button
  */
 export const clickSubmitButton = () => {
