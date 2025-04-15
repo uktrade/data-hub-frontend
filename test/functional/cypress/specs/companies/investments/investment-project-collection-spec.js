@@ -39,7 +39,7 @@ function assertListItem({
   formattedEstimatedLandDate,
 }) {
   it('should have a link with the investment project name', () => {
-    assertItemLink(alias, name, `/investments/projects/${id}/details`, 'h2')
+    assertItemLink(alias, name, `/investments/projects/${id}/details`, 'h3')
   })
 
   it('should render the stage badge', () => {
