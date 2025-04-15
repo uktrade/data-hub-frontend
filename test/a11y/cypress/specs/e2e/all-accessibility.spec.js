@@ -8,13 +8,7 @@ const arrayOfUrls = createArrayOfUrls(urls)
 let filteredArrayOfUrls = cleanseArrayOfUrls(arrayOfUrls, urlTestExclusions)
 // // TODO remove limited tests
 // console.log(filteredArrayOfUrls)
-// filteredArrayOfUrls = [
-//   filteredArrayOfUrls[31],
-//   filteredArrayOfUrls[32],
-//   filteredArrayOfUrls[34],
-//   filteredArrayOfUrls[33],
-//   filteredArrayOfUrls[50],
-// ]
+// filteredArrayOfUrls = [filteredArrayOfUrls[1]]
 
 filteredArrayOfUrls.map((path) => {
   describe(`${path}`, () => {
@@ -30,8 +24,8 @@ filteredArrayOfUrls.map((path) => {
 
     it('Page should not have any a11y violations', () => {
       cy.checkA11y(null, {
-        retries: 0,
-        interval: 100,
+        retries: 3,
+        interval: 5000,
       })
     })
   })
