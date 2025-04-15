@@ -64,26 +64,24 @@ const CollectionList = ({
             />
           )}
           <ol aria-live="polite">
-            <li>
-              {items.map((item, index) =>
-                collectionItemTemplate ? (
-                  collectionItemTemplate(item)
-                ) : (
-                  <CollectionItem
-                    key={[count, activePage, index].join('-')}
-                    headingUrl={item.headingUrl}
-                    headingText={item.headingText}
-                    subheading={item.subheading}
-                    badges={item.badges}
-                    metadata={item.metadata}
-                    metadataRenderer={metadataRenderer}
-                    buttons={item.buttons}
-                    footerRenderer={footerRenderer}
-                    footerdata={item.footerdata}
-                  />
-                )
-              )}
-            </li>
+            {items.map((item, index) =>
+              collectionItemTemplate ? (
+                collectionItemTemplate(item)
+              ) : (
+                <CollectionItem
+                  key={[count, activePage, index].join('-')}
+                  headingUrl={item.headingUrl}
+                  headingText={item.headingText}
+                  subheading={item.subheading}
+                  badges={item.badges}
+                  metadata={item.metadata}
+                  metadataRenderer={metadataRenderer}
+                  buttons={item.buttons}
+                  footerRenderer={footerRenderer}
+                  footerdata={item.footerdata}
+                />
+              )
+            )}
           </ol>
           {taskProps && (
             <Task.Status {...taskProps}>
