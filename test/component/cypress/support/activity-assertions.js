@@ -13,7 +13,7 @@ export const assertActivitySubject = (
   dataTest = 'collection-item'
 ) => {
   cy.get(`[data-test="${dataTest}"]`)
-    .find('h3')
+    .find('h2')
     .children()
     .should('exist')
     .should('have.text', subject)

@@ -104,7 +104,7 @@ const assertListLength = (fakeList) => {
 
 const assertItemLink = (item, linkText, link) => {
   cy.get(item)
-    .find('h3')
+    .find('h2')
     .children()
     .should('have.text', linkText)
     .should('have.attr', 'href', link)
