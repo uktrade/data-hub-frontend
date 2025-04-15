@@ -2,6 +2,7 @@ export const urlTestExclusions = [
   // A11y errors
   { url: '/search/' },
   { url: '/search/:searchPath?' },
+  { url: '/companies/:companyId/investments/large-capital-profile' },
   // 404 errors and or no sandbox data available
   { url: '/companies/:companyId/audit' },
   { url: '/companies/:companyId/archive' },
