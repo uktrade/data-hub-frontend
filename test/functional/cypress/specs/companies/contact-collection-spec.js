@@ -165,7 +165,7 @@ describe('Company Contacts Collections', () => {
         '@firstListItem',
         'Hanna Reinger',
         '/contacts/1/details',
-        'h2'
+        'h3'
       )
     })
 
@@ -231,7 +231,7 @@ describe('Company Contacts Collections', () => {
         '@secondListItem',
         'Ted Woods',
         '/contacts/2/details',
-        'h2'
+        'h3'
       )
     })
 
