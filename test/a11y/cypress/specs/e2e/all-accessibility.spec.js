@@ -30,7 +30,7 @@ filteredArrayOfUrls.map((path) => {
 
     it('Page should not have any a11y violations', () => {
       cy.checkA11y(null, {
-        retries: 3,
+        retries: 0,
         interval: 100,
       })
     })
