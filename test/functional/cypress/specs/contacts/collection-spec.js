@@ -96,7 +96,12 @@ describe('Contacts Collections', () => {
 
   context('UK contact', () => {
     it('should render the correct elements', () => {
-      assertItemLink('@firstListItem', 'Hanna Reinger', '/contacts/1/details')
+      assertItemLink(
+        '@firstListItem',
+        'Hanna Reinger',
+        '/contacts/1/details',
+        'h2'
+      )
       assertTag('@firstListItem', 'Primary')
       assertTagNotPresent('@firstListItem', 'Archived')
       assertTagNotPresent('@firstListItem', 'UNKNOWN EMAIL')
@@ -119,7 +124,12 @@ describe('Contacts Collections', () => {
 
   context('Foreign contact', () => {
     it('should render the correct elements', () => {
-      assertItemLink('@secondListItem', 'Ted Woods', '/contacts/2/details')
+      assertItemLink(
+        '@secondListItem',
+        'Ted Woods',
+        '/contacts/2/details',
+        'h2'
+      )
       assertTagShouldNotExist('@secondListItem')
       assertMetadataItem('@secondListItem', 'Country United States')
       assertMetadataItemNotPresent('@secondListItem', 'UK region')

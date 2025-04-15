@@ -161,7 +161,12 @@ describe('Company Contacts Collections', () => {
     })
 
     it('should have a link with the contact name', () => {
-      assertItemLink('@firstListItem', 'Hanna Reinger', '/contacts/1/details')
+      assertItemLink(
+        '@firstListItem',
+        'Hanna Reinger',
+        '/contacts/1/details',
+        'h2'
+      )
     })
 
     it('should contain a primary contact tag', () => {
@@ -222,7 +227,12 @@ describe('Company Contacts Collections', () => {
     })
 
     it('should have a link with the contact name', () => {
-      assertItemLink('@secondListItem', 'Ted Woods', '/contacts/2/details')
+      assertItemLink(
+        '@secondListItem',
+        'Ted Woods',
+        '/contacts/2/details',
+        'h2'
+      )
     })
 
     it('should not contain a primary contact badge', () => {
