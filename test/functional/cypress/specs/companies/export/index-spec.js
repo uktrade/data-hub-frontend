@@ -107,7 +107,7 @@ describe('Company Export tab', () => {
       })
 
       it('should render the "Export wins" header', () => {
-        cy.get('h3').eq(0).should('have.text', 'Export wins')
+        cy.get('h2').eq(0).should('have.text', 'Export wins')
       })
 
       it('should render the "Add export win" button', () => {

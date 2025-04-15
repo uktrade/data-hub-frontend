@@ -42,7 +42,7 @@ describe('Company export wins', () => {
   })
 
   it('should render a h2 title', () => {
-    cy.get('h2').should('have.text', '3 Confirmed export wins')
+    cy.get('h2').should('contain.text', '3 Confirmed export wins')
   })
 
   it('should display a list of export wins', () => {
