@@ -99,7 +99,7 @@ describe('Event attendee search', () => {
           '@firstListItem',
           'Hanna Reinger',
           urls.events.addAttendee(eventFixtureId, 1),
-          'h2'
+          'h3'
         )
       })
 
@@ -152,7 +152,7 @@ describe('Event attendee search', () => {
           '@secondListItem',
           'Ted Woods',
           urls.events.addAttendee(eventFixtureId, 2),
-          'h2'
+          'h3'
         )
       })
 

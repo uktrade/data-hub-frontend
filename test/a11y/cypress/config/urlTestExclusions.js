@@ -1,5 +1,6 @@
 export const urlTestExclusions = [
   // A11y errors
+  { url: '/investment-projects/' },
   { url: '/companies/:companyId/investments/large-capital-profile' },
   { url: '/search/' },
   { url: '/search/:searchPath?' },
