@@ -1,7 +1,7 @@
-import urls from '../../../../src/lib/urls'
-import { initialiseTests } from '../config/initialiseTests'
-import { urlTestExclusions } from '../config/urlTestExclusions'
-import { cleanseArrayOfUrls, createArrayOfUrls } from '../config/utils'
+import urls from '../../../../../src/lib/urls'
+import { initialiseTests } from '../../config/initialiseTests'
+import { urlTestExclusions } from '../../config/urlTestExclusions'
+import { cleanseArrayOfUrls, createArrayOfUrls } from '../../config/utils'
 
 const arrayOfUrls = createArrayOfUrls(urls)
 
