@@ -41,7 +41,7 @@ export const StyledCollectionItem = styled(CollectionItem)`
   padding: ${SPACING.SCALE_3} 0;
 `
 
-const StyledLinkHeader = styled('h3')`
+const StyledLinkHeader = styled('h2')`
   font-size: ${FONT_SIZE.SIZE_20};
   font-weight: ${FONT_WEIGHTS.bold};
   line-height: ${FONT_SIZE.SIZE_24};

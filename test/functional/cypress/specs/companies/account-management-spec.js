@@ -74,7 +74,7 @@ describe('Company account management', () => {
     assertBreadcrumbs(fixtures.company.allActivitiesCompany)
 
     it('should display the strategy heading', () => {
-      cy.get('h3').contains('Strategy')
+      cy.get('h2').contains('Strategy')
     })
 
     it('should display the edit history details link', () => {
@@ -125,7 +125,7 @@ describe('Company account management', () => {
       assertBreadcrumbs(fixtures.company.allActivitiesCompany)
 
       it('should display the strategy heading', () => {
-        cy.get('h3').contains('Strategy')
+        cy.get('h2').contains('Strategy')
       })
 
       it('should display the add strategy button', () => {

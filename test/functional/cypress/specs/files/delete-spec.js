@@ -36,7 +36,11 @@ describe('Delete SharePoint link from company', () => {
       genericDocument
     ).as('genericDocumentRequest')
     cy.visit(
-      `/files/${genericDocument.id}/delete?related_object_id=${company.id}&related_object_type=${RELATED_OBJECT_TYPES.COMPANY}&document_type=${DOCUMENT_TYPES.SHAREPOINT.type}`
+      urls.companies.files.delete(genericDocument.id, {
+        related_object_id: company.id,
+        related_object_type: RELATED_OBJECT_TYPES.COMPANY,
+        document_type: DOCUMENT_TYPES.SHAREPOINT.type,
+      })
     )
     cy.wait(['@companyRequest', '@genericDocumentRequest'])
   })

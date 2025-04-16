@@ -96,7 +96,12 @@ describe('Event Collection List Page', () => {
     })
 
     it('should display a datahub event name with link', () => {
-      assertItemLink('@firstListItem', event1.name, events.details(event1.id))
+      assertItemLink(
+        '@firstListItem',
+        event1.name,
+        events.details(event1.id),
+        'h2'
+      )
     })
 
     it('should display a data hub event date', () => {

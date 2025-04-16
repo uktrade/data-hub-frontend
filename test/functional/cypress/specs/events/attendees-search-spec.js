@@ -98,7 +98,8 @@ describe('Event attendee search', () => {
         assertItemLink(
           '@firstListItem',
           'Hanna Reinger',
-          urls.events.addAttendee(eventFixtureId, 1)
+          urls.events.addAttendee(eventFixtureId, 1),
+          'h3'
         )
       })
 
@@ -150,7 +151,8 @@ describe('Event attendee search', () => {
         assertItemLink(
           '@secondListItem',
           'Ted Woods',
-          urls.events.addAttendee(eventFixtureId, 2)
+          urls.events.addAttendee(eventFixtureId, 2),
+          'h3'
         )
       })
 

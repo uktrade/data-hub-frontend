@@ -55,7 +55,7 @@ describe('Great Export Enquiry activity card', () => {
     it('should render the labels and metadata', () => {
       assertGreatLabels()
       cy.get(`[data-test="collection-item"]`)
-        .find('h3')
+        .find('h2')
         .children()
         .should('exist')
         .should('have.text', `Enquiry ${SUBJECT}`)
@@ -91,7 +91,7 @@ describe('Great Export Enquiry activity card', () => {
     it('should truncate the long fields', () => {
       assertGreatLabels()
       cy.get(`[data-test="collection-item"]`)
-        .find('h3')
+        .find('h2')
         .children()
         .should('exist')
         .should('have.text', 'Enquiry Lorem ipsum dolor sit amet, ...')

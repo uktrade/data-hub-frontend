@@ -89,9 +89,11 @@ const CollectionList = ({
                 isComplete && (
                   <>
                     <ol>
-                      {results.map((item, i) => (
-                        <CollectionItem {...item} key={i} />
-                      ))}
+                      <li>
+                        {results.map((item, i) => (
+                          <CollectionItem {...item} key={i} />
+                        ))}
+                      </li>
                     </ol>
                   </>
                 )

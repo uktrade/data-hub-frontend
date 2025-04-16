@@ -102,9 +102,9 @@ const assertListLength = (fakeList) => {
   cy.get('[data-test="collection-item"]').should('have.length', fakeList.length)
 }
 
-const assertItemLink = (item, linkText, link) => {
+const assertItemLink = (item, linkText, link, headerLevel = 'h3') => {
   cy.get(item)
-    .find('h3')
+    .find(headerLevel)
     .children()
     .should('have.text', linkText)
     .should('have.attr', 'href', link)

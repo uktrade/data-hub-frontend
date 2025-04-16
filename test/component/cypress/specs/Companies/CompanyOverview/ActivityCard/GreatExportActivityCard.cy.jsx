@@ -42,7 +42,7 @@ describe('Great activity card', () => {
     it('should render the labels and metadata', () => {
       assertGreatKindLabel()
       cy.get(`[data-test="activity-card-wrapper"]`)
-        .find('h3')
+        .find('h2')
         .children()
         .should('exist')
         .should('have.text', SUBJECT)
@@ -64,7 +64,7 @@ describe('Great activity card', () => {
     it('should render the truncated label', () => {
       assertGreatKindLabel()
       cy.get(`[data-test="activity-card-wrapper"]`)
-        .find('h3')
+        .find('h2')
         .children()
         .should('exist')
         .should('have.text', 'Lorem ipsum dolor sit amet, ...')
@@ -86,7 +86,7 @@ describe('Great activity card', () => {
     it('should render the truncated label', () => {
       assertGreatKindLabel()
       cy.get(`[data-test="activity-card-wrapper"]`)
-        .find('h3')
+        .find('h2')
         .children()
         .should('exist')
         .should('have.text', SUBJECT)

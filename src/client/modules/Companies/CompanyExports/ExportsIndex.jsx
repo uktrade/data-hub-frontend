@@ -3,8 +3,9 @@ import styled from 'styled-components'
 import Details from '@govuk-react/details'
 import Link from '@govuk-react/link'
 import { Button } from 'govuk-react'
-import { H3 } from '@govuk-react/heading'
+import { H2 } from '@govuk-react/heading'
 import { SPACING } from '@govuk-react/constants'
+import { typography } from '@govuk-react/lib'
 import { useParams } from 'react-router-dom'
 
 import { GREY_3, TEXT_COLOUR } from '../../../utils/colours'
@@ -29,6 +30,11 @@ const StyledSummaryTable = styled(SummaryTable)`
 const StyledLink = styled(Link)`
   display: inline-block;
   margin-bottom: ${SPACING.SCALE_5};
+`
+
+const StyledH2 = styled(H2)`
+  ${typography.font({ size: 24, weight: 'bold' })};
+  margin-bottom: ${SPACING.SCALE_2};
 `
 
 const ExportsIndex = () => {
@@ -154,7 +160,7 @@ const ExportsIndex = () => {
             <StyledLink href={urls.companies.exports.history.index(companyId)}>
               View full export countries history
             </StyledLink>
-            <H3>Export wins</H3>
+            <StyledH2>Export wins</StyledH2>
             <Button
               as={'a'}
               data-test="add-export-win"
