@@ -55,15 +55,14 @@ const expectedRowData = [
       text: '15 Aug 2019',
     },
     {
-      text: 'Here is a long interaction title some more text some more text some more text almost finished some more text nearly there...',
+      text: allOptionalData.subject,
       linksTo: '/interactions/79d92719-7402-45b6-b3d7-eff559d6b282',
-      shouldHaveEllipsis: true,
     },
     {
       text: 'Multiple advisers',
     },
   ],
-  //noOptionalData:
+  // noOptionalData:
   [
     {
       text: 'Lambda plc',
@@ -91,7 +90,6 @@ const expectedRowData = [
     {
       text: 'Here is a long interaction title some more text some more text',
       linksTo: '/interactions/79d92719-7402-45b6-b3d7-eff559d6b282',
-      shouldHaveEllipsis: false,
     },
     {
       text: 'Barry Oling - Isle of Wight Chamber of Commerce',
@@ -109,7 +107,6 @@ const expectedRowData = [
     {
       text: 'Here is a long interaction title some more text some more text',
       linksTo: '/interactions/79d92719-7402-45b6-b3d7-eff559d6b282',
-      shouldHaveEllipsis: false,
     },
     {
       text: 'Unknown adviser - Unknown team',
