@@ -9,6 +9,7 @@ import { OPTION_YES, OPTIONS_YES_NO } from '../../../../common/constants'
 import { MID_GREY } from '../../../../client/utils/colours'
 import { StyledHintParagraph } from './styled'
 import { steps } from './constants'
+import * as validators from './validators'
 
 import {
   Step,
@@ -76,6 +77,11 @@ const CreditForThisWinStep = () => {
                   name={`contributing_officer_${groupIndex}`}
                   label="Contributing officer"
                   required="Enter a contributing officer"
+                  validate={[
+                    validators.validateContributorIsNotLeadOfficer,
+                    validators.validateContributorIsNotTeamMember,
+                    validators.validateContributorDuplication,
+                  ]}
                 />
                 <TeamType.FieldTypeahead
                   name={`team_type_${groupIndex}`}

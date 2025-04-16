@@ -44,7 +44,7 @@ function Step({
   const renderBackButton = () => {
     if (typeof backButton === 'undefined') {
       return (
-        <ButtonLink name="back" onClick={goBack}>
+        <ButtonLink data-test="back" name="back" onClick={goBack}>
           Back
         </ButtonLink>
       )
@@ -52,7 +52,11 @@ function Step({
 
     if (typeof backButton === 'string') {
       return (
-        <ButtonLink name="back" onClick={goBack}>
+        <ButtonLink
+          data-test={kebabCase(backButton)}
+          name="back"
+          onClick={goBack}
+        >
           {backButton}
         </ButtonLink>
       )

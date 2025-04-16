@@ -36,6 +36,7 @@ const OfficerDetailsStep = ({
           name="lead_officer"
           label="Lead officer name"
           required="Enter a lead officer"
+          validate={validators.validateLeadOfficer}
         />
       )}
       <TeamType.FieldTypeahead
@@ -70,7 +71,11 @@ const OfficerDetailsStep = ({
         label="Team members (optional)"
         hint="These are your secondary contacts, such as your manager or direct team,
                they will not be credited for this win. You can add up to 5 team members."
-        validate={validators.validateTeamMembers}
+        validate={[
+          validators.validateTeamMembers,
+          validators.validateTeamMembersAreNotContributors,
+          validators.validateTeamMembersAndLeadOfficer,
+        ]}
         isMulti={true}
       />
     </Step>
