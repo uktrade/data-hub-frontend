@@ -8,7 +8,7 @@ import MetadataItem from './MetadataItem'
 const StyledMetadataWrapper = styled('dl')`
   font-size: ${FONT_SIZE.SIZE_16};
   line-height: ${FONT_SIZE.SIZE_27};
-  display: grid;
+  display: block;
 
   & > * {
     margin-bottom: 0px;

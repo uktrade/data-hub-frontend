@@ -14,6 +14,8 @@ import Tag from '../Tag'
 const ItemWrapper = styled('li')`
   border-bottom: 1px solid ${GREY_2};
   padding: ${SPACING.SCALE_3} 0;
+  clear: left;
+  display: inline-block;
 `
 
 export const StyledBadgesWrapper = styled('div')`
