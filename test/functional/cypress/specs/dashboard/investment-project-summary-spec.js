@@ -32,9 +32,8 @@ describe('Investment projects summary', () => {
   })
 
   context('after initial load', () => {
-    it('should display an SVG representing a chart', () => {
+    it('should display a chart', () => {
       cy.get('[data-test="pie-chart"]')
-        .find('svg')
         .should('exist')
         .should('have.attr', 'aria-label', `${projectCount} Projects`)
     })

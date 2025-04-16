@@ -52,12 +52,6 @@ updates:
       - dependency-name: '@sentry/tracing'
         versions:
           - '>= 0'
-      - dependency-name: '@nivo/pie'
-        versions:
-          - '>= 0'
-      - dependency-name: '@nivo/tooltip'
-        versions:
-          - '>= 0'
       - dependency-name: 'cypress-image-diff-js'
         versions:
           - '>= 2.2.1'

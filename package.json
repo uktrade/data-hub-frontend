@@ -43,8 +43,7 @@
     "adr-graph": "adr generate graph",
     "adr-toc": "adr generate toc",
     "dependabot:update-storybook": "npm install --save-dev @storybook/addon-a11y@latest @storybook/addon-essentials@latest @storybook/addon-webpack5-compiler-babel@latest @storybook/manager-api@latest @storybook/react@latest @storybook/react-webpack5@latest @storybook/test@latest storybook@latest",
-    "dependabot:update-sentry": "npm install @sentry/browser@latest @sentry/node@latest @sentry/react@latest",
-    "dependabot:update-nivo": "npm install @nivo/core@latest @nivo/pie@latest @nivo/tooltip@latest"
+    "dependabot:update-sentry": "npm install @sentry/browser@latest @sentry/node@latest @sentry/react@latest"
   },
   "nyc": {
     "report-dir": "cypress-coverage",
@@ -63,9 +62,6 @@
   },
   "dependencies": {
     "@govuk-react/constants": "^0.10.7",
-    "@nivo/core": "^0.88.0",
-    "@nivo/pie": "^0.88.0",
-    "@nivo/tooltip": "^0.88.0",
     "@redux-devtools/extension": "^3.3.0",
     "@reduxjs/toolkit": "^2.6.1",
     "@sentry/browser": "^9.10.1",

@@ -1,108 +1,74 @@
-import React, { useEffect, useRef } from 'react'
-import PropTypes from 'prop-types'
-import { FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
-import { ResponsivePie } from '@nivo/pie'
+import React from 'react'
 import styled from 'styled-components'
 import pluralize from 'pluralize'
 
 import Legend from './Legend'
 import { MID_GREY } from '../../utils/colours'
 
-const StyledFigure = styled('figure')({
+const dataToGradient = ({ data, total }) => {
+  const stops = data.reduce((a, { colour, value }, i) => {
+    const percentage = value / total
+    const from = a[i - 1]?.to ?? 0
+    const to = from + percentage
+
+    return [
+      ...a,
+      {
+        to,
+        stop: `${colour} ${from}turn ${to}turn`,
+      },
+    ]
+  }, [])
+
+  return `conic-gradient(from -90deg, ${stops.map((x) => x.stop).join(',')}) border-box`
+}
+
+const Root = styled.figure({
   border: `1px solid ${MID_GREY}`,
 })
 
-const StyledPieContainer = styled('div')(({ height }) => ({
-  paddingTop: SPACING.SCALE_3,
-  height: `${height}px`,
-}))
+const Pie = styled.div({
+  position: 'relative',
+  // This must be a string because of a styled-components bug:
+  // https://github.com/styled-components/styled-components/issues/3254#issuecomment-1265113393
+  aspectRatio: '1',
+  borderRadius: '50%',
+  maskComposite: 'exclude',
+  background: dataToGradient,
+  maxWidth: 250,
+  margin: '30px auto',
+})
 
-const centredText = (text, fontSize, x, y) => (
-  <text
-    x={x}
-    y={y}
-    textAnchor="middle"
-    dominantBaseline="central"
-    style={{
-      fontSize: `${fontSize}px`,
-      fontWeight: FONT_WEIGHTS.bold,
-    }}
-  >
-    {text}
-  </text>
-)
+const Filling = styled.div({
+  background: 'white',
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  borderRadius: '50%',
+  aspectRatio: '1 / 1',
+  width: '75%',
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center',
+  fontWeight: 'bold',
+})
 
-const PieChart = ({ data, unit = '', height }) => {
-  const pieWrapperRef = useRef(null)
-
-  // Nivo currently doesn't support aria labels as props
-  // https://github.com/plouc/nivo/issues/126
-  // This is our workaround until/if nivo updates its accessibility
-  useEffect(() => {
-    const pieWrapper = pieWrapperRef.current
-    const svgWrapper = pieWrapper.children[0].children[0]
-    const total = data.reduce(
-      (accumulator, datum) => accumulator + datum.value,
-      0
-    )
-    if (svgWrapper) {
-      svgWrapper.children[0].setAttribute(
-        'aria-label',
-        `${total} ${pluralize(unit, total)}`
-      )
-    }
-  })
-  const CentredProjectTotal = ({ dataWithArc, centerX, centerY }) => {
-    const projectTotal = dataWithArc.reduce(
-      (accumulator, datum) => accumulator + datum.value,
-      0
-    )
-
-    return (
-      <>
-        {centredText(projectTotal, 60, centerX, centerY - 20)}
-        {centredText(pluralize(unit, projectTotal), 20, centerX, centerY + 30)}
-      </>
-    )
-  }
+const PieChart = ({ data, unit = '' }) => {
+  const total = data.reduce((a, { value }) => a + value, 0)
+  const pluralizedProject = pluralize(unit, total)
   return (
-    <StyledFigure>
-      <StyledPieContainer
-        ref={pieWrapperRef}
-        height={height}
-        data-test="pie-chart"
-      >
-        <ResponsivePie
-          theme={{
-            fontSize: '16px',
-          }}
-          data={data}
-          colors={(item) => item.data.colour}
-          margin={{ top: 20, bottom: 20 }}
-          startAngle={-90}
-          innerRadius={0.75}
-          padAngle={0}
-          enableArcLabels={false}
-          isInteractive={false}
-          layers={['arcs', CentredProjectTotal]}
-        />
-      </StyledPieContainer>
-      <Legend data={data} />
-    </StyledFigure>
+    <Root data-test="pie-chart" aria-label={`${total} ${pluralizedProject}`}>
+      <Pie data={data} total={total}>
+        <Filling>
+          <div style={{ fontSize: '3em' }}>{total}</div>
+          <div>{pluralizedProject}</div>
+        </Filling>
+      </Pie>
+      <Legend data={data} total={total} />
+    </Root>
   )
-}
-
-PieChart.propTypes = {
-  data: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      value: PropTypes.number.isRequired,
-      link: PropTypes.string,
-    })
-  ).isRequired,
-  height: PropTypes.number,
-  unit: PropTypes.string,
 }
 
 export default PieChart
