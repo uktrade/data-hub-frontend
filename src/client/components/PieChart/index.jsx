@@ -57,12 +57,13 @@ const Filling = styled.div({
 
 const PieChart = ({ data, unit = '' }) => {
   const total = data.reduce((a, { value }) => a + value, 0)
+  const pluralizedProject = pluralize(unit, total)
   return (
-    <Root>
+    <Root data-test="pie-chart" aria-label={`${total} ${pluralizedProject}`}>
       <Pie data={data} total={total}>
         <Filling>
           <div style={{ fontSize: '3em' }}>{total}</div>
-          <div>{pluralize(unit, total)}</div>
+          <div>{pluralizedProject}</div>
         </Filling>
       </Pie>
       <Legend data={data} total={total} />
