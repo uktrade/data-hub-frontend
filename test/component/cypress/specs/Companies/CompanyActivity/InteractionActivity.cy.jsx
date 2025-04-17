@@ -26,11 +26,11 @@ const TYPE = 'interaction'
 const SERVICE_DELIVERY = 'service_delivery'
 const INTERACTION_URL = urls.companies.interactions.detail('1', '2')
 const ONE_ADVISER_TEXT =
-  'Adviser Bernard Harris-Patel  bernardharrispatel@test.com, Test Team 1  '
+  'Bernard Harris-Patel  bernardharrispatel@test.com, Test Team 1  '
 const TWO_ADVISERS_TEXT =
-  'Advisers Bernard Harris-Patel  bernardharrispatel@test.com, Test Team 1  Puck Head  puckhead@test.com, Test Team 2  '
-const ONE_CONTACT_TEXT = 'Contact Alexander Hamilton'
-const TWO_CONTACTS_TEXT = 'Contacts Alexander Hamilton, Oliver Twist'
+  'Bernard Harris-Patel  bernardharrispatel@test.com, Test Team 1  Puck Head  puckhead@test.com, Test Team 2  '
+const ONE_CONTACT_TEXT = 'Alexander Hamilton'
+const TWO_CONTACTS_TEXT = 'Alexander Hamilton, Oliver Twist'
 
 const INTERACTION_SERVICES = {
   specificDITService:
@@ -59,10 +59,6 @@ const INTERACTION_SERVICES = {
 }
 
 const DIT_SERVICE = INTERACTION_SERVICES.specificDITService
-
-const buildServiceLabel = (service) => {
-  return 'Service ' + service
-}
 
 const buildAndMountActivity = (
   serviceName,
@@ -112,11 +108,11 @@ describe('Interaction activity card', () => {
       assertKindLabel()
       assertActivitySubject(SUBJECT, INTERACTION_URL)
       assertMetadataItems([
-        'Date 25 Nov 2058',
-        ONE_CONTACT_TEXT,
-        'Communication channel Email/Fax',
-        ONE_ADVISER_TEXT,
-        buildServiceLabel(DIT_SERVICE),
+        { label: 'Date', value: '25 Nov 2058' },
+        { label: 'Contact', value: ONE_CONTACT_TEXT },
+        { label: 'Communication channel', value: 'Email/Fax' },
+        { label: 'Adviser', value: ONE_ADVISER_TEXT },
+        { label: 'Service', value: DIT_SERVICE },
       ])
 
       cy.get('[data-test=contact-link-0]').should(
@@ -140,11 +136,11 @@ describe('Interaction activity card', () => {
 
       it('should render multiple contacts and advisers', () => {
         assertMetadataItems([
-          'Date 25 Nov 2058',
-          TWO_CONTACTS_TEXT,
-          'Communication channel Email/Fax',
-          TWO_ADVISERS_TEXT,
-          buildServiceLabel(DIT_SERVICE),
+          { label: 'Date', value: '25 Nov 2058' },
+          { label: 'Contacts', value: TWO_CONTACTS_TEXT },
+          { label: 'Communication channel', value: 'Email/Fax' },
+          { label: 'Advisers', value: TWO_ADVISERS_TEXT },
+          { label: 'Service', value: DIT_SERVICE },
         ])
       })
     })
@@ -181,10 +177,10 @@ describe('Interaction activity card', () => {
 
       it('should not render the date label', () => {
         assertMetadataItems([
-          ONE_CONTACT_TEXT,
-          'Communication channel Email/Fax',
-          ONE_ADVISER_TEXT,
-          buildServiceLabel(DIT_SERVICE),
+          { label: 'Contact', value: ONE_CONTACT_TEXT },
+          { label: 'Communication channel', value: 'Email/Fax' },
+          { label: 'Adviser', value: ONE_ADVISER_TEXT },
+          { label: 'Service', value: DIT_SERVICE },
         ])
       })
     })
@@ -197,10 +193,10 @@ describe('Interaction activity card', () => {
 
       it('should not render the advisers label', () => {
         assertMetadataItems([
-          'Date 25 Nov 2058',
-          ONE_CONTACT_TEXT,
-          'Communication channel Email/Fax',
-          buildServiceLabel(DIT_SERVICE),
+          { label: 'Date', value: '25 Nov 2058' },
+          { label: 'Contact', value: ONE_CONTACT_TEXT },
+          { label: 'Communication channel', value: 'Email/Fax' },
+          { label: 'Service', value: DIT_SERVICE },
         ])
       })
     })
@@ -213,10 +209,10 @@ describe('Interaction activity card', () => {
 
       it('should not render the communication channel label', () => {
         assertMetadataItems([
-          'Date 25 Nov 2058',
-          ONE_CONTACT_TEXT,
-          ONE_ADVISER_TEXT,
-          buildServiceLabel(DIT_SERVICE),
+          { label: 'Date', value: '25 Nov 2058' },
+          { label: 'Contact', value: ONE_CONTACT_TEXT },
+          { label: 'Adviser', value: ONE_ADVISER_TEXT },
+          { label: 'Service', value: DIT_SERVICE },
         ])
       })
     })
@@ -312,16 +308,19 @@ function assertService(service = DIT_SERVICE, index = 4) {
   beforeEach(() => {
     buildAndMountWithCustomService(service)
     cy.get('[data-test="collection-item"]').should('exist')
-    cy.get('[data-test="metadata-item"]').as('metadataItems')
+    cy.get('[data-test="metadata-label"]').as('metadataLabels')
+    cy.get('[data-test="metadata-value"]').as('metadataValues')
   })
 
   it('should display the correct service', () => {
     assertServiceLabel(service)
   })
 
-  it('should render the full service label', () => {
-    cy.get('@metadataItems')
-      .eq(index)
-      .should('have.text', buildServiceLabel(service))
+  it('should render the Service label', () => {
+    cy.get('@metadataLabels').eq(index).should('have.text', 'Service')
+  })
+
+  it('should render the service value', () => {
+    cy.get('@metadataValues').eq(index).should('have.text', service)
   })
 }

@@ -4,19 +4,31 @@ import PropTypes from 'prop-types'
 
 import { BLACK, DARK_GREY } from '../../utils/colours'
 
-const StyledMetaWrapper = styled('div')`
-  color: ${BLACK};
+const StyledItemLabel = styled('dt')`
+  color: ${DARK_GREY};
+  display: inline;
+  clear: left;
+  float: left;
+  margin-right: 0.5em;
 `
 
-const StyledItemLabel = styled('span')`
-  color: ${DARK_GREY};
+const StyledItemValues = styled('dd')`
+  color: ${BLACK};
+  float: left;
 `
 
 function MetadataItem({ label, children }) {
   return (
-    <StyledMetaWrapper data-test="metadata-item">
-      {label && <StyledItemLabel>{label}</StyledItemLabel>} {children}
-    </StyledMetaWrapper>
+    <>
+      {label && (
+        <StyledItemLabel data-test="metadata-label">{label}</StyledItemLabel>
+      )}
+      {
+        <StyledItemValues data-test="metadata-value">
+          {children}
+        </StyledItemValues>
+      }
+    </>
   )
 }
 

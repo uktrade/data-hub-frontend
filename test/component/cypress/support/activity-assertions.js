@@ -24,11 +24,21 @@ export const assertActivitySubject = (
  * Asserts that a given metadata element in an activity item is correct
  */
 export const assertMetadataItems = (expectedMetadata) => {
-  cy.get('[data-test="metadata-item"]').as('metadataItems')
-  cy.get('@metadataItems')
+  cy.get('[data-test="metadata-label"]').as('metadataLabels')
+  cy.get('@metadataLabels')
     .should('have.length', expectedMetadata.length)
     .each((x, i) => {
-      cy.get('@metadataItems').eq(i).should('have.text', expectedMetadata[i])
+      cy.get('@metadataLabels')
+        .eq(i)
+        .should('have.text', expectedMetadata[i].label)
+    })
+  cy.get('[data-test="metadata-value"]').as('metadataValues')
+  cy.get('@metadataValues')
+    .should('have.length', expectedMetadata.length)
+    .each((x, i) => {
+      cy.get('@metadataValues')
+        .eq(i)
+        .should('have.text', expectedMetadata[i].value)
     })
 }
 

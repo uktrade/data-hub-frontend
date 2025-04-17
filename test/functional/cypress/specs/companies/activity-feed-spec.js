@@ -150,7 +150,7 @@ describe('Company activity feed', () => {
     })
     it('displays the order with a uk region', () => {
       cy.get('[data-test="collection-item"]').each(() =>
-        cy.get('span').contains('UK region')
+        cy.get('dt').contains('UK region')
       )
     })
 

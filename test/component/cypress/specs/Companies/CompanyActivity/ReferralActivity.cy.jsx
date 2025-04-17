@@ -55,10 +55,17 @@ describe('Referral activity card', () => {
       assertReferralLabel()
       assertActivitySubject(SUBJECT, REFERRAL_URL)
       assertMetadataItems([
-        'Created on 25 Nov 2058',
-        'Completed on 25 Dec 2058',
-        'Sending adviser Bernard Harris-Patel  bernardharrispatel@test.com, Test Team 1  ',
-        'Receiving adviser Puck Head  puckhead@test.com, Test Team 2  ',
+        { label: 'Created on', value: '25 Nov 2058' },
+        { label: 'Completed on', value: '25 Dec 2058' },
+        {
+          label: 'Sending adviser',
+          value:
+            'Bernard Harris-Patel  bernardharrispatel@test.com, Test Team 1  ',
+        },
+        {
+          label: 'Receiving adviser',
+          value: 'Puck Head  puckhead@test.com, Test Team 2  ',
+        },
       ])
     })
   })
@@ -73,9 +80,16 @@ describe('Referral activity card', () => {
       assertReferralLabel('Outstanding referral')
       assertActivitySubject(SUBJECT, REFERRAL_URL)
       assertMetadataItems([
-        'Created on 25 Nov 2058',
-        'Sending adviser Bernard Harris-Patel  bernardharrispatel@test.com, Test Team 1  ',
-        'Receiving adviser Puck Head  puckhead@test.com, Test Team 2  ',
+        { label: 'Created on', value: '25 Nov 2058' },
+        {
+          label: 'Sending adviser',
+          value:
+            'Bernard Harris-Patel  bernardharrispatel@test.com, Test Team 1  ',
+        },
+        {
+          label: 'Receiving adviser',
+          value: 'Puck Head  puckhead@test.com, Test Team 2  ',
+        },
       ])
     })
   })

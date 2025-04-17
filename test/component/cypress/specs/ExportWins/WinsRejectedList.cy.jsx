@@ -57,21 +57,29 @@ describe('WinsRejectedList', () => {
           urls.companies.overview.index(exportWinsList[0].company.id)
         )
 
-      const items = '[data-test="metadata-item"]'
-      cy.get(items).should('have.length', 4)
+      const itemLabels = '[data-test="metadata-label"]'
+      cy.get(itemLabels).should('have.length', 4)
 
-      cy.get(items)
+      cy.get(itemLabels).eq(0).should('have.text', `Contact name:`)
+
+      cy.get(itemLabels).eq(1).should('have.text', `Total value:`)
+
+      cy.get(itemLabels).eq(2).should('have.text', 'Date won:')
+
+      cy.get(itemLabels).eq(3).should('have.text', `Date modified:`)
+
+      const itemValues = '[data-test="metadata-value"]'
+      cy.get(itemValues).should('have.length', 4)
+
+      cy.get(itemValues)
         .eq(0)
-        .should(
-          'have.text',
-          `Contact name: ${exportWin.company_contacts[0].name}`
-        )
+        .should('have.text', `${exportWin.company_contacts[0].name}`)
 
-      cy.get(items)
+      cy.get(itemValues)
         .eq(1)
         .should(
           'have.text',
-          `Total value: ${currencyGBP(
+          `${currencyGBP(
             sumExportValues(
               pick(exportWin, [
                 'total_expected_export_value',
@@ -82,13 +90,13 @@ describe('WinsRejectedList', () => {
           )}`
         )
 
-      cy.get(items).eq(2).should('have.text', 'Date won: May 2023')
+      cy.get(itemValues).eq(2).should('have.text', 'May 2023')
 
-      cy.get(items)
+      cy.get(itemValues)
         .eq(3)
         .should(
           'have.text',
-          `Date modified: ${formatDate(exportWin.modified_on, DATE_FORMAT_MEDIUM)}`
+          `${formatDate(exportWin.modified_on, DATE_FORMAT_MEDIUM)}`
         )
     })
   })

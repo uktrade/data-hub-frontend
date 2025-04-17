@@ -60,13 +60,23 @@ describe('Great Export Enquiry activity card', () => {
         .should('exist')
         .should('have.text', `Enquiry ${SUBJECT}`)
         .should('not.have.attr', 'href')
-      assertMetadataItems([
-        ` ${NOTES}`,
-        'Date 25 Nov 2058',
-        'Contact Alexander Hamilton',
-        'Job title Test Job',
-        'Email bernardharrispatel@test.com',
-      ])
+
+      const itemLabels = '[data-test="metadata-label"]'
+      cy.get(itemLabels).should('have.length', 4)
+      cy.get(itemLabels).eq(0).should('have.text', 'Date')
+      cy.get(itemLabels).eq(1).should('have.text', 'Contact')
+      cy.get(itemLabels).eq(2).should('have.text', 'Job title')
+      cy.get(itemLabels).eq(3).should('have.text', 'Email')
+
+      const itemValues = '[data-test="metadata-value"]'
+      cy.get(itemValues).should('have.length', 5)
+      cy.get(itemValues).eq(0).should('have.text', `${NOTES}`)
+      cy.get(itemValues).eq(1).should('have.text', '25 Nov 2058')
+      cy.get(itemValues).eq(2).should('have.text', 'Alexander Hamilton')
+      cy.get(itemValues).eq(3).should('have.text', 'Test Job')
+      cy.get(itemValues)
+        .eq(4)
+        .should('have.text', 'bernardharrispatel@test.com')
     })
   })
 
@@ -78,7 +88,7 @@ describe('Great Export Enquiry activity card', () => {
 
     it('should render the date and the labels', () => {
       assertGreatLabels()
-      assertMetadataItems(['Date 25 Nov 2058'])
+      assertMetadataItems([{ label: 'Date', value: '25 Nov 2058' }])
     })
   })
 
@@ -96,13 +106,28 @@ describe('Great Export Enquiry activity card', () => {
         .should('exist')
         .should('have.text', 'Enquiry Lorem ipsum dolor sit amet, ...')
         .should('not.have.attr', 'href')
-      assertMetadataItems([
-        ' Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec ...',
-        'Date 25 Nov 2058',
-        'Contact Alexander Hamilton',
-        'Job title Test Job',
-        'Email bernardharrispatel@test.com',
-      ])
+
+      const itemLabels = '[data-test="metadata-label"]'
+      cy.get(itemLabels).should('have.length', 4)
+      cy.get(itemLabels).eq(0).should('have.text', 'Date')
+      cy.get(itemLabels).eq(1).should('have.text', 'Contact')
+      cy.get(itemLabels).eq(2).should('have.text', 'Job title')
+      cy.get(itemLabels).eq(3).should('have.text', 'Email')
+
+      const itemValues = '[data-test="metadata-value"]'
+      cy.get(itemValues).should('have.length', 5)
+      cy.get(itemValues)
+        .eq(0)
+        .should(
+          'have.text',
+          'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec ...'
+        )
+      cy.get(itemValues).eq(1).should('have.text', '25 Nov 2058')
+      cy.get(itemValues).eq(2).should('have.text', 'Alexander Hamilton')
+      cy.get(itemValues).eq(3).should('have.text', 'Test Job')
+      cy.get(itemValues)
+        .eq(4)
+        .should('have.text', 'bernardharrispatel@test.com')
     })
   })
 })

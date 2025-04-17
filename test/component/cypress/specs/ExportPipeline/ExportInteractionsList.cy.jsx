@@ -62,19 +62,23 @@ describe('ExportInteractionsList', () => {
         .should('have.text', 'Video call meeting to Baileys')
         .and('have.attr', 'href', '/export/987/interactions/123/details')
 
-      const items = '[data-test="metadata-item"]'
-      cy.get(items).should('have.length', 4)
-      cy.get(items).eq(0).should('have.text', 'Date: 23 December 2024')
-      cy.get(items).eq(1).should('have.text', 'Contact(s): James Brown')
-      cy.get(items)
+      const itemLabels = '[data-test="metadata-label"]'
+      cy.get(itemLabels).should('have.length', 4)
+      cy.get(itemLabels).eq(0).should('have.text', 'Date:')
+      cy.get(itemLabels).eq(1).should('have.text', 'Contact(s):')
+      cy.get(itemLabels).eq(2).should('have.text', 'Adviser(s):')
+      cy.get(itemLabels).eq(3).should('have.text', 'Service:')
+
+      const itemValues = '[data-test="metadata-value"]'
+      cy.get(itemValues).should('have.length', 4)
+      cy.get(itemValues).eq(0).should('have.text', '23 December 2024')
+      cy.get(itemValues).eq(1).should('have.text', 'James Brown')
+      cy.get(itemValues)
         .eq(2)
-        .should(
-          'have.text',
-          'Adviser(s): David Buffer - Digital Data Hub - Live Service'
-        )
-      cy.get(items)
+        .should('have.text', 'David Buffer - Digital Data Hub - Live Service')
+      cy.get(itemValues)
         .eq(3)
-        .should('have.text', 'Service: Account management : General')
+        .should('have.text', 'Account management : General')
     })
   })
 
@@ -106,9 +110,12 @@ describe('ExportInteractionsList', () => {
       },
     })
 
-    cy.get('[data-test="metadata-item"]')
+    cy.get('[data-test="metadata-label"]')
       .eq(1)
-      .should('have.text', 'Contact(s): James Brown, Jim Brown, Jude Brown')
+      .should('have.text', 'Contact(s):')
+    cy.get('[data-test="metadata-value"]')
+      .eq(1)
+      .should('have.text', 'James Brown, Jim Brown, Jude Brown')
   })
 
   it('should render a list of multiple advisers', () => {
@@ -153,11 +160,14 @@ describe('ExportInteractionsList', () => {
       },
     })
 
-    cy.get('[data-test="metadata-item"]')
+    cy.get('[data-test="metadata-label"]')
+      .eq(2)
+      .should('have.text', 'Adviser(s):')
+    cy.get('[data-test="metadata-value"]')
       .eq(2)
       .should(
         'have.text',
-        'Adviser(s): James Brown - British Water, Jim Brown - Cumbria LEP, Jude Brown - Doncaster Council'
+        'James Brown - British Water, Jim Brown - Cumbria LEP, Jude Brown - Doncaster Council'
       )
   })
 
