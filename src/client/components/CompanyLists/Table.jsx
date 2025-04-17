@@ -3,17 +3,11 @@ import Table from '@govuk-react/table'
 import { FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
 import VisuallyHidden from '@govuk-react/visually-hidden'
 import React from 'react'
-import LinesEllipsis from 'react-lines-ellipsis'
 import styled from 'styled-components'
 
-import {
-  BORDER_COLOUR,
-  LINK_ACTIVE_COLOUR,
-  LINK_COLOUR,
-  LINK_HOVER_COLOUR,
-  LINK_VISITED_COLOUR,
-  PAGE_COLOUR,
-} from '../../../client/utils/colours'
+import LinesEllipsis from '../LinesEllipsis'
+
+import { BORDER_COLOUR } from '../../../client/utils/colours'
 import urls from '../../../lib/urls'
 import { MEDIA_QUERIES } from '../../utils/responsive'
 import SecondaryButton from '../SecondaryButton'
@@ -95,27 +89,6 @@ const ActionCell = styled(StyledTableCell)({
   },
 })
 
-const StyledLink = styled(Link)({
-  ':focus': {
-    color: LINK_COLOUR,
-    ':active': {
-      color: LINK_ACTIVE_COLOUR,
-    },
-    ':hover': {
-      color: LINK_HOVER_COLOUR,
-    },
-    ':visited': {
-      color: LINK_VISITED_COLOUR,
-    },
-  },
-})
-
-const StyledLinesEllipsis = styled(LinesEllipsis)({
-  display: 'inline-block',
-  background: PAGE_COLOUR,
-  textDecoration: 'underline',
-})
-
 const Advisers = ({ ditParticipants }) =>
   ditParticipants.length === 0
     ? 'Unknown adviser - Unknown team'
@@ -149,30 +122,26 @@ const CompaniesTable = ({ companies }) => (
       ({ id, name, date, subject, interactionId, ditParticipants }) => (
         <StyledTableRow key={id}>
           <TitleCell>
-            <StyledLink href={urls.companies.detail(id)}>
-              <StyledLinesEllipsis
-                text={name}
-                maxLine="2"
-                ellipsis="..."
-                trimRight={true}
-                basedOn="words"
-              />
-            </StyledLink>
+            <LinesEllipsis
+              maxLine={2}
+              as={Link}
+              href={urls.companies.detail(id)}
+            >
+              {name}
+            </LinesEllipsis>
           </TitleCell>
           <ColumnLabelCell>
             {date ? formatDate(date, DATE_FORMAT_COMPACT) : '-'}
           </ColumnLabelCell>
           <StyledTableCell>
             {interactionId ? (
-              <StyledLink href={urls.interactions.detail(interactionId)}>
-                <StyledLinesEllipsis
-                  text={subject}
-                  maxLine="2"
-                  ellipsis="..."
-                  trimRight={true}
-                  basedOn="words"
-                />
-              </StyledLink>
+              <LinesEllipsis
+                maxLine={2}
+                as={Link}
+                href={urls.interactions.detail(interactionId)}
+              >
+                {subject}
+              </LinesEllipsis>
             ) : (
               'No interactions have been recorded'
             )}
