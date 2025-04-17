@@ -20,8 +20,14 @@ const StyledItemValues = styled('dd')`
 function MetadataItem({ label, children }) {
   return (
     <>
-      {label && <StyledItemLabel>{label}</StyledItemLabel>}{' '}
-      {<StyledItemValues>{children}</StyledItemValues>}
+      {label && (
+        <StyledItemLabel data-test="metadata-label">{label}</StyledItemLabel>
+      )}
+      {
+        <StyledItemValues data-test="metadata-value">
+          {children}
+        </StyledItemValues>
+      }
     </>
   )
 }
