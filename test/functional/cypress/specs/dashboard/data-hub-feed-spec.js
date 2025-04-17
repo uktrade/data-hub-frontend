@@ -14,7 +14,7 @@ describe('Dashboard - Data Hub feed', () => {
     })
 
     it('Should contain a header and no updates available text', () => {
-      cy.get('@dataHubFeed').find('h3').should('have.text', "What's new?")
+      cy.get('@dataHubFeed').find('h2').should('have.text', "What's new?")
 
       cy.get('@dataHubFeed')
         .find('p')
@@ -45,7 +45,7 @@ describe('Dashboard - Data Hub feed', () => {
     })
 
     it('should display only one feed item', () => {
-      cy.get('@dataHubFeed').find('h3').should('have.text', "What's new?")
+      cy.get('@dataHubFeed').find('h2').should('have.text', "What's new?")
 
       cy.get('@dataHubFeed')
         .find('[data-test="data-hub-feed-link-0"]')
