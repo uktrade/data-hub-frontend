@@ -1432,7 +1432,7 @@ describe('Edit the value details of a project', () => {
           cy.get('[data-test="field-number_new_jobs"]').then((element) => {
             assertFieldInput({
               element,
-              label: 'Number of new jobs (required for next stage)',
+              label: 'Number of new jobs (required)',
               hint: 'An expansion project must always have at least 1 new job',
             })
           })
@@ -1474,11 +1474,9 @@ describe('Edit the value details of a project', () => {
             })
           })
         })
-        it('should not show an error if the number of new jobs is empty', () => {
+        it('should show an error if the number of new jobs is empty', () => {
           cy.get('[data-test="submit-button"]').click()
-          cy.contains('Value for number of new jobs is required').should(
-            'not.exist'
-          )
+          assertErrorSummary(['Value for number of new jobs is required'])
         })
         it('should not show an error if the number of new jobs is 0', () => {
           cy.get('[data-test="number-new-jobs-input"]').type(0)
@@ -1496,7 +1494,7 @@ describe('Edit the value details of a project', () => {
     })
 
     context('When editing an non expansion project', () => {
-      it('should not show an error or hint text if number of new jobs is empty and it is a non FDI project', () => {
+      it('should show an error or hint text if number of new jobs is empty and it is a non FDI project', () => {
         const nonFdiProject = setupProjectFaker({
           stage: INVESTMENT_PROJECT_STAGES.active,
           investment_type: {
@@ -1512,9 +1510,9 @@ describe('Edit the value details of a project', () => {
           '[data-test="hint-text"]'
         )
         cy.get('[data-test="submit-button"]').click()
-        assertNotExists('[data-test="summary-form-errors"]')
+        assertErrorSummary(['Value for number of new jobs is required'])
       })
-      it('should not show an error or hint text if number of new jobs is empty and it is not an expansion FDI project', () => {
+      it('should show an error or hint text if number of new jobs is empty and it is not an expansion FDI project', () => {
         const nonExpansionFdiProject = setupProjectFaker({
           stage: INVESTMENT_PROJECT_STAGES.active,
         })
@@ -1524,7 +1522,7 @@ describe('Edit the value details of a project', () => {
           '[data-test="hint-text"]'
         )
         cy.get('[data-test="submit-button"]').click()
-        assertNotExists('[data-test="summary-form-errors"]')
+        assertErrorSummary(['Value for number of new jobs is required'])
       })
     })
   })
