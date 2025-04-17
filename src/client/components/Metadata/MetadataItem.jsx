@@ -2,20 +2,21 @@ import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 
-import { BLACK, DARK_GREY } from '../../utils/colours'
+import { BLACK, DARK_GREY, WHITE } from '../../utils/colours'
 
-const StyledMetaWrapper = styled('div')`
-  color: ${BLACK};
-`
+const StyledMetaWrapper = styled('div')((props) => ({
+  color: props.active ? WHITE : BLACK,
+}))
 
-const StyledItemLabel = styled('span')`
-  color: ${DARK_GREY};
-`
+const StyledItemLabel = styled('span')((props) => ({
+  color: props.active ? WHITE : DARK_GREY,
+}))
 
-function MetadataItem({ label, children }) {
+function MetadataItem({ label, children, active = false }) {
   return (
-    <StyledMetaWrapper data-test="metadata-item">
-      {label && <StyledItemLabel>{label}</StyledItemLabel>} {children}
+    <StyledMetaWrapper active={active} data-test="metadata-item">
+      {label && <StyledItemLabel active={active}>{label}</StyledItemLabel>}{' '}
+      {children}
     </StyledMetaWrapper>
   )
 }
@@ -23,6 +24,7 @@ function MetadataItem({ label, children }) {
 MetadataItem.propTypes = {
   label: PropTypes.string,
   children: PropTypes.node.isRequired,
+  active: PropTypes.bool,
 }
 
 export default MetadataItem
