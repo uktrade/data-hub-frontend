@@ -23,7 +23,7 @@ const Date = styled('div')({
 
 const DataHubFeed = ({ items, feedLimit = 5 }) => (
   <FeedContainer>
-    <H3>What's new?</H3>
+    <H3 as="h2">What's new?</H3>
     {!!items.length && (
       <>
         <UnorderedList listStyleType="none">
