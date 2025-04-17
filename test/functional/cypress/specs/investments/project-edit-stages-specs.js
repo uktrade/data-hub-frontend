@@ -6,6 +6,7 @@ import {
   UPDATE_SUMMARY_ADDITIONAL_FIELDS,
   UPDATE_SUMMARY_BASE_FIELDS,
   EDIT_VALUE_BASE_FIELDS,
+  EDIT_VALUE_PROSPECT_REQUIRED_FIELDS,
 } from './constants'
 
 const urls = require('../../../../../src/lib/urls')
@@ -122,7 +123,7 @@ describe('Field validation for each stage', () => {
 
   describe('Edit value', () => {
     const stageRequiredFields = [
-      [INVESTMENT_PROJECT_STAGES.prospect, []],
+      [INVESTMENT_PROJECT_STAGES.prospect, EDIT_VALUE_PROSPECT_REQUIRED_FIELDS],
       [INVESTMENT_PROJECT_STAGES.assignPm, EDIT_VALUE_BASE_FIELDS],
       [INVESTMENT_PROJECT_STAGES.active, EDIT_VALUE_BASE_FIELDS],
       [INVESTMENT_PROJECT_STAGES.verifyWin, EDIT_VALUE_ADDITIONAL_FIELDS],
