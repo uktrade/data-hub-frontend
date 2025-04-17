@@ -53,8 +53,8 @@ describe('EYB lead activity card', () => {
         assertInvestmentThemeLabel()
         assertActivitySubject(LINKED_COMPANY_NAME, PROJECT_URL)
         assertMetadataItems([
-          `Submitted to EYB date 01 Dec 2024`,
-          'Value Unknown',
+          { label: 'Submitted to EYB date', value: '01 Dec 2024' },
+          { label: 'Value', value: 'Unknown' },
         ])
       })
     }
@@ -72,7 +72,10 @@ describe('EYB lead activity card', () => {
         assertEYBLabel()
         assertInvestmentThemeLabel()
         assertActivitySubject(LINKED_COMPANY_NAME, PROJECT_URL)
-        assertMetadataItems([`Submitted to EYB date 01 Dec 2024`, 'Value High'])
+        assertMetadataItems([
+          { label: 'Submitted to EYB date', value: '01 Dec 2024' },
+          { label: 'Value', value: 'High' },
+        ])
       })
     }
   )
@@ -89,7 +92,10 @@ describe('EYB lead activity card', () => {
         assertEYBLabel()
         assertInvestmentThemeLabel()
         assertActivitySubject(LINKED_COMPANY_NAME, PROJECT_URL)
-        assertMetadataItems([`Submitted to EYB date 01 Dec 2024`, 'Value Low'])
+        assertMetadataItems([
+          { label: 'Submitted to EYB date', value: '01 Dec 2024' },
+          { label: 'Value', value: 'Low' },
+        ])
       })
     }
   )
@@ -107,8 +113,8 @@ describe('EYB lead activity card', () => {
         assertInvestmentThemeLabel()
         assertActivitySubject(EYB_COMPANY_NAME, PROJECT_URL)
         assertMetadataItems([
-          `Submitted to EYB date 01 Dec 2024`,
-          'Value Unknown',
+          { label: 'Submitted to EYB date', value: '01 Dec 2024' },
+          { label: 'Value', value: 'Unknown' },
         ])
       })
     }
@@ -126,7 +132,10 @@ describe('EYB lead activity card', () => {
         assertEYBLabel()
         assertInvestmentThemeLabel()
         assertActivitySubject(EYB_COMPANY_NAME, PROJECT_URL)
-        assertMetadataItems([`Submitted to EYB date 01 Dec 2024`, 'Value High'])
+        assertMetadataItems([
+          { label: 'Submitted to EYB date', value: '01 Dec 2024' },
+          { label: 'Value', value: 'High' },
+        ])
       })
     }
   )
@@ -143,7 +152,10 @@ describe('EYB lead activity card', () => {
         assertEYBLabel()
         assertInvestmentThemeLabel()
         assertActivitySubject(EYB_COMPANY_NAME, PROJECT_URL)
-        assertMetadataItems([`Submitted to EYB date 01 Dec 2024`, 'Value Low'])
+        assertMetadataItems([
+          { label: 'Submitted to EYB date', value: '01 Dec 2024' },
+          { label: 'Value', value: 'Low' },
+        ])
       })
     }
   )

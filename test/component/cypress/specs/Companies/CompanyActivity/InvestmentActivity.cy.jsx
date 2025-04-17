@@ -76,15 +76,19 @@ describe('Investment project activity card', () => {
         assertNotEYBLabel()
         assertActivitySubject(NAME, PROJECT_URL)
         assertMetadataItems([
-          'Created on 25 Nov 2058',
-          'Investment type FDI',
-          'Added by Bernard Harris-Patel  bernardharrispatel@test.com, Test Team 1  ',
-          'Estimated land date 1 Dec 2023',
-          'Company contact Alexander Hamilton',
-          'Total investment £1,234,567,890',
-          'Capital expenditure value £123,456,789',
-          'Gross value added (GVA) £12,345',
-          'Number of jobs 1',
+          { label: 'Created on', value: '25 Nov 2058' },
+          { label: 'Investment type', value: 'FDI' },
+          {
+            label: 'Added by',
+            value:
+              'Bernard Harris-Patel  bernardharrispatel@test.com, Test Team 1  ',
+          },
+          { label: 'Estimated land date', value: '1 Dec 2023' },
+          { label: 'Company contact', value: 'Alexander Hamilton' },
+          { label: 'Total investment', value: '£1,234,567,890' },
+          { label: 'Capital expenditure value', value: '£123,456,789' },
+          { label: 'Gross value added (GVA)', value: '£12,345' },
+          { label: 'Number of jobs', value: '1' },
         ])
       })
     }
@@ -108,15 +112,19 @@ describe('Investment project activity card', () => {
         assertEYBLabel()
         assertActivitySubject(NAME, PROJECT_URL)
         assertMetadataItems([
-          'Created on 25 Nov 2058',
-          'Investment type FDI',
-          'Added by Bernard Harris-Patel  bernardharrispatel@test.com, Test Team 1  ',
-          'Estimated land date 1 Dec 2023',
-          'Company contact Alexander Hamilton',
-          'Total investment £1,234,567,890',
-          'Capital expenditure value £123,456,789',
-          'Gross value added (GVA) £12,345',
-          'Number of jobs 1',
+          { label: 'Created on', value: '25 Nov 2058' },
+          { label: 'Investment type', value: 'FDI' },
+          {
+            label: 'Added by',
+            value:
+              'Bernard Harris-Patel  bernardharrispatel@test.com, Test Team 1  ',
+          },
+          { label: 'Estimated land date', value: '1 Dec 2023' },
+          { label: 'Company contact', value: 'Alexander Hamilton' },
+          { label: 'Total investment', value: '£1,234,567,890' },
+          { label: 'Capital expenditure value', value: '£123,456,789' },
+          { label: 'Gross value added (GVA)', value: '£12,345' },
+          { label: 'Number of jobs', value: '1' },
         ])
       })
     }
@@ -140,15 +148,19 @@ describe('Investment project activity card', () => {
         assertEYBLabel()
         assertActivitySubject(NAME, PROJECT_URL)
         assertMetadataItems([
-          'Created on 25 Nov 2058',
-          'Investment type FDI',
-          'Added by Bernard Harris-Patel  bernardharrispatel@test.com, Test Team 1  ',
-          'Estimated land date 1 Dec 2023',
-          'Company contact Alexander Hamilton',
-          'Total investment £1,234,567,890',
-          'Capital expenditure value £123,456,789',
-          'Gross value added (GVA) £12,345',
-          'Number of jobs 1',
+          { label: 'Created on', value: '25 Nov 2058' },
+          { label: 'Investment type', value: 'FDI' },
+          {
+            label: 'Added by',
+            value:
+              'Bernard Harris-Patel  bernardharrispatel@test.com, Test Team 1  ',
+          },
+          { label: 'Estimated land date', value: '1 Dec 2023' },
+          { label: 'Company contact', value: 'Alexander Hamilton' },
+          { label: 'Total investment', value: '£1,234,567,890' },
+          { label: 'Capital expenditure value', value: '£123,456,789' },
+          { label: 'Gross value added (GVA)', value: '£12,345' },
+          { label: 'Number of jobs', value: '1' },
         ])
       })
     }
@@ -167,15 +179,22 @@ describe('Investment project activity card', () => {
         assertNotEYBLabel()
         assertActivitySubject(NAME, PROJECT_URL)
         assertMetadataItems([
-          'Created on 25 Nov 2058',
-          'Investment type FDI',
-          'Added by Bernard Harris-Patel  bernardharrispatel@test.com, Test Team 1  ',
-          'Estimated land date 1 Dec 2023',
-          'Company contacts Alexander Hamilton, Oliver Twist',
-          'Total investment £1,234,567,890',
-          'Capital expenditure value £123,456,789',
-          'Gross value added (GVA) £12,345',
-          'Number of jobs 1',
+          { label: 'Created on', value: '25 Nov 2058' },
+          { label: 'Investment type', value: 'FDI' },
+          {
+            label: 'Added by',
+            value:
+              'Bernard Harris-Patel  bernardharrispatel@test.com, Test Team 1  ',
+          },
+          { label: 'Estimated land date', value: '1 Dec 2023' },
+          {
+            label: 'Company contacts',
+            value: 'Alexander Hamilton, Oliver Twist',
+          },
+          { label: 'Total investment', value: '£1,234,567,890' },
+          { label: 'Capital expenditure value', value: '£123,456,789' },
+          { label: 'Gross value added (GVA)', value: '£12,345' },
+          { label: 'Number of jobs', value: '1' },
         ])
       })
     }
@@ -199,15 +218,22 @@ describe('Investment project activity card', () => {
         assertEYBLabel()
         assertActivitySubject(NAME, PROJECT_URL)
         assertMetadataItems([
-          'Created on 25 Nov 2058',
-          'Investment type FDI',
-          'Added by Bernard Harris-Patel  bernardharrispatel@test.com, Test Team 1  ',
-          'Estimated land date 1 Dec 2023',
-          'Company contacts Alexander Hamilton, Oliver Twist',
-          'Total investment £1,234,567,890',
-          'Capital expenditure value £123,456,789',
-          'Gross value added (GVA) £12,345',
-          'Number of jobs 1',
+          { label: 'Created on', value: '25 Nov 2058' },
+          { label: 'Investment type', value: 'FDI' },
+          {
+            label: 'Added by',
+            value:
+              'Bernard Harris-Patel  bernardharrispatel@test.com, Test Team 1  ',
+          },
+          { label: 'Estimated land date', value: '1 Dec 2023' },
+          {
+            label: 'Company contacts',
+            value: 'Alexander Hamilton, Oliver Twist',
+          },
+          { label: 'Total investment', value: '£1,234,567,890' },
+          { label: 'Capital expenditure value', value: '£123,456,789' },
+          { label: 'Gross value added (GVA)', value: '£12,345' },
+          { label: 'Number of jobs', value: '1' },
         ])
       })
     }
@@ -231,15 +257,22 @@ describe('Investment project activity card', () => {
         assertEYBLabel()
         assertActivitySubject(NAME, PROJECT_URL)
         assertMetadataItems([
-          'Created on 25 Nov 2058',
-          'Investment type FDI',
-          'Added by Bernard Harris-Patel  bernardharrispatel@test.com, Test Team 1  ',
-          'Estimated land date 1 Dec 2023',
-          'Company contacts Alexander Hamilton, Oliver Twist',
-          'Total investment £1,234,567,890',
-          'Capital expenditure value £123,456,789',
-          'Gross value added (GVA) £12,345',
-          'Number of jobs 1',
+          { label: 'Created on', value: '25 Nov 2058' },
+          { label: 'Investment type', value: 'FDI' },
+          {
+            label: 'Added by',
+            value:
+              'Bernard Harris-Patel  bernardharrispatel@test.com, Test Team 1  ',
+          },
+          { label: 'Estimated land date', value: '1 Dec 2023' },
+          {
+            label: 'Company contacts',
+            value: 'Alexander Hamilton, Oliver Twist',
+          },
+          { label: 'Total investment', value: '£1,234,567,890' },
+          { label: 'Capital expenditure value', value: '£123,456,789' },
+          { label: 'Gross value added (GVA)', value: '£12,345' },
+          { label: 'Number of jobs', value: '1' },
         ])
       })
     }
@@ -258,10 +291,14 @@ describe('Investment project activity card', () => {
         assertNotEYBLabel()
         assertActivitySubject(NAME, PROJECT_URL)
         assertMetadataItems([
-          'Created on 25 Nov 2058',
-          'Investment type FDI',
-          'Added by Bernard Harris-Patel  bernardharrispatel@test.com, Test Team 1  ',
-          'Estimated land date 1 Dec 2023',
+          { label: 'Created on', value: '25 Nov 2058' },
+          { label: 'Investment type', value: 'FDI' },
+          {
+            label: 'Added by',
+            value:
+              'Bernard Harris-Patel  bernardharrispatel@test.com, Test Team 1  ',
+          },
+          { label: 'Estimated land date', value: '1 Dec 2023' },
         ])
       })
     }
@@ -285,10 +322,14 @@ describe('Investment project activity card', () => {
         assertEYBLabel()
         assertActivitySubject(NAME, PROJECT_URL)
         assertMetadataItems([
-          'Created on 25 Nov 2058',
-          'Investment type FDI',
-          'Added by Bernard Harris-Patel  bernardharrispatel@test.com, Test Team 1  ',
-          'Estimated land date 1 Dec 2023',
+          { label: 'Created on', value: '25 Nov 2058' },
+          { label: 'Investment type', value: 'FDI' },
+          {
+            label: 'Added by',
+            value:
+              'Bernard Harris-Patel  bernardharrispatel@test.com, Test Team 1  ',
+          },
+          { label: 'Estimated land date', value: '1 Dec 2023' },
         ])
       })
     }
@@ -312,10 +353,14 @@ describe('Investment project activity card', () => {
         assertEYBLabel()
         assertActivitySubject(NAME, PROJECT_URL)
         assertMetadataItems([
-          'Created on 25 Nov 2058',
-          'Investment type FDI',
-          'Added by Bernard Harris-Patel  bernardharrispatel@test.com, Test Team 1  ',
-          'Estimated land date 1 Dec 2023',
+          { label: 'Created on', value: '25 Nov 2058' },
+          { label: 'Investment type', value: 'FDI' },
+          {
+            label: 'Added by',
+            value:
+              'Bernard Harris-Patel  bernardharrispatel@test.com, Test Team 1  ',
+          },
+          { label: 'Estimated land date', value: '1 Dec 2023' },
         ])
       })
     }
@@ -334,10 +379,14 @@ describe('Investment project activity card', () => {
         assertNotEYBLabel()
         assertActivitySubject(NAME, PROJECT_URL)
         assertMetadataItems([
-          'Created on 25 Nov 2058',
-          'Investment type Non-FDI',
-          'Added by Bernard Harris-Patel  bernardharrispatel@test.com, Test Team 1  ',
-          'Estimated land date 1 Dec 2023',
+          { label: 'Created on', value: '25 Nov 2058' },
+          { label: 'Investment type', value: 'Non-FDI' },
+          {
+            label: 'Added by',
+            value:
+              'Bernard Harris-Patel  bernardharrispatel@test.com, Test Team 1  ',
+          },
+          { label: 'Estimated land date', value: '1 Dec 2023' },
         ])
       })
     }
@@ -361,10 +410,14 @@ describe('Investment project activity card', () => {
         assertEYBLabel()
         assertActivitySubject(NAME, PROJECT_URL)
         assertMetadataItems([
-          'Created on 25 Nov 2058',
-          'Investment type Non-FDI',
-          'Added by Bernard Harris-Patel  bernardharrispatel@test.com, Test Team 1  ',
-          'Estimated land date 1 Dec 2023',
+          { label: 'Created on', value: '25 Nov 2058' },
+          { label: 'Investment type', value: 'Non-FDI' },
+          {
+            label: 'Added by',
+            value:
+              'Bernard Harris-Patel  bernardharrispatel@test.com, Test Team 1  ',
+          },
+          { label: 'Estimated land date', value: '1 Dec 2023' },
         ])
       })
     }
@@ -388,10 +441,14 @@ describe('Investment project activity card', () => {
         assertEYBLabel()
         assertActivitySubject(NAME, PROJECT_URL)
         assertMetadataItems([
-          'Created on 25 Nov 2058',
-          'Investment type Non-FDI',
-          'Added by Bernard Harris-Patel  bernardharrispatel@test.com, Test Team 1  ',
-          'Estimated land date 1 Dec 2023',
+          { label: 'Created on', value: '25 Nov 2058' },
+          { label: 'Investment type', value: 'Non-FDI' },
+          {
+            label: 'Added by',
+            value:
+              'Bernard Harris-Patel  bernardharrispatel@test.com, Test Team 1  ',
+          },
+          { label: 'Estimated land date', value: '1 Dec 2023' },
         ])
       })
     }
@@ -414,10 +471,14 @@ describe('Investment project activity card', () => {
         assertNotEYBLabel()
         assertActivitySubject(NAME, PROJECT_URL)
         assertMetadataItems([
-          'Created on 25 Nov 2058',
-          'Investment type Commitment to invest',
-          'Added by Bernard Harris-Patel  bernardharrispatel@test.com, Test Team 1  ',
-          'Estimated land date 1 Dec 2023',
+          { label: 'Created on', value: '25 Nov 2058' },
+          { label: 'Investment type', value: 'Commitment to invest' },
+          {
+            label: 'Added by',
+            value:
+              'Bernard Harris-Patel  bernardharrispatel@test.com, Test Team 1  ',
+          },
+          { label: 'Estimated land date', value: '1 Dec 2023' },
         ])
       })
     }
@@ -441,10 +502,14 @@ describe('Investment project activity card', () => {
         assertEYBLabel()
         assertActivitySubject(NAME, PROJECT_URL)
         assertMetadataItems([
-          'Created on 25 Nov 2058',
-          'Investment type Commitment to invest',
-          'Added by Bernard Harris-Patel  bernardharrispatel@test.com, Test Team 1  ',
-          'Estimated land date 1 Dec 2023',
+          { label: 'Created on', value: '25 Nov 2058' },
+          { label: 'Investment type', value: 'Commitment to invest' },
+          {
+            label: 'Added by',
+            value:
+              'Bernard Harris-Patel  bernardharrispatel@test.com, Test Team 1  ',
+          },
+          { label: 'Estimated land date', value: '1 Dec 2023' },
         ])
       })
     }
@@ -468,10 +533,14 @@ describe('Investment project activity card', () => {
         assertEYBLabel()
         assertActivitySubject(NAME, PROJECT_URL)
         assertMetadataItems([
-          'Created on 25 Nov 2058',
-          'Investment type Commitment to invest',
-          'Added by Bernard Harris-Patel  bernardharrispatel@test.com, Test Team 1  ',
-          'Estimated land date 1 Dec 2023',
+          { label: 'Created on', value: '25 Nov 2058' },
+          { label: 'Investment type', value: 'Commitment to invest' },
+          {
+            label: 'Added by',
+            value:
+              'Bernard Harris-Patel  bernardharrispatel@test.com, Test Team 1  ',
+          },
+          { label: 'Estimated land date', value: '1 Dec 2023' },
         ])
       })
     }

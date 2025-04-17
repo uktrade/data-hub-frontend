@@ -59,11 +59,15 @@ describe('Order activity card', () => {
       assertOrderLabels()
       assertActivitySubject(REFERENCE, ORDER_URL)
       assertMetadataItems([
-        'Date 25 Nov 2058',
-        'Country Test Country',
-        'UK region Test UK Region',
-        'Added by Bernard Harris-Patel  bernardharrispatel@test.com, Test Team 1  ',
-        'Company contact Alexander Hamilton, Test Job',
+        { label: 'Date', value: '25 Nov 2058' },
+        { label: 'Country', value: 'Test Country' },
+        { label: 'UK region', value: 'Test UK Region' },
+        {
+          label: 'Added by',
+          value:
+            'Bernard Harris-Patel  bernardharrispatel@test.com, Test Team 1  ',
+        },
+        { label: 'Company contact', value: 'Alexander Hamilton, Test Job' },
       ])
     })
   })
@@ -78,10 +82,14 @@ describe('Order activity card', () => {
       assertOrderLabels()
       assertActivitySubject(REFERENCE, ORDER_URL)
       assertMetadataItems([
-        'Date 25 Nov 2058',
-        'Country Test Country',
-        'Added by Bernard Harris-Patel  bernardharrispatel@test.com, Test Team 1  ',
-        'Company contact Oliver Twist',
+        { label: 'Date', value: '25 Nov 2058' },
+        { label: 'Country', value: 'Test Country' },
+        {
+          label: 'Added by',
+          value:
+            'Bernard Harris-Patel  bernardharrispatel@test.com, Test Team 1  ',
+        },
+        { label: 'Company contact', value: 'Oliver Twist' },
       ])
     })
   })
