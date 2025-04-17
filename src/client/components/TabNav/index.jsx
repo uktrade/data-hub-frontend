@@ -26,8 +26,11 @@ const BORDER = `1px solid ${BORDER_COLOUR}`
 
 const focusStyle = {
   '&:focus': {
-    outline: `3px solid ${FOCUS_COLOUR}`,
+    outline: `3px solid transparent`,
     background: FOCUS_COLOUR,
+    color: 'BLACK',
+    boxShadow: `0 -2px ${FOCUS_COLOUR}, 0 4px ${BLACK}`,
+    textDecoration: 'none',
     [MEDIA_QUERIES.TABLET]: {
       background: WHITE,
     },
