@@ -1,5 +1,5 @@
 import React from 'react'
-import { H1, H3 } from '@govuk-react/heading'
+import { H2, H3 } from '@govuk-react/heading'
 import styled from 'styled-components'
 import Button from '@govuk-react/button'
 
@@ -44,7 +44,7 @@ const StyledImage = styled('img')`
 
 const NoTasks = () => (
   <StyledContainer>
-    <H3 as={H1}>You don't currently have any tasks</H3>
+    <H3 as={H2}>You don't currently have any tasks</H3>
     <StyledParagraph>
       You can create your own tasks or collaborate with colleagues and assign
       tasks to other users.

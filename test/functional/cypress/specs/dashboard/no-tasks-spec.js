@@ -17,7 +17,7 @@ describe('Dashboard - no taskss', () => {
   context('Tabbed navigation', () => {
     it("should have a heading of `You don't currently have any tasks`", () => {
       cy.get('@tabPanel')
-        .find('h1')
+        .find('h2')
         .should('have.text', "You don't currently have any tasks")
     })
 
