@@ -29,6 +29,29 @@ describe('SelectedChips – Accessibility', () => {
     })
   })
 
+  // scenario where chipLabel is populated
+  it('uses chipLabel when present and applies correct aria-label', () => {
+    const chipLabelOptions = [
+      { value: '3', label: 'John Smith', chipLabel: 'Johnny S' },
+    ]
+
+    mount(
+      <SelectedChips
+        name="contacts"
+        selectedOptions={chipLabelOptions}
+        onOptionRemove={() => {}}
+      />
+    )
+
+    const expectedLabel = 'Remove Johnny S as a contact'
+
+    cy.contains('button', 'Johnny S').should(
+      'have.attr',
+      'aria-label',
+      expectedLabel
+    )
+  })
+
   it('has no critical accessibility violations (axe)', () => {
     cy.injectAxe()
     cy.checkA11y(null, {
