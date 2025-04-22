@@ -29,10 +29,7 @@ describe('AttendeeList', () => {
       cy.mountWithProvider(<AttendeeList interactions={interactions} />)
 
       assertTitle('Not Available')
-      assertMetadataItem(
-        '[data-test=collection-item]',
-        'Job title Not available'
-      )
+      assertMetadataItem('[data-test=collection-item]', 'Not available')
     })
 
     it('should render values from interaction', () => {
@@ -42,10 +39,16 @@ describe('AttendeeList', () => {
 
       assertTitle('Ima Contact')
       assertMetadataItems([
-        `Company ${interactions[0].companies[0].name}`,
-        `Job title ${interactions[0].contacts[0].job_title}`,
-        `Date attended ${formatDate(interactions[0].date, DATE_FORMAT_FULL)}`,
-        `Service delivery ${interactions[0].service.name}`,
+        { label: 'Company', value: `${interactions[0].companies[0].name}` },
+        {
+          label: 'Job title',
+          value: `${interactions[0].contacts[0].job_title}`,
+        },
+        {
+          label: 'Date attended',
+          value: `${formatDate(interactions[0].date, DATE_FORMAT_FULL)}`,
+        },
+        { label: 'Service delivery', value: `${interactions[0].service.name}` },
       ])
     })
   })
