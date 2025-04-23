@@ -3,8 +3,8 @@ services:
   frontend:
     depends_on:
       - mock-sso
-    entrypoint: dockerize -wait tcp://api:8000 -timeout 5m -wait-retry-interval 5s
     env_file: .env
+    command: bash -c 'dockerize -wait tcp://api:8000 -timeout 5m -wait-retry-interval 5s && npm run develop'
 
   mock-sso:
     image: gcr.io/sre-docker-registry/github.com/uktrade/mock-sso:latest
@@ -20,4 +20,3 @@ networks:
   default:
     external:
       name: data-infrastructure-shared-network
-
