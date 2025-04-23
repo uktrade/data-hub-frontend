@@ -61,7 +61,7 @@ const transformAuditLogItem = (
         (change, index) =>
           metadata.push({
             key: `${logItem.id}-${index}-field-name`,
-            value: <strong>{change.fieldName}</strong>,
+            label: <strong>{change.fieldName}</strong>,
           }) &&
           metadata.push({
             key: `${logItem.id}-${index}-old-value`,
@@ -75,7 +75,7 @@ const transformAuditLogItem = (
           })
       )
     : metadata.push({
-        value: `No changes were made to ${auditType} in this update`,
+        label: `No changes were made to ${auditType} in this update`,
       })
 
   const badges = [
