@@ -43,14 +43,21 @@ describe('Investment project propositions', () => {
           )
         )
 
-      cy.get('[data-test="collection-item"]')
-        .find('[data-test="metadata"]')
+      const itemLabels = '[data-test="metadata-label"]'
+      cy.get(itemLabels).eq(0).should('have.text', 'Deadline')
+      cy.get(itemLabels).eq(1).should('have.text', 'Created on')
+      cy.get(itemLabels).eq(2).should('have.text', 'Adviser')
+
+      const itemValues = '[data-test="metadata-value"]'
+      cy.get(itemValues)
+        .eq(0)
         .should(
-          'contain',
-          'Deadline ' + formatDate(new Date(), DATE_FORMAT_DAY_MONTH_YEAR)
+          'have.text',
+          `${formatDate(new Date(), DATE_FORMAT_DAY_MONTH_YEAR)}`
         )
-        .and('contain', 'Created on 15 June 2017')
-        .and('contain', 'Adviser Paula Churing')
+      cy.get(itemValues).eq(1).should('have.text', '15 June 2017')
+      cy.get(itemValues).eq(2).should('have.text', 'Paula Churing')
+
       cy.get('[data-test="badge"]').should('exist').should('contain', 'Ongoing')
       cy.get('[data-test="abandon-button"]')
         .should('exist')
