@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
-import { Button, GridCol, GridRow, Link } from 'govuk-react'
+import { Button, GridCol, GridRow } from 'govuk-react'
 import { FONT_SIZE, SPACING } from '@govuk-react/constants'
 import PropTypes from 'prop-types'
 
@@ -11,6 +11,7 @@ import { Badge } from '..'
 import urls from '../../../lib/urls'
 import ArchivePanel from '../ArchivePanel'
 import { ContactResource } from '../Resource'
+import AccessibleLink from '../Link'
 
 const dispatchToProps = (dispatch) => ({
   writeFlashMessage: (message) =>
@@ -21,7 +22,7 @@ const dispatchToProps = (dispatch) => ({
     }),
 })
 
-const StyledLink = styled(Link)({
+const StyledLink = styled(AccessibleLink)({
   fontSize: FONT_SIZE.SIZE_20,
 })
 

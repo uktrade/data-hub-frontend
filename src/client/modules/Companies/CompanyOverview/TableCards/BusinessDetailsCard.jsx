@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'govuk-react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
@@ -13,6 +12,7 @@ import {
   StyledSummaryTable,
   StyledTableRow,
 } from './components'
+import AccessibleLink from '../../../../components/Link'
 
 const StyledAddressList = styled('ul')``
 
@@ -74,22 +74,22 @@ const BusinessDetailsCard = ({ company }) => (
     {company.globalUltimateCountry && (
       <SummaryTable.Row heading="Headquarter Location">
         {company.globalUltimateCountry}
-        <Link
+        <AccessibleLink
           href={urls.companies.dnbHierarchy.tree(company.id)}
           data-test="company-tree-link"
         >
           View company tree
-        </Link>
+        </AccessibleLink>
       </SummaryTable.Row>
     )}
     <StyledTableRow>
       <StyledLastTableCell colSpan={2}>
-        <Link
+        <AccessibleLink
           href={urls.companies.businessDetails(company.id)}
           data-test="business-page-link"
         >
           View full business details
-        </Link>
+        </AccessibleLink>
       </StyledLastTableCell>
     </StyledTableRow>
   </StyledSummaryTable>

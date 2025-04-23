@@ -1,8 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Link } from 'govuk-react'
 import { SPACING } from '@govuk-react/constants'
 import styled from 'styled-components'
+
+import AccessibleLink from '../Link'
 
 const StyledLegend = styled('figcaption')({})
 const StyledList = styled('ul')({
@@ -33,7 +34,8 @@ const Legend = ({ data }) => (
           colour={colour}
           data-test={`pie-chart-legend-${name}`}
         >
-          {value ? <Link href={link}>{id}</Link> : id} ({value})
+          {value ? <AccessibleLink href={link}>{id}</AccessibleLink> : id} (
+          {value})
         </StyledListItem>
       ))}
     </StyledList>

@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import Button from '@govuk-react/button'
-import Link from '@govuk-react/link'
 import { kebabCase } from 'lodash'
 
 import { useFormContext } from '../hooks'
 import ButtonLink from '../../ButtonLink'
 import FormActions from './FormActions'
+import AccessibleLink from '../../Link'
 
 function Step({
   name,
@@ -83,9 +83,9 @@ function Step({
   }
 
   const renderCancelLink = () => (
-    <Link data-test="cancel-link" href={cancelUrl}>
+    <AccessibleLink data-test="cancel-link" href={cancelUrl}>
       Cancel
-    </Link>
+    </AccessibleLink>
   )
 
   return (

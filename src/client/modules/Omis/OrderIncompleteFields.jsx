@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Link, ListItem, UnorderedList } from 'govuk-react'
+import { ListItem, UnorderedList } from 'govuk-react'
 import { kebabCase } from 'lodash'
 
 import { StatusMessage } from '../../components'
@@ -9,6 +9,7 @@ import { INCOMPLETE_FIELD_MESSAGES, STATUS } from './constants'
 import urls from '../../../lib/urls'
 import { BLUE } from '../../utils/colours'
 import { getIncompleteFields, mapFieldToUrl } from './transformers'
+import AccessibleLink from '../../components/Link'
 
 const StyledListItem = styled(ListItem)`
   color: ${BLUE};
@@ -23,9 +24,12 @@ const OrderIncompleteFields = ({ order, assignees }) => (
         You cannot edit the order once a quote has been sent.
         <br />
         <br />
-        <Link href={urls.omis.quote(order.id)} data-test="withdraw-quote-link">
+        <AccessibleLink
+          href={urls.omis.quote(order.id)}
+          data-test="withdraw-quote-link"
+        >
           Withdraw the quote
-        </Link>{' '}
+        </AccessibleLink>{' '}
         to edit the order.
       </StatusMessage>
     )}
@@ -48,12 +52,12 @@ const OrderIncompleteFields = ({ order, assignees }) => (
               {field === INCOMPLETE_FIELD_MESSAGES.LEAD_ASSIGNEE ? (
                 field
               ) : (
-                <Link
+                <AccessibleLink
                   href={mapFieldToUrl(field, order.id)}
                   data-test={`${kebabCase(field)}-link`}
                 >
                   {field}
-                </Link>
+                </AccessibleLink>
               )}
             </StyledListItem>
           ))}

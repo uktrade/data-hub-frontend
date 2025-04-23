@@ -1,6 +1,5 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
-import { Link } from 'govuk-react'
 import styled from 'styled-components'
 
 import { SPACING_POINTS } from '@govuk-react/constants'
@@ -15,6 +14,7 @@ import { EYBLeadResource } from '../../../components/Resource'
 import { EYBLeadLayout, NewWindowLink, SummaryTable } from '../../../components'
 import { NOT_SET_TEXT } from '../../../../apps/companies/constants'
 import { VALUES_VALUE_TO_LABEL_MAP } from './constants'
+import AccessibleLink from '../../../components/Link'
 
 const StyledRoot = styled('div')`
   {
@@ -33,9 +33,11 @@ const EYBLeadDetails = () => {
               <StyledRoot>
                 <div>
                   Changes made to this information can be found on the{' '}
-                  <Link href={urls.investments.eybLeads.editHistory(eybLeadId)}>
+                  <AccessibleLink
+                    href={urls.investments.eybLeads.editHistory(eybLeadId)}
+                  >
                     Edit history page
-                  </Link>
+                  </AccessibleLink>
                   .
                 </div>
               </StyledRoot>
@@ -44,14 +46,14 @@ const EYBLeadDetails = () => {
                   <SummaryTable.TextRow
                     heading="Company name"
                     value={
-                      <Link
+                      <AccessibleLink
                         href={urls.companies.overview.index(
                           eybLead.company?.id
                         )}
                         data-test="company-link"
                       >
                         {eybLead.company.name}
-                      </Link>
+                      </AccessibleLink>
                     }
                   />
                 ) : (

@@ -1,10 +1,10 @@
 import React from 'react'
-import { Link } from 'govuk-react'
 
 import { SummaryTable } from '../../../components'
 import { isOrderActive } from '../transformers'
 import urls from '../../../../lib/urls'
 import WideSummaryTableRow from '../../Companies/CompanyBusinessDetails/WideSummaryTableRow'
+import AccessibleLink from '../../../components/Link'
 
 const buildSubscriberRows = (subscribers) =>
   subscribers.map(({ name, ditTeam }) => (
@@ -20,7 +20,7 @@ const SubscribersTable = ({ subscribers, order }) => (
     data-test="subscribers-table"
     actions={
       isOrderActive(order) && (
-        <Link
+        <AccessibleLink
           key="addSubscribersLink"
           href={urls.omis.edit.subscribers(order.id)}
           aria-label="Add or remove advisers in the UK"
@@ -28,7 +28,7 @@ const SubscribersTable = ({ subscribers, order }) => (
           noVisitedState={true}
         >
           Add or remove
-        </Link>
+        </AccessibleLink>
       )
     }
   >

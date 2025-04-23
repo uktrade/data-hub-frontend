@@ -1,13 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import Link from '@govuk-react/link'
 import Table from '@govuk-react/table'
 import { SPACING_POINTS } from '@govuk-react/constants'
 
 import { Badge, SummaryTable } from '../../../components'
 import urls from '../../../../lib/urls'
 import { NOT_SET_TEXT } from '../../../../apps/companies/constants'
+import AccessibleLink from '../../../components/Link'
 
 const StyledAddressList = styled('ul')`
   margin-top: ${SPACING_POINTS[2]}px;
@@ -51,12 +51,12 @@ const SectionAddresses = ({ company, isDnbCompany, isArchived }) => {
       actions={
         !isDnbCompany &&
         !isArchived && (
-          <Link
+          <AccessibleLink
             href={`${urls.companies.edit(company.id)}#field-address`}
             key={company.id}
           >
             Edit
-          </Link>
+          </AccessibleLink>
         )
       }
     >

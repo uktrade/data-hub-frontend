@@ -1,9 +1,9 @@
 import React from 'react'
-import { Link } from 'govuk-react'
 
 import { INTERACTION_STATUS } from '../../../../apps/interactions/constants'
 import { SummaryTable } from '../../../components'
 import urls from '../../../../lib/urls'
+import AccessibleLink from '../../../components/Link'
 
 const groupExportCountries = require('../../../../lib/group-export-countries')
 
@@ -47,9 +47,9 @@ export const transformCompany = (companyObject, companyArray) => {
     <SummaryTable.Row
       heading="Company"
       children={
-        <Link href={urls.companies.overview.index(company.id)}>
+        <AccessibleLink href={urls.companies.overview.index(company.id)}>
           {company.name}
-        </Link>
+        </AccessibleLink>
       }
     />
   )
@@ -57,7 +57,9 @@ export const transformCompany = (companyObject, companyArray) => {
 
 export const transformContacts = (contacts) =>
   contacts.map((contact) => (
-    <Link href={urls.contacts.details(contact.id)}>{contact.name}</Link>
+    <AccessibleLink href={urls.contacts.details(contact.id)}>
+      {contact.name}
+    </AccessibleLink>
   ))
 
 export const transformAdvisers = (advisers) =>

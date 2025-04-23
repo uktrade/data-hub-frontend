@@ -2,7 +2,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import Details from '@govuk-react/details'
-import Link from '@govuk-react/link'
 import styled from 'styled-components'
 import Button from '@govuk-react/button'
 import { SPACING_POINTS } from '@govuk-react/constants'
@@ -40,6 +39,7 @@ import {
   DNB__CHECK_PENDING_REQUEST,
 } from '../../../actions'
 import DefaultLayoutBase from '../../../components/Layout/DefaultLayoutBase'
+import AccessibleLink from '../../../components/Link'
 
 const StyledRoot = styled('div')`
   & > table {
@@ -82,9 +82,11 @@ const CompanyBusinessDetails = ({
               </div>
               <div>
                 Changes made to this information can be found on the{' '}
-                <Link href={urls.companies.editHistory.index(companyId)}>
+                <AccessibleLink
+                  href={urls.companies.editHistory.index(companyId)}
+                >
                   Edit history page
-                </Link>
+                </AccessibleLink>
                 .
               </div>
               {lastUpdated(company) && (

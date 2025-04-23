@@ -2,7 +2,6 @@ import _ from 'lodash'
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import Link from '@govuk-react/link'
 import { SPACING } from '@govuk-react/constants'
 
 import { indexToOrdinal } from '../../../../../client/utils/number-utils'
@@ -15,6 +14,7 @@ import {
   FIELD_ADD_ANOTHER__REMOVE,
 } from '../../../../actions'
 import reducer from './reducer'
+import AccessibleLink from '../../../Link'
 
 const StyledChildren = styled('div')`
   padding-bottom: ${SPACING.SCALE_1};
@@ -73,7 +73,7 @@ const FieldAddAnother = ({
             </StyledChildren>
             {fieldGroupIds.length > 1 && (
               <StyledLink>
-                <Link
+                <AccessibleLink
                   href="#"
                   aria-label={`Remove ${indexToOrdinal(index)} ${itemName}`}
                   onClick={(event) => {
@@ -82,7 +82,7 @@ const FieldAddAnother = ({
                   }}
                 >
                   Remove
-                </Link>
+                </AccessibleLink>
               </StyledLink>
             )}
           </StyledGroup>

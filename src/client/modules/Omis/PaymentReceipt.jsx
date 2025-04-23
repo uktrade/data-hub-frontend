@@ -1,7 +1,7 @@
 import React, { useRef } from 'react'
 import styled from 'styled-components'
 import { useParams } from 'react-router-dom'
-import { GridCol, GridRow, H2, Link, Table } from 'govuk-react'
+import { GridCol, GridRow, H2, Table } from 'govuk-react'
 import { LEVEL_SIZE, SPACING } from '@govuk-react/constants'
 import { useReactToPrint } from 'react-to-print'
 
@@ -16,6 +16,7 @@ import { formatDate, DATE_FORMAT_FULL } from '../../utils/date-utils'
 import { currencyGBP } from '../../utils/number-utils'
 import { ButtonLink } from '../../components'
 import urls from '../../../lib/urls'
+import AccessibleLink from '../../components/Link'
 
 const StyledSectionHeading = styled('p')`
   color: ${DARK_GREY};
@@ -178,13 +179,16 @@ export const PaymentSection = ({
         </>
       )}
       {reconciliationJourney ? (
-        <Link href={urls.omis.reconciliation()} data-test="reconciliation-link">
+        <AccessibleLink
+          href={urls.omis.reconciliation()}
+          data-test="reconciliation-link"
+        >
           Reconcile another order
-        </Link>
+        </AccessibleLink>
       ) : (
-        <Link href={urls.omis.order(orderId)} data-test="order-link">
+        <AccessibleLink href={urls.omis.order(orderId)} data-test="order-link">
           Return to order
-        </Link>
+        </AccessibleLink>
       )}
       <br />
       <StyledButtonLink onClick={handlePrint} data-test="print-link">

@@ -109,6 +109,9 @@ const NavigationLink = styled.a(({ hasFeatureGroup }) => ({
   },
   ':visited': {
     color: WHITE,
+    ':focus': {
+      color: BLACK,
+    },
   },
   ':hover': {
     textDecoration: 'underline',

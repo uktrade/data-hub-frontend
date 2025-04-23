@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import Details from '@govuk-react/details'
-import Link from '@govuk-react/link'
 import { isEmpty } from 'lodash'
 import { SPACING_POINTS, LINE_HEIGHT } from '@govuk-react/constants'
 
@@ -11,6 +10,7 @@ import { NewWindowLink, SummaryTable } from '../../../components'
 import { exportSegmentsLabels, exportSubSegmentsLabels } from './labels'
 import urls from '../../../../lib/urls'
 import { NOT_SET_TEXT } from '../../../../apps/companies/constants'
+import AccessibleLink from '../../../components/Link'
 
 const TableDetails = styled('div')`
   display: flex;
@@ -38,9 +38,9 @@ const SectionAbout = ({ company, isDnbCompany, isArchived }) => (
     data-test="aboutDetailsContainer"
     actions={
       !isArchived && (
-        <Link href={urls.companies.edit(company.id)} key={company.id}>
+        <AccessibleLink href={urls.companies.edit(company.id)} key={company.id}>
           Edit
-        </Link>
+        </AccessibleLink>
       )
     }
   >

@@ -1,12 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Details, Link, Paragraph, VisuallyHidden } from 'govuk-react'
+import { Details, Paragraph, VisuallyHidden } from 'govuk-react'
 import { FONT_WEIGHTS } from '@govuk-react/constants'
 import styled from 'styled-components'
 
 import urls from '../../../../../lib/urls'
 import { NewWindowLink } from '../../../../components'
 import { CompanyResource } from '../../../../components/Resource'
+import AccessibleLink from '../../../../components/Link'
 
 const StyledLegend = styled('legend')`
   font-weight: ${FONT_WEIGHTS.bold};
@@ -35,10 +36,10 @@ const GlobalAccountManagerDetails = ({ oneListEmail, companyId }) => (
           {' or '}
           {oneListEmail && (
             <>
-              <Link href={`mailto:${oneListEmail}`}>
+              <AccessibleLink href={`mailto:${oneListEmail}`}>
                 <VisuallyHidden>opens email client for </VisuallyHidden>
                 {oneListEmail}
-              </Link>
+              </AccessibleLink>
               {'.'}
             </>
           )}

@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useParams } from 'react-router-dom'
-import { Button, Details, H2, Link, Table } from 'govuk-react'
+import { Button, Details, H2, Table } from 'govuk-react'
 import { LEVEL_SIZE, SPACING } from '@govuk-react/constants'
 
 import {
@@ -29,8 +29,9 @@ import {
 } from './transformers'
 import { STATUS } from './constants'
 import OMISLayout from './OMISLayout'
+import AccessibleLink from '../../components/Link'
 
-const StyledLink = styled(Link)`
+const StyledLink = styled(AccessibleLink)`
   display: inline-block;
   margin-bottom: ${SPACING.SCALE_5};
 `
@@ -189,13 +190,15 @@ const PaymentReconciliation = () => {
                         data-test="something-wrong-details"
                         summary="Is something wrong with the payment?"
                       >
-                        <Link href={urls.omis.workOrder(order.id)}>
+                        <AccessibleLink href={urls.omis.workOrder(order.id)}>
                           View the order
-                        </Link>{' '}
+                        </AccessibleLink>{' '}
                         to contact an adviser in the UK or contact{' '}
-                        <Link href={'mailto:omis.orders@digital.trade.gov.uk'}>
+                        <AccessibleLink
+                          href={'mailto:omis.orders@digital.trade.gov.uk'}
+                        >
                           omis.orders@digital.trade.gov.uk
-                        </Link>
+                        </AccessibleLink>
                         .
                       </Details>
                     </Form>

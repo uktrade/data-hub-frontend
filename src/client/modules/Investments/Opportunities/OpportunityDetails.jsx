@@ -5,7 +5,6 @@ import pluralize from 'pluralize'
 import { FONT_SIZE } from '@govuk-react/constants'
 import styled from 'styled-components'
 import Button from '@govuk-react/button'
-import Link from '@govuk-react/link'
 import { Details, SectionBreak } from 'govuk-react'
 
 import { state2props } from './state'
@@ -22,6 +21,7 @@ import OpportunityRequirementsForm from './OpportunityRequirementsForm'
 import { SummaryTable, ToggleSection } from '../../../components'
 
 import { RED } from '../../../utils/colours'
+import AccessibleLink from '../../../components/Link'
 
 const StyledLabel = styled('label')`
   display: inline-table;
@@ -117,7 +117,7 @@ const OpportunityDetails = ({
       </OpportunitySection>
       <StyledDetails summary="Need to delete this opportunity?">
         To delete this opportunity, email{' '}
-        <Link>capitalinvestment@trade.gov.uk</Link>
+        <AccessibleLink>capitalinvestment@trade.gov.uk</AccessibleLink>
       </StyledDetails>
     </>
   )

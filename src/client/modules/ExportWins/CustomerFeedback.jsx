@@ -1,7 +1,6 @@
 import React from 'react'
 import { Link as ReactRouterLink, useParams } from 'react-router-dom'
 import styled from 'styled-components'
-import { Link } from 'govuk-react'
 
 import {
   ExportWinTitle,
@@ -13,6 +12,7 @@ import ExportWin from '../../components/Resource/ExportWin'
 import SummaryTable from '../../components/SummaryTable'
 import { DefaultLayout } from '../../components'
 import urls from '../../../lib/urls'
+import AccessibleLink from '../../components/Link'
 
 const toYesNo = (val) => {
   if (val === undefined || val === null) return
@@ -125,12 +125,12 @@ const CustomerFeedback = () => {
       </ExportWin>
       <VerticalSpacerWithMarginBottom>
         <ExportWinsLink />
-        <Link
+        <AccessibleLink
           as={ReactRouterLink}
           to={urls.companies.exportWins.editSummary(companyId, winId)}
         >
           Back
-        </Link>
+        </AccessibleLink>
       </VerticalSpacerWithMarginBottom>
     </DefaultLayout>
   )

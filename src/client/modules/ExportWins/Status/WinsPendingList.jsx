@@ -1,5 +1,4 @@
 import React from 'react'
-import Link from '@govuk-react/link'
 
 import ExportWinsResource from '../../../components/Resource/ExportWins'
 import { currencyGBP } from '../../../utils/number-utils'
@@ -16,6 +15,7 @@ import { SORT_OPTIONS, WIN_STATUS } from './constants'
 import State from '../../../components/State'
 import urls from '../../../../lib/urls'
 import { NOT_SET_TEXT } from '../../../../apps/companies/constants'
+import AccessibleLink from '../../../components/Link'
 
 export const getHeadingUrl = (item) =>
   item.company?.id
@@ -49,13 +49,13 @@ export const WinsPendingList = ({ exportWins = [], currentAdviserId }) => {
                   {
                     label: 'Contact name:',
                     value: (
-                      <Link
+                      <AccessibleLink
                         href={urls.contacts.details(
                           item.company_contacts[0].id
                         )}
                       >
                         {item.company_contacts[0].name}
-                      </Link>
+                      </AccessibleLink>
                     ),
                   },
                 ]

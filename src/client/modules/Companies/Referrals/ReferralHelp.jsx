@@ -1,5 +1,4 @@
 import React from 'react'
-import Link from '@govuk-react/link'
 import { H2 } from '@govuk-react/heading'
 import { LEVEL_SIZE } from '@govuk-react/constants'
 import { useParams } from 'react-router-dom'
@@ -9,6 +8,7 @@ import urls from '../../../../lib/urls'
 import { buildCompanyBreadcrumbs } from '../utils'
 import { ReferralResource } from '../../../components/Resource'
 import { CompanyName } from './SendReferralForm/SendReferralForm'
+import AccessibleLink from '../../../components/Link'
 
 const AdviserDetails = ({ name, email }) => (
   <>
@@ -77,9 +77,14 @@ const ReferralHelp = () => {
 
             <p>
               Forward this referral onto someone else. Paste this URL into an
-              email: <Link href={relReferralLink}>{absReferralLink}</Link>
+              email:{' '}
+              <AccessibleLink href={relReferralLink}>
+                {absReferralLink}
+              </AccessibleLink>
             </p>
-            <Link href={relReferralLink}>Back to the referral</Link>
+            <AccessibleLink href={relReferralLink}>
+              Back to the referral
+            </AccessibleLink>
             <br />
             <br />
           </>

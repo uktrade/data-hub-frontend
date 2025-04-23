@@ -1,6 +1,6 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
-import { Details, Link } from 'govuk-react'
+import { Details } from 'govuk-react'
 
 import {
   FieldTypeahead,
@@ -24,6 +24,7 @@ import { FORM_LAYOUT } from '../../../common/constants'
 import { TASK_EDIT_ORDER_CONTACT, EDIT_CONTACT_ID } from './state'
 import { transformContactForApi } from './transformers'
 import OMISLayout from './OMISLayout'
+import AccessibleLink from '../../components/Link'
 
 const AddNewContact = ({ order }) => (
   <Task>
@@ -52,7 +53,7 @@ const AddNewContact = ({ order }) => (
           data-test="contact-not-listed"
         >
           If the contact you are looking for is not listed you can{' '}
-          <Link
+          <AccessibleLink
             data-test="add-a-new-contact-link"
             onClick={(e) => {
               e.preventDefault()
@@ -61,7 +62,7 @@ const AddNewContact = ({ order }) => (
             href={redirectUrl}
           >
             add a new contact
-          </Link>
+          </AccessibleLink>
           .
         </Details>
       )

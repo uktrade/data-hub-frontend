@@ -4,7 +4,6 @@ import qs from 'qs'
 import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
-import Link from '@govuk-react/link'
 import { FONT_SIZE, FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
 import styled from 'styled-components'
 import Label from '@govuk-react/label'
@@ -35,6 +34,7 @@ import {
 import useAdministrativeAreaLookup from '../AdministrativeAreaSearch/useAdministrativeAreaLookup'
 import useAdministrativeAreaSearch from '../AdministrativeAreaSearch/useAdministrativeAreaSearch'
 import urls from '../../../lib/urls'
+import AccessibleLink from '../Link'
 
 const YES = 'Yes'
 const NO = 'No'
@@ -71,7 +71,7 @@ const StyledLabel = styled(Label)`
   font-weight: ${FONT_WEIGHTS.bold};
 `
 
-const StyledLink = styled(Link)({
+const StyledLink = styled(AccessibleLink)({
   fontSize: FONT_SIZE.SIZE_20,
   lineHeight: '32px',
 })

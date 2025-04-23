@@ -2,11 +2,11 @@ import React from 'react'
 import { Link as ReactRouterLink } from 'react-router-dom'
 import { SPACING } from '@govuk-react/constants'
 import styled from 'styled-components'
-import { Link } from 'govuk-react'
 
 import ExportWin from '../../components/Resource/ExportWin'
 import VerticalSpacer from '../../components/VerticalSpacer'
 import urls from '../../../lib/urls'
+import AccessibleLink from '../../components/Link'
 
 export const ExportWinTitle = (props) => (
   <ExportWin.Inline {...props}>
@@ -19,13 +19,13 @@ export const ExportWinTitle = (props) => (
 )
 
 export const ExportWinsLink = () => (
-  <Link
+  <AccessibleLink
     data-test="export-wins-link"
     as={ReactRouterLink}
     to={urls.companies.exportWins.index()}
   >
     Export wins
-  </Link>
+  </AccessibleLink>
 )
 
 export const VerticalSpacerWithMarginBottom = styled(VerticalSpacer)`

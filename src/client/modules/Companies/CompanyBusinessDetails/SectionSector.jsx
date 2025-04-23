@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Link from '@govuk-react/link'
 
 import { SummaryTable } from '../../../components'
 import urls from '../../../../lib/urls'
+import AccessibleLink from '../../../components/Link'
 
 const SectionSector = ({ company, isArchived }) => (
   <SummaryTable
@@ -11,12 +11,12 @@ const SectionSector = ({ company, isArchived }) => (
     data-test="sectorDetailsContainer"
     actions={
       !isArchived && (
-        <Link
+        <AccessibleLink
           href={`${urls.companies.edit(company.id)}#sector`}
           key={company.id}
         >
           Edit
-        </Link>
+        </AccessibleLink>
       )
     }
   >

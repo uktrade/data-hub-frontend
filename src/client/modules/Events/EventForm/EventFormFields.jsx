@@ -1,8 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import Link from '@govuk-react/link'
-
 import {
   FieldAdvisersTypeahead,
   FieldRadios,
@@ -18,6 +16,7 @@ import {
 } from '../../../../common/constants'
 import { validateStartDateBeforeOrEqualToEndDate } from './validators'
 import urls from '../../../../lib/urls'
+import AccessibleLink from '../../../components/Link'
 
 export const EventFormFields = ({ values }) => (
   <>
@@ -25,13 +24,13 @@ export const EventFormFields = ({ values }) => (
       <p>Select a trade agreement and then a related event.</p>
       <p>
         Find{' '}
-        <Link
+        <AccessibleLink
           href={urls.external.helpCentre.tradeAgreementGuidance}
           target="_blank"
           aria-label="more information (opens in a new tab)"
         >
           more information (opens in a new tab)
-        </Link>{' '}
+        </AccessibleLink>{' '}
         about selecting trade agreements.
       </p>
     </article>

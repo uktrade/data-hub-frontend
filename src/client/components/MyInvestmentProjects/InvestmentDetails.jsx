@@ -1,10 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
-import Link from '@govuk-react/link'
 import { SPACING, FONT_SIZE, FONT_WEIGHTS } from '@govuk-react/constants'
 
 import { companies, interactions } from '../../../lib/urls'
 import { GREY_3, DARK_GREY } from '../../utils/colours'
+import AccessibleLink from '../Link'
 
 const { formatDate, DATE_FORMAT_COMPACT } = require('../../utils/date-utils')
 
@@ -58,9 +58,9 @@ const InvestmentDetails = ({
     <StyledDL>
       <StyledDT>Investor:</StyledDT>
       <StyledDD>
-        <Link href={companies.details(investor.id)}>
+        <AccessibleLink href={companies.details(investor.id)}>
           <Truncate>{investor.name}</Truncate>
-        </Link>
+        </AccessibleLink>
       </StyledDD>
       <StyledDT>Sector:</StyledDT>
       <StyledDD>
@@ -80,9 +80,9 @@ const InvestmentDetails = ({
           </StyledDD>
           <StyledDT>Interaction subject:</StyledDT>
           <StyledDD>
-            <Link href={interactions.detail(latestInteraction.id)}>
+            <AccessibleLink href={interactions.detail(latestInteraction.id)}>
               <Truncate>{latestInteraction.subject}</Truncate>
-            </Link>
+            </AccessibleLink>
           </StyledDD>
         </>
       )}

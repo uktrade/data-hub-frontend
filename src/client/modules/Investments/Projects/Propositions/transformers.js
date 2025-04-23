@@ -1,11 +1,11 @@
 import React from 'react'
-import { Link } from 'govuk-react'
 import styled from 'styled-components'
 
 import { formatDateWithYearMonth } from '../../../../utils/date'
 import { VIRUS_SCAN_STATUSES } from '../constants'
 
 import urls from '../../../../../lib/urls'
+import AccessibleLink from '../../../../components/Link'
 
 export const buildPropositionUrl = (propositionId, projectId) =>
   `v3/investment/${projectId}/proposition/${propositionId}`
@@ -60,19 +60,19 @@ const buildDocumentLink = (
 ) => (
   <>
     {avClean ? (
-      <Link
+      <AccessibleLink
         href={`/investments/projects/${projectId}/propositions/${propositionId}/download/${documentId}`}
         aria-label={`Download the document ${originalFilename}`}
       >
         Download
-      </Link>
+      </AccessibleLink>
     ) : (
       <strong>
         The file didn't pass virus scanning, contact your administrator
       </strong>
     )}
     <StyledSpan>
-      <Link
+      <AccessibleLink
         href={urls.investments.projects.proposition.document.delete(
           projectId,
           propositionId,
@@ -81,7 +81,7 @@ const buildDocumentLink = (
         data-test="delete-link"
       >
         Delete
-      </Link>
+      </AccessibleLink>
     </StyledSpan>
   </>
 )

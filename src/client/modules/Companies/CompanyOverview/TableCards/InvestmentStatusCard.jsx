@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'govuk-react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
@@ -18,6 +17,7 @@ import {
   StyledSummaryTable,
   StyledTableRow,
 } from './components'
+import AccessibleLink from '../../../../components/Link'
 
 const {
   formatDate,
@@ -36,12 +36,12 @@ const buildProjectCountCell = (
 ) => (
   <SummaryTable.Row heading={heading}>
     {list ? (
-      <Link
+      <AccessibleLink
         href={buildProjectStatusUrl(companyId, urlParam)}
         data-test={dataTest}
       >
         {list}
-      </Link>
+      </AccessibleLink>
     ) : (
       '0'
     )}
@@ -71,7 +71,7 @@ const InvestmentStatusCard = ({
         >
           <SummaryTable.Row heading="Last Project won">
             {summary?.won?.last_won_project?.id != null ? (
-              <Link
+              <AccessibleLink
                 href={urls.investments.projects.details(
                   summary.won.last_won_project.id
                 )}
@@ -80,7 +80,7 @@ const InvestmentStatusCard = ({
                 {`${formatDate(summary.won.last_won_project.last_changed, DATE_FORMAT_COMPACT)} - ${
                   summary.won.last_won_project.name
                 }`}
-              </Link>
+              </AccessibleLink>
             ) : (
               <StyledSpan>None</StyledSpan>
             )}
@@ -122,14 +122,14 @@ const InvestmentStatusCard = ({
           )}
           <StyledTableRow>
             <StyledLastTableCell colSpan={2}>
-              <Link
+              <AccessibleLink
                 href={urls.companies.investments.companyInvestmentProjectsWithSearch(
                   companyId
                 )}
                 data-test="investment-page-link"
               >
                 View all investments
-              </Link>
+              </AccessibleLink>
             </StyledLastTableCell>
           </StyledTableRow>
         </StyledSummaryTable>

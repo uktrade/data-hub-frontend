@@ -2,7 +2,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
-import Link from '@govuk-react/link'
 import { SPACING } from '@govuk-react/constants'
 
 import urls from '../../../../lib/urls'
@@ -36,6 +35,7 @@ import {
 } from './constants'
 import { FORM_LAYOUT } from '../../../../common/constants'
 import { number } from '../../../components/Form/validators'
+import AccessibleLink from '../../../components/Link'
 
 const StyledFieldCheckboxes = styled(FieldCheckboxes)`
   margin-bottom: 0;
@@ -125,7 +125,11 @@ const OpportunityRequirementsForm = (state) => {
                 />
                 <StyledP>
                   If you can’t see the type of investment you need, request it
-                  from <Link>capitalinvestment@trade.gov.uk</Link>.
+                  from{' '}
+                  <AccessibleLink href="mailto:capitalinvestment@trade.gov.uk">
+                    capitalinvestment@trade.gov.uk
+                  </AccessibleLink>
+                  .
                 </StyledP>
                 <FieldRadios
                   legend="Estimated return rate"

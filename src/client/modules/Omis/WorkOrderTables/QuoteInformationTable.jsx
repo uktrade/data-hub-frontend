@@ -1,10 +1,10 @@
 import React from 'react'
-import { Link } from 'govuk-react'
 
 import { SummaryTable } from '../../../components'
 import { canEditOrder } from '../transformers'
 import { formatDate, DATE_FORMAT_MEDIUM } from '../../../utils/date-utils'
 import urls from '../../../../lib/urls'
+import AccessibleLink from '../../../components/Link'
 
 const QuoteInformationTable = ({ order }) => (
   <SummaryTable
@@ -12,14 +12,14 @@ const QuoteInformationTable = ({ order }) => (
     data-test="quote-info-table"
     actions={
       canEditOrder(order) && (
-        <Link
+        <AccessibleLink
           key="editQuoteInfoLink"
           href={urls.omis.edit.quote(order.id)}
           data-test="edit-quote-info-link"
           noVisitedState={true}
         >
           Edit
-        </Link>
+        </AccessibleLink>
       )
     }
   >

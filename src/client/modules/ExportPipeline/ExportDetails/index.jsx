@@ -19,6 +19,7 @@ import {
 import { currencyGBP } from '../../../../client/utils/number-utils'
 import { BLACK, GREY_3 } from '../../../utils/colours'
 import { transformIdNameToValueLabel } from '../../../transformers'
+import AccessibleLink from '../../../components/Link'
 
 const StyledSummaryTable = styled(SummaryTable)({
   marginTop: 0,
@@ -179,12 +180,12 @@ const ExportDetailsForm = ({ exportItem }) => {
                 >
                   Convert to export win
                 </Button>
-                <Link
+                <AccessibleLink
                   href={urls.exportPipeline.delete(exportId)}
                   data-test="delete-export-details-button"
                 >
                   Delete
-                </Link>
+                </AccessibleLink>
               </Container>
             </>
           )

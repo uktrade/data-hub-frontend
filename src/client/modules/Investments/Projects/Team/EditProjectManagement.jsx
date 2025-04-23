@@ -1,5 +1,4 @@
 import React from 'react'
-import Link from '@govuk-react/link'
 import { useParams } from 'react-router-dom'
 
 import {
@@ -26,6 +25,7 @@ import {
   DATE_FORMAT_MONTH_YEAR,
 } from '../../../../utils/date-utils'
 import { currencyGBP } from '../../../../utils/number-utils'
+import AccessibleLink from '../../../../components/Link'
 
 const EditProjectManagement = () => {
   const { projectId } = useParams()
@@ -87,12 +87,12 @@ const EditProjectManagement = () => {
                   <SummaryTable.Row
                     heading="Client company"
                     children={
-                      <Link
+                      <AccessibleLink
                         href={urls.companies.detail(project.investorCompany.id)}
                         aria-label={'client company'}
                       >
                         {project.investorCompany.name}
-                      </Link>
+                      </AccessibleLink>
                     }
                   />
                   <SummaryTable.Row

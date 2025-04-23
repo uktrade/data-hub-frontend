@@ -1,6 +1,5 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import Link from '@govuk-react/link'
 import Button from '@govuk-react/button'
 import { GridRow } from 'govuk-react'
 import { SPACING } from '@govuk-react/constants'
@@ -15,6 +14,7 @@ import {
 } from './state'
 import { GREY_3, RED, TEXT_COLOUR } from '../../../utils/colours'
 import { STATUS } from '../TaskForm/constants'
+import AccessibleLink from '../../../components/Link'
 
 const ButtonWrapper = styled.div`
   min-height: 71px;
@@ -93,12 +93,12 @@ export const TaskButtons = ({ task, returnUrl }) => (
         </DeleteTaskWrapper>
       )}
       <ButtonWrapper>
-        <Link
+        <AccessibleLink
           data-test="task-back-link"
           href={returnUrl ?? urls.dashboard.myTasks()}
         >
           Back
-        </Link>
+        </AccessibleLink>
       </ButtonWrapper>
     </GridRow>
   </>

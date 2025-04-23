@@ -1,15 +1,17 @@
 import React from 'react'
-import { Link } from 'govuk-react'
 
 import urls from '../../../../../lib/urls'
 import ItemRenderer from '../ItemRenderer'
+import AccessibleLink from '../../../../components/Link'
 
 const ItemContent = ({ item }) => (
   <>
     {item.event} for{' '}
-    <Link href={`${urls.investments.projects.details(item.project.id)}`}>
+    <AccessibleLink
+      href={`${urls.investments.projects.details(item.project.id)}`}
+    >
       {item.project.name}
-    </Link>
+    </AccessibleLink>
   </>
 )
 

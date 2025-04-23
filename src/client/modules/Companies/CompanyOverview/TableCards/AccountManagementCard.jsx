@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { Link } from 'govuk-react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import pluralize from 'pluralize'
@@ -13,6 +12,7 @@ import {
   StyledSummaryTable,
   StyledTableRow,
 } from './components'
+import AccessibleLink from '../../../../components/Link'
 
 const Button = styled('button')`
   background: none !important;
@@ -76,12 +76,12 @@ const AccountManagementCard = ({ company }) => {
       >
         {buildCellContents(
           company?.oneListGroupGlobalAccountManager,
-          <Link
+          <AccessibleLink
             data-test="account-manager-link"
             href={urls.companies.accountManagement.index(company.id)}
           >
             {company.oneListGroupGlobalAccountManager?.name}
-          </Link>
+          </AccessibleLink>
         )}
       </SummaryTable.Row>
       <SummaryTable.Row heading="One List">
@@ -96,12 +96,12 @@ const AccountManagementCard = ({ company }) => {
           <StyledAddressList>
             {viewablePrimaryContacts.map((contact, index) => (
               <li key={`${contact.id}-${index}`}>
-                <Link
+                <AccessibleLink
                   data-test={`contact-${contact.id}-link`}
                   href={urls.contacts.details(contact.id)}
                 >
                   {contact.name}
-                </Link>
+                </AccessibleLink>
               </li>
             ))}
           </StyledAddressList>
@@ -117,12 +117,12 @@ const AccountManagementCard = ({ company }) => {
       </SummaryTable.Row>
       <StyledTableRow>
         <StyledLastTableCell colSpan={2}>
-          <Link
+          <AccessibleLink
             href={urls.companies.accountManagement.index(company.id)}
             data-test="account-management-page-link"
           >
             View full account management
-          </Link>
+          </AccessibleLink>
         </StyledLastTableCell>
       </StyledTableRow>
     </StyledSummaryTable>

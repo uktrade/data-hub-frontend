@@ -1,6 +1,5 @@
 import React from 'react'
 import { H2 } from '@govuk-react/heading'
-import { Link } from 'govuk-react'
 import styled from 'styled-components'
 import pluralize from 'pluralize'
 import {
@@ -12,6 +11,7 @@ import {
 
 import { CollectionHeaderRow } from '../../components'
 import { decimal } from '../../utils/number-utils'
+import AccessibleLink from '../../components/Link'
 
 const ListHeader = styled(H2)({
   marginTop: 0,
@@ -30,7 +30,7 @@ const StyledCollectionHeaderRow = styled(CollectionHeaderRow)({
   alignItems: 'flex-end',
 })
 
-const SettingsLink = styled(Link)({
+const SettingsLink = styled(AccessibleLink)({
   display: 'none',
   fontSize: FONT_SIZE.SIZE_19,
   [MEDIA_QUERIES.TABLET]: {

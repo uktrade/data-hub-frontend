@@ -7,7 +7,6 @@ import GridRow from '@govuk-react/grid-row'
 import Button from '@govuk-react/button'
 import Details from '@govuk-react/details'
 import { SPACING, FONT_SIZE, BREAKPOINTS } from '@govuk-react/constants'
-import { Link } from 'govuk-react'
 import { H4 } from '@govuk-react/heading'
 import { connect } from 'react-redux'
 
@@ -26,6 +25,7 @@ import {
 } from '../../modules/Companies/utils'
 import { RelatedCompaniesCountResource } from '../Resource'
 import { companyState2Props } from './state'
+import AccessibleLink from '../Link'
 
 const LocalHeaderTradingNames = styled(H4)`
   font-weight: normal;
@@ -154,14 +154,14 @@ const CompanyLocalHeader = ({
                 {({ relatedCompaniesCount }) =>
                   relatedCompaniesCount > 0 && (
                     <StyledRelatedCompaniesWrapper>
-                      <Link
+                      <AccessibleLink
                         href={urls.companies.dnbHierarchy.tree(company.id)}
                         data-test="company-tree-link"
                       >
                         {`View company tree: ${
                           relatedCompaniesCount + 1
                         } companies`}
-                      </Link>
+                      </AccessibleLink>
                     </StyledRelatedCompaniesWrapper>
                   )
                 }
@@ -237,11 +237,13 @@ const CompanyLocalHeader = ({
                     ? 'Lead ITA'
                     : 'Global Account Manager'}
                   : {company.oneListGroupGlobalAccountManager.name}{' '}
-                  <a href={urls.companies.accountManagement.index(company.id)}>
+                  <AccessibleLink
+                    href={urls.companies.accountManagement.index(company.id)}
+                  >
                     {isItaTierDAccount(company.oneListGroupTier)
                       ? 'View Lead adviser'
                       : 'View core team'}
-                  </a>
+                  </AccessibleLink>
                 </p>
               </>
             )}

@@ -5,7 +5,13 @@ import { connect } from 'react-redux'
 import { H3 } from 'govuk-react'
 import { FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
 
-import { BLUE, BORDER_COLOUR } from '../../../client/utils/colours'
+import {
+  BLACK,
+  BLUE,
+  BORDER_COLOUR,
+  FOCUS_COLOUR,
+  LINK_HOVER_COLOUR,
+} from '../../../client/utils/colours'
 import urls from '../../../lib/urls'
 import { state2props } from './state'
 import {
@@ -38,6 +44,20 @@ const LinkListLink = styled(Link)(({ $isActive }) => ({
   paddingLeft: SPACING.SCALE_2,
   display: 'block',
   borderLeft: `solid 5px transparent`,
+  '&:hover': {
+    textDecoration: 'underline',
+    color: LINK_HOVER_COLOUR,
+    textDecorationThickness: 'max(3px, 0.1875rem, 0.12em)',
+    textDecorationSkip: 'none',
+    textDecorationSkipInk: 'none',
+  },
+  '&:focus': {
+    outline: '3px solid transparent',
+    color: BLACK,
+    boxShadow: `0 -2px ${FOCUS_COLOUR}, 0 4px ${BLACK}`,
+    textDecoration: 'none',
+    backgroundColor: FOCUS_COLOUR,
+  },
   ...($isActive
     ? {
         fontWeight: FONT_WEIGHTS.bold,

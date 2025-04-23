@@ -1,5 +1,4 @@
 import React from 'react'
-import Link from '@govuk-react/link'
 
 import {
   TAGS,
@@ -16,6 +15,7 @@ import { AdviserResource } from '../../../components/Resource'
 import { INTERACTION_NAMES } from '../../../../apps/interactions/constants'
 import { getServiceText } from '../../../components/ActivityFeed/activities/InteractionUtils'
 import { currencyGBP } from '../../../utils/number-utils'
+import AccessibleLink from '../../../components/Link'
 
 const { isEmpty } = require('lodash')
 
@@ -27,7 +27,9 @@ const AdviserEmail = (props) => (
 
 const AdviserRenderer = ({ adviser, team }) => {
   const email = adviser.email ? adviser.email : <AdviserEmail id={adviser.id} />
-  const emailLink = <Link href={`mailto:${email}`}> {email}</Link>
+  const emailLink = (
+    <AccessibleLink href={`mailto:${email}`}> {email}</AccessibleLink>
+  )
   const teamString = team ? `${team.name} ` : null
   return (
     <>
@@ -42,12 +44,12 @@ export const formattedContacts = (contacts) =>
   contacts.map((contact, index) => (
     <span key={contact.name}>
       {index ? ', ' : ''}
-      <Link
+      <AccessibleLink
         data-test={`contact-link-${index}`}
         href={urls.contacts.details(contact.id)}
       >
         {contact.name}
-      </Link>
+      </AccessibleLink>
     </span>
   ))
 

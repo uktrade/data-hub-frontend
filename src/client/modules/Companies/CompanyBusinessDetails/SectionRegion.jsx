@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Link from '@govuk-react/link'
 
 import { SummaryTable } from '../../../components'
 import urls from '../../../../lib/urls'
+import AccessibleLink from '../../../components/Link'
 
 const SectionRegion = ({ company, isArchived }) =>
   !!company.ukBased ? (
@@ -12,12 +12,12 @@ const SectionRegion = ({ company, isArchived }) =>
       data-test="regionDetailsContainer"
       actions={
         !isArchived && (
-          <Link
+          <AccessibleLink
             href={`${urls.companies.edit(company.id)}#uk_region`}
             key={company.id}
           >
             Edit
-          </Link>
+          </AccessibleLink>
         )
       }
     >

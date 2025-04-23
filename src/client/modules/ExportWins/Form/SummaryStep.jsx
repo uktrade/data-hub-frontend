@@ -3,7 +3,6 @@ import WarningText from '@govuk-react/warning-text'
 import InsetText from '@govuk-react/inset-text'
 import { FONT_SIZE } from '@govuk-react/constants'
 import styled from 'styled-components'
-import { Link } from 'govuk-react'
 import pluralize from 'pluralize'
 
 import { Step, ButtonLink, FieldInput, SummaryTable } from '../../../components'
@@ -31,6 +30,7 @@ import {
   sumWinTypeYearlyValues,
   sumAllWinTypeYearlyValues,
 } from './utils'
+import AccessibleLink from '../../../components/Link'
 
 const StyledButtonLink = styled(ButtonLink)({
   margin: 0,
@@ -183,14 +183,16 @@ const CustomerDetailsTable = ({ values, goToStep, isEditing, companyId }) => (
     >
       <SummaryTable.Row heading="Company name">
         {isEditing && (
-          <Link href={urls.companies.overview.index(values.company?.id)}>
+          <AccessibleLink
+            href={urls.companies.overview.index(values.company?.id)}
+          >
             {values.company?.name}
-          </Link>
+          </AccessibleLink>
         )}
         {!isEditing && (
-          <Link href={urls.companies.overview.index(companyId)}>
+          <AccessibleLink href={urls.companies.overview.index(companyId)}>
             <CompanyName companyId={companyId} />
-          </Link>
+          </AccessibleLink>
         )}
       </SummaryTable.Row>
       <SummaryTable.Row heading="Contact name">

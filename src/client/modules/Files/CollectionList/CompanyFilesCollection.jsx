@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Link, Details } from 'govuk-react'
+import { Details } from 'govuk-react'
 import { useParams } from 'react-router-dom'
 
 import { FILES__LOADED } from '../../../actions'
@@ -13,6 +13,7 @@ import DefaultLayoutBase from '../../../components/Layout/DefaultLayoutBase'
 
 import { FILES_LIST_ID, TASK_GET_FILES_LIST, filesState2props } from './state'
 import CollectionSummaryCardItem from '../../../components/CollectionList/CollectionSummaryCardItem'
+import AccessibleLink from '../../../components/Link'
 
 const CompanyFilesCollection = ({
   payload,
@@ -55,9 +56,9 @@ const CompanyFilesCollection = ({
                 data-test="archived-details"
               >
                 Files cannot be added to an archived company.{' '}
-                <Link href={`/companies/${company.id}/unarchive`}>
+                <AccessibleLink href={`/companies/${company.id}/unarchive`}>
                   Click here to unarchive
-                </Link>
+                </AccessibleLink>
               </Details>
             ) : null}
             <FilteredCollectionList

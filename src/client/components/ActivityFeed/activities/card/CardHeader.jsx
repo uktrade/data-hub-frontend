@@ -57,14 +57,6 @@ const StyledHeading = styled(H3)`
   font-weight: normal;
   font-size: ${HEADING_SIZES.MEDIUM}px;
 
-  & > a:link,
-  a:visited,
-  a:hover,
-  a:active {
-    text-decoration: none;
-    color: ${BLUE};
-  }
-
   ${MEDIA_QUERIES.TABLET} {
     margin-bottom: ${SPACING.SCALE_5};
   }

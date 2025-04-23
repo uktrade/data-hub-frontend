@@ -1,15 +1,15 @@
 import React from 'react'
-import { Link } from 'govuk-react'
 
 import { SummaryTable } from '../../../components'
 import urls from '../../../../lib/urls'
 import { canEditOrder, isOrderActive } from '../transformers'
+import AccessibleLink from '../../../components/Link'
 
 const MailtoLink = ({ email }) =>
   email ? (
-    <Link href={`mailto:${email}`} data-test="email-link">
+    <AccessibleLink href={`mailto:${email}`} data-test="email-link">
       {email}
-    </Link>
+    </AccessibleLink>
   ) : (
     ''
   )
@@ -21,26 +21,26 @@ const ContactTable = ({ order, contact }) => (
     data-test="contact-table"
     actions={
       (canEditOrder(order) || isOrderActive(order)) && (
-        <Link
+        <AccessibleLink
           key="editContactLink"
           href={urls.omis.edit.contact(order.id)}
           data-test="edit-contact-link"
           noVisitedState={true}
         >
           Edit
-        </Link>
+        </AccessibleLink>
       )
     }
   >
     <SummaryTable.Row heading="Name">
       <>
-        <Link
+        <AccessibleLink
           href={urls.contacts.contact(contact.id)}
           data-test="contact-link"
           noVisitedState={true}
         >
           {contact.name}
-        </Link>
+        </AccessibleLink>
         {setJobTitle(contact.jobTitle)}
       </>
     </SummaryTable.Row>

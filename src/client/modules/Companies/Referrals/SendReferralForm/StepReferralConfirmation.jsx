@@ -1,5 +1,5 @@
 import React from 'react'
-import { H2, Button, Link } from 'govuk-react'
+import { H2, Button } from 'govuk-react'
 import { LEVEL_SIZE } from '@govuk-react/constants'
 import UnorderedList from '@govuk-react/unordered-list'
 import ListItem from '@govuk-react/list-item'
@@ -12,6 +12,7 @@ import {
   SecondaryButton,
   FieldInput,
 } from '../../../../components'
+import AccessibleLink from '../../../../components/Link'
 
 const StepReferralConfirmation = ({ cancelUrl }) => {
   const { values = {}, goBack } = useFormContext()
@@ -49,7 +50,7 @@ const StepReferralConfirmation = ({ cancelUrl }) => {
       </UnorderedList>
       <FormActions>
         <Button name="forward">Send referral</Button>
-        <Link href={cancelUrl}>Cancel</Link>
+        <AccessibleLink href={cancelUrl}>Cancel</AccessibleLink>
       </FormActions>
     </>
   )

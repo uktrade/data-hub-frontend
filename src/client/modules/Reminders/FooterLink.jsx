@@ -1,7 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
-import { H3, Link } from 'govuk-react'
+import { H3 } from 'govuk-react'
 import { SPACING, MEDIA_QUERIES } from '@govuk-react/constants'
+
+import AccessibleLink from '../../components/Link'
 
 const StyledFooterLink = styled('div')({
   display: 'block',
@@ -22,9 +24,13 @@ const FooterLink = ({ headingText, linkText, linkUrl }) => {
         </H3>
         <p>
           See the{' '}
-          <Link target="_blank" rel="noopener noreferrer" href={linkUrl}>
+          <AccessibleLink
+            target="_blank"
+            rel="noopener noreferrer"
+            href={linkUrl}
+          >
             {linkText}{' '}
-          </Link>
+          </AccessibleLink>
         </p>
       </div>
     </StyledFooterLink>

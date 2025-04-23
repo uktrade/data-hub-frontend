@@ -1,18 +1,19 @@
 import React from 'react'
-import { Link, UnorderedList, ListItem, H2 } from 'govuk-react'
+import { UnorderedList, ListItem, H2 } from 'govuk-react'
 
 import Layout from './Layout'
+import AccessibleLink from '../../../components/Link'
 
 const WCAGLink = () => (
-  <Link target="_blank" href="https://www.w3.org/TR/WCAG22/">
+  <AccessibleLink target="_blank" href="https://www.w3.org/TR/WCAG22/">
     Web Content Accessibility Guidelines (WCAG) 2.2
-  </Link>
+  </AccessibleLink>
 )
 
 const DBTMailtoLink = () => (
-  <Link href="mailto:digital@businessandtrade.gov.uk?subject=Export Wins accessibility question">
+  <AccessibleLink href="mailto:digital@businessandtrade.gov.uk?subject=Export Wins accessibility question">
     digital@businessandtrade.gov.uk.
-  </Link>
+  </AccessibleLink>
 )
 
 const AccesibilityStatement = () => (
@@ -50,9 +51,9 @@ const AccesibilityStatement = () => (
       <ListItem>use words that are clear and simple to understand </ListItem>
     </UnorderedList>
     <p>
-      <Link target="_blank" href="https://mcmw.abilitynet.org.uk/">
+      <AccessibleLink target="_blank" href="https://mcmw.abilitynet.org.uk/">
         AbilityNet
-      </Link>{' '}
+      </AccessibleLink>{' '}
       has advice on making your device easier to use if you have a disability.
     </p>
     <H2>How accessible this website is</H2>

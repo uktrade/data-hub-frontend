@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'govuk-react'
 import { useParams } from 'react-router-dom'
 
 import { SummaryTable } from '../../../components'
@@ -20,6 +19,7 @@ import urls from '../../../../lib/urls'
 import { formatDate, DATE_FORMAT_FULL } from '../../../utils/date-utils'
 import ProjectLayoutNew from '../../../components/Layout/ProjectLayoutNew'
 import InvestmentName from './InvestmentName'
+import AccessibleLink from '../../../components/Link'
 
 const NOT_KNOWN = 'Not known'
 
@@ -50,9 +50,9 @@ const landingTable = (ukCompany = null, actualLandDate) => (
       heading="UK company"
       value={
         ukCompany ? (
-          <Link href={urls.companies.overview.index(ukCompany.id)}>
+          <AccessibleLink href={urls.companies.overview.index(ukCompany.id)}>
             {ukCompany.name}
-          </Link>
+          </AccessibleLink>
         ) : (
           NOT_KNOWN
         )
@@ -200,9 +200,11 @@ const ProjectEvaluation = () => {
                   <SummaryTable.TextRow
                     heading="Foreign investor"
                     value={
-                      <Link href={urls.companies.overview.index(company.id)}>
+                      <AccessibleLink
+                        href={urls.companies.overview.index(company.id)}
+                      >
                         {company.name}
-                      </Link>
+                      </AccessibleLink>
                     }
                   />
                   <SummaryTable.TextRow
@@ -213,13 +215,13 @@ const ProjectEvaluation = () => {
                     heading="UK company"
                     value={
                       project.ukCompany ? (
-                        <Link
+                        <AccessibleLink
                           href={urls.companies.overview.index(
                             project.ukCompany.id
                           )}
                         >
                           {project.ukCompany.name}
-                        </Link>
+                        </AccessibleLink>
                       ) : (
                         NOT_KNOWN
                       )

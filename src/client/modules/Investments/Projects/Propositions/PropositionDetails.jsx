@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { Button, Link } from 'govuk-react'
+import { Button } from 'govuk-react'
 
 import { LocalHeader, Main, SummaryTable } from '../../../../components'
 import {
@@ -21,6 +21,7 @@ import { buildProjectBreadcrumbs } from '../../utils'
 import { ID, TASK_PROPOSITION_COMPLETE, propositionState2props } from '../state'
 import { PROPOSITION_COMPLETE } from '../../../../../client/actions'
 import Task from '../../../../../client/components/Task'
+import AccessibleLink from '../../../../components/Link'
 
 const buildHeading = (index) => {
   index++
@@ -133,7 +134,7 @@ const PropositionDetails = ({
                     </SummaryTable>
                     {checkStatus(proposition.status) && (
                       <>
-                        <Link
+                        <AccessibleLink
                           href={urls.investments.projects.proposition.document.index(
                             investmentProjectId,
                             propositionId
@@ -141,7 +142,7 @@ const PropositionDetails = ({
                           data-test="upload-link"
                         >
                           {getUploadText(evidence.count)}
-                        </Link>
+                        </AccessibleLink>
                         <br />
                         <br />
                         {evidence.count > 0 && (
@@ -174,7 +175,7 @@ const PropositionDetails = ({
                           </Task>
                         )}
                         <br />
-                        <Link
+                        <AccessibleLink
                           href={urls.investments.projects.proposition.abandon(
                             investmentProjectId,
                             propositionId
@@ -182,17 +183,17 @@ const PropositionDetails = ({
                           data-test="abandon-link"
                         >
                           Abandon proposition
-                        </Link>
+                        </AccessibleLink>
                         <br />
                         <br />
-                        <Link
+                        <AccessibleLink
                           href={urls.investments.projects.propositions(
                             investmentProjectId
                           )}
                           data-test="proposition-list-link"
                         >
                           View propositions list
-                        </Link>
+                        </AccessibleLink>
                         <br />
                         <br />
                       </>

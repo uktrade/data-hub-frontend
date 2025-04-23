@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { InsetText, Link } from 'govuk-react'
+import { InsetText } from 'govuk-react'
 
 import { SummaryTable } from '../../../components'
 import {
@@ -12,6 +12,7 @@ import {
 import { VAT_STATUS } from '../constants'
 import urls from '../../../../lib/urls'
 import { currencyGBP } from '../../../utils/number-utils'
+import AccessibleLink from '../../../components/Link'
 
 const StyledInset = styled(InsetText)`
   margin-top: -10px;
@@ -60,14 +61,14 @@ const InvoiceDetailsTable = ({ order, company }) => (
     data-test="invoice-details-table"
     actions={
       (canEditOrder(order) || isOrderActive(order)) && (
-        <Link
+        <AccessibleLink
           key="editInvoiceDetailsLink"
           href={urls.omis.edit.invoiceDetails(order.id)}
           data-test="edit-invoice-details-link"
           noVisitedState={true}
         >
           Edit
-        </Link>
+        </AccessibleLink>
       )
     }
   >

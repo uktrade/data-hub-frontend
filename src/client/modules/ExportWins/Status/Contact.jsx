@@ -1,10 +1,10 @@
 import React from 'react'
-import Link from '@govuk-react/link'
 
 import urls from '../../../../lib/urls'
+import AccessibleLink from '../../../components/Link'
 
 const ContactLink = ({ name, id }) => (
-  <Link href={urls.contacts.details(id)}>{name}</Link>
+  <AccessibleLink href={urls.contacts.details(id)}>{name}</AccessibleLink>
 )
 
 const Contact = ({

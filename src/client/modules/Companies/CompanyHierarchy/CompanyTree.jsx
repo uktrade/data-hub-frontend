@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Button, H2, Link } from 'govuk-react'
+import { Button, H2 } from 'govuk-react'
 import { isEmpty, isFunction, kebabCase } from 'lodash'
 import pluralize from 'pluralize'
 import { BsFillPersonFill } from 'react-icons/bs'
@@ -41,6 +41,7 @@ import { addressToString } from '../../../utils/addresses'
 import { GREY_4, BLACK, WHITE, BLUE } from '../../../utils/colours'
 import { formatDate, DATE_FORMAT_COMPACT } from '../../../utils/date-utils'
 import { hqLabels } from '../../../../apps/companies/labels'
+import AccessibleLink from '../../../components/Link'
 
 const ToggleSubsidiariesButton = ({
   isOpen,
@@ -303,12 +304,13 @@ const HierarchyItem = ({
             {Object.keys(company).length === 0 ? (
               `No related companies found`
             ) : company?.id ? (
-              <Link
+              <AccessibleLink
+                darkBackground={true}
                 href={urls.companies.overview.index(company.id)}
                 aria-label={`Go to ${company.name} details`}
               >
                 {company.name}
-              </Link>
+              </AccessibleLink>
             ) : (
               <span>{`${company.name} (not on Data Hub)`}</span>
             )}

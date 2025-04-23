@@ -1,10 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { H2, Table, Link } from 'govuk-react'
+import { H2, Table } from 'govuk-react'
 import { LEVEL_SIZE } from '@govuk-react/constants'
 
 import { CompanyOneListTeamResource } from '../../../components/Resource'
 import { transformOneListCoreTeamToCollection } from './transformers'
+import AccessibleLink from '../../../components/Link'
 
 const getSubheadingText = (company) => {
   const endText = ` an account managed company on the One List (${company.oneListGroupTier.name})`
@@ -24,7 +25,11 @@ const buildRow = (transformedAdvisers) =>
       <Table.Cell>{location}</Table.Cell>
       <Table.Cell>{name}</Table.Cell>
       <Table.Cell>
-        {email ? <Link href={`mailto:${email}`}>{email}</Link> : '-'}
+        {email ? (
+          <AccessibleLink href={`mailto:${email}`}>{email}</AccessibleLink>
+        ) : (
+          '-'
+        )}
       </Table.Cell>
     </Table.Row>
   ))

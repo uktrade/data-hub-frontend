@@ -6,7 +6,6 @@ import GridRow from '@govuk-react/grid-row'
 import Button from '@govuk-react/button'
 import { SPACING } from '@govuk-react/constants'
 import Breadcrumbs from '@govuk-react/breadcrumbs'
-import { Link } from 'govuk-react'
 
 import { investments } from '../../../lib/urls'
 
@@ -22,6 +21,7 @@ import StatusMessageHeader from '../StatusMessageHeader'
 import { EYBLeadResource } from '../../../client/components/Resource'
 import { buildEYBLeadBreadcrumbs } from '../../modules/Investments/utils'
 import EYBLeadName from '../../modules/Investments/EYBLeads/EYBLeadName'
+import AccessibleLink from '../Link'
 
 const GlobalStyles = createGlobalStyle`
   *, *:before, *:after {
@@ -65,12 +65,9 @@ const StyledButtonLink = styled.a({
   float: 'right',
 })
 
-const StyledHeaderLink = styled(Link)`
+const StyledHeaderLink = styled(AccessibleLink)`
   color: ${BLUE};
   text-decoration: underline;
-  &:hover {
-    color: ${BLUE};
-  }
   &:visited {
     color: ${BLUE};
   }

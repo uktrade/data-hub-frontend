@@ -2,7 +2,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import Details from '@govuk-react/details'
 import Button from '@govuk-react/button'
-import Link from '@govuk-react/link'
 import PropTypes from 'prop-types'
 import { useParams } from 'react-router-dom'
 
@@ -13,6 +12,7 @@ import SecondaryButton from '../../../components/SecondaryButton'
 import { DefaultLayout, SummaryTable, FormActions } from '../../../components'
 import { CompanyResource, ReferralResource } from '../../../components/Resource'
 import { CompanyName } from './SendReferralForm/SendReferralForm'
+import AccessibleLink from '../../../components/Link'
 
 const { formatDate, DATE_FORMAT_COMPACT } = require('../../../utils/date-utils')
 
@@ -48,7 +48,7 @@ const BackButton = ({ referrerUrl, companyId }) => {
     ? new URL(referrerUrl).pathname === urls.companies.referrals.list()
     : false
   return (
-    <Link
+    <AccessibleLink
       href={
         cameFromHomePage
           ? urls.companies.referrals.list()
@@ -57,7 +57,7 @@ const BackButton = ({ referrerUrl, companyId }) => {
       data-test="back-button"
     >
       Back
-    </Link>
+    </AccessibleLink>
   )
 }
 
@@ -94,15 +94,17 @@ export default connect(({ referrerUrl, ...state }) => ({
                   data-test="referral-details-table"
                 >
                   <SummaryTable.Row heading="Company">
-                    <Link href={urls.companies.detail(company.id)}>
+                    <AccessibleLink href={urls.companies.detail(company.id)}>
                       {company.name}
-                    </Link>
+                    </AccessibleLink>
                   </SummaryTable.Row>
                   {referral.contact && (
                     <SummaryTable.Row heading="Contact">
-                      <Link href={urls.contacts.contact(referral.contact.id)}>
+                      <AccessibleLink
+                        href={urls.contacts.contact(referral.contact.id)}
+                      >
                         {referral.contact.name}
-                      </Link>
+                      </AccessibleLink>
                     </SummaryTable.Row>
                   )}
                   <SummaryTable.Row heading="Sending adviser">
@@ -131,13 +133,13 @@ export default connect(({ referrerUrl, ...state }) => ({
                         <AdviserDetails {...referral.completedBy} />
                       </SummaryTable.Row>
                       <SummaryTable.Row heading="With interaction">
-                        <Link
+                        <AccessibleLink
                           href={urls.interactions.detail(
                             referral.interaction?.id
                           )}
                         >
                           {referral.interaction?.subject}
-                        </Link>
+                        </AccessibleLink>
                       </SummaryTable.Row>
                     </SummaryTable>
                     <FormActions>

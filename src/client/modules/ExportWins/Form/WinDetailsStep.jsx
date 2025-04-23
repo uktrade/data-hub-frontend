@@ -1,7 +1,6 @@
 import React from 'react'
 import { Details, ListItem, UnorderedList } from 'govuk-react'
 import { H3 } from '@govuk-react/heading'
-import Link from '@govuk-react/link'
 import styled from 'styled-components'
 
 import Countries from '../../../components/Resource/Countries'
@@ -31,6 +30,7 @@ import {
   winTypeOptions,
   goodsServicesOptions,
 } from './constants'
+import AccessibleLink from '../../../components/Link'
 
 const MAX_WORDS = 100
 
@@ -264,19 +264,21 @@ const WinDetailsStep = ({ isEditing }) => {
           Since 2021 the UK does not provide financial or promotional support
           for the fossil fuel energy sector overseas, so only exempt projects
           can be added. See guidance in{' '}
-          <Link
+          <AccessibleLink
             href={urls.external.cleanEnergyTransition}
             target="_blank"
             aria-label="opens in a new tab"
           >
             'Aligning UK international support for the clean energy transition'.
-          </Link>
+          </AccessibleLink>
         </p>
 
         <p>If it doesn't meet the criteria the win will not be approved</p>
         <p>
           To check if your project is exempt contact{' '}
-          <Link href={`mailto:${FOSSIL_FUEL_EMAIL}`}>{FOSSIL_FUEL_EMAIL}.</Link>
+          <AccessibleLink href={`mailto:${FOSSIL_FUEL_EMAIL}`}>
+            {FOSSIL_FUEL_EMAIL}.
+          </AccessibleLink>
         </p>
       </Details>
     </Step>

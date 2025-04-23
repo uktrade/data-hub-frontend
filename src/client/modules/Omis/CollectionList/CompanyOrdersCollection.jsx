@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
-import { Link, Details } from 'govuk-react'
+import { Details } from 'govuk-react'
 import { H3 } from '@govuk-react/heading'
 import { HEADING_SIZES } from '@govuk-react/constants'
 import VisuallyHidden from '@govuk-react/visually-hidden'
@@ -21,18 +21,10 @@ import {
   TASK_GET_ORDERS_LIST,
 } from './state'
 import urls from '../../../../lib/urls'
+import AccessibleLink from '../../../components/Link'
 
 const StyledHeader = styled(H3)`
   font-size: ${HEADING_SIZES.SMALL}px;
-`
-
-const StyledLinkHeader = styled(StyledHeader)`
-  & > a:link,
-  a:visited,
-  a:hover,
-  a:active {
-    text-decoration: none;
-  }
 `
 
 const CompanyOrdersCollection = ({
@@ -58,11 +50,11 @@ const CompanyOrdersCollection = ({
   }
 
   const TitleRenderer = (title, url) => (
-    <StyledLinkHeader>
-      <Link href={url}>
+    <StyledHeader>
+      <AccessibleLink href={url} showUnderline={false}>
         {title} <VisuallyHidden>(Order reference)</VisuallyHidden>
-      </Link>
-    </StyledLinkHeader>
+      </AccessibleLink>
+    </StyledHeader>
   )
 
   return (
@@ -80,9 +72,9 @@ const CompanyOrdersCollection = ({
                 data-test="archived-details"
               >
                 Orders cannot be added to an archived company.{' '}
-                <Link href={`/companies/${company.id}/unarchive`}>
+                <AccessibleLink href={`/companies/${company.id}/unarchive`}>
                   Click here to unarchive
-                </Link>
+                </AccessibleLink>
               </Details>
             ) : null}
             <FilteredCollectionList

@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Link from '@govuk-react/link'
 import pluralize from 'pluralize'
 import styled from 'styled-components'
 import { SPACING_POINTS } from '@govuk-react/constants'
@@ -9,8 +8,9 @@ import { SummaryTable } from '../../../components'
 import WideSummaryTableRow from './WideSummaryTableRow'
 import { hqLabels } from '../../../../apps/companies/labels'
 import { companies } from '../../../../lib/urls'
+import AccessibleLink from '../../../components/Link'
 
-const StyledRowActionLink = styled(Link)`
+const StyledRowActionLink = styled(AccessibleLink)`
   float: right;
   margin-left: ${SPACING_POINTS[3]}px;
   font-size: inherit;
@@ -46,9 +46,9 @@ const SubsectionDnBHierarchy = ({
 
       {!isGlobalUltimate && globalUltimate && (
         <SummaryTable.Row heading="Ultimate HQ">
-          <Link href={companies.detail(globalUltimate.id)}>
+          <AccessibleLink href={companies.detail(globalUltimate.id)}>
             {globalUltimate.name}
-          </Link>
+          </AccessibleLink>
         </SummaryTable.Row>
       )}
 
@@ -56,7 +56,7 @@ const SubsectionDnBHierarchy = ({
         {dnbRelatedCompaniesCount > 0 ? (
           <>
             Data Hub contains{' '}
-            <Link
+            <AccessibleLink
               data-test="company-tree-link"
               href={companies.dnbHierarchy.tree(companyId)}
             >
@@ -65,7 +65,7 @@ const SubsectionDnBHierarchy = ({
                 dnbRelatedCompaniesCount,
                 true
               )}
-            </Link>{' '}
+            </AccessibleLink>{' '}
             related to this company
           </>
         ) : (
@@ -86,9 +86,9 @@ SubsectionDnBHierarchy.propTypes = {
 const SubsidiariesCounter = ({ subsidiariesCount, isGlobalHQ, companyId }) => {
   if (subsidiariesCount) {
     return (
-      <Link href={companies.subsidiaries.index(companyId)}>
+      <AccessibleLink href={companies.subsidiaries.index(companyId)}>
         {pluralize('subsidiary', subsidiariesCount, true)}
-      </Link>
+      </AccessibleLink>
     )
   }
 
@@ -126,9 +126,9 @@ const GlobalHQ = ({ company }) => {
   if (company.globalHeadquarters) {
     return (
       <>
-        <Link href={setGlobalHQUrl(company.globalHeadquarters)}>
+        <AccessibleLink href={setGlobalHQUrl(company.globalHeadquarters)}>
           {company.globalHeadquarters.name}
-        </Link>
+        </AccessibleLink>
         <StyledRowActionLink
           href={companies.hierarchies.ghq.remove(company.id)}
         >
@@ -212,12 +212,12 @@ const SectionHierarchy = ({
       actions={
         !isArchived &&
         showDataHubHierarchy && (
-          <Link
+          <AccessibleLink
             href={`${companies.edit(company.id)}#field-headquarter_type`}
             key={company.id}
           >
             Edit
-          </Link>
+          </AccessibleLink>
         )
       }
     >

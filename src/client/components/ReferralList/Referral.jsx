@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'govuk-react'
 import { SPACING, FONT_SIZE } from '@govuk-react/constants'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
@@ -10,6 +9,7 @@ import { Card, CardHeader } from '../ActivityFeed/activities/card'
 import SummaryList from '../../components/SummaryList'
 import urls from '../../../lib/urls'
 import { formatDate, DATE_FORMAT_COMPACT } from '../../utils/date-utils'
+import AccessibleLink from '../Link'
 
 const StyledSummaryListWrapper = styled.div({
   flexGrow: 1,
@@ -41,9 +41,12 @@ const Referral = ({
     <CardHeader
       company={{ name: companyName }}
       heading={
-        <Link href={urls.companies.referrals.details(companyId, id)}>
+        <AccessibleLink
+          showUnderline={false}
+          href={urls.companies.referrals.details(companyId, id)}
+        >
           {subject}
-        </Link>
+        </AccessibleLink>
       }
       headingLevel={2}
       startTime={date}

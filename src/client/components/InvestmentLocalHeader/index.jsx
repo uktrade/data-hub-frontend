@@ -4,7 +4,6 @@ import styled from 'styled-components'
 import { SPACING } from '@govuk-react/constants'
 import Main from '@govuk-react/main'
 import Breadcrumbs from '@govuk-react/breadcrumbs'
-import { Link } from 'govuk-react'
 
 import { GREY_4 } from '../../../client/utils/colours'
 import LocalHeaderHeading from '../LocalHeader/LocalHeaderHeading'
@@ -12,6 +11,7 @@ import FlashMessages from '../LocalHeader/FlashMessages'
 import { InvestmentResource } from '../Resource'
 import urls from '../../../lib/urls'
 import InvestmentProjectLocalHeader from '../InvestmentProjectLocalHeader'
+import AccessibleLink from '../Link'
 
 // Using <div> as there is already a <header> on the page
 // role="region" gives the element significance as a landmark
@@ -30,7 +30,7 @@ const BreadcrumbsWrapper = styled(Breadcrumbs)`
   margin-top: 0;
 `
 
-const StyledLink = styled(Link)({
+const StyledLink = styled(AccessibleLink)({
   fontSize: 20,
   display: 'inline-block',
   fontFamily: 'Arial, sans-serif',

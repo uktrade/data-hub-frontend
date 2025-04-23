@@ -8,7 +8,6 @@ import { flushSync } from 'react-dom'
 
 import qs from 'qs'
 import Button from '@govuk-react/button'
-import Link from '@govuk-react/link'
 
 import multiInstance from '../../utils/multiinstance'
 import ErrorSummary from '../ErrorSummary'
@@ -26,6 +25,7 @@ import Effect from '../Effect'
 import HardRedirect from '../HardRedirect'
 
 import { BUTTON_COLOUR } from '../../../client/utils/colours'
+import AccessibleLink from '../Link'
 
 const validateForm = (state) =>
   Object.values(state.fields)
@@ -385,12 +385,12 @@ const _Form = ({
                                   {submitButtonLabel}
                                 </Button>
                                 {cancelRedirectTo && (
-                                  <Link
+                                  <AccessibleLink
                                     href={cancelRedirectTo()}
                                     data-test="cancel-button"
                                   >
                                     {cancelButtonLabel}
-                                  </Link>
+                                  </AccessibleLink>
                                 )}
                               </FormActions>
                             )}

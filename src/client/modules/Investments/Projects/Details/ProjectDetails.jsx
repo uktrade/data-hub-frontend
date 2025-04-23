@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { isEmpty } from 'lodash'
 import { connect } from 'react-redux'
-import { Button, InsetText, Link } from 'govuk-react'
+import { Button, InsetText } from 'govuk-react'
 import { useParams } from 'react-router-dom'
 
 import ProjectLayoutNew from '../../../../components/Layout/ProjectLayoutNew'
@@ -31,6 +31,7 @@ import {
 import { GREY_3, BLACK } from '../../../../utils/colours'
 import { currencyGBP } from '../../../../utils/number-utils'
 import InvestmentName from '../InvestmentName'
+import AccessibleLink from '../../../../components/Link'
 
 const checkIfRequirementsStarted = (project) => {
   const requirementsArrays = [
@@ -92,14 +93,14 @@ const ProjectDetails = ({ currentAdviserId }) => {
               <SummaryTable.TextRow
                 heading="Client"
                 value={
-                  <Link
+                  <AccessibleLink
                     href={urls.companies.overview.index(
                       project.investorCompany?.id
                     )}
                     data-test="company-link"
                   >
                     {project.investorCompany?.name}
-                  </Link>
+                  </AccessibleLink>
                 }
               />
               {project.investmentType && (
@@ -135,13 +136,13 @@ const ProjectDetails = ({ currentAdviserId }) => {
                 <SummaryTable.TextRow
                   heading="Client contacts"
                   value={project.clientContacts.map((contact, i) => (
-                    <Link
+                    <AccessibleLink
                       key={`${contact}-${i}`}
                       href={urls.contacts.contact(contact.id)}
                       data-test={`contact-` + i}
                     >
                       {contact.name}
-                    </Link>
+                    </AccessibleLink>
                   ))}
                 />
               )}
@@ -255,7 +256,7 @@ const ProjectDetails = ({ currentAdviserId }) => {
                       {project.ukCompany.name}
                       <br />
                       <br />
-                      <Link
+                      <AccessibleLink
                         href={
                           urls.investments.projects.recipientCompany(
                             project.id
@@ -266,26 +267,26 @@ const ProjectDetails = ({ currentAdviserId }) => {
                         data-test="edit-company-link"
                       >
                         Edit company
-                      </Link>
+                      </AccessibleLink>
                       <br />
-                      <Link
+                      <AccessibleLink
                         href={urls.investments.projects.removeRecipientCompany(
                           project.id
                         )}
                         data-test="remove-company-link"
                       >
                         Remove company
-                      </Link>
+                      </AccessibleLink>
                     </>
                   ) : (
-                    <Link
+                    <AccessibleLink
                       href={urls.investments.projects.recipientCompany(
                         project.id
                       )}
                       data-test="find-company-link"
                     >
                       Find company
-                    </Link>
+                    </AccessibleLink>
                   )
                 }
               />

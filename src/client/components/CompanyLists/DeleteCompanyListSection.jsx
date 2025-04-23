@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import Button from '@govuk-react/button'
 import ErrorSummary from '@govuk-react/error-summary'
 import InsetText from '@govuk-react/inset-text'
-import Link from '@govuk-react/link'
 import ListItem from '@govuk-react/list-item'
 import Paragraph from '@govuk-react/paragraph'
 import UnorderedList from '@govuk-react/unordered-list'
@@ -12,6 +11,7 @@ import pluralize from 'pluralize'
 import { FormActions, LocalHeader, Main } from '../../../client/components'
 import urls from '../../../lib/urls'
 import { RED } from '../../../client/utils/colours'
+import AccessibleLink from '../Link'
 
 const DeleteCompanyListSection = ({
   companyList,
@@ -55,9 +55,9 @@ const DeleteCompanyListSection = ({
           <Button buttonColour={RED} onClick={onDelete}>
             Delete list
           </Button>
-          <Link href={returnUrl} data-test="return-link">
+          <AccessibleLink href={returnUrl} data-test="return-link">
             Return without deleting
-          </Link>
+          </AccessibleLink>
         </FormActions>
       </Main>
     </>

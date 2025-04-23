@@ -1,9 +1,9 @@
 import React from 'react'
-import { Link } from 'govuk-react'
 
 import { SummaryTable } from '../../../components'
 import { canEditOrder } from '../transformers'
 import urls from '../../../../lib/urls'
+import AccessibleLink from '../../../components/Link'
 
 const InternalUseTable = ({ order }) => (
   <SummaryTable
@@ -11,14 +11,14 @@ const InternalUseTable = ({ order }) => (
     data-test="internal-use-table"
     actions={
       canEditOrder(order) && (
-        <Link
+        <AccessibleLink
           key="editInternalInfoLink"
           href={urls.omis.edit.internalInfo(order.id)}
           data-test="edit-internal-info-link"
           noVisitedState={true}
         >
           Edit
-        </Link>
+        </AccessibleLink>
       )
     }
   >

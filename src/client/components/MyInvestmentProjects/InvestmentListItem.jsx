@@ -21,6 +21,7 @@ import InvestmentDetails from './InvestmentDetails'
 import InvestmentNextSteps from './InvestmentNextSteps'
 import { NoHighlightToggleSection } from '../ToggleSection'
 import Tag, { TAG_COLOURS } from '../Tag'
+import AccessibleLink from '../Link'
 
 const Row = styled('div')`
   margin-bottom: ${SPACING.SCALE_3};
@@ -159,7 +160,9 @@ const InvestmentListItem = ({
   return (
     <ListItem data-test="projects-list-item">
       <ListItemTitle data-test="project-title">
-        <a href={`${investments.projects.details(id)}`}>{name}</a>
+        <AccessibleLink href={`${investments.projects.details(id)}`}>
+          {name}
+        </AccessibleLink>
       </ListItemTitle>
       <ListItemTags>
         <ListItemTagRow>
