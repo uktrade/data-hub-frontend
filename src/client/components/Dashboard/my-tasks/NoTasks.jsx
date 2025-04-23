@@ -52,7 +52,7 @@ const NoTasks = () => (
     <Button as={'a'} href={tasks.create()}>
       Add a task
     </Button>
-    <StyledImage src={NoTaskImage} alt="An image of a list of tasks" />
+    <StyledImage src={NoTaskImage} alt="" />
   </StyledContainer>
 )
 

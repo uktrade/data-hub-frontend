@@ -32,9 +32,7 @@ describe('Dashboard - no taskss', () => {
     })
 
     it('should have an image of a list of tasks', () => {
-      cy.get('@tabPanel')
-        .find('img')
-        .should('have.attr', 'alt', 'An image of a list of tasks')
+      cy.get('@tabPanel').find('img').should('have.attr', 'alt', '')
     })
 
     it('should have a button to add a task', () => {
