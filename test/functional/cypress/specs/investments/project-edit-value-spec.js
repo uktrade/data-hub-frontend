@@ -27,8 +27,25 @@ const setup = (project) => {
     'editValueSubmissionRequest'
   )
   cy.visit(investments.projects.editValue(project.id))
-  // cy.wait('@getProjectDetails')
 }
+
+const testNumberOfNewJobs = ({ required, value }) =>
+  it('should display the number of new jobs field', () => {
+    if (value !== null && value !== undefined) {
+      cy.get('#number_new_jobs').should('have.value', value)
+    }
+
+    cy.get('label[for="number_new_jobs"]').should(
+      'have.text',
+      required ? 'Number of new jobs (required)' : 'Number of new jobs'
+    )
+
+    required
+      ? cy.contains('An expansion project must always have at least 1 new job')
+      : cy
+          .contains('An expansion project must always have at least 1 new job')
+          .should('not.exist')
+  })
 
 const setupProjectFaker = (overrides) =>
   investmentProjectFaker({
@@ -157,13 +174,8 @@ describe('Edit the value details of a project', () => {
         )
       })
 
-      it('should display the number of new jobs field', () => {
-        cy.get('[data-test="field-number_new_jobs"]').then((element) => {
-          assertFieldInput({
-            element,
-            label: 'Number of new jobs (required)',
-          })
-        })
+      testNumberOfNewJobs({
+        required: true,
       })
 
       it('should not display the GVA calculation for number of new jobs', () => {
@@ -356,15 +368,31 @@ describe('Edit the value details of a project', () => {
         )
       })
 
-      it('should display the number of new jobs field', () => {
-        cy.get('[data-test="field-number_new_jobs"]').then((element) => {
-          assertFieldInput({
-            element,
-            label: 'Number of new jobs (required)',
-            value: capitalIntensiveProjectWithValue.number_new_jobs,
-          })
-        })
+      testNumberOfNewJobs({
+        required: true,
+        value: capitalIntensiveProjectWithValue.number_new_jobs,
       })
+
+      // it.only('should display the number of new jobs field', () => {
+      //   // cy.get('[data-test="field-number_new_jobs"]').then((element) => {
+      //   //   assertFieldInput({
+      //   //     element,
+      //   //     label: 'Number of new jobs (required)',
+      //   //     value: capitalIntensiveProjectWithValue.number_new_jobs,
+      //   //   })
+      //   // })
+      //   cy.get('#number_new_jobs').should(
+      //     'have.value',
+      //     capitalIntensiveProjectWithValue.number_new_jobs
+      //   )
+
+      //   cy.get('label[for="number_new_jobs"]').should(
+      //     'have.text',
+      //     'Number of new jobs (required)'
+      //   )
+
+      //   cy.contains('An expansion project must always have at least 1 new job')
+      // })
 
       it('should not display the GVA calculation for number of new jobs', () => {
         cy.get('[data-test="field-gross_value_added_labour"]').should(
@@ -806,14 +834,17 @@ describe('Edit the value details of a project', () => {
         )
       })
 
-      it('should display the number of new jobs field', () => {
-        cy.get('[data-test="field-number_new_jobs"]').then((element) => {
-          assertFieldInput({
-            element,
-            label: 'Number of new jobs (required)',
-          })
-        })
+      testNumberOfNewJobs({
+        required: true,
       })
+      // it('should display the number of new jobs field', () => {
+      //   cy.get('[data-test="field-number_new_jobs"]').then((element) => {
+      //     assertFieldInput({
+      //       element,
+      //       label: 'Number of new jobs (required)',
+      //     })
+      //   })
+      // })
 
       it('should display message to add number of new jobs to calculate GVA', () => {
         cy.get('[data-test="field-gross_value_added_labour"]').then(
@@ -1009,15 +1040,19 @@ describe('Edit the value details of a project', () => {
       )
     })
 
-    it('should display the number of new jobs field', () => {
-      cy.get('[data-test="field-number_new_jobs"]').then((element) => {
-        assertFieldInput({
-          element,
-          label: 'Number of new jobs (required)',
-          value: labourIntensiveProjectWithValue.number_new_jobs,
-        })
-      })
+    testNumberOfNewJobs({
+      required: true,
+      value: labourIntensiveProjectWithValue.number_new_jobs,
     })
+    // it('should display the number of new jobs field', () => {
+    //   cy.get('[data-test="field-number_new_jobs"]').then((element) => {
+    //     assertFieldInput({
+    //       element,
+    //       label: 'Number of new jobs (required)',
+    //       value: labourIntensiveProjectWithValue.number_new_jobs,
+    //     })
+    //   })
+    // })
 
     it('should display the GVA calculation for number of new jobs', () => {
       cy.get('[data-test="field-gross_value_added_labour"]').then((element) => {
@@ -1411,13 +1446,13 @@ describe('Edit the value details of a project', () => {
   )
 
   context('Number of jobs error handling', () => {
-    context('When editing an expansion project', () => {
+    context('When editing an FDI project', () => {
       context('With involvement', () => {
         const expansionProject = setupProjectFaker({
           stage: INVESTMENT_PROJECT_STAGES.active,
-          fdi_type: {
-            name: 'Expansion of existing site or activity',
-            id: '8dc41652-12bc-4ecf-8e60-bdb6dfd5eab1',
+          investment_type: {
+            name: 'FDI',
+            id: 'foo',
           },
           level_of_involvement: {
             name: 'Foo',
@@ -1427,15 +1462,8 @@ describe('Edit the value details of a project', () => {
         beforeEach(() => {
           setup(expansionProject)
         })
-
-        it('should show the hint text for the number of new jobs input', () => {
-          cy.get('[data-test="field-number_new_jobs"]').then((element) => {
-            assertFieldInput({
-              element,
-              label: 'Number of new jobs (required)',
-              hint: 'An expansion project must always have at least 1 new job',
-            })
-          })
+        testNumberOfNewJobs({
+          required: true,
         })
         it('should show an error if the number of new jobs is empty', () => {
           cy.get('[data-test="submit-button"]').click()
@@ -1456,9 +1484,9 @@ describe('Edit the value details of a project', () => {
       context('With no involvement', () => {
         const expansionProject = setupProjectFaker({
           stage: INVESTMENT_PROJECT_STAGES.active,
-          fdi_type: {
-            name: 'Expansion of existing site or activity',
-            id: '8dc41652-12bc-4ecf-8e60-bdb6dfd5eab1',
+          investment_type: {
+            name: 'FDI',
+            id: 'foo',
           },
           level_of_involvement: null,
         })
@@ -1466,18 +1494,17 @@ describe('Edit the value details of a project', () => {
           setup(expansionProject)
         })
 
-        it('should not show the hint text for the number of new jobs input', () => {
-          cy.get('[data-test="field-number_new_jobs"]').then((element) => {
-            assertFieldInput({
-              element,
-              label: 'Number of new jobs (optional)',
-            })
-          })
+        testNumberOfNewJobs({
+          required: false,
         })
+
         it('should show an error if the number of new jobs is empty', () => {
           cy.get('[data-test="submit-button"]').click()
-          assertErrorSummary(['Value for number of new jobs is required'])
+          cy.contains('Value for number of new jobs is required').should(
+            'not.exist'
+          )
         })
+
         it('should not show an error if the number of new jobs is 0', () => {
           cy.get('[data-test="number-new-jobs-input"]').type(0)
           cy.get('[data-test="submit-button"]').click()
@@ -1485,6 +1512,7 @@ describe('Edit the value details of a project', () => {
             'not.exist'
           )
         })
+
         it('should not show an error if the number of new jobs is 1', () => {
           cy.get('[data-test="number-new-jobs-input"]').type(1)
           cy.get('[data-test="submit-button"]').click()

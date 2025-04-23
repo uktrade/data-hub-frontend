@@ -60,11 +60,8 @@ const EditProjectValue = () => {
     >
       <InvestmentResource id={projectId}>
         {(project) => {
-          const isExpansion =
-            project.fdiType?.name === 'Expansion of existing site or activity'
-
-          const isNumberNewJobsRequired =
-            isExpansion && project.levelOfInvolvement
+          const isNumberNewJobsOptional =
+            project.investmentType.name === 'FDI' && !project.levelOfInvolvement
 
           return (
             <>
@@ -209,30 +206,19 @@ const EditProjectValue = () => {
                     <FieldInput
                       label={
                         'Number of new jobs' +
-                        (project.levelOfInvolvement === null && isExpansion
-                          ? ' (optional)'
-                          : isFieldOptionalForStageLabel(
-                              'number_new_jobs',
-                              project
-                            ))
+                        (isNumberNewJobsOptional ? '' : ' (required)')
                       }
                       name="number_new_jobs"
                       type="number"
-                      {...(isNumberNewJobsRequired && {
+                      {...(!isNumberNewJobsOptional && {
                         required: 'Value for number of new jobs is required',
                         hint: 'An expansion project must always have at least 1 new job',
                       })}
-                      validate={(value, field, formFields) => {
-                        let result = validateFieldForStage(
-                          field,
-                          formFields,
-                          project,
-                          'Value for number of new jobs is required'
-                        )
-                        return isNumberNewJobsRequired && value < 1
-                          ? 'Number of new jobs must be greater than 0'
-                          : result
-                      }}
+                      validate={(value) =>
+                        !isNumberNewJobsOptional &&
+                        value < 1 &&
+                        'Number of new jobs must be greater than 0'
+                      }
                       initialValue={project.numberNewJobs}
                     />
                     {project.investmentType.name === 'FDI' &&
