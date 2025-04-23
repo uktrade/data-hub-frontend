@@ -31,8 +31,6 @@ const GlobalStyles = createGlobalStyle`
 
 const LocalHeader = styled('div')`
   background-color: ${GREY_4};
-  paddingTop: SPACING.SCALE_5,
-  textAlign: 'center',
 `
 
 const StyledHeader = styled(InnerContainer)`
