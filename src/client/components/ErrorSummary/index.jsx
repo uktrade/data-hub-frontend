@@ -18,7 +18,12 @@ import {
 } from '@govuk-react/constants'
 import { spacing } from '@govuk-react/lib'
 
-import { TEXT_COLOUR, ERROR_COLOUR } from '../../../client/utils/colours'
+import {
+  BLACK,
+  ERROR_COLOUR,
+  FOCUS_COLOUR,
+  TEXT_COLOUR,
+} from '../../../client/utils/colours'
 import { focusMixin } from '../../styles'
 
 const StyledErrorText = styled(Link)({
@@ -38,6 +43,12 @@ const StyledErrorText = styled(Link)({
   },
   ':visited': {
     color: `${ERROR_COLOUR}`,
+  },
+  ':focus': {
+    outline: '3px solid transparent',
+    color: BLACK,
+    boxShadow: `0 -2px ${FOCUS_COLOUR}, 0 4px ${BLACK}`,
+    textDecoration: 'none',
   },
   [MEDIA_QUERIES.LARGESCREEN]: {
     fontSize: FONT_SIZE.SIZE_19,
