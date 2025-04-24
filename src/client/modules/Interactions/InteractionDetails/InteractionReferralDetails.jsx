@@ -1,10 +1,10 @@
 import React from 'react'
 import { SPACING_POINTS } from '@govuk-react/constants'
-import { Link } from 'govuk-react'
 import styled from 'styled-components'
 
 import { SummaryTable } from '../../../components'
 import urls from '../../../../lib/urls'
+import AccessibleLink from '../../../components/Link'
 
 const { formatDate, DATE_FORMAT_COMPACT } = require('../../../utils/date-utils')
 
@@ -19,9 +19,11 @@ const InteractionReferralDetails = ({ referral, companyId }) => {
       data-test="interaction-referral-table"
     >
       <SummaryTable.Row heading="Subject">
-        <Link href={urls.companies.referrals.details(companyId, referral.id)}>
+        <AccessibleLink
+          href={urls.companies.referrals.details(companyId, referral.id)}
+        >
           {referral.subject}
-        </Link>
+        </AccessibleLink>
       </SummaryTable.Row>
       <SummaryTable.Row heading="Sent on">
         {formatDate(referral.createdOn, DATE_FORMAT_COMPACT)}

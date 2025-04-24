@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Link from '@govuk-react/link'
+
+import AccessibleLink from '../Link'
 
 const CollectionSummaryCardItem = ({ title, links, rows }) => (
   <div
@@ -15,9 +16,9 @@ const CollectionSummaryCardItem = ({ title, links, rows }) => (
           links.length > 0 &&
           links.map((link, index) => (
             <span key={`link-${index}`}>
-              <Link href={link.url} {...link.attrs}>
+              <AccessibleLink href={link.url} {...link.attrs}>
                 {link.text}
-              </Link>
+              </AccessibleLink>
               {index < links.length - 1 && ' | '}
             </span>
           ))}

@@ -1,5 +1,5 @@
 import React from 'react'
-import { H2, H3, Link, GridCol, GridRow } from 'govuk-react'
+import { H2, H3, GridCol, GridRow } from 'govuk-react'
 import { FONT_SIZE, SPACING } from '@govuk-react/constants'
 import Button from '@govuk-react/button'
 import Details from '@govuk-react/details'
@@ -28,6 +28,7 @@ import { ONE_LIST_EMAIL } from './constants'
 import DefaultLayoutBase from '../../../components/Layout/DefaultLayoutBase'
 import { state2propsMainTab } from './state'
 import { canEditOneList } from '../CompanyBusinessDetails/utils'
+import AccessibleLink from '../../../components/Link'
 
 const LastUpdatedHeading = styled.div`
   color: ${DARK_GREY};
@@ -45,7 +46,7 @@ const BorderContainer = styled('div')`
     `border-bottom: 1px solid ${GREY_2}; margin-bottom: ${SPACING.SCALE_5};`}
 `
 
-const StyledLink = styled(Link)`
+const StyledLink = styled(AccessibleLink)`
   padding-right: ${SPACING.SCALE_5};
 `
 
@@ -126,12 +127,12 @@ const Strategy = ({ company }) => (
                 )}. `}</span>
                 <span>
                   View changes in{' '}
-                  <Link
+                  <AccessibleLink
                     href={urls.companies.editHistory.index(company.id)}
                     data-test="edit-history-link"
                   >
                     Edit history page
-                  </Link>
+                  </AccessibleLink>
                 </span>
               </LastUpdatedHeading>
             </GridCol>
@@ -216,14 +217,14 @@ const Objectives = ({ company }) => (
               <CompanyObjectivesCountResource id={company.id}>
                 {(response) =>
                   response.archivedCount > 0 && (
-                    <Link
+                    <AccessibleLink
                       href={urls.companies.accountManagement.objectives.archived(
                         company.id
                       )}
                       data-test="archived-objectives-link"
                     >
                       View archived objectives
-                    </Link>
+                    </AccessibleLink>
                   )
                 }
               </CompanyObjectivesCountResource>
@@ -305,7 +306,9 @@ const AccountManagement = ({ permissions }) => {
                 Intranet
               </NewWindowLink>{' '}
               or email{' '}
-              <Link href={`mailto:${ONE_LIST_EMAIL}`}>{ONE_LIST_EMAIL}</Link>
+              <AccessibleLink href={`mailto:${ONE_LIST_EMAIL}`}>
+                {ONE_LIST_EMAIL}
+              </AccessibleLink>
             </Details>
           </CompanyLayout>
         )}

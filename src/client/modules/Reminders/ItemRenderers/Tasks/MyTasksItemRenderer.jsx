@@ -1,11 +1,11 @@
 import React from 'react'
-import { Link } from 'govuk-react'
 import styled from 'styled-components'
 
 import { formatDate, DATE_FORMAT_FULL } from '../../../../utils/date-utils'
 import urls from '../../../../../lib/urls'
 import { GREY_1 } from '../../../../utils/colours'
 import ItemRenderer from '../ItemRenderer'
+import AccessibleLink from '../../../../components/Link'
 
 const ItemHint = styled('span')({
   color: GREY_1,
@@ -16,9 +16,9 @@ const ItemContent = ({ item }) => (
     {item.task.company && (
       <li>
         <ItemHint>Company: </ItemHint>
-        <Link href={urls.companies.detail(item.task.company.id)}>
+        <AccessibleLink href={urls.companies.detail(item.task.company.id)}>
           {item.task.company.name}
-        </Link>
+        </AccessibleLink>
       </li>
     )}
 

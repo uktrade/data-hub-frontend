@@ -1,6 +1,7 @@
 import React from 'react'
-import Link from '@govuk-react/link'
 import PropTypes from 'prop-types'
+
+import AccessibleLink from '../Link'
 
 /**
  * When using a screen reader the aria-label attribute overrides
@@ -22,23 +23,31 @@ import PropTypes from 'prop-types'
  * https://design-system.service.gov.uk/styles/typography/#links
  */
 
-const NewWindowLink = ({ href, children, showWarning = true, ...rest }) => (
-  <Link
+const NewWindowLink = ({
+  href,
+  children,
+  showWarning = true,
+  darkBackground = false,
+  ...rest
+}) => (
+  <AccessibleLink
     data-test="newWindowLink"
     href={href}
     rel="noreferrer noopener"
     target="_blank"
+    darkBackground={darkBackground}
     {...rest}
   >
     {children}
     {showWarning && ' (opens in new tab)'}
-  </Link>
+  </AccessibleLink>
 )
 
 NewWindowLink.propTypes = {
   href: PropTypes.string.isRequired,
   children: PropTypes.node,
   showWarning: PropTypes.bool,
+  darkBackground: PropTypes.bool,
 }
 
 export default NewWindowLink

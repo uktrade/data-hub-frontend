@@ -1,9 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Link, ListItem, OrderedList } from 'govuk-react'
+import { ListItem, OrderedList } from 'govuk-react'
 
 import { NewWindowLink, SummaryTable } from '../../components'
 import urls from '../../../lib/urls'
+import AccessibleLink from '../../components/Link'
 
 const StyledListItem = styled(ListItem)`
   margin-top: 16px;
@@ -284,9 +285,9 @@ const OMISTermsAndConditions = () => (
         <StyledListItem>
           8.3. If you have a question about the use of our intellectual property
           and Crown copyright, email the DBT brand team at{' '}
-          <Link href="mailto:brand@trade.gsi.gov.uk">
+          <AccessibleLink href="mailto:brand@trade.gsi.gov.uk">
             brand@trade.gsi.gov.uk
-          </Link>
+          </AccessibleLink>
           , with your contact details detailing how and why you wish to use the
           name or logo(s).
         </StyledListItem>
@@ -314,9 +315,9 @@ const OMISTermsAndConditions = () => (
         <StyledListItem>
           8.6. Enquiries about use and re-use of Crown copyright material should
           be sent to{' '}
-          <Link href="mailto:psi@nationalarchives.gsi.gov.uk">
+          <AccessibleLink href="mailto:psi@nationalarchives.gsi.gov.uk">
             psi@nationalarchives.gsi.gov.uk
-          </Link>
+          </AccessibleLink>
           .
         </StyledListItem>
         <StyledListItem>

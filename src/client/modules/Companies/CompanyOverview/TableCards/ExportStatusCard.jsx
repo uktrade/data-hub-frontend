@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'govuk-react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
@@ -24,6 +23,7 @@ import {
   StyledSummaryTable,
   StyledTableRow,
 } from './components'
+import AccessibleLink from '../../../../components/Link'
 
 const StyledTD = styled('td')`
   display: flex;
@@ -39,10 +39,10 @@ const StyledDiv = styled('div')`
   border: 0;
 `
 
-const StyledLink = styled(Link)`
+const StyledLink = styled(AccessibleLink)`
   margin-right: 5px;
 `
-const StyledViewMoreLink = styled(Link)`
+const StyledViewMoreLink = styled(AccessibleLink)`
   font-size: 12px;
   margin-right: 5px;
 `
@@ -196,12 +196,12 @@ export const ExportStatusDetails = ({
     </SummaryTable.Row>
     <StyledTableRow>
       <StyledLastTableCell colSpan={2}>
-        <Link
+        <AccessibleLink
           href={companies.exports.index(company.id)}
           data-test="export-status-page-link"
         >
           View full export details
-        </Link>
+        </AccessibleLink>
       </StyledLastTableCell>
     </StyledTableRow>
   </StyledSummaryTable>

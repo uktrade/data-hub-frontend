@@ -1,5 +1,5 @@
 import React from 'react'
-import { Details, Link, Paragraph } from 'govuk-react'
+import { Details, Paragraph } from 'govuk-react'
 import { FONT_SIZE } from '@govuk-react/constants'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
@@ -33,6 +33,7 @@ import {
 } from '../../../actions'
 
 import { sanitizeFilter } from '../../../filters'
+import AccessibleLink from '../../../components/Link'
 
 const StyledParagraph = styled(Paragraph)`
   font-size: ${FONT_SIZE.SIZE_16};
@@ -110,9 +111,9 @@ const ProjectsCollection = ({
           data-test="archived-details"
         >
           Investment projects cannot be added to an archived company.{' '}
-          <Link href={`/companies/${company.id}/unarchive`}>
+          <AccessibleLink href={`/companies/${company.id}/unarchive`}>
             Click here to unarchive
-          </Link>
+          </AccessibleLink>
         </Details>
       )}
       <FilteredCollectionList

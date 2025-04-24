@@ -1,12 +1,13 @@
 import React from 'react'
 
-import { Link, Table } from 'govuk-react'
+import { Table } from 'govuk-react'
 
 import styled from 'styled-components'
 
 import { formatDate, DATE_FORMAT_MEDIUM } from '../../../utils/date-utils'
 import urls from '../../../../lib/urls'
 import { STATUS } from '../../../modules/Tasks/TaskForm/constants'
+import AccessibleLink from '../../Link'
 
 export const transformAdvisersListItem = (advisers) => {
   return advisers.map((adviser, index) => (
@@ -40,12 +41,12 @@ const rows = ({ results }) => {
             : ''}
       </Table.Cell>
       <Table.Cell setWidth="23%">
-        <Link
+        <AccessibleLink
           href={urls.tasks.details(task.id)}
           data-test={`${task.id}-task-link`}
         >
           {task.title}
-        </Link>
+        </AccessibleLink>
       </Table.Cell>
       <Table.Cell setWidth="20%">{task.company?.name}</Table.Cell>
       <Table.Cell setWidth="20%">{task.investment_project?.name}</Table.Cell>

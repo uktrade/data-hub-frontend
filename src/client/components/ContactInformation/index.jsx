@@ -1,9 +1,10 @@
 import React from 'react'
-import { Details, Link, Paragraph, ListItem, UnorderedList } from 'govuk-react'
+import { Details, Paragraph, ListItem, UnorderedList } from 'govuk-react'
 import styled from 'styled-components'
 import { SPACING_POINTS } from '@govuk-react/constants'
 
 import urls from '../../../lib/urls'
+import AccessibleLink from '../Link'
 
 const StyledDetails = styled(Details)`
   margin-top: ${SPACING_POINTS[1]};
@@ -17,7 +18,7 @@ const ContactInformation = ({ onOpenContactForm, companyId }) => {
   return (
     <>
       If your contact is not listed{' '}
-      <Link
+      <AccessibleLink
         data-test="add-a-new-contact-link"
         onClick={(e) => {
           e.preventDefault()
@@ -26,7 +27,7 @@ const ContactInformation = ({ onOpenContactForm, companyId }) => {
         href={redirectUrl}
       >
         add a new contact
-      </Link>
+      </AccessibleLink>
       . You will leave this page to enter details, once added you will return
       here. The information you added will have been saved.
       <StyledDetails

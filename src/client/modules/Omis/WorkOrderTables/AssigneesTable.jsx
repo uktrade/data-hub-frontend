@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Link, Table } from 'govuk-react'
+import { Table } from 'govuk-react'
 import { typography } from '@govuk-react/lib'
 import { SPACING } from '@govuk-react/constants'
 
@@ -12,6 +12,7 @@ import {
 } from '../transformers'
 import urls from '../../../../lib/urls'
 import { GREY_2 } from '../../../utils/colours'
+import AccessibleLink from '../../../components/Link'
 
 const StyledTable = styled(Table)`
   & > tbody th {
@@ -67,13 +68,13 @@ const buildAssigneeRows = (assignees, order) =>
           (isLead ? (
             ''
           ) : (
-            <Link
+            <AccessibleLink
               href={urls.omis.edit.setLeadAssignee(order.id, adviser.id)}
               data-test={`set-lead-adviser-link-${adviser.id}`}
               noVisitedState={true}
             >
               Set as lead adviser
-            </Link>
+            </AccessibleLink>
           ))}
       </Table.Cell>
       <StyledEndCell>
@@ -90,7 +91,7 @@ const AssigneesTable = ({ assignees, order }) => (
       'Advisers in the market',
       [
         isOrderActive(order) && (
-          <Link
+          <AccessibleLink
             key="addAssigneeLink"
             href={urls.omis.edit.assignees(order.id)}
             aria-label={`${setAdviserEditText(
@@ -101,17 +102,17 @@ const AssigneesTable = ({ assignees, order }) => (
             noVisitedState={true}
           >
             {setAdviserEditText(assignees, canEditOrder(order))}
-          </Link>
+          </AccessibleLink>
         ),
         canEditOrder(order) && (
-          <Link
+          <AccessibleLink
             key="estimateHours"
             href={urls.omis.edit.assigneeTime(order.id)}
             data-test="assignee-time-link"
             noVisitedState={true}
           >
             Estimate hours
-          </Link>
+          </AccessibleLink>
         ),
       ],
     ]}

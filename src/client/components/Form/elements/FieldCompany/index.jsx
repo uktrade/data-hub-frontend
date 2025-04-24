@@ -2,7 +2,6 @@ import React from 'react'
 import { isEmpty } from 'lodash'
 import pluralize from 'pluralize'
 import styled from 'styled-components'
-import Link from '@govuk-react/link'
 import LoadingBox from '@govuk-react/loading-box'
 import { H3 } from '@govuk-react/heading'
 import Button from '@govuk-react/button'
@@ -29,6 +28,7 @@ import EntityList from '../../../EntityList'
 import EntityListItem from '../../../EntityList/EntityListItem'
 import { useFormContext } from '../../../../../client/components/Form/hooks'
 import urls from '../../../../../lib/urls'
+import AccessibleLink from '../../../Link'
 
 const COMPANY_NAME_MIN_LENGTH = 2
 const COMPANY_NAME_MAX_LENGTH = 30
@@ -142,12 +142,12 @@ const FieldCompany = ({ results, onSearchClick, progress, searchTerm }) => {
           {results.length === 0 && !progress && (
             <StyledParagraph>
               If you can't find the company you're looking for,{' '}
-              <Link
+              <AccessibleLink
                 href={urls.companies.create()}
                 aria-label="Add a new company"
               >
                 add a new company.{' '}
-              </Link>
+              </AccessibleLink>
               Unfortunately you will lose your progress.
             </StyledParagraph>
           )}

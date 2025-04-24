@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'govuk-react'
 
 import { OPTION_NO, OPTION_YES } from '../../../../common/constants'
 
@@ -27,6 +26,7 @@ import {
 import { NOT_SET_TEXT } from '../../../../apps/companies/constants'
 import { idNamesToValueLabels } from '../../../utils'
 import Tag, { TAG_COLOURS } from '../../../components/Tag'
+import AccessibleLink from '../../../components/Link'
 
 export const checkIfItemHasValue = (item) => (item ? item : null)
 
@@ -165,7 +165,7 @@ export const transformFdiRAndDProject = (project) => {
         {project.associatedNonFdiRAndDProject.name}
         <br />
         <br />
-        <Link
+        <AccessibleLink
           href={
             urls.investments.projects.findAssociatedProject(project.id) +
             '?project_code=' +
@@ -174,18 +174,18 @@ export const transformFdiRAndDProject = (project) => {
           data-test="edit-project-link"
         >
           Edit project
-        </Link>
+        </AccessibleLink>
         <br />
         {project.stage.name != STAGE_VERIFY_WIN &&
           project.stage.name != STAGE_WON && (
-            <Link
+            <AccessibleLink
               href={urls.investments.projects.removeAssociatedProject(
                 project.id
               )}
               data-test="remove-project-link"
             >
               Remove association
-            </Link>
+            </AccessibleLink>
           )}
       </>
     )
@@ -193,12 +193,12 @@ export const transformFdiRAndDProject = (project) => {
 
   if (project.investmentType?.name === 'FDI' && project.nonFdiRAndDBudget) {
     return (
-      <Link
+      <AccessibleLink
         href={urls.investments.projects.findAssociatedProject(project.id)}
         data-test="find-project-link"
       >
         Find project
-      </Link>
+      </AccessibleLink>
     )
   }
 

@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Details from '@govuk-react/details'
-import Link from '@govuk-react/link'
 
 import { FieldUneditable } from '../../../../../client/components'
+import AccessibleLink from '../../../../../client/components/Link'
 
 function OneListFields({ company, sectors, headquarterTypes, oneListEmail }) {
   const sectorName = sectors.find(
@@ -21,7 +21,10 @@ function OneListFields({ company, sectors, headquarterTypes, oneListEmail }) {
 
       <Details summary="Need to edit the sector?" data-test="sector-details">
         If you need to change the sector for a company on the One List, please
-        email <Link href={`mailto:${oneListEmail}`}>{oneListEmail}</Link>
+        email{' '}
+        <AccessibleLink href={`mailto:${oneListEmail}`}>
+          {oneListEmail}
+        </AccessibleLink>
       </Details>
 
       <FieldUneditable name="headquarter_type" label="Business hierarchy">
@@ -34,7 +37,9 @@ function OneListFields({ company, sectors, headquarterTypes, oneListEmail }) {
       >
         If you need to change the headquarter type for a company on the One
         List, please email{' '}
-        <Link href={`mailto:${oneListEmail}`}>{oneListEmail}</Link>
+        <AccessibleLink href={`mailto:${oneListEmail}`}>
+          {oneListEmail}
+        </AccessibleLink>
       </Details>
     </>
   )

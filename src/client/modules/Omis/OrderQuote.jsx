@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom'
 import { connect } from 'react-redux'
 import Markdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
-import { Details, H1, InsetText, Link, WarningText } from 'govuk-react'
+import { Details, H1, InsetText, WarningText } from 'govuk-react'
 import { FONT_SIZE, SPACING } from '@govuk-react/constants'
 
 import { DefaultLayout, Form } from '../../components'
@@ -32,6 +32,7 @@ import {
   DATE_FORMAT_MEDIUM_WITH_TIME,
 } from '../../utils/date-utils'
 import { STATUS } from './constants'
+import AccessibleLink from '../../components/Link'
 
 const StyledInsetText = styled(InsetText)`
   margin-bottom: -${SPACING.SCALE_2};
@@ -136,9 +137,9 @@ const AcceptedOn = ({ quote }) => (
 
 const ReturnToOrder = ({ orderId }) => (
   <>
-    <Link href={urls.omis.workOrder(orderId)} data-test="return-link">
+    <AccessibleLink href={urls.omis.workOrder(orderId)} data-test="return-link">
       Return to order
-    </Link>
+    </AccessibleLink>
     <br />
     <br />
   </>

@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 
 import { SPACING, MEDIA_QUERIES } from '@govuk-react/constants'
 import styled from 'styled-components'
-import { Link } from 'govuk-react'
 
 import { state2props } from './state'
 
@@ -37,6 +36,7 @@ import {
 import TaskAssignedToMeFromOthersList from './TaskAssignedToMeFromOthersList'
 import TaskAmendedByOthersList from './TaskAmendedByOthersList'
 import TaskCompletedList from './TaskCompletedList'
+import AccessibleLink from '../../components/Link'
 
 const Container = styled('div')({
   [MEDIA_QUERIES.DESKTOP]: {
@@ -52,7 +52,7 @@ const MenuContainer = styled('div')({
   },
 })
 
-const SettingsLink = styled(Link)({
+const SettingsLink = styled(AccessibleLink)({
   display: 'block',
   marginTop: SPACING.SCALE_5,
   marginBottom: SPACING.SCALE_3,

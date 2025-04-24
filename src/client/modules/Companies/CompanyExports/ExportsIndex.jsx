@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 import Details from '@govuk-react/details'
-import Link from '@govuk-react/link'
 import { Button } from 'govuk-react'
 import { H2 } from '@govuk-react/heading'
 import { SPACING } from '@govuk-react/constants'
@@ -22,12 +21,13 @@ import {
   transformExportCountries,
 } from './transformers'
 import DefaultLayoutBase from '../../../components/Layout/DefaultLayoutBase'
+import AccessibleLink from '../../../components/Link'
 
 const StyledSummaryTable = styled(SummaryTable)`
   margin-top: 0;
 `
 
-const StyledLink = styled(Link)`
+const StyledLink = styled(AccessibleLink)`
   display: inline-block;
   margin-bottom: ${SPACING.SCALE_5};
 `
@@ -52,9 +52,9 @@ const ExportsIndex = () => {
               caption="Exports"
               actions={
                 !company.archived && (
-                  <Link href={urls.companies.exports.edit(companyId)}>
+                  <AccessibleLink href={urls.companies.exports.edit(companyId)}>
                     Edit
-                  </Link>
+                  </AccessibleLink>
                 )
               }
             >
@@ -92,13 +92,13 @@ const ExportsIndex = () => {
             <Details summary="What is export potential">
               The export potential score is a prediction of a company's
               likelihood of exporting, and was originally created for the{' '}
-              <Link
+              <AccessibleLink
                 href={urls.external.dataWorkspace.findExporters}
                 target="_blank"
                 aria-label="opens in a new tab"
               >
                 Find Exporters tool
-              </Link>
+              </AccessibleLink>
               . DBT's data science team compared all HMRC export information
               with the features of all UK companies to find patterns; they then
               repeatedly tested their model against a subset of known-good data
@@ -113,19 +113,22 @@ const ExportsIndex = () => {
               <br />
               We are continuing to improve the algorithm so please do share your
               feedback or let us know of any anomalies through the{' '}
-              <a href={urls.support()}>support channel</a>.
+              <AccessibleLink href={urls.support()}>
+                support channel
+              </AccessibleLink>
+              .
             </Details>
 
             <StyledSummaryTable
               caption="Export countries information"
               actions={
                 !company.archived && (
-                  <Link
+                  <AccessibleLink
                     href={urls.companies.exports.editCountries(companyId)}
                     data-test-id="edit-export-countries"
                   >
                     Edit
-                  </Link>
+                  </AccessibleLink>
                 )
               }
             >
@@ -138,14 +141,14 @@ const ExportsIndex = () => {
                             const isLastItem = i === values.length - 1
                             return (
                               <React.Fragment key={id}>
-                                <Link
+                                <AccessibleLink
                                   href={urls.companies.exports.history.country(
                                     companyId,
                                     id
                                   )}
                                 >
                                   {name}
-                                </Link>
+                                </AccessibleLink>
                                 {isLastItem ? null : ', '}
                               </React.Fragment>
                             )

@@ -3,10 +3,10 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import Main from '@govuk-react/main'
 import { SPACING, FONT_SIZE, FONT_WEIGHTS } from '@govuk-react/constants'
-import Link from '@govuk-react/link'
 
 import StatusMessage from '../../../client/components/StatusMessage'
 import { formatDate, DATE_FORMAT_COMPACT } from '../../utils/date-utils'
+import AccessibleLink from '../Link'
 
 const negativeSpacing = '-' + SPACING.SCALE_4
 
@@ -56,9 +56,13 @@ const ArchivePanel = ({
       </StyledMessage>
       <StyledReason data-test="archive-reason">{`Reason: ${archiveReason}`}</StyledReason>
       {unarchiveUrl && (
-        <Link data-test="unarchive-link" onClick={onClick} href={unarchiveUrl}>
+        <AccessibleLink
+          data-test="unarchive-link"
+          onClick={onClick}
+          href={unarchiveUrl}
+        >
           Unarchive
-        </Link>
+        </AccessibleLink>
       )}
     </StatusMessage>
   </StyledMain>

@@ -1,7 +1,7 @@
 import React from 'react'
 import { isFuture } from 'date-fns'
 import styled from 'styled-components'
-import { Button, GridCol, GridRow, Link } from 'govuk-react'
+import { Button, GridCol, GridRow } from 'govuk-react'
 import { FONT_WEIGHTS } from '@govuk-react/constants'
 
 import LocalHeaderDetails from '../../components/LocalHeaderDetails'
@@ -12,6 +12,7 @@ import {
 } from '../../utils/date-utils'
 import { STATUS } from './constants'
 import urls from '../../../lib/urls'
+import AccessibleLink from '../../components/Link'
 
 const StyledWrapper = styled('div')`
   text-align: right;
@@ -21,7 +22,7 @@ const StyledButtonWrapper = styled('div')`
   margin-bottom: -30px;
 `
 
-const StyledLink = styled(Link)`
+const StyledLink = styled(AccessibleLink)`
   font-weight: ${FONT_WEIGHTS.bold};
 `
 
@@ -49,13 +50,13 @@ const setHeaderItems = (order, quote) => {
     {
       label: 'Company',
       value: (
-        <Link
+        <AccessibleLink
           href={urls.companies.details(order.company.id)}
           data-test="company-link"
           noVisitedState={true}
         >
           {order.company.name}
-        </Link>
+        </AccessibleLink>
       ),
     },
     { label: 'Country (market)', value: order.primaryMarket.name },

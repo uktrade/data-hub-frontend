@@ -1,9 +1,9 @@
 import React from 'react'
-import Link from '@govuk-react/link'
 import styled from 'styled-components'
 
 import SummaryTable from '../../../components/SummaryTable'
 import Tag from '../../../components/Tag'
+import AccessibleLink from '../../../components/Link'
 
 const StyledTag = styled(Tag)`
   float: right;
@@ -36,7 +36,9 @@ const OpportunityDetailsTable = ({ details }) => {
           <ul>
             {promoters.map((v, i) => (
               <li key={`Promoters-${i}`}>
-                <Link href={`/companies/${v.value}`}>{v.label}</Link>
+                <AccessibleLink href={`/companies/${v.value}`}>
+                  {v.label}
+                </AccessibleLink>
               </li>
             ))}
           </ul>

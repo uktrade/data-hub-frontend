@@ -1,6 +1,6 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
-import { H2, InsetText, Link } from 'govuk-react'
+import { H2, InsetText } from 'govuk-react'
 import { LEVEL_SIZE } from '@govuk-react/constants'
 
 import {
@@ -23,6 +23,7 @@ import {
   transformAddress,
 } from './transformers'
 import OMISLayout from './OMISLayout'
+import AccessibleLink from '../../components/Link'
 
 export const BillingAddress = ({ company, order }) => {
   const address = getAddress(order, company)
@@ -44,20 +45,20 @@ export const BillingAddress = ({ company, order }) => {
           The company's address is currently being used for the invoice.
           <br />
           <br />
-          <Link
+          <AccessibleLink
             href={urls.omis.edit.billingAddress(order.id)}
             data-test="billing-address-link"
           >
             Add a different billing address
-          </Link>
+          </AccessibleLink>
         </InsetText>
       ) : (
-        <Link
+        <AccessibleLink
           href={urls.omis.edit.billingAddress(order.id)}
           data-test="order-billing-address"
         >
           Change billing address
-        </Link>
+        </AccessibleLink>
       )}
     </>
   )

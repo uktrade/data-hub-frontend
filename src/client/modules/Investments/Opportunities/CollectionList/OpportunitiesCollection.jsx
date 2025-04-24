@@ -1,6 +1,5 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'govuk-react'
 
 import { CollectionList } from '../../../../components'
 import { listSkeletonPlaceholder } from '../../../../components/SkeletonPlaceholder'
@@ -9,6 +8,7 @@ import {
   INVESTMENTS__OPPORTUNITIES_LOADED,
   INVESTMENTS__OPPORTUNITIES_SELECT_PAGE,
 } from '../../../../actions'
+import AccessibleLink from '../../../../components/Link'
 
 const LargeCapitalOpportunityCollection = ({
   count,
@@ -34,9 +34,9 @@ const LargeCapitalOpportunityCollection = ({
 
       <p>
         For further information email 
-        <Link href="mailto:capitalinvestment@trade.gov.uk">
+        <AccessibleLink href="mailto:capitalinvestment@trade.gov.uk">
           capitalinvestment@trade.gov.uk
-        </Link>
+        </AccessibleLink>
       </p>
     </div>
     <CollectionList

@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useParams } from 'react-router-dom'
-import { Details, InsetText, Label, Link, WarningText } from 'govuk-react'
+import { Details, InsetText, Label, WarningText } from 'govuk-react'
 import { SPACING } from '@govuk-react/constants'
 
 import {
@@ -30,6 +30,7 @@ import { TASK_CREATE_ORDER } from './state'
 import { transformOrderForApi } from './transformers'
 import { transformCompanyAddress } from '../transformers'
 import { idNamesToValueLabels } from '../../../utils'
+import AccessibleLink from '../../../components/Link'
 
 const StyledLabel = styled(Label)`
   font-size: 19px;
@@ -50,13 +51,13 @@ export const CompanyDetails = ({ company }) => (
       {transformCompanyAddress(company)}
       <br />
       <br />
-      <Link
+      <AccessibleLink
         href={urls.omis.create.companySelect()}
         noVisitedState={true}
         data-test="company-change-link"
       >
         Change company
-      </Link>
+      </AccessibleLink>
     </StyledInsetText>
   </FieldWrapper>
 )
@@ -122,9 +123,9 @@ const CreateOrder = () => {
                   data-test="contact-details"
                 >
                   If the contact you are looking for is not listed you can{' '}
-                  <Link href={urls.contacts.create(company.id)}>
+                  <AccessibleLink href={urls.contacts.create(company.id)}>
                     add a new contact
-                  </Link>
+                  </AccessibleLink>
                   .
                 </Details>
               </FieldWrapper>

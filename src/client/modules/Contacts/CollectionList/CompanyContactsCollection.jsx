@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Link, Details } from 'govuk-react'
+import { Details } from 'govuk-react'
 import { useParams } from 'react-router-dom'
 
 import { CONTACTS__LOADED } from '../../../actions'
@@ -15,6 +15,7 @@ import {
   COMPANY_CONTACTS_LIST_ID,
   companyContactsState2props,
 } from './state'
+import AccessibleLink from '../../../components/Link'
 
 const CompanyContactsCollection = ({
   payload,
@@ -53,9 +54,9 @@ const CompanyContactsCollection = ({
                 data-test="archived-details"
               >
                 Contacts cannot be added to an archived company.{' '}
-                <Link href={`/companies/${company.id}/unarchive`}>
+                <AccessibleLink href={`/companies/${company.id}/unarchive`}>
                   Click here to unarchive
-                </Link>
+                </AccessibleLink>
               </Details>
             ) : null}
             <FilteredCollectionList

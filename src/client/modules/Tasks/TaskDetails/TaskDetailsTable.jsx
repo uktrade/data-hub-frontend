@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'govuk-react'
 
 import { SummaryTable } from '../../../components'
 
@@ -8,6 +7,7 @@ import { transformAdvisers } from './transformers'
 import { NOT_SET_TEXT } from '../../../../apps/companies/constants'
 import urls from '../../../../lib/urls'
 import TaskButtons from './TaskButtons'
+import AccessibleLink from '../../../components/Link'
 
 const TaskDetailsTable = ({ task, company, project }) => (
   <>
@@ -16,7 +16,9 @@ const TaskDetailsTable = ({ task, company, project }) => (
         heading="Company"
         children={
           company ? (
-            <Link href={urls.companies.detail(company.id)}>{company.name}</Link>
+            <AccessibleLink href={urls.companies.detail(company.id)}>
+              {company.name}
+            </AccessibleLink>
           ) : (
             NOT_SET_TEXT
           )
@@ -26,9 +28,11 @@ const TaskDetailsTable = ({ task, company, project }) => (
         <SummaryTable.Row
           heading="Investment project"
           children={
-            <Link href={urls.investments.projects.details(project.id)}>
+            <AccessibleLink
+              href={urls.investments.projects.details(project.id)}
+            >
               {project.name}
-            </Link>
+            </AccessibleLink>
           }
         />
       )}
@@ -36,9 +40,11 @@ const TaskDetailsTable = ({ task, company, project }) => (
         <SummaryTable.Row
           heading="Related interaction"
           children={
-            <Link href={urls.interactions.detail(task.interaction.id)}>
+            <AccessibleLink
+              href={urls.interactions.detail(task.interaction.id)}
+            >
               {task.interaction.subject}
-            </Link>
+            </AccessibleLink>
           }
         />
       )}

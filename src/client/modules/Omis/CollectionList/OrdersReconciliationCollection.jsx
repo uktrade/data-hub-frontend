@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
-import Link from '@govuk-react/link'
 import { H3 } from '@govuk-react/heading'
 import { HEADING_SIZES } from '@govuk-react/constants'
 import VisuallyHidden from '@govuk-react/visually-hidden'
@@ -29,19 +28,12 @@ import {
   TASK_GET_ORDERS_RECONCILIATION,
   TASK_GET_ORDERS_RECONCILIATION_METADATA,
 } from './state'
+import AccessibleLink from '../../../components/Link'
 
 const StyledHeader = styled(H3)`
   font-size: ${HEADING_SIZES.SMALL}px;
 `
 
-const StyledLinkHeader = styled(StyledHeader)`
-  & > a:link,
-  a:visited,
-  a:hover,
-  a:active {
-    text-decoration: none;
-  }
-`
 const OrdersReconciliationCollection = ({
   payload,
   optionMetadata,
@@ -76,11 +68,11 @@ const OrdersReconciliationCollection = ({
   }
 
   const TitleRenderer = (title, url) => (
-    <StyledLinkHeader>
-      <Link href={url}>
+    <StyledHeader>
+      <AccessibleLink showUnderline={false} href={url}>
         {title} <VisuallyHidden>(Order reference)</VisuallyHidden>
-      </Link>
-    </StyledLinkHeader>
+      </AccessibleLink>
+    </StyledHeader>
   )
 
   return (

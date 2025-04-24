@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import { Link, Table } from 'govuk-react'
+import { Table } from 'govuk-react'
 import styled from 'styled-components'
 import { FONT_SIZE, FONT_WEIGHTS } from '@govuk-react/constants'
 import { connect } from 'react-redux'
@@ -8,9 +8,10 @@ import { kebabCase } from 'lodash'
 import { companies, investments } from '../../../../../lib/urls'
 import Tag, { TAG_COLOURS } from '../../../../components/Tag'
 import { companyProjectsState2props } from './state'
-import { BLUE, GREY_2 } from '../../../../utils/colours'
+import { GREY_2 } from '../../../../utils/colours'
 import { buildCellContents } from './transformers'
 import { StyledSummaryTable, StyledTableRow } from './components'
+import AccessibleLink from '../../../../components/Link'
 
 const StyledActiveInvestmentSubject = styled('h3')`
   font-size: ${FONT_SIZE.SIZE_20};
@@ -18,13 +19,6 @@ const StyledActiveInvestmentSubject = styled('h3')`
   line-height: ${FONT_SIZE.SIZE_24};
   margin-top: 10px;
   margin-bottom: 0;
-  & > a:link,
-  a:visited,
-  a:hover,
-  a:active {
-    text-decoration: none;
-    color: ${BLUE};
-  }
 `
 
 const StyledTableCell = styled(Table.Cell)`
@@ -70,7 +64,7 @@ const StyledActiveInvestmentTableBottomCell = styled(Table.Cell)`
   padding-top: 0px;
 `
 
-const EditLink = styled(Link)`
+const EditLink = styled(AccessibleLink)`
   float: right;
 `
 
@@ -102,14 +96,15 @@ const ActiveInvestmentList = ({ upcomingActiveInvestments, companyId }) =>
       <StyledTableRow>
         <StyledActiveInvestmentHeadingTableCell colSpan={2}>
           <StyledActiveInvestmentSubject>
-            <Link
+            <AccessibleLink
+              showUnderline={false}
               href={investments.projects.details(activeInvestment.id)}
               data-test={`active-investment-page-${kebabCase(
                 activeInvestment.name
               )}-link`}
             >
               {activeInvestment.name}
-            </Link>
+            </AccessibleLink>
           </StyledActiveInvestmentSubject>
         </StyledActiveInvestmentHeadingTableCell>
       </StyledTableRow>
@@ -161,7 +156,7 @@ const ActiveInvestmentList = ({ upcomingActiveInvestments, companyId }) =>
         <StyledActiveInvestmentTableBottomCell colSpan={1}>
           {buildCellContents(
             activeInvestment.latest_interaction,
-            <Link
+            <AccessibleLink
               href={companies.interactions.detail(
                 companyId,
                 activeInvestment.latest_interaction?.id
@@ -177,7 +172,7 @@ const ActiveInvestmentList = ({ upcomingActiveInvestments, companyId }) =>
                 month: 'long',
                 year: 'numeric',
               })}
-            </Link>
+            </AccessibleLink>
           )}
         </StyledActiveInvestmentTableBottomCell>
       </StyledActiveInvestmentTableBottomRow>
@@ -209,7 +204,7 @@ const ActiveInvestmentProjectsCard = ({
     <StyledTableRow>
       <StyledTableCell colSpan={2}>
         {stageList?.active ? (
-          <Link
+          <AccessibleLink
             href={companies.investments.companyInvestmentProjectsWithSearch(
               companyId
             )}
@@ -224,16 +219,16 @@ const ActiveInvestmentProjectsCard = ({
               `View ${
                 stageList.active - upcomingActiveInvestments.length
               } more active investments`}
-          </Link>
+          </AccessibleLink>
         ) : (
-          <Link
+          <AccessibleLink
             href={companies.investments.companyInvestmentProjectsWithSearch(
               companyId
             )}
             data-test="investments-page-link"
           >
             View all investments
-          </Link>
+          </AccessibleLink>
         )}
       </StyledTableCell>
     </StyledTableRow>

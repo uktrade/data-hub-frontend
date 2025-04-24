@@ -1,6 +1,5 @@
 import React from 'react'
 import { Link as ReactRouterLink } from 'react-router-dom'
-import { Link } from 'govuk-react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
 import pluralize from 'pluralize'
@@ -28,6 +27,7 @@ import {
   DefaultLayout,
   StatusMessage,
 } from '../../../components'
+import AccessibleLink from '../../../components/Link'
 
 const FORM_ID = 'export-win-form'
 
@@ -48,8 +48,8 @@ export const ContactLink = ({ sections = [], shouldPluralize = true }) => {
     : 'section.'
   return (
     <>
-      Contact <Link href={`mailto:${EMAIL}`}>{EMAIL}</Link> if you need to
-      update the {section} {sections.join(', ')}
+      Contact <AccessibleLink href={`mailto:${EMAIL}`}>{EMAIL}</AccessibleLink>{' '}
+      if you need to update the {section} {sections.join(', ')}
     </>
   )
 }
@@ -165,7 +165,7 @@ const ExportWinForm = ({
                 {currentStepName === steps.SUMMARY && (
                   <VerticalSpacerWithMarginBottom>
                     {winStatus !== WIN_STATUS.PENDING && (
-                      <Link
+                      <AccessibleLink
                         as={ReactRouterLink}
                         data-test="customer-feedback"
                         to={urls.companies.exportWins.customerFeedback(
@@ -174,7 +174,7 @@ const ExportWinForm = ({
                         )}
                       >
                         Customer feedback
-                      </Link>
+                      </AccessibleLink>
                     )}
                     <ExportWinsLink />
                   </VerticalSpacerWithMarginBottom>

@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Button, Details, Link } from 'govuk-react'
+import { Button, Details } from 'govuk-react'
 import styled from 'styled-components'
 import { SPACING } from '@govuk-react/constants'
 
@@ -28,6 +28,7 @@ import {
   transformKind,
   transformService,
 } from './transformers'
+import AccessibleLink from '../../../components/Link'
 
 const EXPORT = 'export'
 
@@ -100,13 +101,13 @@ const InteractionDetails = ({ interactionId }) => {
               <SummaryTable.Row
                 heading="Investment project"
                 children={
-                  <Link
+                  <AccessibleLink
                     href={urls.investments.projects.details(
                       interaction.investmentProject.id
                     )}
                   >
                     {interaction.investmentProject.name}
-                  </Link>
+                  </AccessibleLink>
                 }
               />
             ) : null}
@@ -115,7 +116,7 @@ const InteractionDetails = ({ interactionId }) => {
                 heading="Event"
                 children={
                   interaction.isEvent ? (
-                    <Link
+                    <AccessibleLink
                       href={
                         interaction.event.stovaEventId
                           ? urls.events.stova.details(
@@ -125,7 +126,7 @@ const InteractionDetails = ({ interactionId }) => {
                       }
                     >
                       {interaction.event.name}
-                    </Link>
+                    </AccessibleLink>
                   ) : (
                     'No'
                   )
@@ -156,13 +157,13 @@ const InteractionDetails = ({ interactionId }) => {
               <SummaryTable.Row
                 heading="Related large capital opportunity"
                 children={
-                  <Link
+                  <AccessibleLink
                     href={urls.investments.opportunities.details(
                       interaction.largeCapitalOpportunity.id
                     )}
                   >
                     {interaction.largeCapitalOpportunity.name}
-                  </Link>
+                  </AccessibleLink>
                 }
               />
             ) : null}
@@ -248,9 +249,9 @@ const InteractionDetails = ({ interactionId }) => {
 
               <div>
                 If you think the information is incomplete or incorrect,{' '}
-                <Link href={urls.support()}>
+                <AccessibleLink href={urls.support()}>
                   get in touch using the support form.
-                </Link>
+                </AccessibleLink>
               </div>
             </Details>
           )}

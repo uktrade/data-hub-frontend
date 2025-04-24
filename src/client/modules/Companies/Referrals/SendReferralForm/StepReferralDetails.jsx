@@ -1,7 +1,7 @@
 import React from 'react'
 import { throttle } from 'lodash'
 import styled from 'styled-components'
-import { H2, Button, Link } from 'govuk-react'
+import { H2, Button } from 'govuk-react'
 import { SPACING, LEVEL_SIZE } from '@govuk-react/constants'
 
 import { ID as STORE_ID } from './state'
@@ -17,6 +17,7 @@ import {
 
 import { useFormContext } from '../../../../components/Form/hooks'
 import { apiProxyAxios } from '../../../../components/Task/utils'
+import AccessibleLink from '../../../../components/Link'
 
 const StyledPanel = styled(Panel)({
   marginBottom: SPACING.SCALE_4,
@@ -46,6 +47,7 @@ const StepReferralDetails = ({
         <NewWindowLink
           data-test="referral-guidance"
           href={urls.external.helpCentre.referrals}
+          darkBackground={true}
         >
           Read more guidance here
         </NewWindowLink>
@@ -125,7 +127,7 @@ const StepReferralDetails = ({
           <>
             Who should the recipient of the referral talk to? If the contact you{' '}
             are looking for is not listed you can{' '}
-            <Link
+            <AccessibleLink
               onClick={(e) => {
                 e.preventDefault()
                 openContactFormTask.start({
@@ -142,7 +144,7 @@ const StepReferralDetails = ({
               })}
             >
               add a new contact.
-            </Link>
+            </AccessibleLink>
           </>
         }
         options={transformedContacts.map(({ name, id }) => ({
@@ -155,12 +157,12 @@ const StepReferralDetails = ({
       />
       <FormActions>
         <Button name="forward">Continue</Button>
-        <Link
+        <AccessibleLink
           data-test="referral-details-cancel"
           href={urls.companies.detail(companyId)}
         >
           Cancel
-        </Link>
+        </AccessibleLink>
       </FormActions>
     </>
   )

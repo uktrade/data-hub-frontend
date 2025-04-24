@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Link, H4 } from 'govuk-react'
+import { H4 } from 'govuk-react'
 import { FONT_SIZE, FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
 import styled from 'styled-components'
 
@@ -34,7 +34,8 @@ import {
   state2props,
 } from './state'
 
-import { BLUE, GREY_2 } from '../../../utils/colours'
+import { GREY_2 } from '../../../utils/colours'
+import AccessibleLink from '../../../components/Link'
 
 export const StyledCollectionItem = styled(CollectionItem)`
   border-bottom: 1px solid ${GREY_2};
@@ -47,20 +48,19 @@ const StyledLinkHeader = styled('h2')`
   line-height: ${FONT_SIZE.SIZE_24};
   margin-top: ${({ margin }) => `${margin.top}px`};
   margin-bottom: ${({ margin }) => `${margin.bottom}px`};
-  & > a:link,
-  a:visited,
-  a:hover,
-  a:active {
-    text-decoration: none;
-    color: ${BLUE};
-  }
 `
 
 // FIXME: This should be a component
 // e.g. the positional arguments should be passed as an object
 export const TitleRenderer = (title, url, margin = { bottom: 10 }) => (
   <StyledLinkHeader margin={margin}>
-    {url ? <Link href={url}>{title}</Link> : <H4>{title}</H4>}
+    {url ? (
+      <AccessibleLink showUnderline={false} href={url}>
+        {title}
+      </AccessibleLink>
+    ) : (
+      <H4>{title}</H4>
+    )}
   </StyledLinkHeader>
 )
 

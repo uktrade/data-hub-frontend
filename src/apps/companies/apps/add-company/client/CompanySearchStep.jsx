@@ -1,6 +1,5 @@
 import React from 'react'
 import { flushSync } from 'react-dom'
-import { Link } from 'govuk-react'
 import PropTypes from 'prop-types'
 import { get } from 'lodash'
 import { H3 } from '@govuk-react/heading'
@@ -8,6 +7,7 @@ import { H3 } from '@govuk-react/heading'
 import EntityListItem from '../../../../../client/components/EntityList/EntityListItem'
 import { useFormContext } from '../../../../../client/components/Form/hooks'
 import { FieldDnbCompany, Step } from '../../../../../client/components'
+import AccessibleLink from '../../../../../client/components/Link'
 
 function DnbCompanyRenderer(props) {
   const { setFieldValue, goForward } = useFormContext()
@@ -46,12 +46,12 @@ export const getDnbEntityText = (companyId, isOutOfBusiness, companyName) => {
     return (
       <div data-test="company-already-on-datahub">
         This company is already on Data Hub. You can record activity{' '}
-        <Link
+        <AccessibleLink
           href={`/companies/${companyId}`}
           aria-label={`Go to ${companyName} details page to record activity`}
         >
           on the company page.
-        </Link>
+        </AccessibleLink>
       </div>
     )
   }

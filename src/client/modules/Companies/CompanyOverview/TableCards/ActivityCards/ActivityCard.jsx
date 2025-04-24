@@ -1,5 +1,4 @@
 import React, { Fragment } from 'react'
-import { Link } from 'govuk-react'
 import { SPACING } from '@govuk-react/constants'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
@@ -19,12 +18,13 @@ import {
   renderTags,
 } from '../../../../../components/CollectionList/CollectionItem'
 import { GREY_2 } from '../../../../../utils/colours'
+import AccessibleLink from '../../../../../components/Link'
 
 const StyledSummaryTable = styled(SummaryTable)`
   margin: 0;
 `
 
-const ActivityStyledLink = styled(Link)`
+const ActivityStyledLink = styled(AccessibleLink)`
   caption & {
     font-weight: 400;
     font-size: 16px;
@@ -123,12 +123,12 @@ const ActivityCard = ({
     </StyledTableRow>
     <StyledTableRow>
       <StyledLastTableCell colSpan={2}>
-        <Link
+        <AccessibleLink
           href={companies.activity.index(company.id)}
           data-test="activity-page-link"
         >
           View all activities
-        </Link>
+        </AccessibleLink>
       </StyledLastTableCell>
     </StyledTableRow>
   </StyledSummaryTable>

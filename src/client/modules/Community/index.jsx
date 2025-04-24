@@ -2,7 +2,6 @@ import React from 'react'
 import { H2 } from '@govuk-react/heading'
 import GridRow from '@govuk-react/grid-row'
 import GridCol from '@govuk-react/grid-col'
-import Link from '@govuk-react/link'
 import styled from 'styled-components'
 
 import { DefaultLayout, NewWindowLink } from '../../components'
@@ -13,6 +12,7 @@ import feedbackImg from './img-feedback.jpg'
 import principlesImg from './img-principles.jpg'
 import trainingImg from './img-training.jpg'
 import researchImg from './img-research.jpg'
+import AccessibleLink from '../../components/Link'
 
 const StyledHeading = styled(H2)`
   font-size: 24px;
@@ -88,9 +88,11 @@ const Community = () => {
             </StyledHeading>
             <StyledParagraph>
               Do you have a great idea? We would love to hear it. Tell us your{' '}
-              <Link href={urls.external.helpCentre.community.feedback}>
+              <AccessibleLink
+                href={urls.external.helpCentre.community.feedback}
+              >
                 feedback or experience
-              </Link>{' '}
+              </AccessibleLink>{' '}
               using our CRM tools.
             </StyledParagraph>
           </div>
@@ -143,13 +145,13 @@ const Community = () => {
               We regularly run user research sessions to find out how our
               current tools are used and to test new solutions. We need your
               help, if you are interested{' '}
-              <Link
+              <AccessibleLink
                 href={`mailto:${EMAIL}?subject=${encodeURIComponent(
                   EMAIL_SUBJECT
                 )}&body=${encodeURIComponent(EMAIL_BODY)}`}
               >
                 sign up to take part in user research
-              </Link>
+              </AccessibleLink>
               .
             </StyledParagraph>
           </div>

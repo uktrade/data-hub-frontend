@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useParams } from 'react-router-dom'
-import { Link, Table } from 'govuk-react'
+import { Table } from 'govuk-react'
 import { SPACING } from '@govuk-react/constants'
 
 import { FieldInput, Form, FormLayout, StatusMessage } from '../../components'
@@ -16,8 +16,9 @@ import { TASK_EDIT_ORDER_ASSIGNEE_TIME } from './state'
 import { transformAssigneeTimeForApi } from './transformers'
 import { RED } from '../../utils/colours'
 import OMISLayout from './OMISLayout'
+import AccessibleLink from '../../components/Link'
 
-const StyledLink = styled(Link)`
+const StyledLink = styled(AccessibleLink)`
   display: inline-block;
   margin-bottom: ${SPACING.SCALE_5};
 `
@@ -92,12 +93,12 @@ export const NoAssigneesMessage = ({ order }) => (
       To add estimated hours you must add advisers in the market.
       <br />
       <br />
-      <Link
+      <AccessibleLink
         href={urls.omis.edit.assignees(order.id)}
         data-test="add-advisers-link"
       >
         Add advisers
-      </Link>
+      </AccessibleLink>
     </StatusMessage>
     <StyledLink href={urls.omis.order(order.id)} data-test="return-link">
       Return without saving

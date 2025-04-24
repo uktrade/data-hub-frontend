@@ -3,13 +3,13 @@ import PropTypes from 'prop-types'
 import { Link as RouterLink } from 'react-router-dom'
 import styled from 'styled-components'
 import { H3 } from '@govuk-react/heading'
-import Link from '@govuk-react/link'
 import { HEADING_SIZES, MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
 
 import { GREY_2, DARK_GREY } from '../../utils/colours'
 import Badge from '../Badge/'
 import Metadata from '../../components/Metadata/'
 import Tag from '../Tag'
+import AccessibleLink from '../Link'
 
 const ItemWrapper = styled('li')`
   border-bottom: 1px solid ${GREY_2};
@@ -40,15 +40,6 @@ const StyledInlineTagWrapper = styled('div')({
 
 const StyledHeader = styled(H3)`
   font-size: ${HEADING_SIZES.SMALL}px;
-`
-
-const StyledLinkHeader = styled(StyledHeader)`
-  & > a:link,
-  a:visited,
-  a:hover,
-  a:active {
-    text-decoration: none;
-  }
 `
 
 const StyledSubheading = styled('h4')`
@@ -122,24 +113,33 @@ const CollectionItem = ({
     {titleRenderer ? (
       titleRenderer(headingText, headingUrl)
     ) : headingUrl ? (
-      <StyledLinkHeader>
+      <StyledHeader>
         {useReactRouter ? (
-          <Link as={RouterLink} to={headingUrl} onClick={onClick}>
+          <AccessibleLink
+            showUnderline={false}
+            as={RouterLink}
+            to={headingUrl}
+            onClick={onClick}
+          >
             {headingText}
-          </Link>
+          </AccessibleLink>
         ) : (
-          <Link href={headingUrl} onClick={onClick}>
+          <AccessibleLink
+            showUnderline={false}
+            href={headingUrl}
+            onClick={onClick}
+          >
             {headingText}
-          </Link>
+          </AccessibleLink>
         )}
-      </StyledLinkHeader>
+      </StyledHeader>
     ) : (
       <StyledHeader>{headingText}</StyledHeader>
     )}
     {subheading ? (
       subheadingUrl ? (
         <StyledSubheading fontSize={19}>
-          <Link href={subheadingUrl}>{subheading}</Link>
+          <AccessibleLink href={subheadingUrl}>{subheading}</AccessibleLink>
         </StyledSubheading>
       ) : (
         <StyledSubheading>{subheading}</StyledSubheading>

@@ -7,6 +7,7 @@ import { UnorderedList, ListItem } from 'govuk-react'
 import { investments } from '../../../lib/urls'
 import { INCOMPLETE_FIELDS } from './constants'
 import { FOCUS_COLOUR, rgba } from '../../utils/colours'
+import AccessibleLink from '../Link'
 
 const StyledDiv = styled('div')`
   height: 100%;
@@ -43,7 +44,7 @@ const OverflowWrapper = styled('span')`
   width: calc(100% - 8px);
 `
 
-const StyledLink = styled('a')`
+const StyledLink = styled(AccessibleLink)`
   font-size: ${FONT_SIZE.SIZE_16};
 `
 

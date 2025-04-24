@@ -1,10 +1,11 @@
 import React from 'react'
-import { H3, Link } from 'govuk-react'
+import { H3 } from 'govuk-react'
 
 import { ATTENDEE_SORT_OPTIONS } from '../constants'
 import { formatDate, DATE_FORMAT_FULL } from '../../../utils/date-utils'
 import CollectionItem from '../../../components/CollectionList/CollectionItem'
 import InteractionsV3 from '../../../components/Resource/InteractionsV3'
+import AccessibleLink from '../../../components/Link'
 
 // Attendees are contacts for an interaction linked to an event created via Stova.
 const Attendees = ({ datahubEventId }) => (
@@ -36,9 +37,9 @@ const AttendeeList = ({ interactions }) => {
                 {
                   label: 'Company',
                   value: (
-                    <Link href={`/companies/${company?.id}`}>
+                    <AccessibleLink href={`/companies/${company?.id}`}>
                       {company?.name || 'Not available'}
-                    </Link>
+                    </AccessibleLink>
                   ),
                 },
                 {
@@ -52,9 +53,9 @@ const AttendeeList = ({ interactions }) => {
                 {
                   label: 'Service delivery',
                   value: (
-                    <Link href={`/companies/${service.id}`}>
+                    <AccessibleLink href={`/companies/${service.id}`}>
                       {service.name}
-                    </Link>
+                    </AccessibleLink>
                   ),
                 },
               ]}

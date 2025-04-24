@@ -86,6 +86,9 @@ const styledLink = {
     color: BLACK,
     '&.active': {
       color: DARK_BLUE_LEGACY,
+      '&:focus': {
+        color: BLACK,
+      },
     },
     [MEDIA_QUERIES.TABLET]: {
       display: 'inline-block',

@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Link, ListItem, UnorderedList } from 'govuk-react'
+import { ListItem, UnorderedList } from 'govuk-react'
 import { kebabCase } from 'lodash'
 
 import urls from '../../../../lib/urls'
@@ -14,6 +14,7 @@ import { TASK_UPDATE_INVESTMENT_PROJECT_STAGE } from './state'
 import { INCOMPLETE_FIELDS } from '../../../components/MyInvestmentProjects/constants'
 import { BLUE } from '../../../utils/colours'
 import { STAGE_ACTIVE, STAGE_VERIFY_WIN, STAGE_WON } from './constants'
+import AccessibleLink from '../../../components/Link'
 
 const StyledListItem = styled(ListItem)`
   color: ${BLUE};
@@ -46,12 +47,12 @@ const checkIfActiveOrVerifyWin = (currentStage, projectId) =>
       <StyledP>Before you move to the Verify win stage:</StyledP>
       <UnorderedList listStyleType="bullet">
         <StyledListItem key={1}>
-          <Link
+          <AccessibleLink
             href={urls.investments.projects.evidence.index(projectId)}
             data-test="upload-evidence-link"
           >
             Upload any evidence documents
-          </Link>
+          </AccessibleLink>
         </StyledListItem>
       </UnorderedList>
     </>
@@ -60,12 +61,12 @@ const checkIfActiveOrVerifyWin = (currentStage, projectId) =>
       <StyledP>Before you move to the Won stage:</StyledP>
       <UnorderedList listStyleType="bullet">
         <StyledListItem key={1}>
-          <Link
+          <AccessibleLink
             href={urls.investments.projects.evidence.index(projectId)}
             data-test="review-evidence-link"
           >
             Review the evidence for this investment project
-          </Link>
+          </AccessibleLink>
         </StyledListItem>
       </UnorderedList>
     </>
@@ -127,12 +128,12 @@ const ProjectIncompleteFields = ({
       <UnorderedList listStyleType="bullet">
         {getIncompleteFields(project.incompleteFields).map((step, i) => (
           <StyledListItem key={i}>
-            <Link
+            <AccessibleLink
               href={mapFieldToUrl(step, project.id)}
               data-test={`${kebabCase(step)}-link`}
             >
               {step}
-            </Link>
+            </AccessibleLink>
           </StyledListItem>
         ))}
       </UnorderedList>

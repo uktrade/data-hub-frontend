@@ -1,4 +1,3 @@
-import Link from '@govuk-react/link'
 import Table from '@govuk-react/table'
 import { FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
 import VisuallyHidden from '@govuk-react/visually-hidden'
@@ -11,6 +10,7 @@ import { BORDER_COLOUR } from '../../../client/utils/colours'
 import urls from '../../../lib/urls'
 import { MEDIA_QUERIES } from '../../utils/responsive'
 import SecondaryButton from '../SecondaryButton'
+import AccessibleLink from '../Link'
 
 const { formatDate, DATE_FORMAT_COMPACT } = require('../../utils/date-utils')
 
@@ -124,7 +124,7 @@ const CompaniesTable = ({ companies }) => (
           <TitleCell>
             <LinesEllipsis
               maxLine={2}
-              as={Link}
+              as={AccessibleLink}
               href={urls.companies.detail(id)}
             >
               {name}
@@ -137,7 +137,7 @@ const CompaniesTable = ({ companies }) => (
             {interactionId ? (
               <LinesEllipsis
                 maxLine={2}
-                as={Link}
+                as={AccessibleLink}
                 href={urls.interactions.detail(interactionId)}
               >
                 {subject}

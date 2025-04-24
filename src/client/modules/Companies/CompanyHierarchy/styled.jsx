@@ -12,6 +12,7 @@ import {
 } from '../../../utils/colours'
 import { Tag, ToggleSection } from '../../../components'
 import { ToggleButton } from '../../../components/ToggleSection/BaseToggleSection'
+import AccessibleLink from '../../../components/Link'
 
 const horizontalLine = css`
   //This is the horizontal line to the left of the div
@@ -218,7 +219,7 @@ export const AddCompanyLinkDiv = styled('div')`
   padding: 15px;
 `
 
-export const AddCompanyLink = styled(Link)`
+export const AddCompanyLink = styled(AccessibleLink)`
   font-size: ${FONT_SIZE.SIZE_16};
 `
 

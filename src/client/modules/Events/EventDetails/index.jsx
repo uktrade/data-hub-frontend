@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom'
 import Button from '@govuk-react/button'
 import styled from 'styled-components'
 
-import { H3, Link } from 'govuk-react'
+import { H3 } from 'govuk-react'
 
 import { ATTENDEE_SORT_OPTIONS } from '../constants'
 import urls from '../../../../lib/urls'
@@ -21,6 +21,7 @@ import { VerticalTabNav } from '../../../components/TabNav'
 import InteractionsV3 from '../../../components/Resource/InteractionsV3'
 import { formatDate, DATE_FORMAT_FULL } from '../../../utils/date-utils'
 import StatusMessage from '../../../components/StatusMessage'
+import AccessibleLink from '../../../components/Link'
 
 const StyledSummaryTable = styled(SummaryTable)({
   marginTop: 0,
@@ -60,9 +61,9 @@ const Attendees = ({ eventId, isDisabled }) => (
                   {
                     label: 'Company',
                     value: (
-                      <Link href={`/companies/${company?.id}`}>
+                      <AccessibleLink href={`/companies/${company?.id}`}>
                         {company?.name}
-                      </Link>
+                      </AccessibleLink>
                     ),
                   },
                   {
@@ -76,7 +77,9 @@ const Attendees = ({ eventId, isDisabled }) => (
                   {
                     label: 'Service delivery',
                     value: (
-                      <Link href={`/interactions/${id}`}>{service.name}</Link>
+                      <AccessibleLink href={`/interactions/${id}`}>
+                        {service.name}
+                      </AccessibleLink>
                     ),
                   },
                 ]}

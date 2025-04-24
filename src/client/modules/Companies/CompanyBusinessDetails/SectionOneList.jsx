@@ -1,14 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Link from '@govuk-react/link'
 import styled from 'styled-components'
 import { SPACING_POINTS } from '@govuk-react/constants'
 
 import { SummaryTable } from '../../../components'
 import urls from '../../../../lib/urls'
 import { NOT_SET_TEXT } from '../../../../apps/companies/constants'
+import AccessibleLink from '../../../components/Link'
 
-const StyledSummaryFooterLink = styled(Link)`
+const StyledSummaryFooterLink = styled(AccessibleLink)`
   margin-top: -${SPACING_POINTS[7]}px;
   display: block;
 `
@@ -34,9 +34,12 @@ const SectionOneList = ({ company, isArchived, isDnbCompany }) =>
         actions={
           !isArchived &&
           !isDnbCompany && (
-            <Link href={urls.companies.edit(company.id)} key={company.id}>
+            <AccessibleLink
+              href={urls.companies.edit(company.id)}
+              key={company.id}
+            >
               Edit
-            </Link>
+            </AccessibleLink>
           )
         }
       >

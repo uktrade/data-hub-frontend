@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { GridCol, H3, Link } from 'govuk-react'
+import { GridCol, H3 } from 'govuk-react'
 import {
   SPACING,
   FONT_SIZE,
@@ -9,6 +9,7 @@ import {
 } from '@govuk-react/constants'
 
 import { DARK_GREY, GREY_2, LINK_COLOUR } from '../../../utils/colours'
+import AccessibleLink from '../../../components/Link'
 
 export const DeleteButton = styled('button')({
   padding: 0,
@@ -52,7 +53,7 @@ export const ItemHeader = styled(H3)({
   marginBottom: SPACING.SCALE_4,
 })
 
-export const ItemHeaderLink = styled(Link)({
+export const ItemHeaderLink = styled(AccessibleLink)({
   fontColor: LINK_COLOUR,
   fontWeight: FONT_WEIGHTS.regular,
 })

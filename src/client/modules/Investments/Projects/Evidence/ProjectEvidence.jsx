@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Button, H2, Link, ListItem, Table, UnorderedList } from 'govuk-react'
+import { Button, H2, ListItem, Table, UnorderedList } from 'govuk-react'
 import { LEVEL_SIZE } from '@govuk-react/constants'
 import { useParams } from 'react-router-dom'
 
@@ -12,6 +12,7 @@ import urls from '../../../../../lib/urls'
 import { VIRUS_SCAN_STATUSES } from '../constants'
 import ProjectLayoutNew from '../../../../components/Layout/ProjectLayoutNew'
 import InvestmentName from '../InvestmentName'
+import AccessibleLink from '../../../../components/Link'
 
 const StyledListItem = styled(ListItem)`
   font-size: 16px;
@@ -61,12 +62,12 @@ const ProjectEvidence = () => {
                         document.status === 'virus_scanned' ? (
                           <ProjectDocumentResource id={document.url.slice(1)}>
                             {(documentDownload) => (
-                              <Link
+                              <AccessibleLink
                                 href={documentDownload.documentUrl}
                                 data-test="download-link"
                               >
                                 Download
-                              </Link>
+                              </AccessibleLink>
                             )}
                           </ProjectDocumentResource>
                         ) : (
@@ -81,7 +82,7 @@ const ProjectEvidence = () => {
                     </Table.Cell>
                     <Table.Cell>
                       {
-                        <Link
+                        <AccessibleLink
                           href={urls.investments.projects.evidence.delete(
                             projectId,
                             document.id
@@ -89,7 +90,7 @@ const ProjectEvidence = () => {
                           data-test="delete-link"
                         >
                           Delete
-                        </Link>
+                        </AccessibleLink>
                       }
                     </Table.Cell>
                   </Table.Row>
