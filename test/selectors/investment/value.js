@@ -9,7 +9,7 @@ module.exports = {
   foreignEquityInvestmentRadioNo:
     '[data-test="client-cannot-provide-foreign-investment-no"]',
   foreignEquityInvestment: '[data-test="foreign-equity-investment-input"]',
-  newJobs: '[data-test="field-number_new_jobs"]',
+  newJobs: '[data-test="number-new-jobs-input"]',
   safeguardedJobs: '[data-test="field-number_safeguarded_jobs"]',
   governmentAssistanceRadioYes: '[data-test="government-assistance-yes"]',
   governmentAssistanceRadioNo: '[data-test="government-assistance-no"]',
