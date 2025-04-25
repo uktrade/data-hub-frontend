@@ -100,12 +100,12 @@ describe('Company activity feed', () => {
       )
     })
     it('displays the Great export enquiry contact', () => {
-      cy.get('[data-test="metadata-item"]').contains(
+      cy.get('[data-test="metadata-value"]').contains(
         activity.great_export_enquiry.contact.name
       )
     })
     it('displays the Great export enquiry comment', () => {
-      cy.get('[data-test="metadata-item"]').contains(great_comment)
+      cy.get('[data-test="metadata-value"]').contains(great_comment)
     })
   })
 
@@ -297,7 +297,8 @@ describe('Company activity feed', () => {
         EYBListHighValue,
         urls.companies.activity.index(fixtures.company.venusLtd.id)
       )
-      cy.get('[data-test="metadata-item"]').contains('Value High')
+      cy.get('[data-test="metadata-label"]').contains('Value')
+      cy.get('[data-test="metadata-value"]').contains('High')
       cy.get('[data-test="collection-item"]').each(() =>
         cy
           .get('a')
@@ -316,7 +317,8 @@ describe('Company activity feed', () => {
         EYBListLowValue,
         urls.companies.activity.index(fixtures.company.venusLtd.id)
       )
-      cy.get('[data-test="metadata-item"]').contains('Value Low')
+      cy.get('[data-test="metadata-label"]').contains('Value')
+      cy.get('[data-test="metadata-value"]').contains('Low')
       cy.get('[data-test="collection-item"]').each(() =>
         cy
           .get('a')
@@ -335,7 +337,8 @@ describe('Company activity feed', () => {
         EYBListUnknownValue,
         urls.companies.activity.index(fixtures.company.venusLtd.id)
       )
-      cy.get('[data-test="metadata-item"]').contains('Value Unknown')
+      cy.get('[data-test="metadata-label"]').contains('Value')
+      cy.get('[data-test="metadata-value"]').contains('Unknown')
       cy.get('[data-test="collection-item"]').each(() =>
         cy
           .get('a')
@@ -383,7 +386,8 @@ describe('Company activity feed', () => {
         EYBListHighValue,
         urls.companies.activity.index(fixtures.company.venusLtd.id)
       )
-      cy.get('[data-test="metadata-item"]').contains('Value High')
+      cy.get('[data-test="metadata-label"]').contains('Value')
+      cy.get('[data-test="metadata-value"]').contains('High')
       cy.get('[data-test="collection-item"]').each(() =>
         cy
           .get('a')
@@ -402,7 +406,8 @@ describe('Company activity feed', () => {
         EYBListLowValue,
         urls.companies.activity.index(fixtures.company.venusLtd.id)
       )
-      cy.get('[data-test="metadata-item"]').contains('Value Low')
+      cy.get('[data-test="metadata-label"]').contains('Value')
+      cy.get('[data-test="metadata-value"]').contains('Low')
       cy.get('[data-test="collection-item"]').each(() =>
         cy
           .get('a')
@@ -421,7 +426,8 @@ describe('Company activity feed', () => {
         EYBListUnknownValue,
         urls.companies.activity.index(fixtures.company.venusLtd.id)
       )
-      cy.get('[data-test="metadata-item"]').contains('Value Unknown')
+      cy.get('[data-test="metadata-label"]').contains('Value')
+      cy.get('[data-test="metadata-value"]').contains('Unknown')
       cy.get('[data-test="collection-item"]').each(() =>
         cy
           .get('a')
