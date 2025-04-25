@@ -27,6 +27,7 @@ const StyledUnorderedList = styled(UnorderedList)`
 const FieldDnbCompany = ({
   name,
   label,
+  apiEndpoint,
   legend,
   hint,
   country,
@@ -59,6 +60,7 @@ const FieldDnbCompany = ({
 
         <FieldCompanyDnBTypeahead
           name="companyDnB"
+          apiEndpoint={apiEndpoint}
           aria-label="Search a company"
           label="Company Name"
           required="Search for and select a company."

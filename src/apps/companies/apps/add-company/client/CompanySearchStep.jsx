@@ -1,37 +1,11 @@
 import React from 'react'
 import { flushSync } from 'react-dom'
 import PropTypes from 'prop-types'
-import { get } from 'lodash'
 import { H3 } from '@govuk-react/heading'
 
-import EntityListItem from '../../../../../client/components/EntityList/EntityListItem'
 import { useFormContext } from '../../../../../client/components/Form/hooks'
 import { FieldDnbCompany, Step } from '../../../../../client/components'
 import AccessibleLink from '../../../../../client/components/Link'
-
-function DnbCompanyRenderer(props) {
-  const { setFieldValue, goForward } = useFormContext()
-
-  function onEntityClick({ dnb_company }) {
-    setFieldValue('cannotFind', false)
-    setFieldValue('dnbCompany', dnb_company)
-    goForward()
-  }
-
-  const { data } = props
-  const companyId = get(data, 'datahub_company.id')
-  const isOutOfBusiness = get(data, 'dnb_company.is_out_of_business')
-  const companyName = get(data, 'dnb_company.primary_name')
-  const isClickable = !companyId && !isOutOfBusiness
-
-  return (
-    <EntityListItem
-      onEntityClick={isClickable ? onEntityClick : null}
-      text={getDnbEntityText(companyId, isOutOfBusiness, companyName)}
-      {...props}
-    />
-  )
-}
 
 export const getDnbEntityText = (companyId, isOutOfBusiness, companyName) => {
   if (isOutOfBusiness) {
@@ -59,12 +33,7 @@ export const getDnbEntityText = (companyId, isOutOfBusiness, companyName) => {
   return null
 }
 
-function CompanySearchStep({
-  countryName,
-  countryIsoCode,
-  csrfToken,
-  features,
-}) {
+function CompanySearchStep({ countryName, countryIsoCode, csrfToken }) {
   const { setFieldValue, goForward } = useFormContext()
   return (
     <Step name="companySearch" forwardButton={null} backButton={null}>
@@ -75,12 +44,10 @@ function CompanySearchStep({
         queryParams={{ address_country: countryIsoCode }}
         name="dnbCompany"
         country={countryName}
-        entityRenderer={DnbCompanyRenderer}
         onCompanySelect={(dnb_company) => {
           setFieldValue('cannotFind', false)
           setFieldValue('dnbCompany', dnb_company)
         }}
-        csrfToken={csrfToken}
         onCannotFind={() => {
           // The CompanyNotFoundStep where the user manually adds a company to Data Hub via
           // a form was being skipped altogether throwing out the sequencing of form steps.
@@ -95,7 +62,6 @@ function CompanySearchStep({
           // Opt out of React v18 batching so the form functions as before.
           flushSync(() => goForward())
         }}
-        features={features}
       />
     </Step>
   )

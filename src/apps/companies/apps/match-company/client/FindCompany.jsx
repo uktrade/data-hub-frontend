@@ -5,7 +5,6 @@ import InsetText from '@govuk-react/inset-text'
 
 import urls from '../../../../../lib/urls'
 import { SummaryList, FieldDnbCompany } from '../../../../../client/components'
-import EntityListItem from '../../../../../client/components/EntityList/EntityListItem'
 import Form from '../../../../../client/components/Form'
 
 function FindCompany({ company, csrfToken }) {
@@ -34,19 +33,6 @@ function FindCompany({ company, csrfToken }) {
         )}?_csrf=${csrfToken}`}
         queryParams={{ address_country: company.countryCode }}
         name="dnbCompany"
-        entityRenderer={(props) => (
-          <EntityListItem
-            onEntityClick={({ dnb_company }) =>
-              window.location.assign(
-                urls.companies.match.confirmation(
-                  company.id,
-                  dnb_company.duns_number
-                )
-              )
-            }
-            {...props}
-          />
-        )}
         onCannotFind={() => {
           window.location.assign(urls.companies.match.cannotFind(company.id))
         }}
