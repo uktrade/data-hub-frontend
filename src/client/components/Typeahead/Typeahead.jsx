@@ -396,7 +396,7 @@ const Typeahead = ({
                         {showMetaData && option.meta ? (
                           <Metadata
                             active={index === activeIndex}
-                            key={label}
+                            key={`${label}-${index}`}
                             rows={option.meta}
                           />
                         ) : null}
