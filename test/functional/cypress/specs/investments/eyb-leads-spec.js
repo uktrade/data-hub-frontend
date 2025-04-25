@@ -264,26 +264,41 @@ describe('EYB leads collection page', () => {
         .should('contain', eybLead.company.name)
         .should(
           'contain',
-          `Submitted to EYB ${formatDate(eybLead.triage_created, DATE_FORMAT_COMPACT)}`
-        )
-        .should('contain', `Estimated spend ${eybLead.spend}`)
-        .should(
-          'contain',
-          `Location of company headquarters ${eybLead.address.country.name}`
-        )
-        .should('contain', `Sector ${eybLead.sector.name}`)
-        .should(
-          'contain',
-          `Estimated land date ${convertEYBChoicesToLabels(eybLead.landing_timeframe)}`
-        )
-        .should(
-          'contain',
-          `Location ${eybLead.proposed_investment_region.name}`
-        )
-        .should(
-          'contain',
           VALUES_VALUE_TO_LABEL_MAP[eybLead.is_high_value].toUpperCase()
         )
+      cy.get('[data-test="metadata-label"]').as('metadataLabels')
+      cy.get('[data-test="metadata-value"]').as('metadataValues')
+
+      cy.get('@metadataLabels').eq(0).should('have.text', 'Submitted to EYB')
+      cy.get('@metadataLabels').eq(1).should('have.text', 'Estimated spend')
+      cy.get('@metadataLabels')
+        .eq(2)
+        .should('have.text', 'Location of company headquarters')
+      cy.get('@metadataLabels').eq(3).should('have.text', 'Sector')
+      cy.get('@metadataLabels').eq(4).should('have.text', 'Estimated land date')
+      cy.get('@metadataLabels').eq(5).should('have.text', 'Location')
+      cy.get('@metadataValues')
+        .eq(0)
+        .should(
+          'have.text',
+          `${formatDate(eybLead.triage_created, DATE_FORMAT_COMPACT)}`
+        )
+      cy.get('@metadataValues').eq(1).should('have.text', `${eybLead.spend}`)
+      cy.get('@metadataValues')
+        .eq(2)
+        .should('have.text', `${eybLead.address.country.name}`)
+      cy.get('@metadataValues')
+        .eq(3)
+        .should('have.text', `${eybLead.sector.name}`)
+      cy.get('@metadataValues')
+        .eq(4)
+        .should(
+          'have.text',
+          `${convertEYBChoicesToLabels(eybLead.landing_timeframe)}`
+        )
+      cy.get('@metadataValues')
+        .eq(5)
+        .should('have.text', `${eybLead.proposed_investment_region.name}`)
     })
     it('should display the other name when company is null for a collection item', () => {
       cy.get('[data-test="collection-item"]')
@@ -293,24 +308,48 @@ describe('EYB leads collection page', () => {
     it('should display the audit log metadata for each collection item correctly', () => {
       cy.get('[data-test="collection-item"]')
         .eq(3)
-        .should(
-          'contain',
-          `Value modified on ${formatDate(eybLeadWithAuditDataHighToLowValue.audit_log[1].timestamp, DATE_FORMAT_COMPACT)}`
-        )
-        .should('contain', `Value change High to Low`)
+        .find('[data-test="metadata-label"]')
+        .then((items) => {
+          expect(items[1]).to.have.text('Value modified on')
+          expect(items[2]).to.have.text('Value change')
+        })
+
+      cy.get('[data-test="collection-item"]')
+        .eq(3)
+        .find('[data-test="metadata-value"]')
+        .then((items) => {
+          expect(items[1]).to.have.text(
+            `${formatDate(eybLeadWithAuditDataHighToLowValue.audit_log[1].timestamp, DATE_FORMAT_COMPACT)}`
+          )
+          expect(items[2]).to.have.text('High to Low')
+        })
 
       cy.get('[data-test="collection-item"]')
         .eq(1)
-        .should('not.contain', 'Value modified on')
-        .should('not.contain', `Value change`)
+        .find('[data-test="metadata-label"]')
+        .invoke('text')
+        .then((text) => {
+          expect(text).to.not.contain('Value modified on') //If you don't know the position
+          expect(text).to.not.contain('Value change')
+        })
 
       cy.get('[data-test="collection-item"]')
         .eq(4)
-        .should(
-          'contain',
-          `Value modified on ${formatDate(eybLeadWithAuditDataLowToHighValue.audit_log[0].timestamp, DATE_FORMAT_COMPACT)}`
-        )
-        .should('contain', `Value change Low to High`)
+        .find('[data-test="metadata-label"]')
+        .then((items) => {
+          expect(items[1]).to.have.text('Value modified on')
+          expect(items[2]).to.have.text('Value change')
+        })
+
+      cy.get('[data-test="collection-item"]')
+        .eq(4)
+        .find('[data-test="metadata-value"]')
+        .then((items) => {
+          expect(items[1]).to.have.text(
+            `${formatDate(eybLeadWithAuditDataLowToHighValue.audit_log[0].timestamp, DATE_FORMAT_COMPACT)}`
+          )
+          expect(items[2]).to.have.text('Low to High')
+        })
     })
   })
 
