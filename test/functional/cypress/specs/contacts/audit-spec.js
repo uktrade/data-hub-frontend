@@ -65,9 +65,10 @@ describe('Contact audit history', () => {
       it('should only render the updated on and no changes text', () => {
         cy.get('@listItem1')
           .should('exist')
-          .should('contain', 'Updated on 19 May 2022, 1:56pm by Joseph Woof')
+          .should('contain', 'Updated on')
+          .should('contain', '19 May 2022, 1:56pm by Joseph Woof')
           .find('[data-test="metadata"]')
-          .find('[data-test="metadata-item"]')
+          .find('[data-test="metadata-label"]')
           .should(
             'contain',
             'No changes were made to the contact in this update'
