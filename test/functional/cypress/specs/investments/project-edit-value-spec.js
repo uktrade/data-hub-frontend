@@ -373,27 +373,6 @@ describe('Edit the value details of a project', () => {
         value: capitalIntensiveProjectWithValue.number_new_jobs,
       })
 
-      // it.only('should display the number of new jobs field', () => {
-      //   // cy.get('[data-test="field-number_new_jobs"]').then((element) => {
-      //   //   assertFieldInput({
-      //   //     element,
-      //   //     label: 'Number of new jobs (required)',
-      //   //     value: capitalIntensiveProjectWithValue.number_new_jobs,
-      //   //   })
-      //   // })
-      //   cy.get('#number_new_jobs').should(
-      //     'have.value',
-      //     capitalIntensiveProjectWithValue.number_new_jobs
-      //   )
-
-      //   cy.get('label[for="number_new_jobs"]').should(
-      //     'have.text',
-      //     'Number of new jobs (required)'
-      //   )
-
-      //   cy.contains('An expansion project must always have at least 1 new job')
-      // })
-
       it('should not display the GVA calculation for number of new jobs', () => {
         cy.get('[data-test="field-gross_value_added_labour"]').should(
           'not.exist'
@@ -837,14 +816,6 @@ describe('Edit the value details of a project', () => {
       testNumberOfNewJobs({
         required: true,
       })
-      // it('should display the number of new jobs field', () => {
-      //   cy.get('[data-test="field-number_new_jobs"]').then((element) => {
-      //     assertFieldInput({
-      //       element,
-      //       label: 'Number of new jobs (required)',
-      //     })
-      //   })
-      // })
 
       it('should display message to add number of new jobs to calculate GVA', () => {
         cy.get('[data-test="field-gross_value_added_labour"]').then(
@@ -1044,15 +1015,6 @@ describe('Edit the value details of a project', () => {
       required: true,
       value: labourIntensiveProjectWithValue.number_new_jobs,
     })
-    // it('should display the number of new jobs field', () => {
-    //   cy.get('[data-test="field-number_new_jobs"]').then((element) => {
-    //     assertFieldInput({
-    //       element,
-    //       label: 'Number of new jobs (required)',
-    //       value: labourIntensiveProjectWithValue.number_new_jobs,
-    //     })
-    //   })
-    // })
 
     it('should display the GVA calculation for number of new jobs', () => {
       cy.get('[data-test="field-gross_value_added_labour"]').then((element) => {
