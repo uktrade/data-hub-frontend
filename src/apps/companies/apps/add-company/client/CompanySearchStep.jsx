@@ -79,7 +79,6 @@ function CompanySearchStep({
         onCompanySelect={(dnb_company) => {
           setFieldValue('cannotFind', false)
           setFieldValue('dnbCompany', dnb_company)
-          goForward()
         }}
         csrfToken={csrfToken}
         onCannotFind={() => {

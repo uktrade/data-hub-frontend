@@ -23,21 +23,19 @@ const goToOverseasCompanySearchPage = (country) => {
 
 const goToOverseasCompanySearchResultsPage = () => {
   goToOverseasCompanySearchPage('Poland')
-  cy.get(entitySearch.companyNameField).type('a company')
-  cy.get(entitySearch.searchButton).click()
 }
 
 const goToUKCompanySearchResultsPage = () => {
   cy.visit(urls.companies.create())
   cy.get(selectors.companyAdd.form).find('[type="radio"]').check('GB')
   cy.get(selectors.companyAdd.continueButton).click()
-  cy.get(entitySearch.companyNameField).type('a company')
-  cy.get(entitySearch.searchButton).click()
 }
 
 const goToAddUKCompanyPage = (listItem) => {
   goToUKCompanySearchResultsPage()
+  cy.get(entitySearch.companyNameField).type('some')
   cy.get(listItem).click()
+  cy.get(entitySearch.selectCompanyButton).click()
   cy.get(selectors.companyAdd.continueButton).click()
 }
 
@@ -94,18 +92,19 @@ describe('Add company form', () => {
     () => {
       it('should show that the company is already in Data Hub', () => {
         goToUKCompanySearchResultsPage()
-        cy.get('[data-test="entity-list"] li')
-          .eq(1)
-          .find('h3')
-          .should('have.text', 'Some matched company')
-          .next()
+        cy.get(entitySearch.companyNameField).type('some matched company')
+        cy.get('[data-test="typeahead-menu-option"]')
+          .find('span')
+          .should('contain', 'Some matched company')
+          .find('[data-test="metadata-item"]')
           .should(
-            'have.text',
-            'Trading name(s)Some matched company trading nameLocation at123 Fake Street, Brighton, BN1 4SE'
+            'contain',
+            'Trading name(s) Some matched company trading name'
           )
-          .next()
+          .should('contain', 'Location at 123 Fake Street, Brighton, BN1 4SE')
+        cy.get('[data-test="company-already-on-datahub"]')
           .should(
-            'have.text',
+            'contain',
             'This company is already on Data Hub. You can record activity on the company page.'
           )
           .find('a')
@@ -197,8 +196,8 @@ describe('Add company form', () => {
         .find('fieldset')
         .contains('CountryPoland Change Country')
 
-      // should display the "Find company" button
-      cy.get(entitySearch.searchButton).should('be.visible')
+      // should display the "Select company" button
+      cy.get(entitySearch.selectCompanyButton).should('be.visible')
 
       // should not display the "Back" button
       cy.get(selectors.companyAdd.backButton).should('not.exist')
@@ -207,24 +206,23 @@ describe('Add company form', () => {
       cy.get(selectors.companyAdd.continueButton).should('not.exist')
 
       // should display an error message when the "Company name" field is not filled in
-      cy.get(entitySearch.searchButton).click()
-      assertErrorSummary(['Enter company name'])
+      cy.get(entitySearch.selectCompanyButton).click()
+      assertErrorSummary(['Search for and select a company.'])
       cy.get(entitySearchResults.someCompanyName).should('not.exist')
       cy.get(entitySearchResults.someOtherCompany).should('not.exist')
 
       // should display an error message when DnB search fails', () => {
       cy.get(entitySearch.companyNameField).type('Simulate 500 Error')
-      cy.get(entitySearch.searchButton).click()
-      cy.get('[data-test="status-message"]')
-        .should('exist')
-        .should('contain.text', 'Error occurred while searching for company.')
-        .should('have.attr', 'role', 'alert')
+      cy.get('[data-test="typeahead-menu-option"]')
+        .find('span')
+        .should('contain', 'Error searching the D&B API')
     })
   })
 
   context('when an overseas company is searched', () => {
     before(() => {
       goToOverseasCompanySearchResultsPage()
+      cy.get(entitySearch.companyNameField).type('some')
     })
 
     it('should display the entity search results', () => {
@@ -236,7 +234,9 @@ describe('Add company form', () => {
   context('when a company is picked that does not exist on Data Hub', () => {
     beforeEach(() => {
       goToOverseasCompanySearchResultsPage()
+      cy.get(entitySearch.companyNameField).type('some')
       cy.contains('Some unmatched company').click()
+      cy.get(entitySearch.selectCompanyButton).click()
     })
 
     it('should display a confirmation summary', () => {
@@ -262,7 +262,9 @@ describe('Add company form', () => {
   context('when adding a company that does not exist on Data Hub', () => {
     beforeEach(() => {
       goToOverseasCompanySearchResultsPage()
+      cy.get(entitySearch.companyNameField).type('some')
       cy.contains('Some unmatched company').click()
+      cy.get(entitySearch.selectCompanyButton).click()
       cy.get(selectors.companyAdd.continueButton).click()
     })
 
@@ -439,7 +441,6 @@ describe('Add company form', () => {
   context('when manually adding a new overseas company', () => {
     beforeEach(() => {
       goToOverseasCompanySearchResultsPage()
-
       cy.get(entitySearch.cannotFind.summary).click()
       cy.get(entitySearch.cannotFind.stillCannotFind).click()
     })
@@ -541,7 +542,10 @@ describe('Add company form', () => {
     beforeEach(() => {
       goToOverseasCompanySearchPage('United States')
       cy.get(entitySearch.companyNameField).type('a US company')
-      cy.get(entitySearch.searchButton).click()
+      cy.get('[data-test="typeahead-no-options"]').should(
+        'contain',
+        'No company found, try adding postcode or manually create company'
+      )
       cy.get(entitySearch.cannotFind.summary).click()
       cy.get(entitySearch.cannotFind.stillCannotFind).click()
     })
@@ -586,7 +590,10 @@ describe('Add company form', () => {
     beforeEach(() => {
       goToOverseasCompanySearchPage('Canada')
       cy.get(entitySearch.companyNameField).type('a Canadian company')
-      cy.get(entitySearch.searchButton).click()
+      cy.get('[data-test="typeahead-no-options"]').should(
+        'contain',
+        'No company found, try adding postcode or manually create company'
+      )
       cy.get(entitySearch.cannotFind.summary).click()
       cy.get(entitySearch.cannotFind.stillCannotFind).click()
     })

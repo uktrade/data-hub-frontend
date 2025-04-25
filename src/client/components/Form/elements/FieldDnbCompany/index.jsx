@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
@@ -15,8 +15,6 @@ import FieldWrapper from '../FieldWrapper'
 import FieldUneditable from '../FieldUneditable'
 import FieldInput from '../FieldInput'
 import FieldCompanyDnBTypeahead from '../FieldCompanyDnBTypeahead'
-import useEntitySearch from '../../../EntityList/useEntitySearch'
-import useDnbSearch from '../../../EntityList/useDnbSearch'
 import FormActions from '../FormActions'
 import FormLayout from '../../../Layout/FormLayout'
 import { FORM_LAYOUT } from '../../../../../common/constants'
@@ -32,18 +30,12 @@ const FieldDnbCompany = ({
   legend,
   hint,
   country,
-  apiEndpoint,
   onCompanySelect,
   onCannotFind,
   csrfToken,
-  features,
   queryParams,
 }) => {
-  const { values, goBack, setIsLoading } = useFormContext()
-  const { findCompany } = useDnbSearch(apiEndpoint, features)
-  const { searching } = useEntitySearch(findCompany)
-
-  useEffect(() => setIsLoading(searching), [searching])
+  const { values, goBack } = useFormContext()
 
   return (
     <FormLayout setWidth={FORM_LAYOUT.THREE_QUARTERS}>
@@ -77,6 +69,7 @@ const FieldDnbCompany = ({
 
         <FormActions>
           <Button
+            data-test="select-company-button"
             onClick={() => {
               if (!values.companyDnB) {
                 return
