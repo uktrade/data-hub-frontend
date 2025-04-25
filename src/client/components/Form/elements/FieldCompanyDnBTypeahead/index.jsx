@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { throttle, isEmpty, compact } from 'lodash'
+import { isEmpty, compact } from 'lodash'
 import axios from 'axios'
 
 import { getCompanyAddress } from '../../../../utils/addresses'
@@ -32,7 +32,7 @@ const FieldCompanyDnBTypeahead = ({
   required,
   placeholder = 'Type to search for companies',
   loadOptions,
-  csrfToken,
+  apiEndpoint,
   postcode,
   country,
   ...props
@@ -47,7 +47,7 @@ const FieldCompanyDnBTypeahead = ({
       showMetaData={true}
       showInsetText={true}
       isMulti={false}
-      loadOptions={throttle((searchString) => {
+      loadOptions={(searchString) => {
         if (searchString.length > 1) {
           const post_data = {
             search_term: searchString,
@@ -57,10 +57,7 @@ const FieldCompanyDnBTypeahead = ({
             post_data.postal_code = postcode
           }
           return axios
-            .post(
-              `/companies/create/dnb/company-search?_csrf=${csrfToken}`,
-              post_data
-            )
+            .post(apiEndpoint, post_data)
             .then(({ data }) =>
               data.results.map((result) => ({
                 dnb_company: result.dnb_company,
@@ -94,7 +91,7 @@ const FieldCompanyDnBTypeahead = ({
         } else {
           return Promise.resolve([{ label: '', value: '' }])
         }
-      }, 500)}
+      }}
       {...props}
     />
   )
@@ -103,7 +100,6 @@ const FieldCompanyDnBTypeahead = ({
 FieldCompanyDnBTypeahead.propTypes = {
   name: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
-  csrfToken: PropTypes.string.isRequired,
   required: PropTypes.string,
   placeholder: PropTypes.string,
 }
