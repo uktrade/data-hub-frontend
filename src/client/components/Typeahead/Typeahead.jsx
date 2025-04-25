@@ -291,6 +291,7 @@ const Typeahead = ({
         <AutocompleteInput
           {...inputProps}
           id={name}
+          name={name}
           autoComplete="off"
           autoCorrect="off"
           autoCapitalize="off"
