@@ -60,12 +60,18 @@ export const getUpdatedIndex = (current, max, action) => {
   }
 }
 
-export const getFilteredOptions = ({ input, options }) =>
-  (input
-    ? options.filter((option) =>
-        option.label.toLowerCase().includes(input.toLowerCase())
-      )
-    : options) || []
+export const getFilteredOptions = ({ input, options }) => {
+  return (
+    (input
+      ? options.filter((option) => {
+          if (option.isError == true) {
+            return option.label
+          }
+          return option.label.toLowerCase().includes(input.toLowerCase())
+        })
+      : options) || []
+  )
+}
 
 export const valueEqual = (item1, item2) => item1.value == item2.value
 

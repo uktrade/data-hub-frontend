@@ -81,8 +81,18 @@ const FieldCompanyDnBTypeahead = ({
                     : false,
               }))
             )
+            .catch(() => {
+              return [
+                {
+                  label: 'Error searching the D&B API',
+                  value: '',
+                  isError: true,
+                  isDisabled: true,
+                },
+              ]
+            })
         } else {
-          return Promise.resolve([])
+          return Promise.resolve([{ label: '', value: '' }])
         }
       }, 500)}
       {...props}
