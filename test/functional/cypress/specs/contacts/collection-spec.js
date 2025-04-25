@@ -101,19 +101,23 @@ describe('Contacts Collections', () => {
       assertTagNotPresent('@firstListItem', 'Archived')
       assertTagNotPresent('@firstListItem', 'UNKNOWN EMAIL')
       assertUpdatedOn('@firstListItem', 'Updated on 10 Aug 2020, 8:09pm')
+      assertMetadataItem('@firstListItem', 'Company')
+      assertMetadataItem('@firstListItem', 'Murray, Price and Hodkiewicz')
+      assertMetadataItem('@firstListItem', 'Job title')
       assertMetadataItem(
         '@firstListItem',
-        'Company Murray, Price and Hodkiewicz'
+        'Dynamic Accountability Administrator'
       )
-      assertMetadataItem(
-        '@firstListItem',
-        'Job title Dynamic Accountability Administrator'
-      )
-      assertMetadataItem('@firstListItem', 'Sector Advanced Engineering')
-      assertMetadataItem('@firstListItem', 'Country United Kingdom')
-      assertMetadataItem('@firstListItem', 'UK region London')
-      assertMetadataItem('@firstListItem', 'Phone number +44 02071234567')
-      assertMetadataItem('@firstListItem', 'Email gloria33@gmail.com')
+      assertMetadataItem('@firstListItem', 'Sector')
+      assertMetadataItem('@firstListItem', 'Advanced Engineering')
+      assertMetadataItem('@firstListItem', 'Country')
+      assertMetadataItem('@firstListItem', 'United Kingdom')
+      assertMetadataItem('@firstListItem', 'UK region')
+      assertMetadataItem('@firstListItem', 'London')
+      assertMetadataItem('@firstListItem', 'Phone number')
+      assertMetadataItem('@firstListItem', '+44 02071234567')
+      assertMetadataItem('@firstListItem', 'Email')
+      assertMetadataItem('@firstListItem', 'gloria33@gmail.com')
     })
   })
 
@@ -121,9 +125,11 @@ describe('Contacts Collections', () => {
     it('should render the correct elements', () => {
       assertItemLink('@secondListItem', 'Ted Woods', '/contacts/2/details')
       assertTagShouldNotExist('@secondListItem')
-      assertMetadataItem('@secondListItem', 'Country United States')
+      assertMetadataItem('@secondListItem', 'Country')
+      assertMetadataItem('@secondListItem', 'United States')
       assertMetadataItemNotPresent('@secondListItem', 'UK region')
-      assertMetadataItem('@secondListItem', 'Phone number 0045 48770000')
+      assertMetadataItem('@secondListItem', 'Phone number')
+      assertMetadataItem('@secondListItem', '0045 48770000')
     })
   })
 
