@@ -100,22 +100,23 @@ describe('Event Collection List Page', () => {
     })
 
     it('should display a data hub event date', () => {
-      assertMetadataItem('@firstListItem', 'Event date 24 Sep to 01 Oct 2017')
+      assertMetadataItem('@firstListItem', 'Event date')
+      assertMetadataItem('@firstListItem', '24 Sep to 01 Oct 2017')
     })
 
     it('should display the event organiser', () => {
-      assertMetadataItem('@firstListItem', `Organiser ${event1.organiser.name}`)
+      assertMetadataItem('@firstListItem', 'Organiser')
+      assertMetadataItem('@firstListItem', `${event1.organiser.name}`)
     })
 
     it('should display the service type', () => {
-      assertMetadataItem(
-        '@firstListItem',
-        `Service type ${event1.service.name}`
-      )
+      assertMetadataItem('@firstListItem', 'Service type')
+      assertMetadataItem('@firstListItem', `${event1.service.name}`)
     })
 
     it('should display the lead team', () => {
-      assertMetadataItem('@firstListItem', `Lead team ${event1.lead_team.name}`)
+      assertMetadataItem('@firstListItem', 'Lead team')
+      assertMetadataItem('@firstListItem', `${event1.lead_team.name}`)
     })
 
     it('should not display missing metadata items', () => {
