@@ -435,15 +435,9 @@ import { TASK_SAVE_TASK_DETAILS } from './modules/Tasks/TaskForm/state'
 import {
   TASK_RESEND_EXPORT_WIN,
   TASK_GET_EXPORT_WINS_SAVE_FORM,
-  TASK_GET_EXPORT_PROJECT,
   TASK_GET_EXPORT_WIN,
 } from './modules/ExportWins/Form/state'
-import {
-  saveExportWin,
-  resendExportWin,
-  getExportProject,
-  getExportWin,
-} from './modules/ExportWins/Form/tasks'
+import * as exportWinTasks from './modules/ExportWins/Form/tasks'
 
 import { getMyTasks } from './components/Dashboard/my-tasks/tasks'
 import { TASK_GET_MY_TASKS } from './components/Dashboard/my-tasks/state'
@@ -673,7 +667,7 @@ export const tasks = {
   [TASK_EDIT_ORDER_BILLING_ADDRESS]: updateOrder,
   [TASK_EDIT_ORDER_VAT_STATUS]: updateOrder,
   [TASK_CANCEL_ORDER]: cancelOrder,
-  [TASK_GET_EXPORT_WINS_SAVE_FORM]: saveExportWin,
+  [TASK_GET_EXPORT_WINS_SAVE_FORM]: exportWinTasks.saveExportWin,
   [TASK_EDIT_ORDER_ASSIGNEE_TIME]: updateAssignees,
   [TASK_SAVE_MY_TASKS_DUE_DATE_APPROACHING_REMINDER_SUBSCRIPTIONS]:
     reminderSettings.saveUpcomingDueDateExportSubscriptions,
@@ -707,8 +701,7 @@ export const tasks = {
     reminderSettings.saveTaskAmendedByOthersSubscriptions,
   [TASK_GET_INTERACTION]: getInteraction,
   [TASK_PROPOSITION_COMPLETE]: completeInvestmentPropositions,
-  [TASK_GET_EXPORT_PROJECT]: getExportProject,
-  [TASK_GET_EXPORT_WIN]: getExportWin,
+  [TASK_GET_EXPORT_WIN]: exportWinTasks.getInitialFormValues,
   [TASK_GET_GLOBAL_ULTIMATE]: businessDetails.getGlobalUltimate,
   [TASK_SET_GLOBAL_HQ]: setGlobalHq,
   [TASK_REMOVE_GLOBAL_HQ]: removeGlobalHq,
@@ -716,7 +709,7 @@ export const tasks = {
   [TASK_CREATE_QUOTE]: createQuote,
   [TASK_CANCEL_QUOTE]: cancelQuote,
   [TASK_ADD_PROJECT_DOCUMENT]: addProjectDocument,
-  [TASK_RESEND_EXPORT_WIN]: resendExportWin,
+  [TASK_RESEND_EXPORT_WIN]: exportWinTasks.resendExportWin,
   [TASK_ADD_PROPOSITION_DOCUMENT]: addPropositionDocument,
   [TASK_GET_COMPANY_OVERVIEW_ACTIVITY]: getCompanyOverviewActivities,
 }
