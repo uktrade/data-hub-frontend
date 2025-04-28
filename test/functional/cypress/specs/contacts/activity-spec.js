@@ -112,23 +112,27 @@ describe('Contact activity', () => {
       })
 
       it('should display the date', () => {
-        cy.get('@firstListItem').contains('Date 10 Jun 2019')
+        cy.get('@firstListItem').contains('Date')
+        cy.get('@firstListItem').contains('10 Jun 2019')
       })
 
       it('should display the advisers with email', () => {
+        cy.get('@firstListItem').contains('Adviser')
         cy.get('@firstListItem').contains(
-          'Adviser Puck Head Puck.Head@example.com, Digital Data Hub - Live Service'
+          'Puck Head Puck.Head@example.com, Digital Data Hub - Live Service'
         )
       })
 
       it('should display the service', () => {
+        cy.get('@firstListItem').contains('Service')
         cy.get('@firstListItem').contains(
-          'Service Export introductions : Someone else in DBT'
+          'Export introductions : Someone else in DBT'
         )
       })
 
       it('should display the communication channel', () => {
-        cy.get('@firstListItem').contains('Communication channel Email/Website')
+        cy.get('@firstListItem').contains('Communication channel')
+        cy.get('@firstListItem').contains('Email/Website')
       })
 
       context('when optional data is missing', () => {

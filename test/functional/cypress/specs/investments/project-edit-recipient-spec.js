@@ -23,7 +23,8 @@ describe('Edit the recipient company', () => {
         investments.projects.recipientCompany(fixture.id)
       )
       getCollectionList()
-      cy.get('[data-test="metadata-item"]').as('metadataItems')
+      cy.get('[data-test="metadata-label"]').as('metadataLabels')
+      cy.get('[data-test="metadata-value"]').as('metadataValues')
     })
 
     it('should render the potential recipient company information correctly', () => {
@@ -39,14 +40,16 @@ describe('Edit the recipient company', () => {
         'contain',
         `Updated on ${formatDate(company.modified_on, DATE_FORMAT_MEDIUM_WITH_TIME)}`
       )
-      cy.get('@metadataItems')
+      cy.get('@metadataLabels').eq(0).should('have.text', 'Sector')
+      cy.get('@metadataLabels').eq(1).should('contain', 'Address')
+      cy.get('@metadataValues')
         .eq(0)
-        .should('contain', `Sector ${company.sector.name}`)
-      cy.get('@metadataItems')
+        .should('have.text', `${company.sector.name}`)
+      cy.get('@metadataValues')
         .eq(1)
         .should(
           'contain',
-          `Address ${company.address.line_1}, ${company.address.line_2}, ${company.address.town}, ${company.address.county}, ${company.address.postcode}`
+          `${company.address.line_1}, ${company.address.line_2}, ${company.address.town}, ${company.address.county}, ${company.address.postcode}`
         )
     })
     it('should link the recipient company and redirect back to the details page', () => {

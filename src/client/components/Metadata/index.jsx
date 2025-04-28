@@ -5,10 +5,11 @@ import { FONT_SIZE } from '@govuk-react/constants'
 
 import MetadataItem from './MetadataItem'
 
-const StyledMetadataWrapper = styled('div')`
+const StyledMetadataWrapper = styled('dl')`
   font-size: ${FONT_SIZE.SIZE_16};
   line-height: ${FONT_SIZE.SIZE_27};
-  display: grid;
+  display: block;
+  overflow: hidden;
 
   & > * {
     margin-bottom: 0px;

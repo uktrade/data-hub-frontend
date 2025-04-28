@@ -63,14 +63,13 @@ function assertListItem({
   })
 
   it('should render the sector', () => {
-    assertMetadataItem(alias, `Sector ${sector.name}`)
+    assertMetadataItem(alias, 'Sector')
+    assertMetadataItem(alias, `${sector.name}`)
   })
 
   it('should render the estimated land date', () => {
-    assertMetadataItem(
-      alias,
-      `Estimated land date ${formattedEstimatedLandDate}`
-    )
+    assertMetadataItem(alias, 'Estimated land date')
+    assertMetadataItem(alias, `${formattedEstimatedLandDate}`)
   })
 
   it('should render the subsidiary companies enabled', () => {

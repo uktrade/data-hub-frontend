@@ -112,37 +112,41 @@ describe('Event attendee search', () => {
       })
 
       it('should render the company name', () => {
-        assertMetadataItem(
-          '@firstListItem',
-          'Company Murray, Price and Hodkiewicz'
-        )
+        assertMetadataItem('@firstListItem', 'Company')
+        assertMetadataItem('@firstListItem', 'Murray, Price and Hodkiewicz')
       })
 
       it('should render the job title', () => {
+        assertMetadataItem('@firstListItem', 'Job title')
         assertMetadataItem(
           '@firstListItem',
-          'Job title Dynamic Accountability Administrator'
+          'Dynamic Accountability Administrator'
         )
       })
 
       it('should render the sector', () => {
-        assertMetadataItem('@firstListItem', 'Sector Advanced Engineering')
+        assertMetadataItem('@firstListItem', 'Sector')
+        assertMetadataItem('@firstListItem', 'Advanced Engineering')
       })
 
       it('should render the country', () => {
-        assertMetadataItem('@firstListItem', 'Country United Kingdom')
+        assertMetadataItem('@firstListItem', 'Country')
+        assertMetadataItem('@firstListItem', 'United Kingdom')
       })
 
       it('should render the UK region', () => {
-        assertMetadataItem('@firstListItem', 'UK region London')
+        assertMetadataItem('@firstListItem', 'UK region')
+        assertMetadataItem('@firstListItem', 'London')
       })
 
       it('should render the UK telephone number', () => {
-        assertMetadataItem('@firstListItem', 'Phone number +44 02071234567')
+        assertMetadataItem('@firstListItem', 'Phone number')
+        assertMetadataItem('@firstListItem', '+44 02071234567')
       })
 
       it('should render the email', () => {
-        assertMetadataItem('@firstListItem', 'Email gloria33@gmail.com')
+        assertMetadataItem('@firstListItem', 'Email')
+        assertMetadataItem('@firstListItem', 'gloria33@gmail.com')
       })
     })
 
@@ -161,13 +165,15 @@ describe('Event attendee search', () => {
       })
 
       it('should render the foreign country', () => {
-        assertMetadataItem('@secondListItem', 'Country United States')
+        assertMetadataItem('@secondListItem', 'Country')
+        assertMetadataItem('@secondListItem', 'United States')
       })
       it('should not render the UK region', () => {
         assertMetadataItemNotPresent('@secondListItem', 'UK region')
       })
       it('should render the telephone number', () => {
-        assertMetadataItem('@secondListItem', 'Phone number 0045 48770000')
+        assertMetadataItem('@secondListItem', 'Phone number')
+        assertMetadataItem('@secondListItem', '0045 48770000')
       })
     })
   })

@@ -49,23 +49,31 @@ const assertTaskItem = (index, investmentTask) => {
 
   cy.get('[data-test="collection-item"]')
     .eq(index)
-    .find('[data-test="metadata"]')
-    .should(
-      'contain',
-      `Date created ${formatDate(investmentTask.createdOn, DATE_FORMAT_DAY_MONTH_YEAR)}`
-    )
-    .and(
-      'contain',
-      `Due date ${
-        investmentTask.dueDate
-          ? formatDate(investmentTask.dueDate, DATE_FORMAT_DAY_MONTH_YEAR)
-          : NOT_SET_TEXT
-      }`
-    )
-    .and(
-      'contain',
-      `Assigned to ${investmentTask.advisers.map((a) => a.name).join(', ')}`
-    )
+    .find('[data-test="metadata-label"]')
+    .then((items) => {
+      expect(items[0]).to.have.text('Date created')
+      expect(items[1]).to.have.text('Due date')
+      expect(items[2]).to.have.text('Assigned to')
+    })
+
+  cy.get('[data-test="collection-item"]')
+    .eq(index)
+    .find('[data-test="metadata-value"]')
+    .then((items) => {
+      expect(items[0]).to.have.text(
+        `${formatDate(investmentTask.createdOn, DATE_FORMAT_DAY_MONTH_YEAR)}`
+      )
+      expect(items[1]).to.have.text(
+        `${
+          investmentTask.dueDate
+            ? formatDate(investmentTask.dueDate, DATE_FORMAT_DAY_MONTH_YEAR)
+            : NOT_SET_TEXT
+        }`
+      )
+      expect(items[2]).to.have.text(
+        `${investmentTask.advisers.map((a) => a.name).join(', ')}`
+      )
+    })
 }
 
 describe('Investment project tasks', () => {

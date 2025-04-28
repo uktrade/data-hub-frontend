@@ -21,7 +21,8 @@ describe('Edit the associated FDI R&D project', () => {
         investments.projects.findAssociatedProject(fixture.id)
       )
       getCollectionList()
-      cy.get('[data-test="metadata-item"]').as('metadataItems')
+      cy.get('[data-test="metadata-label"]').as('metadataLabels')
+      cy.get('[data-test="metadata-value"]').as('metadataValues')
     })
 
     it('should render the potential associated project information correctly', () => {
@@ -34,20 +35,20 @@ describe('Edit the associated FDI R&D project', () => {
           investments.projects.editAssociatedProject(fixture.id, project.id)
         )
       cy.get('h4').should('contain', `Project code ${project.project_code}`)
-      cy.get('@metadataItems')
+      cy.get('@metadataLabels').eq(0).should('contain', 'Investor')
+      cy.get('@metadataValues')
         .eq(0)
-        .should('contain', `Investor ${project.investor_company.name}`)
-      cy.get('@metadataItems')
+        .should('contain', `${project.investor_company.name}`)
+      cy.get('@metadataLabels').eq(1).should('contain', 'Sector')
+      cy.get('@metadataValues')
         .eq(1)
-        .should('contain', `Sector ${project.sector.name}`)
-      cy.get('@metadataItems')
+        .should('contain', `${project.sector.name}`)
+      cy.get('@metadataLabels').eq(2).should('contain', 'Estimated land date')
+      cy.get('@metadataValues')
         .eq(2)
         .should(
           'contain',
-          `Estimated land date ${formatDate(
-            project.estimated_land_date,
-            DATE_FORMAT_MONTH_YEAR
-          )}`
+          `${formatDate(project.estimated_land_date, DATE_FORMAT_MONTH_YEAR)}`
         )
     })
   })

@@ -104,18 +104,28 @@ const assertInteractionDetails = ({
   it('should display an interaction date', () => {
     cy.get('@collectionItems')
       .eq(listItemNumber)
-      .find('[data-test="metadata-item"]')
+      .find('[data-test="metadata-label"]')
       .eq(0)
-      .should('have.text', 'Date 05 June 2019')
+      .should('have.text', 'Date')
+    cy.get('@collectionItems')
+      .eq(listItemNumber)
+      .find('[data-test="metadata-value"]')
+      .eq(0)
+      .should('have.text', '05 June 2019')
   })
   it('should display contact details', () => {
     cy.get('@collectionItems')
       .eq(listItemNumber)
-      .find('[data-test="metadata-item"]')
+      .find('[data-test="metadata-label"]')
+      .eq(1)
+      .should('have.text', 'Contact(s)')
+    cy.get('@collectionItems')
+      .eq(listItemNumber)
+      .find('[data-test="metadata-value"]')
       .eq(1)
       .should(
         'have.text',
-        `Contact(s) ${
+        `${
           hasMultipleContacts
             ? 'Multiple contacts'
             : `${listType.contacts[0].name}`
@@ -125,18 +135,28 @@ const assertInteractionDetails = ({
   it('should display company details', () => {
     cy.get('@collectionItems')
       .eq(listItemNumber)
-      .find('[data-test="metadata-item"]')
+      .find('[data-test="metadata-label"]')
       .eq(2)
-      .should('have.text', `Company ${listType.companies[0].name}`)
+      .should('have.text', 'Company')
+    cy.get('@collectionItems')
+      .eq(listItemNumber)
+      .find('[data-test="metadata-value"]')
+      .eq(2)
+      .should('have.text', `${listType.companies[0].name}`)
   })
   it('should display adviser details', () => {
     cy.get('@collectionItems')
       .eq(listItemNumber)
-      .find('[data-test="metadata-item"]')
+      .find('[data-test="metadata-label"]')
+      .eq(3)
+      .should('have.text', 'Adviser(s)')
+    cy.get('@collectionItems')
+      .eq(listItemNumber)
+      .find('[data-test="metadata-value"]')
       .eq(3)
       .should(
         'have.text',
-        `Adviser(s) ${
+        `${
           hasMultipleAdvisers
             ? 'Multiple advisers'
             : `${listType.dit_participants[0].adviser.name}, ${listType.dit_participants[0].team.name}`
@@ -148,14 +168,24 @@ const assertInteractionDetails = ({
     ? it('should display service details', () => {
         cy.get('@collectionItems')
           .eq(listItemNumber)
-          .find('[data-test="metadata-item"]')
+          .find('[data-test="metadata-label"]')
           .eq(4)
-          .should('have.text', `Service ${listType.service.name}`)
+          .should('have.text', 'Service')
+        cy.get('@collectionItems')
+          .eq(listItemNumber)
+          .find('[data-test="metadata-value"]')
+          .eq(4)
+          .should('have.text', `${listType.service.name}`)
       })
     : it('should not display service details', () => {
         cy.get('@collectionItems')
           .eq(listItemNumber)
-          .find('[data-test="metadata-item"]')
+          .find('[data-test="metadata-label"]')
+          .eq(5)
+          .should('not.exist')
+        cy.get('@collectionItems')
+          .eq(listItemNumber)
+          .find('[data-test="metadata-value"]')
           .eq(5)
           .should('not.exist')
       })

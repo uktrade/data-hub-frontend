@@ -94,27 +94,33 @@ describe('Orders (OMIS) Collection List Page', () => {
     })
 
     it('should render the company name', () => {
-      assertMetadataItem('@firstListItem', 'Company Williams-Rose')
+      assertMetadataItem('@firstListItem', 'Company')
+      assertMetadataItem('@firstListItem', 'Williams-Rose')
     })
 
     it('should render the created date (created_on)', () => {
-      assertMetadataItem('@firstListItem', 'Created 30 Nov 2020, 1:28am')
+      assertMetadataItem('@firstListItem', 'Created')
+      assertMetadataItem('@firstListItem', '30 Nov 2020, 1:28am')
     })
 
     it('should render the contact name', () => {
-      assertMetadataItem('@firstListItem', 'Contact Melissa Compton')
+      assertMetadataItem('@firstListItem', 'Contact')
+      assertMetadataItem('@firstListItem', 'Melissa Compton')
     })
 
     it('should render the UK region', () => {
-      assertMetadataItem('@firstListItem', 'UK region London')
+      assertMetadataItem('@firstListItem', 'UK region')
+      assertMetadataItem('@firstListItem', 'London')
     })
 
     it('should render the sector', () => {
-      assertMetadataItem('@firstListItem', 'Sector Advanced Engineering')
+      assertMetadataItem('@firstListItem', 'Sector')
+      assertMetadataItem('@firstListItem', 'Advanced Engineering')
     })
 
     it('should render the delivery date (delivery_date)', () => {
-      assertMetadataItem('@firstListItem', 'Delivery date 11 Dec 2022')
+      assertMetadataItem('@firstListItem', 'Delivery date')
+      assertMetadataItem('@firstListItem', '11 Dec 2022')
     })
   })
 

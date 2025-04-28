@@ -72,53 +72,73 @@ describe('Company Export tab - Export countries history', () => {
         checkListItems([
           [
             'Belarus added to countries of no interest',
-            'By DBT Staff',
-            'Date 11 Feb 2020, 10:47am',
+            'By',
+            'DBT Staff',
+            'Date',
+            '11 Feb 2020, 10:47am',
           ],
           [
             'Botswana added to future countries of interest',
-            'By DBT Staff',
-            'Date 11 Feb 2020, 10:47am',
+            'By',
+            'DBT Staff',
+            'Date',
+            '11 Feb 2020, 10:47am',
           ],
           [
             'Georgia added to currently exporting',
-            'By DBT Staff',
-            'Date 11 Feb 2020, 10:48am',
+            'By',
+            'DBT Staff',
+            'Date',
+            '11 Feb 2020, 10:48am',
           ],
           [
             'France added to currently exporting',
-            'By DBT Staff',
-            'Date 11 Feb 2020, 10:47am',
+            'By',
+            'DBT Staff',
+            'Date',
+            '11 Feb 2020, 10:47am',
           ],
           [
             'Fiji added to currently exporting',
-            'By DBT Staff',
-            'Date 11 Feb 2020, 10:46am',
+            'By',
+            'DBT Staff',
+            'Date',
+            '11 Feb 2020, 10:46am',
           ],
           [
             'Argentina added to currently exporting',
-            'By DBT Staff',
-            'Date 6 Feb 2020, 4:06pm',
+            'By',
+            'DBT Staff',
+            'Date',
+            '6 Feb 2020, 4:06pm',
           ],
           [
             'Andorra added to currently exporting',
-            'By DBT Staff',
-            'Date 6 Feb 2020, 4:05pm',
+            'By',
+            'DBT Staff',
+            'Date',
+            '6 Feb 2020, 4:05pm',
           ],
           [
             'Afghanistan added to future countries of interest',
-            'By DBT Staff',
-            'Date 6 Feb 2020, 3:42pm',
+            'By',
+            'DBT Staff',
+            'Date',
+            '6 Feb 2020, 3:42pm',
           ],
           [
             'Andorra removed from future countries of interest',
-            'By DBT Staff',
-            'Date 6 Feb 2020, 3:41pm',
+            'By',
+            'DBT Staff',
+            'Date',
+            '6 Feb 2020, 3:41pm',
           ],
           [
             'Angola added to countries of no interest',
-            'By DBT Staff',
-            'Date 6 Feb 2020, 3:41pm',
+            'By',
+            'DBT Staff',
+            'Date',
+            '6 Feb 2020, 3:41pm',
           ],
         ])
       })
@@ -140,13 +160,17 @@ describe('Company Export tab - Export countries history', () => {
         checkListItems([
           [
             'Andorra removed from future countries of interest',
-            'By DBT Staff',
-            'Date 6 Feb 2020, 3:41pm',
+            'By',
+            'DBT Staff',
+            'Date',
+            '6 Feb 2020, 3:41pm',
           ],
           [
             'Angola added to countries of no interest',
-            'By DBT Staff',
-            'Date 6 Feb 2020, 3:41pm',
+            'By',
+            'DBT Staff',
+            'Date',
+            '6 Feb 2020, 3:41pm',
           ],
         ])
       })
@@ -185,53 +209,73 @@ describe('Company Export tab - Export countries history', () => {
         checkListItems([
           [
             'Afghanistan, Bahrain, Bangladesh, Barbados added to countries of no interest',
-            'By Stephan Padberg',
-            'Date 4 Mar 2020, 4:33pm',
+            'By',
+            'Stephan Padberg',
+            'Date',
+            '4 Mar 2020, 4:33pm',
           ],
           [
             'France removed from future countries of interest',
-            'By Stephan Padberg',
-            'Date 4 Mar 2020, 4:33pm',
+            'By',
+            'Stephan Padberg',
+            'Date',
+            '4 Mar 2020, 4:33pm',
           ],
           [
             'Spain added to currently exporting',
-            'By Stephan Padberg',
-            'Date 4 Mar 2020, 4:33pm',
+            'By',
+            'Stephan Padberg',
+            'Date',
+            '4 Mar 2020, 4:33pm',
           ],
           [
             'Albania, Brazil, Gibraltar removed from currently exporting',
-            'By Stephan Padberg',
-            'Date 4 Mar 2020, 8:55am',
+            'By',
+            'Stephan Padberg',
+            'Date',
+            '4 Mar 2020, 8:55am',
           ],
           [
             'France added to future countries of interest',
-            'By Stephan Padberg',
-            'Date 4 Mar 2020, 8:55am',
+            'By',
+            'Stephan Padberg',
+            'Date',
+            '4 Mar 2020, 8:55am',
           ],
           [
             'Albania, Brazil, Gibraltar added to currently exporting',
-            'By Stephan Padberg',
-            'Date 4 Mar 2020, 8:55am',
+            'By',
+            'Stephan Padberg',
+            'Date',
+            '4 Mar 2020, 8:55am',
           ],
           [
             'Germany, Spain removed from future countries of interest',
-            'By Stephan Padberg',
-            'Date 4 Mar 2020, 8:54am',
+            'By',
+            'Stephan Padberg',
+            'Date',
+            '4 Mar 2020, 8:54am',
           ],
           [
             'France removed from currently exporting',
-            'By Stephan Padberg',
-            'Date 4 Mar 2020, 8:54am',
+            'By',
+            'Stephan Padberg',
+            'Date',
+            '4 Mar 2020, 8:54am',
           ],
           [
             'Germany, Spain added to future countries of interest',
-            'By Stephan Padberg',
-            'Date 4 Mar 2020, 8:54am',
+            'By',
+            'Stephan Padberg',
+            'Date',
+            '4 Mar 2020, 8:54am',
           ],
           [
             'France added to currently exporting',
-            'By Stephan Padberg',
-            'Date 4 Mar 2020, 8:53am',
+            'By',
+            'Stephan Padberg',
+            'Date',
+            '4 Mar 2020, 8:53am',
           ],
         ])
       })
@@ -265,8 +309,10 @@ describe('Company Export tab - Export countries history', () => {
           checkListItems([
             [
               'Andorra removed from future countries of interest',
-              'By unknown',
-              'Date 6 Feb 2020, 3:41pm',
+              'By',
+              'unknown',
+              'Date',
+              '6 Feb 2020, 3:41pm',
             ],
           ])
         })
@@ -295,23 +341,31 @@ describe('Company Export tab - Export countries history', () => {
           checkListItems([
             [
               'Gibraltar, Maldives added to currently exporting',
-              'By unknown',
-              'Date 6 Feb 2020, 5:07pm',
+              'By',
+              'unknown',
+              'Date',
+              '6 Feb 2020, 5:07pm',
             ],
             [
               'Angola moved to currently exporting',
-              'By unknown',
-              'Date 6 Feb 2020, 5:07pm',
+              'By',
+              'unknown',
+              'Date',
+              '6 Feb 2020, 5:07pm',
             ],
             [
               'Andorra added to currently exporting',
-              'By unknown',
-              'Date 6 Feb 2020, 5:07pm',
+              'By',
+              'unknown',
+              'Date',
+              '6 Feb 2020, 5:07pm',
             ],
             [
               'Angola, Czechia, Hong Kong, Kiribati added to future countries of interest',
-              'By unknown',
-              'Date 6 Feb 2020, 5:06pm',
+              'By',
+              'unknown',
+              'Date',
+              '6 Feb 2020, 5:06pm',
             ],
           ])
         })
@@ -329,8 +383,10 @@ describe('Company Export tab - Export countries history', () => {
         checkListItems([
           [
             'Andorra moved to future countries of interest',
-            'By unknown',
-            'Date 6 Feb 2020, 3:41pm',
+            'By',
+            'unknown',
+            'Date',
+            '6 Feb 2020, 3:41pm',
           ],
         ])
       })
@@ -402,11 +458,16 @@ describe('Company Export tab - Export countries history', () => {
             [
               'contain',
               [
-                'Company contacts Stephan Padberg, Stephanie Stokes',
-                'Advisers Mr. Genesis Kub (et nihil repudiandae), Solon Lynch (ea est totam), Dr. Meda Mraz (fuga corporis architecto)',
-                'Service Deserunt magni sapiente soluta praesentium sapiente.',
-                'Countries currently exporting to Benin',
-                'Future countries of interest Brunei Darussalam, French Polynesia',
+                'Company contacts',
+                'Stephan Padberg, Stephanie Stokes',
+                'Advisers',
+                'Mr. Genesis Kub (et nihil repudiandae), Solon Lynch (ea est totam), Dr. Meda Mraz (fuga corporis architecto)',
+                'Service',
+                'Deserunt magni sapiente soluta praesentium sapiente.',
+                'Countries currently exporting to',
+                'Benin',
+                'Future countries of interest',
+                'Brunei Darussalam, French Polynesia',
               ],
             ],
             ['not.contain', ['Countries not interested in']],
@@ -415,11 +476,16 @@ describe('Company Export tab - Export countries history', () => {
             [
               'contain',
               [
-                'Company contact Justus Simonis',
-                'Adviser Carolanne Langworth (sit delectus recusandae)',
-                'Service Ipsa dicta omnis pariatur.',
-                'Countries currently exporting to Christmas Island, Indonesia, Martinique',
-                'Countries not interested in Serbia',
+                'Company contact',
+                'Justus Simonis',
+                'Adviser',
+                'Carolanne Langworth (sit delectus recusandae)',
+                'Service',
+                'Ipsa dicta omnis pariatur.',
+                'Countries currently exporting to',
+                'Christmas Island, Indonesia, Martinique',
+                'Countries not interested in',
+                'Serbia',
               ],
             ],
             ['not.contain', ['Future countries of interest']],
@@ -428,11 +494,16 @@ describe('Company Export tab - Export countries history', () => {
             [
               'contain',
               [
-                'Company contacts Karen Mayer Jr., Ari Von',
-                'Adviser Horace Orn (nisi ipsa quisquam)',
-                'Service Architecto suscipit et aliquam architecto.',
-                'Countries currently exporting to Burkina Faso',
-                'Future countries of interest Kyrgyz Republic, Trinidad and Tobago',
+                'Company contacts',
+                'Karen Mayer Jr., Ari Von',
+                'Adviser',
+                'Horace Orn (nisi ipsa quisquam)',
+                'Service',
+                'Architecto suscipit et aliquam architecto.',
+                'Countries currently exporting to',
+                'Burkina Faso',
+                'Future countries of interest',
+                'Kyrgyz Republic, Trinidad and Tobago',
               ],
             ],
             ['not.contain', ['Countries not interested in']],
@@ -441,12 +512,18 @@ describe('Company Export tab - Export countries history', () => {
             [
               'contain',
               [
-                'Company contact Leonie Deckow',
-                'Advisers Napoleon Powlowski (veritatis temporibus unde), Giovanna Anderson (delectus repellendus ducimus), Tessie Hane (perferendis nihil nam)',
-                'Service Repellat quia fugiat velit delectus expedita omnis doloribus.',
-                'Countries currently exporting to Bolivia, Cameroon',
-                'Future countries of interest Bolivia, Qatar',
-                'Countries not interested in Australia, Greenland',
+                'Company contact',
+                'Leonie Deckow',
+                'Advisers',
+                'Napoleon Powlowski (veritatis temporibus unde), Giovanna Anderson (delectus repellendus ducimus), Tessie Hane (perferendis nihil nam)',
+                'Service',
+                'Repellat quia fugiat velit delectus expedita omnis doloribus.',
+                'Countries currently exporting to',
+                'Bolivia, Cameroon',
+                'Future countries of interest',
+                'Bolivia, Qatar',
+                'Countries not interested in',
+                'Australia, Greenland',
               ],
             ],
           ],
@@ -473,8 +550,10 @@ describe('Company Export tab - Export countries history', () => {
 
         cy.contains('Belarus added to countries of no interest')
           .siblings()
-          .should('contain', 'By DBT Staff')
-          .should('contain', 'Date 11 Feb 2020, 10:47am')
+          .should('contain', 'By')
+          .should('contain', 'DBT Staff')
+          .should('contain', 'Date')
+          .should('contain', '11 Feb 2020, 10:47am')
       })
     })
   })
@@ -525,13 +604,17 @@ describe('Company Export tab - Export countries history', () => {
       checkListItems([
         [
           'Andorra added to currently exporting',
-          'By DBT Staff',
-          'Date 6 Feb 2020, 4:06pm',
+          'By',
+          'DBT Staff',
+          'Date',
+          '6 Feb 2020, 4:06pm',
         ],
         [
           'Andorra removed from future countries of interest',
-          'By DBT Staff',
-          'Date 6 Feb 2020, 3:41pm',
+          'By',
+          'DBT Staff',
+          'Date',
+          '6 Feb 2020, 3:41pm',
         ],
       ])
     })

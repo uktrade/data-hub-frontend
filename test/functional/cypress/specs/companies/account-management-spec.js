@@ -181,13 +181,14 @@ describe('Company account management', () => {
     it('should display the blocker text when an objective has a blocker', () => {
       cy.get('[data-test="objective has-blocker"]')
         .eq(0)
-        .find('[data-test="metadata-item"]')
-        .should('contain', objectives[0].blocker_description)
+        .find('[data-test="metadata-value"]')
+        .eq(1)
+        .should('have.text', objectives[0].blocker_description)
     })
 
     it('should not display the blocker text when an objective has no blocker', () => {
       cy.get('[data-test="objective no-blocker"]')
-        .find('[data-test="metadata-item"]')
+        .find('[data-test="metadata-value"]')
         .should('not.contain', noBlockersObjective.blocker_description)
     })
   })

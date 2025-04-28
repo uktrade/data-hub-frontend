@@ -66,19 +66,35 @@ describe('The interactions tab on an opportunity page', () => {
         .should('have.text', `${interaction.subject}`)
         .and('have.attr', 'href', urls.interactions.detail(interaction.id))
 
-      cy.get('[data-test="collection-item"]')
-        .find('[data-test="metadata"]')
+      const itemLabels = '[data-test="metadata-label"]'
+      cy.get(itemLabels).eq(0).should('have.text', 'Date')
+      cy.get(itemLabels).eq(1).should('have.text', 'Contact(s)')
+      cy.get(itemLabels).eq(2).should('have.text', 'Company')
+      cy.get(itemLabels).eq(3).should('have.text', 'Adviser(s)')
+      cy.get(itemLabels).eq(4).should('have.text', 'Service')
+
+      const itemValues = '[data-test="metadata-value"]'
+      cy.get(itemValues)
+        .eq(0)
         .should(
-          'contain',
-          `Date ${formatDate(interaction.date, DATE_FORMAT_DAY_MONTH_YEAR)}`
+          'have.text',
+          `${formatDate(interaction.date, DATE_FORMAT_DAY_MONTH_YEAR)}`
         )
-        .and('contain', `Contact(s) ${interaction.contacts[0].name}`)
-        .and('contain', `Company ${interaction.companies[0].name}`)
-        .and(
-          'contain',
-          `Adviser(s) ${interaction.dit_participants[0].adviser.name}, ${interaction.dit_participants[0].team.name}`
+      cy.get(itemValues)
+        .eq(1)
+        .should('have.text', `${interaction.contacts[0].name}`)
+      cy.get(itemValues)
+        .eq(2)
+        .should('have.text', `${interaction.companies[0].name}`)
+      cy.get(itemValues)
+        .eq(3)
+        .should(
+          'have.text',
+          `${interaction.dit_participants[0].adviser.name}, ${interaction.dit_participants[0].team.name}`
         )
-        .and('contain', `Service ${interaction.service.name}`)
+      cy.get(itemValues)
+        .eq(4)
+        .should('have.text', `${interaction.service.name}`)
     })
 
     it('should not show pagination', () => {

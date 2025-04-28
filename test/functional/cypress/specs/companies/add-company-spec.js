@@ -101,7 +101,7 @@ describe('Add company form', () => {
           .next()
           .should(
             'have.text',
-            'Trading name(s) Some matched company trading nameLocation at 123 Fake Street, Brighton, BN1 4SE'
+            'Trading name(s)Some matched company trading nameLocation at123 Fake Street, Brighton, BN1 4SE'
           )
           .next()
           .should(
