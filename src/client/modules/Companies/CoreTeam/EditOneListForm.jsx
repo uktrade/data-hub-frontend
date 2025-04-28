@@ -34,8 +34,9 @@ const EditOneListForm = ({
     analyticsFormName="editOneList"
     transformPayload={(values) => ({
       values,
-      companyId: company.id,
+      company: company,
       userPermissions,
+      currentAdviserId,
     })}
     redirectTo={() =>
       returnUrl ? returnUrl : urls.companies.businessDetails(company.id)

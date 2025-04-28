@@ -1,5 +1,5 @@
 export const isOneListAccountOwner = (company, currentAdviserId) =>
-  company?.oneListGroupGlobalAccountManager?.id == currentAdviserId
+  company?.one_list_group_global_account_manager?.id == currentAdviserId
 
 export const canEditOneList = (permissions) =>
   permissions &&

@@ -1,5 +1,8 @@
 import { apiProxyAxios } from '../../../components/Task/utils'
-import { canEditOneListTierAndGlobalAccountManager } from '../CompanyBusinessDetails/utils'
+import {
+  canEditOneListTierAndGlobalAccountManager,
+  isOneListAccountOwner,
+} from '../CompanyBusinessDetails/utils'
 import {
   NONE,
   ACCOUNT_MANAGER_FIELD_NAME,
@@ -22,11 +25,16 @@ export async function getOneListDetails(companyId) {
 }
 
 async function assignOneListTierandGlobalManagerRequest({
-  companyId,
+  company,
   values,
   userPermissions,
+  currentAdviserId,
 }) {
-  if (canEditOneListTierAndGlobalAccountManager(userPermissions)) {
+  const companyId = company.id
+  if (
+    canEditOneListTierAndGlobalAccountManager(userPermissions) ||
+    isOneListAccountOwner(company, currentAdviserId)
+  ) {
     return await apiProxyAxios.post(
       `v4/company/${companyId}/assign-one-list-tier-and-global-account-manager`,
       {
@@ -67,33 +75,43 @@ async function removeCoreTeamRequest({ companyId }) {
 
 export async function saveOneListDetails({
   values,
-  companyId,
+  company,
   userPermissions = NONE,
+  currentAdviserId,
 }) {
   let request
+  const companyId = company.id
 
+  /* 
+  A Global account manager can replace themselves with another user.
+  In the edge case where they also make changes to the Advisers on the core team ensure the 
+  call order is:
+  1. update-one-list-core-team
+  2. assign-one-list-tier-and-global-account-manager
+  This will avoid the update-one-list-core-team failing due to lack of permissions.
+  */
   if (values[TIER_FIELD_NAME] === NONE) {
     request = removeCoreTeamRequest({ companyId, values }).then(
       removeFromOneList({ companyId })
     )
   } else if (!values[ONE_LIST_TEAM_FIELD_NAME]) {
-    request = Promise.all([
+    request = removeCoreTeamRequest({ companyId }).then(
       assignOneListTierandGlobalManagerRequest({
-        companyId,
+        company,
         values,
         userPermissions,
-      }),
-      removeCoreTeamRequest({ companyId }),
-    ])
+        currentAdviserId,
+      })
+    )
   } else {
-    request = Promise.all([
+    request = assignCoreTeamRequest({ companyId, values }).then(
       assignOneListTierandGlobalManagerRequest({
-        companyId,
+        company,
         values,
         userPermissions,
-      }),
-      assignCoreTeamRequest({ companyId, values }),
-    ])
+        currentAdviserId,
+      })
+    )
   }
 
   try {
