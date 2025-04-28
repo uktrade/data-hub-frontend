@@ -47,7 +47,7 @@ const ChipButton = styled('button')(FOCUSABLE, {
   },
 })
 
-const SelectedChips = ({ name, selectedOptions, onOptionRemove }) => (
+const SelectedChips = ({ name, label, selectedOptions, onOptionRemove }) => (
   <ChipList id={`${name}-selected`} data-test="typeahead-chip-list">
     <span id={`${name}-remove`} style={{ display: 'none' }}>
       remove
@@ -56,7 +56,7 @@ const SelectedChips = ({ name, selectedOptions, onOptionRemove }) => (
       <Chip key={option.value} data-test="typeahead-chip">
         <ChipButton
           type="button"
-          aria-label={`Remove ${option.chipLabel || option.label} as a contact`}
+          aria-label={`${option.chipLabel || option.label} from ${label}`}
           onClick={() => {
             onOptionRemove(option)
           }}

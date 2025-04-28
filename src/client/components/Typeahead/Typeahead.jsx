@@ -149,6 +149,7 @@ const Typeahead = ({
   name,
   className,
   label = '',
+  labelName,
   error = false,
   closeMenuOnSelect = false,
   isMulti = false,
@@ -257,6 +258,7 @@ const Typeahead = ({
       {isMulti && Boolean(selectedOptions.length) && (
         <SelectedChips
           name={name}
+          label={labelName}
           selectedOptions={selectedOptions}
           onOptionRemove={(option) => {
             onOptionRemove(option)
@@ -395,6 +397,7 @@ Typeahead.propTypes = {
   name: PropTypes.string,
   className: PropTypes.string,
   label: PropTypes.string,
+  labelName: PropTypes.string,
   error: PropTypes.string,
   closeMenuOnSelect: PropTypes.bool,
   isMulti: PropTypes.bool,

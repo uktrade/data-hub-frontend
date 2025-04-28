@@ -67,6 +67,7 @@ const FieldTypeahead = ({
         {touched && error && <ErrorText>{error}</ErrorText>}
         <Typeahead
           name={name}
+          labelName={label}
           aria-label={label || legend}
           onBlur={onBlur}
           onChange={handleChange}
@@ -99,6 +100,10 @@ FieldTypeahead.propTypes = {
   required: PropTypes.string,
   /**
    * Text for the label element
+   */
+  labelName: PropTypes.string,
+  /**
+   * for internal accessibility labels
    */
   label: PropTypes.node,
   /**

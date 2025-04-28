@@ -5,23 +5,36 @@ import { mount } from 'cypress/react'
 import SelectedChips from '../../../../../../src/client/components/Typeahead/SelectedChips'
 
 describe('SelectedChips – Accessibility', () => {
-  const selectedOptions = [
-    { value: '1', label: 'Jake Roberts' },
-    { value: '2', label: 'Sarah Connor' },
+  const testCases = [
+    { name: 'contacts', label: 'Export Contact', displayLabel: 'Jake Roberts' },
+    {
+      name: 'advisers',
+      label: 'Primary Adviser',
+      displayLabel: 'Sarah Connor',
+    },
+    {
+      name: 'participants',
+      label: 'Internal Participant',
+      displayLabel: 'John Doe',
+    },
   ]
 
-  it('adds accessible aria-labels to remove buttons', () => {
-    mount(
-      <SelectedChips
-        name="contacts"
-        selectedOptions={selectedOptions}
-        onOptionRemove={() => {}}
-      />
-    )
+  testCases.forEach(({ name, label, displayLabel }) => {
+    it(`adds accessible aria-labels to remove buttons for field labeled "${label}"`, () => {
+      const selectedOptions = [{ value: '1', label: displayLabel }]
 
-    selectedOptions.forEach((option) => {
-      const expectedLabel = `Remove ${option.label} as a contact`
-      cy.contains('button', option.label).should(
+      mount(
+        <SelectedChips
+          name={name}
+          label={label} // pass the label into SelectedChips
+          selectedOptions={selectedOptions}
+          onOptionRemove={() => {}}
+        />
+      )
+
+      const expectedLabel = `Remove ${displayLabel} from ${label}`
+
+      cy.contains('button', displayLabel).should(
         'have.attr',
         'aria-label',
         expectedLabel
@@ -29,27 +42,33 @@ describe('SelectedChips – Accessibility', () => {
     })
   })
 
-  // scenario where chipLabel is populated
-  it('uses chipLabel when present and applies correct aria-label', () => {
-    const chipLabelOptions = [
-      { value: '3', label: 'John Smith', chipLabel: 'Johnny S' },
-    ]
+  // scenario where chipLabel is populated for multiple fields
+  ;[
+    { name: 'contacts', label: 'Export Contact', chipDisplayLabel: 'Johnny S' },
+    { name: 'advisers', label: 'Primary Adviser', chipDisplayLabel: 'SC' },
+  ].forEach(({ name, label, chipDisplayLabel }) => {
+    it(`uses chipLabel when present and applies correct aria-label for field labeled "${label}"`, () => {
+      const chipLabelOptions = [
+        { value: '2', label: 'John Smith', chipLabel: chipDisplayLabel },
+      ]
 
-    mount(
-      <SelectedChips
-        name="contacts"
-        selectedOptions={chipLabelOptions}
-        onOptionRemove={() => {}}
-      />
-    )
+      mount(
+        <SelectedChips
+          name={name}
+          label={label}
+          selectedOptions={chipLabelOptions}
+          onOptionRemove={() => {}}
+        />
+      )
 
-    const expectedLabel = 'Remove Johnny S as a contact'
+      const expectedLabel = `Remove ${chipDisplayLabel} from ${label}`
 
-    cy.contains('button', 'Johnny S').should(
-      'have.attr',
-      'aria-label',
-      expectedLabel
-    )
+      cy.contains('button', chipDisplayLabel).should(
+        'have.attr',
+        'aria-label',
+        expectedLabel
+      )
+    })
   })
 
   it('has no critical accessibility violations (axe)', () => {
