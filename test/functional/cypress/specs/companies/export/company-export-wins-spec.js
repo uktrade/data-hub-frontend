@@ -16,7 +16,6 @@ const exportWinList = [exportWin1, exportWin2, exportWin3]
 
 const getExpectedMetadata = (win) => ({
   'Lead officer name': win.lead_officer.name,
-  'Company name': 'Not set',
   'Contact name': `${win.contact.name} (${win.contact.job_title} - ${win.contact.email})`,
   Destination: win.country,
   'Date won': formatDate(win.date, DATE_FORMAT_MONTH_YEAR),
@@ -72,17 +71,22 @@ describe('Company export wins', () => {
           })
 
         // Loop through each metadata item and assert label and value
-        cy.get('[data-test="metadata-item"]').each((metaItem) => {
-          cy.wrap(metaItem).within(() => {
-            cy.get('span')
-              .first()
-              .invoke('text')
-              .then((label) => {
-                const expectedValue = expectedMetadata[index][label.trim()]
-                cy.get('span').last().should('have.text', expectedValue)
-              })
-          })
-        })
+        cy.get('[data-test="metadata-label"]').each(
+          (metadataLabel, metadataIndex) => {
+            const expectedLabel = Object.keys(expectedMetadata[index])[
+              metadataIndex
+            ]
+            expect(metadataLabel).to.have.text(expectedLabel)
+          }
+        )
+        cy.get('[data-test="metadata-value"]').each(
+          (metadataValue, metadataIndex) => {
+            const expectedValue = Object.values(expectedMetadata[index])[
+              metadataIndex
+            ]
+            expect(metadataValue).to.have.text(expectedValue)
+          }
+        )
       })
     })
   })
