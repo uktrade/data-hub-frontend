@@ -20,10 +20,14 @@ describe('Customer details', () => {
     cy.get('[data-test="status-message"]').should('not.exist')
   })
 
-  it('should render a contact hint', () => {
-    cy.get(customerDetails.contactHint).should(
-      'have.text',
-      'To select a customer contact name, it must have already been added to Data Hub. If not listed, go to the company page to add them.'
+  it('should display the add a new contact link', () => {
+    cy.get(customerDetails.addContact).should('contain', 'add a new contact')
+  })
+
+  it('should display the add a new contact details', () => {
+    cy.get(customerDetails.addContactInfoDetails).should(
+      'contain',
+      'Information needed to add a new contact'
     )
   })
 

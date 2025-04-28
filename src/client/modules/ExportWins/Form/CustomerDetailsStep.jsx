@@ -8,20 +8,23 @@ import BusinessPotential from '../../../components/Resource/BusinessPotential'
 import CompanyContacts from '../../../components/Resource/CompanyContacts' // Refactor to CompanyContacts.FieldTypeahead
 import WinUKRegions from '../../../components/Resource/WinUKRegions'
 
-import { Step, FieldTypeahead } from '../../../components'
+import { Step, FieldTypeahead, ContactInformation } from '../../../components'
 import { idNamesToValueLabels } from '../../../utils'
-import { StyledHintParagraph } from './styled'
 import { steps } from './constants'
+import Task from '../../../components/Task'
+import { TASK_REDIRECT_TO_CONTACT_FORM } from '../../../components/ContactForm/state'
+import { ID as STATE_ID } from './state'
 
 const FieldTypeaheadMarginBottom = styled(FieldTypeahead)({
-  marginBottom: 0,
+  paddingBottom: 8,
+  marginBottom: 30,
 })
 
 const FieldTypeaheadMarginTop = styled(WinUKRegions.FieldTypeahead)({
   marginTop: 35,
 })
 
-const CustomerDetailsStep = ({ companyId, isEditing }) => (
+const CustomerDetailsStep = ({ companyId, isEditing, formValues }) => (
   <Step name={steps.CUSTOMER_DETAILS}>
     <H3 data-test="step-heading">Customer details</H3>
     <ResourceOptionsField
@@ -43,10 +46,31 @@ const CustomerDetailsStep = ({ companyId, isEditing }) => (
         }))
       }
     />
-    <StyledHintParagraph data-test="contact-hint">
-      To select a customer contact name, it must have already been added to Data
-      Hub. If not listed, go to the company page to add them.
-    </StyledHintParagraph>
+    <Task>
+      {(getTask) => {
+        const openContactFormTask = getTask(
+          TASK_REDIRECT_TO_CONTACT_FORM,
+          STATE_ID
+        )
+
+        return (
+          <>
+            <ContactInformation
+              companyId={companyId}
+              onOpenContactForm={({ redirectUrl }) => {
+                openContactFormTask.start({
+                  payload: {
+                    values: formValues,
+                    url: redirectUrl,
+                    storeId: STATE_ID,
+                  },
+                })
+              }}
+            />
+          </>
+        )
+      }}
+    </Task>
     <FieldTypeaheadMarginTop
       name="customer_location"
       id="customer-location"
