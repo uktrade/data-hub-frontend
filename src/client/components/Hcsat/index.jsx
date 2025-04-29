@@ -1,4 +1,4 @@
-import { React, useState } from 'react'
+import React, { useState } from 'react'
 
 import styled from 'styled-components'
 
@@ -11,6 +11,7 @@ import { FOOTER_TEXT, FOOTER_BORDER_TOP } from '../../../client/utils/colours'
 import Form from '../Form'
 import Step1 from './step1'
 import Step2 from './step2'
+import { HCSAT_SUBMIT_FEEDBACK } from './state'
 
 const StyledHcsat = styled('div')({
   clear: 'both',
@@ -60,22 +61,15 @@ export default function Hcsat() {
       {!formStage ? (
         step ? (
           <Form
-            id="yes-no-feedback"
-            analyticsFormName="yes-no-feedback"
-            showStepInUrl={false}
-            cancelRedirectTo={true}
+            id="foo"
+            submissionTaskName={HCSAT_SUBMIT_FEEDBACK}
+            initialValuesTaskName="load something"
+            analyticsFormName="Update something"
           >
             <Step1 handleUserNo={handleUserNo} handleUserYes={handleUserYes} />
           </Form>
         ) : (
-          <Form
-            id="additional-feedback"
-            analyticsFormName="additional-feedback"
-            showStepInUrl={false}
-            cancelRedirectTo={true}
-          >
-            <Step2 setFormCompletion={handleUserAdditionalFeedback} />
-          </Form>
+          <Step2 setFormCompletion={handleUserAdditionalFeedback} />
         )
       ) : (
         <StyledLabel>Thank you for your feedback.</StyledLabel>

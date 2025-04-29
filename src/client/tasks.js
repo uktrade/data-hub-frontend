@@ -108,7 +108,7 @@ import * as overviewCardTasks from './modules/Companies/CompanyOverview/TableCar
 
 import { TASK_GET_COMPANY_OVERVIEW_ACTIVITY } from './modules/Companies/CompanyOverview/TableCards/ActivityCards/state'
 import { getCompanyOverviewActivities } from './modules/Companies/CompanyOverview/TableCards/ActivityCards/tasks'
-
+import { HCSAT_SUBMIT_FEEDBACK } from './components/Hcsat/state'
 import {
   TASK_SEARCH_COMPANY,
   TASK_CREATE_INVESTMENT_PROJECT,
@@ -460,6 +460,7 @@ import {
   getCompanyActivities,
   getCompanyActivitiesMetadata,
 } from './modules/Companies/CompanyActivity/tasks'
+import { submitHCSAT } from './components/Hcsat/tasks.js'
 
 export const tasks = {
   'Create list': createList,
@@ -720,4 +721,5 @@ export const tasks = {
   [TASK_RESEND_EXPORT_WIN]: resendExportWin,
   [TASK_ADD_PROPOSITION_DOCUMENT]: addPropositionDocument,
   [TASK_GET_COMPANY_OVERVIEW_ACTIVITY]: getCompanyOverviewActivities,
+  [HCSAT_SUBMIT_FEEDBACK]: submitHCSAT,
 }
