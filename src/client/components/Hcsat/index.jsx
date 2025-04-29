@@ -8,10 +8,9 @@ import { FONT_WEIGHTS, MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
 
 import { FOOTER_TEXT, FOOTER_BORDER_TOP } from '../../../client/utils/colours'
 
-import Form from '../Form'
 import Step1 from './step1'
 import Step2 from './step2'
-import { HCSAT_SUBMIT_FEEDBACK } from './state'
+import { apiProxyAxios } from '../Task/utils'
 
 const StyledHcsat = styled('div')({
   borderTop: `1px solid ${FOOTER_BORDER_TOP}`,
@@ -34,48 +33,46 @@ const StyledLabel = styled(Label)({
 })
 
 export default function Hcsat() {
-  const [step, setStep] = useState(true)
-  const [formStage, setFormCompletion] = useState(false)
+  const [showAdditionalFeedback, setshowAdditionalFeedback] = useState(false)
+  const [formComplete, setFormComplete] = useState(false)
+  const [submittedFeedbackId, setSubmittedFeedbackId] = useState()
+
+  const submitInitialFeedback = async (postData) => {
+    postData.url = window.location.href
+    return await apiProxyAxios.post('/v4/hcsat', postData).then(({ data }) => {
+      setSubmittedFeedbackId(data.id)
+    })
+  }
+
+  const submitAdditionalFeedback = async (postData) => {
+    return await apiProxyAxios.patch(
+      `/v4/hcsat/${submittedFeedbackId}`,
+      postData
+    )
+  }
 
   const handleUserNo = () => {
-    setStep(false)
+    submitInitialFeedback({ was_useful: false })
+    setshowAdditionalFeedback(true)
   }
+
   const handleUserYes = () => {
-    setFormCompletion(true)
+    submitInitialFeedback({ was_useful: true })
+    setFormComplete(true)
   }
-  const handleUserAdditionalFeedback = () => {
-    setFormCompletion(true)
+
+  const handleUserAdditionalFeedback = (data) => {
+    submitAdditionalFeedback(data)
+    setFormComplete(true)
   }
-  //   const handleStepYesCompletion = () => {
-  //     setYesCompletion(true)
-  //   }
+
   return (
     <StyledHcsat>
-      {/* <Form
-        id={}
-        analyticsFormName={}
-        submissionTaskName=""
-        redirectMode="soft"
-        showStepInUrl={true}
-        redirectTo={(_, {  }) =>
-          `../thankyou?agree=${}`
-        }
-        transformPayload={transformPayload(token)}
-      >
-
-      </Form> */}
-      {!formStage ? (
-        step ? (
-          <Form
-            id="foo"
-            submissionTaskName={HCSAT_SUBMIT_FEEDBACK}
-            initialValuesTaskName="load something"
-            analyticsFormName="Update something"
-          >
-            <Step1 handleUserNo={handleUserNo} handleUserYes={handleUserYes} />
-          </Form>
+      {!formComplete ? (
+        !showAdditionalFeedback && !submittedFeedbackId ? (
+          <Step1 handleUserNo={handleUserNo} handleUserYes={handleUserYes} />
         ) : (
-          <Step2 setFormCompletion={handleUserAdditionalFeedback} />
+          <Step2 onFormSubmit={handleUserAdditionalFeedback} />
         )
       ) : (
         <StyledLabel>Thank you for your feedback.</StyledLabel>
