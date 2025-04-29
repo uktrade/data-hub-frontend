@@ -75,7 +75,7 @@ const CompanyFilesCollection = ({
               }
               addItemButtons={[
                 // Un-comment when upload file screen has been implemented
-                /* eslint-disable */
+                // Also enable * eslint-disable */
                 // {
                 //   text: 'Upload file',
                 //   url: company.archived

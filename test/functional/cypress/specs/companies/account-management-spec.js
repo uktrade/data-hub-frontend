@@ -1,8 +1,5 @@
 import { faker } from '../../../../sandbox/utils/random'
-import {
-  companyFaker,
-  companyNoGlobalUltimateAllDetails,
-} from '../../fakers/companies'
+import { companyFaker } from '../../fakers/companies'
 import { userFaker } from '../../fakers/users'
 import objectiveListFaker, { objectiveFaker } from '../../fakers/objective'
 import { adviserFaker } from '../../fakers/advisers'

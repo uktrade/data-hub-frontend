@@ -6,7 +6,6 @@ import Details from '@govuk-react/details'
 import styled from 'styled-components'
 import { useParams } from 'react-router-dom'
 import { connect } from 'react-redux'
-import PropTypes from 'prop-types'
 import { typography } from '@govuk-react/lib'
 
 import { Metadata, NewWindowLink } from '../../../components'

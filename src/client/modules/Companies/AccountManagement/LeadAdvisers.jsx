@@ -8,7 +8,6 @@ import { LEVEL_SIZE } from '@govuk-react/constants'
 import { FormActions } from '../../../components'
 import { TEXT_COLOUR, GREY_3 } from '../../../utils/colours'
 import urls from '../../../../lib/urls'
-import { current } from '@reduxjs/toolkit'
 import { isOneListAccountOwner } from '../CompanyBusinessDetails/utils'
 
 const ButtonSecondary = (props) => (
