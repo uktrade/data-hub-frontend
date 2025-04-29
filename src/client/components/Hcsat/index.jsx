@@ -4,7 +4,7 @@ import styled from 'styled-components'
 
 import { Label } from 'govuk-react'
 
-import { FONT_WEIGHTS } from '@govuk-react/constants'
+import { FONT_WEIGHTS, MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
 
 import { FOOTER_TEXT, FOOTER_BORDER_TOP } from '../../../client/utils/colours'
 
@@ -14,13 +14,19 @@ import Step2 from './step2'
 import { HCSAT_SUBMIT_FEEDBACK } from './state'
 
 const StyledHcsat = styled('div')({
-  clear: 'both',
   borderTop: `1px solid ${FOOTER_BORDER_TOP}`,
   color: `${FOOTER_TEXT}`,
   maxWidth: '960px',
-  margin: '0px auto',
-  paddingTop: '15px',
-  paddingBottom: '15px',
+  padding: '20px 0',
+  marginLeft: SPACING.SCALE_3,
+  marginRight: SPACING.SCALE_3,
+  [MEDIA_QUERIES.LARGESCREEN]: {
+    marginLeft: SPACING.SCALE_5,
+    marginRight: SPACING.SCALE_5,
+  },
+  '@media only screen and (min-width:1020px)': {
+    margin: '0 auto',
+  },
 })
 
 const StyledLabel = styled(Label)({

@@ -12,6 +12,7 @@ const StyledLabel = styled(Label)({
 
 const StyledSecondaryButton = styled(SecondaryButton)({
   marginTop: SPACING.SCALE_3,
+  display: 'block',
 })
 
 export default function Step2({ setFormCompletion }) {

@@ -6,6 +6,7 @@ import GridRow from '@govuk-react/grid-row'
 
 import Footer from '../Footer'
 import DataHubHeader from '../DataHubHeader'
+import Hcsat from '../Hcsat'
 
 const GlobalStyles = createGlobalStyle`
   *, *:before, *:after {
@@ -29,6 +30,7 @@ const DefaultLayoutBase = ({ children }) => {
       <GridRow>
         <GridCol>{children}</GridCol>
       </GridRow>
+      <Hcsat />
       <Footer />
     </>
   )

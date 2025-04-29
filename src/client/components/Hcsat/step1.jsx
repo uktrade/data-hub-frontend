@@ -2,24 +2,23 @@ import React from 'react'
 
 import styled from 'styled-components'
 import { Label } from 'govuk-react'
-import { SPACING, FONT_WEIGHTS } from '@govuk-react/constants'
+import { FONT_WEIGHTS } from '@govuk-react/constants'
 
 import SecondaryButton from '../SecondaryButton'
 
 const StyledLabel = styled(Label)({
+  display: 'block',
   fontWeight: FONT_WEIGHTS.bold,
   alignContent: 'center',
 })
 
 const StyledLayout = styled('div')({
-  flexWrap: 'wrap',
   display: 'flex',
 })
 
 const SyledSecondaryButton = styled(SecondaryButton)({
   marginBottom: '0px',
-  marginRight: SPACING.SCALE_3,
-  marginLeft: SPACING.SCALE_3,
+  marginLeft: '16px',
 })
 
 export default function Step1({ handleUserNo, handleUserYes }) {

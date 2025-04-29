@@ -67,8 +67,8 @@ const DefaultLayout = ({
         <GridRow>
           <GridCol>{children}</GridCol>
         </GridRow>
+        <Hcsat />
       </Main>
-      <Hcsat />
       <Footer />
     </>
   )
