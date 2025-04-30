@@ -13,7 +13,7 @@ describe('Export wins tab navigation', () => {
       })
       assertBreadcrumbs({
         Home: urls.dashboard.index(),
-        'Export Wins': urls.companies.exportWins.index(),
+        'Export wins': urls.companies.exportWins.index(),
         Rejected: null,
       })
     })
@@ -24,7 +24,7 @@ describe('Export wins tab navigation', () => {
 
       assertBreadcrumbs({
         Home: urls.dashboard.index(),
-        'Export Wins': urls.companies.exportWins.index(),
+        'Export wins': urls.companies.exportWins.index(),
         Pending: null,
       })
     })
@@ -34,7 +34,7 @@ describe('Export wins tab navigation', () => {
       })
       assertBreadcrumbs({
         Home: urls.dashboard.index(),
-        'Export Wins': urls.companies.exportWins.index(),
+        'Export wins': urls.companies.exportWins.index(),
         Confirmed: null,
       })
     })
