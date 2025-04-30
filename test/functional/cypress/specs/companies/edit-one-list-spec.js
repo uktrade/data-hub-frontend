@@ -260,7 +260,50 @@ describe('Edit One List', () => {
     })
   })
 
-  context('non Account managers when editing One list', () => {
+  context(
+    'basic users assigned as account manager when editing One list',
+    () => {
+      const testCompany = fixtures.company.oneListCorp
+
+      beforeEach(() => {
+        cy.setModulePermissions([
+          'company.view_company',
+          'company.change_company',
+        ])
+        cy.setAdviserId(testCompany.one_list_group_global_account_manager.id)
+
+        visitWithWait(
+          testCompany.id,
+          urls.companies.editOneList(testCompany.id)
+        )
+      })
+      after(() => {
+        cy.resetUser()
+      })
+
+      it('should have account manager field', () => {
+        cy.contains('Continue').click()
+        cy.get('#global_account_manager').should('exist')
+      })
+
+      it('should submit updated data', () => {
+        cy.contains('Continue').click()
+
+        cy.get(
+          selectors.companyEditOneList.coreTeamField
+        ).selectTypeaheadOptionInFieldset('leroy')
+
+        cy.contains('Submit').click()
+
+        cy.location('pathname').should(
+          'eq',
+          urls.companies.businessDetails(testCompany.id)
+        )
+      })
+    }
+  )
+
+  context('not assigned as account managers when editing One list', () => {
     const testCompany = fixtures.company.oneListCorp
 
     beforeEach(() => {
