@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 import styled from 'styled-components'
 
-import { Label } from 'govuk-react'
+import { Paragraph } from 'govuk-react'
 
 import { FONT_WEIGHTS, MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
 
@@ -16,9 +16,10 @@ const StyledHcsat = styled('div')({
   borderTop: `1px solid ${FOOTER_BORDER_TOP}`,
   color: `${FOOTER_TEXT}`,
   maxWidth: '960px',
+  minHeight: '40px',
   padding: '20px 0',
-  marginLeft: SPACING.SCALE_3,
-  marginRight: SPACING.SCALE_3,
+  marginLeft: ({ isBaseLayout }) => (isBaseLayout ? SPACING.SCALE_3 : '0px'),
+  marginRight: ({ isBaseLayout }) => (isBaseLayout ? SPACING.SCALE_3 : '0px'),
   [MEDIA_QUERIES.LARGESCREEN]: {
     marginLeft: SPACING.SCALE_5,
     marginRight: SPACING.SCALE_5,
@@ -28,12 +29,19 @@ const StyledHcsat = styled('div')({
   },
 })
 
-const StyledLabel = styled(Label)({
-  fontWeight: FONT_WEIGHTS.bold,
+const StyledParagraph = styled(Paragraph)({
+  marginBottom: '0px',
+  height: '37px',
+  fontSize: '16px',
+  display: 'flex',
+  p: {
+    fontWeight: FONT_WEIGHTS.bold,
+    alignSelf: 'center',
+  },
 })
 
-export default function Hcsat() {
-  const [showAdditionalFeedback, setshowAdditionalFeedback] = useState(false)
+export default function Hcsat({ isBaseLayout = false }) {
+  const [showAdditionalFeedback, setShowAdditionalFeedback] = useState(false)
   const [formComplete, setFormComplete] = useState(false)
   const [submittedFeedbackId, setSubmittedFeedbackId] = useState()
 
@@ -53,7 +61,7 @@ export default function Hcsat() {
 
   const handleUserNo = () => {
     submitInitialFeedback({ was_useful: false })
-    setshowAdditionalFeedback(true)
+    setShowAdditionalFeedback(true)
   }
 
   const handleUserYes = () => {
@@ -67,7 +75,7 @@ export default function Hcsat() {
   }
 
   return (
-    <StyledHcsat>
+    <StyledHcsat isBaseLayout={isBaseLayout}>
       {!formComplete ? (
         !showAdditionalFeedback && !submittedFeedbackId ? (
           <Step1 handleUserNo={handleUserNo} handleUserYes={handleUserYes} />
@@ -75,7 +83,7 @@ export default function Hcsat() {
           <Step2 onFormSubmit={handleUserAdditionalFeedback} />
         )
       ) : (
-        <StyledLabel>Thank you for your feedback.</StyledLabel>
+        <StyledParagraph>Thank you for your feedback.</StyledParagraph>
       )}
     </StyledHcsat>
   )

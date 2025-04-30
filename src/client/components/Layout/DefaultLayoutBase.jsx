@@ -30,7 +30,7 @@ const DefaultLayoutBase = ({ children }) => {
       <GridRow>
         <GridCol>{children}</GridCol>
       </GridRow>
-      <Hcsat />
+      <Hcsat isBaseLayout={true} />
       <Footer />
     </>
   )

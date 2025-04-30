@@ -2,7 +2,7 @@ import React from 'react'
 
 import styled from 'styled-components'
 import { Label } from 'govuk-react'
-import { FONT_WEIGHTS } from '@govuk-react/constants'
+import { FONT_WEIGHTS, MEDIA_QUERIES } from '@govuk-react/constants'
 
 import SecondaryButton from '../SecondaryButton'
 
@@ -10,25 +10,44 @@ const StyledLabel = styled(Label)({
   display: 'block',
   fontWeight: FONT_WEIGHTS.bold,
   alignContent: 'center',
+  fontSize: '16px',
 })
 
-const StyledLayout = styled('div')({
+const StyledWrapper = styled('div')({
   display: 'flex',
+  flexDirection: 'column',
+  [MEDIA_QUERIES.LARGESCREEN]: {
+    flexDirection: 'row',
+  },
 })
 
 const SyledSecondaryButton = styled(SecondaryButton)({
+  marginTop: '10px',
   marginBottom: '0px',
-  marginLeft: '16px',
+  [MEDIA_QUERIES.LARGESCREEN]: {
+    marginTop: '0px',
+    marginBottom: '0px',
+    marginLeft: '16px',
+  },
 })
 
 export default function Step1({ handleUserNo, handleUserYes }) {
   return (
-    <StyledLayout>
+    <StyledWrapper>
       <StyledLabel>Is this page useful?</StyledLabel>
-      <div>
-        <SyledSecondaryButton onClick={handleUserYes}>Yes</SyledSecondaryButton>
-        <SyledSecondaryButton onClick={handleUserNo}>No</SyledSecondaryButton>
-      </div>
-    </StyledLayout>
+
+      <SyledSecondaryButton
+        aria-label="This page is useful"
+        onClick={handleUserYes}
+      >
+        Yes
+      </SyledSecondaryButton>
+      <SyledSecondaryButton
+        aria-label="This page is not useful"
+        onClick={handleUserNo}
+      >
+        No
+      </SyledSecondaryButton>
+    </StyledWrapper>
   )
 }

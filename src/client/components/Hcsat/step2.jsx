@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 import styled from 'styled-components'
-import { Checkbox, Label } from 'govuk-react'
+import { Checkbox, Label, H4 } from 'govuk-react'
 import { TextAreaField } from '@govuk-react/text-area'
 import { FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
 
@@ -9,6 +9,30 @@ import SecondaryButton from '../SecondaryButton'
 
 const StyledLabel = styled(Label)({
   fontWeight: FONT_WEIGHTS.bold,
+})
+
+const StyledAdditionalFeedback = styled('div')({
+  margin: '32px 0',
+  label: {
+    marginBottom: '15px',
+  },
+})
+
+const StyledForm = styled('form')({
+  fontSize: '16px',
+  h2: {
+    fontSize: '16px',
+    marginBottom: '10px',
+  },
+  div: {
+    marginBottom: '10px',
+  },
+  span: {
+    fontSize: '16px',
+  },
+  textarea: {
+    fontSize: '16px',
+  },
 })
 
 const StyledSecondaryButton = styled(SecondaryButton)({
@@ -37,30 +61,52 @@ export default function Step2({ onFormSubmit }) {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <StyledLabel>What went wrong?</StyledLabel>
-      <Label>Select all that apply.</Label>
-      <Checkbox name="did_not_find_what_i_wanted">
+    <StyledForm onSubmit={handleSubmit}>
+      <H4 as="h2">What went wrong?</H4>
+      <div>Select all that apply.</div>
+      <Checkbox sizeVariant="SMALL" name="did_not_find_what_i_wanted">
         I did not find what I was looking for.
       </Checkbox>
-      <Checkbox name="difficult_navigation">
+      <Checkbox sizeVariant="SMALL" name="difficult_navigation">
         I found it difficult to navigate the page.
       </Checkbox>
-      <Checkbox name="lacks_feature">The page lacks a feature I need.</Checkbox>
-      <Checkbox name="unable_to_load">
+      <Checkbox sizeVariant="SMALL" name="lacks_feature">
+        The page lacks a feature I need.
+      </Checkbox>
+      <Checkbox sizeVariant="SMALL" name="unable_to_load">
         I was unable to load/refresh/render the page.
       </Checkbox>
-      <Checkbox name="inaccurate_information">
+      <Checkbox sizeVariant="SMALL" name="inaccurate_information">
         I did not find the information accurate.
       </Checkbox>
-      <Checkbox name="other_issues" onClick={handleCheckBox}>
+      <Checkbox
+        sizeVariant="SMALL"
+        name="other_issues"
+        onClick={handleCheckBox}
+      >
         Other
       </Checkbox>
-      {otherCheckBox ? <TextAreaField name="other_issues_detail" /> : ''}
+      {otherCheckBox ? (
+        <TextAreaField rows="6" name="other_issues_detail" />
+      ) : (
+        ''
+      )}
 
-      <StyledLabel>How could we improve the service</StyledLabel>
-      <TextAreaField name="improvement_suggestion" />
+      <StyledAdditionalFeedback>
+        <StyledLabel for="improvement_suggestion">
+          How could we improve the service?
+        </StyledLabel>
+        <div>
+          Do not include any personal information like your name or email
+          address.
+        </div>
+        <TextAreaField
+          rows="6"
+          id="improvement_suggestion"
+          name="improvement_suggestion"
+        />
+      </StyledAdditionalFeedback>
       <StyledSecondaryButton>Send</StyledSecondaryButton>
-    </form>
+    </StyledForm>
   )
 }
