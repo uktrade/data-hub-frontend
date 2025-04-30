@@ -64,10 +64,7 @@ const NoInvestmentProjects = () => (
     <StyledParagraph>
       View and track investment projects from your dashboard
     </StyledParagraph>
-    <StyledImage
-      src={TimelineImage}
-      alt="An image of the stage timeline and estimated land date"
-    />
+    <StyledImage src={TimelineImage} alt="" />
     <div>
       <StyledParagraph>Once added, you'll be able to:</StyledParagraph>
       <StyledUnorderedList listStyleType="bullet">

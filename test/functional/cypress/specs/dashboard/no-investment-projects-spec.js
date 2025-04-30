@@ -32,13 +32,7 @@ describe('Dashboard - no investment projects', () => {
     })
 
     it('should have an image of the stage timeline and estimated land date', () => {
-      cy.get('@tabPanel')
-        .find('img')
-        .should(
-          'have.attr',
-          'alt',
-          'An image of the stage timeline and estimated land date'
-        )
+      cy.get('@tabPanel').find('img').should('have.attr', 'alt', '')
     })
 
     it('should have a body paragraph', () => {
