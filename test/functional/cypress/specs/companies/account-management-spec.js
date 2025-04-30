@@ -444,33 +444,6 @@ describe('One List core Tier D team', () => {
       cy.get('[data-test="edit-core-team-button"]').should('not.exist')
     })
   })
-  // context.only('when viewing a One List Tier D company', () => {
-  //   context('when viewing business details', () => {
-  //     beforeEach(() => {
-  //       cy.setModulePermissions(['company.view_company'])
-  //     })
-  //     after(() => {
-  //       cy.resetUser()
-  //     })
-  //     it('the adviser assigned as account manager should see the Add a Lead ITA button', () => {
-  //       const company = companyTierD
-  //       // company.one_list_group_tier = company.oneListGroupTier
-  //       // company.one_list_group_global_account_manager =
-  //       //   company.oneListGroupGlobalAccountManager
-  //       console.log(company)
-  //       cy.setAdviserId(company.one_list_group_global_account_manager.id)
-
-  //       cy.intercept('GET', `/api-proxy/v4/company/${company.id}`, company).as(
-  //         'businessDetails'
-  //       )
-  //       cy.visit(urls.companies.businessDetails(company.id))
-  //       cy.wait('@businessDetails')
-  //       cy.get('[data-test="edit-one-list-information"]')
-  //         .should('be.visible')
-  //         .should('have.text', 'Add Lead ITA')
-  //     })
-  //   })
-  // })
 
   context(
     'when viewing a One List Tier D company without DIT team name for account manager',
