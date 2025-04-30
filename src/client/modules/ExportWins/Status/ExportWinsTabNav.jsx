@@ -24,7 +24,7 @@ const ExportWinsTabNav = () => {
         { link: urls.dashboard.index(), text: 'Home' },
         {
           link: urls.companies.exportWins.index(),
-          text: 'Export Wins',
+          text: 'Export wins',
         },
         { text: capitalize(title) },
       ]}
