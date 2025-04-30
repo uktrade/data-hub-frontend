@@ -72,13 +72,11 @@ const _LocalNavLink = ({
 }) => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const location = useLocation()
-
-  const NavLink = href?.includes(location.pathname)
-    ? StyledActiveLink
-    : StyledInactiveLink
+  const active = href?.includes(location.pathname)
+  const NavLink = active ? StyledActiveLink : StyledInactiveLink
 
   return (
-    <NavLink href={href} data-test={dataTest} {...rest}>
+    <NavLink href={href} data-test={dataTest} aria-current={active} {...rest}>
       {children}
     </NavLink>
   )
