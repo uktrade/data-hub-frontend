@@ -205,6 +205,11 @@ function fillCommonFields({
 }) {
   fillSelect('[data-test=field-service]', service)
   if (subservice) {
+    cy.get('[data-test=field-service_2nd_level] select')
+      .should('exist')
+      .should('be.visible')
+      .should('have.attr', 'aria-label', 'Select service category')
+
     fillSelect('[data-test=field-service_2nd_level]', subservice)
   }
 
