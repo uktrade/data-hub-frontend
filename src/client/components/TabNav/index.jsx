@@ -12,8 +12,8 @@ import {
   DARK_BLUE_LEGACY,
   TEXT_COLOUR,
   BORDER_COLOUR,
-  FOCUS_COLOUR,
 } from '../../../client/utils/colours'
+import { FOCUS_MIXIN } from '../../utils/styles'
 
 import multiInstance from '../../utils/multiinstance'
 import { TAB_NAV__SELECT, TAB_NAV__FOCUS } from '../../actions'
@@ -23,19 +23,6 @@ const LEFT_ARROW_KEY = 37
 const RIGHT_ARROW_KEY = 39
 
 const BORDER = `1px solid ${BORDER_COLOUR}`
-
-const focusStyle = {
-  '&:focus': {
-    outline: `3px solid transparent`,
-    background: FOCUS_COLOUR,
-    color: 'BLACK',
-    boxShadow: `0 -2px ${FOCUS_COLOUR}, 0 4px ${BLACK}`,
-    textDecoration: 'none',
-    [MEDIA_QUERIES.TABLET]: {
-      background: WHITE,
-    },
-  },
-}
 
 const createId = (id, key, routed) =>
   routed ? `${id}.tab.${key.replace('/', '_')}` : `tab.${key}`
@@ -196,8 +183,8 @@ export const HeadlessTabNav = multiInstance({
 const SmallScreenTabNav = styled(HeadlessTabNav)({
   // We must use direct child combinators everywhere, otherwise the styles
   // would leak to nested tab navs
+  '& > [role="tab"': FOCUS_MIXIN,
   '& > [role="tablist"] > [role="tab"]': {
-    ...focusStyle,
     padding: '0px',
     margin: '0px 0px 10px',
     color: BLUE,
@@ -230,6 +217,7 @@ export const HorizontalTabNav = styled(SmallScreenTabNav)({
       borderBottom: BORDER,
     },
     '& > [role="tab"]': {
+      ...FOCUS_MIXIN,
       [MEDIA_QUERIES.TABLET]: {
         '&::before': {
           display: 'none',
@@ -252,6 +240,7 @@ export const HorizontalTabNav = styled(SmallScreenTabNav)({
           background: WHITE,
           marginBottom: '-1px',
           padding: '14px 19px 16px',
+          ...FOCUS_MIXIN,
         },
       },
     },
@@ -274,6 +263,7 @@ export const VerticalTabNav = styled(SmallScreenTabNav)({
       display: 'flex',
       flexDirection: 'column',
       '& > [role="tab"]': {
+        ...FOCUS_MIXIN,
         [MEDIA_QUERIES.TABLET]: {
           '&::before': {
             display: 'none',
@@ -292,6 +282,7 @@ export const VerticalTabNav = styled(SmallScreenTabNav)({
             color: WHITE,
             background: DARK_BLUE_LEGACY,
             fontWeight: '600',
+            ...FOCUS_MIXIN,
           },
         },
       },

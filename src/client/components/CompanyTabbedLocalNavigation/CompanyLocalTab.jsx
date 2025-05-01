@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import styled, { css } from 'styled-components'
 
 import { BLACK, GREY_2, GREY_4, WHITE } from '../../../client/utils/colours'
+import { FOCUS_MIXIN } from '../../utils/styles'
 
 export const StyledListItem = styled.li`
   *,
@@ -64,6 +65,8 @@ export const StyledAnchorTag = styled.a`
         background-color: ${WHITE};
         height: auto;
       `}
+
+    ${FOCUS_MIXIN}
   }
 `
 const CompanyLocalTab = (props) => {
