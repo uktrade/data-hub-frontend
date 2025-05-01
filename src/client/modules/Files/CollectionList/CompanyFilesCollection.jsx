@@ -68,21 +68,13 @@ const CompanyFilesCollection = ({
               taskProps={collectionListTask}
               collectionItemTemplate={collectionSummaryCardItemTemplateDefault}
               selectedFilters={selectedFilters}
-              addItemUrl={
-                company.archived
-                  ? null
-                  : `/files/create?related_object_id=${companyId}&related_object_type=${RELATED_OBJECT_TYPES.COMPANY}&document_type=${DOCUMENT_TYPES.SHAREPOINT.type}`
-              }
               addItemButtons={[
-                // Un-comment when upload file screen has been implemented
-                // Also enable * eslint-disable */
-                // {
-                //   text: 'Upload file',
-                //   url: company.archived
-                //     ? null
-                //     : `/files/create?company=${company.id}`,
-                // },
-                /* eslint-enable */
+                {
+                  text: 'Upload file',
+                  url: company.archived
+                    ? null
+                    : `/files/create?related_object_id=${companyId}&related_object_type=${RELATED_OBJECT_TYPES.COMPANY}&document_type=${DOCUMENT_TYPES.UPLOADABLE.type}`,
+                },
                 {
                   text: 'Add SharePoint link',
                   url: company.archived
