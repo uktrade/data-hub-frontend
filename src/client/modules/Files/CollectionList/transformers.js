@@ -44,6 +44,35 @@ export const transformFileToListItem = () => (file) => {
         addSummaryRow('SharePoint url', file?.document?.url),
       ]
       break
+    case DOCUMENT_TYPES.UPLOADABLE.type:
+      title = 'Uploaded file'
+      if (file.document.title) {
+        title += ` - ${file.document.title}`
+      }
+
+      // Add links for Uploadable document
+      links.push(
+        {
+          text: 'Download file',
+          // TODO: fix download
+          // url: urls.companies.files.download(file.id),
+        },
+        {
+          text: 'Delete',
+          // TODO: implement delete
+          // url: `${urls.companies.files.delete(file.id)}?related_object_id=${file.related_object_id}&related_object_type=${file.related_object_type}&document_type=${file.document_type}`,
+        }
+      )
+
+      // Add summary rows for Uploadable document
+      summaryRows = [
+        addSummaryRow(
+          'Date added',
+          formatDate(file.document.created_on, DATE_FORMAT_MEDIUM_WITH_TIME)
+        ),
+        addSummaryRow('Added by', file?.created_by?.name),
+      ]
+      break
     default:
       break
   }
