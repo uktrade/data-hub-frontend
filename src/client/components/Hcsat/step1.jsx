@@ -1,16 +1,20 @@
 import React from 'react'
 
 import styled from 'styled-components'
-import { Label } from 'govuk-react'
 import { FONT_WEIGHTS, MEDIA_QUERIES } from '@govuk-react/constants'
 
 import SecondaryButton from '../SecondaryButton'
 
-const StyledLabel = styled(Label)({
+const StyledParagraph = styled('p')({
   display: 'block',
   fontWeight: FONT_WEIGHTS.bold,
-  alignSelf: 'center',
   fontSize: '16px',
+  marginTop: '0px',
+  marginBottom: '0px',
+  alignSelf: 'start',
+  [MEDIA_QUERIES.LARGESCREEN]: {
+    alignSelf: 'center',
+  },
 })
 
 const StyledWrapper = styled('div')({
@@ -34,7 +38,7 @@ const SyledSecondaryButton = styled(SecondaryButton)({
 export default function Step1({ handleUserNo, handleUserYes }) {
   return (
     <StyledWrapper>
-      <StyledLabel>Is this page useful?</StyledLabel>
+      <StyledParagraph>Is this page useful?</StyledParagraph>
 
       <SyledSecondaryButton
         aria-label="This page is useful"

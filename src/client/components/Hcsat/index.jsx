@@ -12,14 +12,14 @@ import Step1 from './step1'
 import Step2 from './step2'
 import { apiProxyAxios } from '../Task/utils'
 
-const StyledHcsat = styled('div')({
+const StyledHcsat = styled('section')({
   borderTop: `1px solid ${FOOTER_BORDER_TOP}`,
   color: `${FOOTER_TEXT}`,
   maxWidth: '960px',
   minHeight: '40px',
   padding: '20px 0',
-  marginLeft: ({ isBaseLayout }) => (isBaseLayout ? SPACING.SCALE_3 : '0px'),
-  marginRight: ({ isBaseLayout }) => (isBaseLayout ? SPACING.SCALE_3 : '0px'),
+  marginLeft: SPACING.SCALE_3,
+  marginRight: SPACING.SCALE_3,
   [MEDIA_QUERIES.LARGESCREEN]: {
     marginLeft: SPACING.SCALE_5,
     marginRight: SPACING.SCALE_5,
@@ -40,7 +40,7 @@ const StyledParagraph = styled(Paragraph)({
   },
 })
 
-export default function Hcsat({ isBaseLayout = false }) {
+export default function Hcsat() {
   const [showAdditionalFeedback, setShowAdditionalFeedback] = useState(false)
   const [formComplete, setFormComplete] = useState(false)
   const [submittedFeedbackId, setSubmittedFeedbackId] = useState()
@@ -75,7 +75,7 @@ export default function Hcsat({ isBaseLayout = false }) {
   }
 
   return (
-    <StyledHcsat data-test="hcsat" isBaseLayout={isBaseLayout}>
+    <StyledHcsat data-test="hcsat">
       {!formComplete ? (
         !showAdditionalFeedback && !submittedFeedbackId ? (
           <Step1 handleUserNo={handleUserNo} handleUserYes={handleUserYes} />

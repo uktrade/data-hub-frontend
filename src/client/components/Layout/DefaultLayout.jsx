@@ -9,7 +9,6 @@ import Main from '../Main'
 import LocalHeader from '../LocalHeader/LocalHeader'
 import DataHubHeader from '../DataHubHeader'
 import WatchTextContent from '../WatchTextContent'
-import Hcsat from '../Hcsat'
 
 const GlobalStyles = createGlobalStyle`
   *, *:before, *:after {
@@ -67,7 +66,6 @@ const DefaultLayout = ({
         <GridRow>
           <GridCol>{children}</GridCol>
         </GridRow>
-        <Hcsat />
       </Main>
       <Footer />
     </>
