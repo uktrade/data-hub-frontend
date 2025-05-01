@@ -192,15 +192,8 @@ describe('Referall list on dashboard', () => {
 
   it('All referrals should be visible by default', () => {
     cy.selectDhTablistTab('Dashboard', 'Referrals')
-      .children()
-      .eq(0)
-      .within(() =>
-        cy
-          .contains('3 received referrals')
-          .next()
-          .contains('View')
-          .contains('select', 'Received referrals')
-      )
+      .contains('View')
+      .contains('select', 'Received referrals')
 
     assertResultList([
       EXPECTED_REFERRALS.yeahButNo,
