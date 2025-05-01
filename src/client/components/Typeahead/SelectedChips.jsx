@@ -56,7 +56,7 @@ const SelectedChips = ({ name, label, selectedOptions, onOptionRemove }) => (
       <Chip key={option.value} data-test="typeahead-chip">
         <ChipButton
           type="button"
-          aria-label={`${option.chipLabel || option.label} from ${label}`}
+          aria-label={`Remove ${option.chipLabel || option.label} from ${label}`}
           onClick={() => {
             onOptionRemove(option)
           }}
