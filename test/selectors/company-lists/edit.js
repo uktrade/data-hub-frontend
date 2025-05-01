@@ -4,5 +4,5 @@ module.exports = {
     label: '#edit-company-list form label',
     input: '#edit-company-list form input[name="listName"]',
   },
-  saveButton: '#edit-company-list button',
+  saveButton: '#edit-company-list button[data-test="submit-button"]',
 }

@@ -52,7 +52,11 @@ const DeleteCompanyListSection = ({
           </UnorderedList>
         </InsetText>
         <FormActions>
-          <Button buttonColour={RED} onClick={onDelete}>
+          <Button
+            buttonColour={RED}
+            data-test="company-delete-list-btn"
+            onClick={onDelete}
+          >
             Delete list
           </Button>
           <AccessibleLink href={returnUrl} data-test="return-link">
