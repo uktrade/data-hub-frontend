@@ -42,8 +42,9 @@ const StyledSecondaryButton = styled(SecondaryButton)({
 
 export default function Step2({ onFormSubmit }) {
   const [otherCheckBox, setOtherCheckBox] = useState(false)
+
   const handleCheckBox = () => {
-    setOtherCheckBox(!otherCheckBox) // Correct, update state in an event handler
+    setOtherCheckBox(!otherCheckBox)
   }
 
   const handleSubmit = (event) => {
@@ -61,7 +62,10 @@ export default function Step2({ onFormSubmit }) {
   }
 
   return (
-    <StyledForm onSubmit={handleSubmit}>
+    <StyledForm
+      data-test="hcsat-additional-feedback-form"
+      onSubmit={handleSubmit}
+    >
       <H4 as="h2">What went wrong?</H4>
       <div>Select all that apply.</div>
       <Checkbox sizeVariant="SMALL" name="did_not_find_what_i_wanted">
@@ -87,7 +91,11 @@ export default function Step2({ onFormSubmit }) {
         Other
       </Checkbox>
       {otherCheckBox ? (
-        <TextAreaField rows="6" name="other_issues_detail" />
+        <TextAreaField
+          data-test="hcsat-other-issues"
+          rows="6"
+          name="other_issues_detail"
+        />
       ) : (
         ''
       )}
@@ -101,12 +109,15 @@ export default function Step2({ onFormSubmit }) {
           address.
         </div>
         <TextAreaField
+          data-test="hcsat-improvement-suggestion"
           rows="6"
           id="improvement_suggestion"
           name="improvement_suggestion"
         />
       </StyledAdditionalFeedback>
-      <StyledSecondaryButton>Send</StyledSecondaryButton>
+      <StyledSecondaryButton data-test="hcsat-send-additional-feedback">
+        Send
+      </StyledSecondaryButton>
     </StyledForm>
   )
 }

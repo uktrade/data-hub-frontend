@@ -39,12 +39,14 @@ export default function Step1({ handleUserNo, handleUserYes }) {
       <SyledSecondaryButton
         aria-label="This page is useful"
         onClick={handleUserYes}
+        data-test="hcsat-page-is-useful"
       >
         Yes
       </SyledSecondaryButton>
       <SyledSecondaryButton
         aria-label="This page is not useful"
         onClick={handleUserNo}
+        data-test="hcsat-page-is-not-useful"
       >
         No
       </SyledSecondaryButton>

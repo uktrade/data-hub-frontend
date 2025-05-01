@@ -75,7 +75,7 @@ export default function Hcsat({ isBaseLayout = false }) {
   }
 
   return (
-    <StyledHcsat isBaseLayout={isBaseLayout}>
+    <StyledHcsat data-test="hcsat" isBaseLayout={isBaseLayout}>
       {!formComplete ? (
         !showAdditionalFeedback && !submittedFeedbackId ? (
           <Step1 handleUserNo={handleUserNo} handleUserYes={handleUserYes} />
