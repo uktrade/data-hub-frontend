@@ -20,6 +20,7 @@ const StyledAdditionalFeedback = styled('div')({
 
 const StyledForm = styled('form')({
   fontSize: '16px',
+  textAlign: 'left',
   h2: {
     fontSize: '16px',
     marginBottom: '10px',
