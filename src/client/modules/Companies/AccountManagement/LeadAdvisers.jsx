@@ -8,19 +8,22 @@ import { LEVEL_SIZE } from '@govuk-react/constants'
 import { FormActions } from '../../../components'
 import { TEXT_COLOUR, GREY_3 } from '../../../utils/colours'
 import urls from '../../../../lib/urls'
+import { isOneListAccountOwner } from '../CompanyBusinessDetails/utils'
 
 const ButtonSecondary = (props) => (
   <Button buttonColour={GREY_3} buttonTextColour={TEXT_COLOUR} {...props} />
 )
 
-const hasPermissionToAddIta = (permissions) =>
+const hasPermissionToAddIta = (permissions, company, currentAdviserId) =>
+  isOneListAccountOwner(company, currentAdviserId) ||
   permissions.includes('company.change_regional_account_manager')
 
 const RenderHasAccountManager = ({
   leadITA,
   addUrl,
-  companyId,
+  company,
   permissions,
+  currentAdviserId,
 }) => (
   <div>
     <Table data-test="lead-adviser-table">
@@ -45,18 +48,18 @@ const RenderHasAccountManager = ({
     </Table>
     <p>
       You can{' '}
-      <a href={urls.companies.editHistory.index(companyId)}>
+      <a href={urls.companies.editHistory.index(company.id)}>
         see changes in the Edit history
       </a>
     </p>
-    {hasPermissionToAddIta(permissions) && (
+    {hasPermissionToAddIta(permissions, company, currentAdviserId) && (
       <FormActions>
         <ButtonSecondary as={'a'} href={addUrl} data-test="replace-ita-button">
           Replace Lead ITA
         </ButtonSecondary>
         <ButtonSecondary
           as={'a'}
-          href={urls.companies.accountManagement.advisers.remove(companyId)}
+          href={urls.companies.accountManagement.advisers.remove(company.id)}
           data-test="remove-ita-button"
         >
           Remove Lead ITA
@@ -66,7 +69,7 @@ const RenderHasAccountManager = ({
   </div>
 )
 
-export const LeadITA = ({ company, permissions }) => (
+export const LeadITA = ({ company, permissions, currentAdviserId }) => (
   <>
     <H2 size={LEVEL_SIZE[3]} data-test="lead-ita-heading">
       {company.oneListGroupTier?.id == '1929c808-99b4-4abf-a891-45f2e187b410'
@@ -76,16 +79,17 @@ export const LeadITA = ({ company, permissions }) => (
     {!!company.oneListGroupGlobalAccountManager ? (
       <RenderHasAccountManager
         leadITA={company.oneListGroupGlobalAccountManager}
-        companyId={company.id}
+        company={company}
         permissions={permissions}
         addUrl={urls.companies.accountManagement.advisers.assign(company.id)}
+        currentAdviserId={currentAdviserId}
       />
     ) : (
       <>
         <p>
           This company record has no Lead International Trade Adviser (ITA).
         </p>
-        {hasPermissionToAddIta(permissions) && (
+        {hasPermissionToAddIta(permissions, company, currentAdviserId) && (
           <>
             <p>
               You can add a Lead ITA. This will be visible to all Data Hub

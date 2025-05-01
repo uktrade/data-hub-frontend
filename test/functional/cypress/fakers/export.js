@@ -18,7 +18,9 @@ const exportFaker = (overrides = {}) => ({
   contacts: [contactFaker()],
   destination_country: countryFaker(),
   sector: sectorFaker(),
-  exporter_experience: faker.helpers.arrayElement(EXPORTER_EXPERIENCE),
+  exporter_experience: faker.helpers.arrayElement(
+    EXPORTER_EXPERIENCE.filter((element) => !element.disabled_on)
+  ),
   estimated_export_value_years: faker.helpers.arrayElement(
     ESTIMATED_EXPORT_VALUE_YEARS
   ),

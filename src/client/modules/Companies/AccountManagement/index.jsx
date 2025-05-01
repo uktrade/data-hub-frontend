@@ -27,7 +27,10 @@ import { isItaTierDAccount } from '../utils'
 import { ONE_LIST_EMAIL } from './constants'
 import DefaultLayoutBase from '../../../components/Layout/DefaultLayoutBase'
 import { state2propsMainTab } from './state'
-import { canEditOneList } from '../CompanyBusinessDetails/utils'
+import {
+  canEditOneList,
+  isOneListAccountOwner,
+} from '../CompanyBusinessDetails/utils'
 import AccessibleLink from '../../../components/Link'
 
 const LastUpdatedHeading = styled.div`
@@ -259,7 +262,7 @@ const objectiveMetadata = (objective) => {
   return rows
 }
 
-const AccountManagement = ({ permissions }) => {
+const AccountManagement = ({ permissions, currentAdviserId }) => {
   const { companyId } = useParams()
 
   return (
@@ -276,14 +279,19 @@ const AccountManagement = ({ permissions }) => {
             <Objectives company={company} />
             {!company.oneListGroupTier ||
             isItaTierDAccount(company.oneListGroupTier) ? (
-              <LeadITA company={company} permissions={permissions} />
+              <LeadITA
+                company={company}
+                permissions={permissions}
+                currentAdviserId={currentAdviserId}
+              />
             ) : (
               <div>
                 <CoreTeamAdvisers
                   company={company}
                   oneListEmail={ONE_LIST_EMAIL}
                 />
-                {canEditOneList(permissions) && (
+                {(isOneListAccountOwner(company, currentAdviserId) ||
+                  canEditOneList(permissions)) && (
                   <div>
                     <Button
                       data-test="edit-core-team-button"

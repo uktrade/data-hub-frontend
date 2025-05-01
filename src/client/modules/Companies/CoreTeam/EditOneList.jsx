@@ -27,6 +27,7 @@ const EditOneList = ({
   oneListTiers,
   globalAccountManager,
   userPermissions,
+  currentAdviserId,
 }) => {
   const { companyId } = useParams()
   const query = useQuery()
@@ -77,6 +78,7 @@ const EditOneList = ({
                 [ACCOUNT_MANAGER_FIELD_NAME]: globalAccountManager,
                 [ONE_LIST_TEAM_FIELD_NAME]: oneListTeam,
               }}
+              currentAdviserId={currentAdviserId}
             />
           )
         }
