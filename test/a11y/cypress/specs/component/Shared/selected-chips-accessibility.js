@@ -22,23 +22,21 @@ describe('SelectedChips – Accessibility', () => {
   testCases.forEach(({ name, label, displayLabel }) => {
     it(`adds accessible aria-labels to remove buttons for field labeled "${label}"`, () => {
       const selectedOptions = [{ value: '1', label: displayLabel }]
+      const expectedLabel = `Remove ${displayLabel} from ${label}`
 
       mount(
         <SelectedChips
           name={name}
-          label={label} // pass the label into SelectedChips
+          label={label}
           selectedOptions={selectedOptions}
           onOptionRemove={() => {}}
         />
       )
 
-      const expectedLabel = `Remove ${displayLabel} from ${label}`
-
-      cy.contains('button', displayLabel).should(
-        'have.attr',
-        'aria-label',
-        expectedLabel
-      )
+      cy.contains('button', displayLabel)
+        .should('exist')
+        .invoke('attr', 'aria-label')
+        .should('eq', expectedLabel)
     })
   })
 
@@ -51,6 +49,7 @@ describe('SelectedChips – Accessibility', () => {
       const chipLabelOptions = [
         { value: '2', label: 'John Smith', chipLabel: chipDisplayLabel },
       ]
+      const expectedLabel = `Remove ${chipDisplayLabel} from ${label}`
 
       mount(
         <SelectedChips
@@ -61,13 +60,10 @@ describe('SelectedChips – Accessibility', () => {
         />
       )
 
-      const expectedLabel = `Remove ${chipDisplayLabel} from ${label}`
-
-      cy.contains('button', chipDisplayLabel).should(
-        'have.attr',
-        'aria-label',
-        expectedLabel
-      )
+      cy.contains('button', chipDisplayLabel)
+        .should('exist')
+        .invoke('attr', 'aria-label')
+        .should('eq', expectedLabel)
     })
   })
 
