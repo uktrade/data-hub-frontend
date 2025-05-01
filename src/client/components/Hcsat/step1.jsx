@@ -9,7 +9,7 @@ import SecondaryButton from '../SecondaryButton'
 const StyledLabel = styled(Label)({
   display: 'block',
   fontWeight: FONT_WEIGHTS.bold,
-  alignContent: 'center',
+  alignSelf: 'center',
   fontSize: '16px',
 })
 
