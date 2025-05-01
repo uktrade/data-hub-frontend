@@ -190,18 +190,15 @@ describe('Referall list on dashboard', () => {
       .url()
       .should('eq', Cypress.config().baseUrl + urls.companies.referrals.list()))
 
+  it('Should display the select component', () => {
+    cy.selectDhTablistTab('Dashboard', 'Referrals')
+      .contains('View')
+      .contains('select', 'Received referrals')
+  })
+
   it('All referrals should be visible by default', () => {
     cy.selectDhTablistTab('Dashboard', 'Referrals')
-      .children()
-      .eq(0)
-      .within(() =>
-        cy
-          .contains('3 received referrals')
-          .next()
-          .contains('View')
-          .contains('select', 'Received referrals')
-      )
-
+    cy.contains('3 received referrals')
     assertResultList([
       EXPECTED_REFERRALS.yeahButNo,
       EXPECTED_REFERRALS.andy2lou,

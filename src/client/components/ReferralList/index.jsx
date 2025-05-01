@@ -1,4 +1,5 @@
 import React from 'react'
+import { SITE_WIDTH, SPACING } from '@govuk-react/constants'
 import HintText from '@govuk-react/hint-text'
 import { SelectInput } from '@govuk-react/select'
 import pluralize from 'pluralize'
@@ -25,9 +26,25 @@ const StyledSelectInput = styled(SelectInput)({
   marginLeft: 10,
   // We need to increase specificity with & to override the 50% width
   '&': {
-    width: 'initial',
+    width: 'auto',
   },
 })
+
+const SELECT_WIDTH = `16%`
+const FiltersContainer = styled.div`
+  display: grid;
+  row-gap: 15px;
+  column-gap: 2px;
+  margin-bottom: ${SPACING.SCALE_3};
+
+  grid-template-columns: repeat(5, ${SELECT_WIDTH}) 3.5% ${SELECT_WIDTH};
+  @media (max-width: ${SITE_WIDTH}) {
+    grid-template-columns: repeat(2, 50%);
+    span.task-select-spacer {
+      display: none;
+    }
+  }
+`
 
 export default multiInstance({
   name: 'ReferralList',
@@ -56,14 +73,8 @@ export default multiInstance({
             .sort((a, b) => new Date(b.date) - new Date(a.date))
 
           return (
-            <ContentWithHeading
-              heading={pluralize(
-                `${filter} referral`,
-                filteredReferrals.length,
-                true
-              )}
-              level="2"
-              headingActions={
+            <>
+              <FiltersContainer>
                 <StyledLabel htmlFor="view-referrals">
                   View
                   <StyledSelectInput
@@ -79,24 +90,33 @@ export default multiInstance({
                     </option>
                   </StyledSelectInput>
                 </StyledLabel>
-              }
-            >
-              {referrals.length ? (
-                <StyledOrderedList>
-                  {filteredReferrals.map(({ id, ...referral }) => (
-                    <li key={id}>
-                      <Referral id={id} {...referral} />
-                    </li>
-                  ))}
-                </StyledOrderedList>
-              ) : (
-                <HintText>
-                  You have not received or sent any referrals.
-                  <br />
-                  You can refer companies to other advisers from a company page.
-                </HintText>
-              )}
-            </ContentWithHeading>
+              </FiltersContainer>
+              <ContentWithHeading
+                heading={pluralize(
+                  `${filter} referral`,
+                  filteredReferrals.length,
+                  true
+                )}
+                level="2"
+              >
+                {referrals.length ? (
+                  <StyledOrderedList>
+                    {filteredReferrals.map(({ id, ...referral }) => (
+                      <li key={id}>
+                        <Referral id={id} {...referral} />
+                      </li>
+                    ))}
+                  </StyledOrderedList>
+                ) : (
+                  <HintText>
+                    You have not received or sent any referrals.
+                    <br />
+                    You can refer companies to other advisers from a company
+                    page.
+                  </HintText>
+                )}
+              </ContentWithHeading>
+            </>
           )
         }
       }}
