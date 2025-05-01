@@ -23,7 +23,7 @@ describe('Tabbed navigation breadcrumbs', () => {
       cy.visit(url)
       assertBreadcrumbs({
         Home: urls.dashboard.index(),
-        'Export Wins': urls.companies.exportWins.index(),
+        'Export wins': urls.companies.exportWins.index(),
         [name]: null,
       })
     })
