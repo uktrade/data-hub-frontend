@@ -1,3 +1,4 @@
+export { default as AccoladesCard } from './AccoladesCard'
 export { default as AccountManagementCard } from './AccountManagementCard'
 export { default as ActivityCard } from './ActivityCards/ActivityCard'
 export { default as BusinessDetailsCard } from './BusinessDetailsCard'

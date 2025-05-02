@@ -11,6 +11,7 @@ import {
   InvestmentStatusCard,
   RecentActivityCard,
   UpcomingActivityCard,
+  AccoladesCard,
 } from './TableCards'
 import { CompanyResource } from '../../../components/Resource/index'
 import CompanyLayout from '../../../components/Layout/CompanyLayout'
@@ -49,6 +50,7 @@ const CompanyOverview = () => {
                 </CardContainer>
               </GridCol>
               <GridCol columnOneHalf={true}>
+                <AccoladesCard companyId={companyId} />
                 <CardContainer>
                   <RecentActivityCard company={company} />
                 </CardContainer>
