@@ -89,7 +89,15 @@ const ErrorSummary = React.forwardRef(
         <UnorderedList mb={0} listStyleType="none">
           {errors.map(({ targetName, text }) => (
             <ListItem key={targetName}>
-              <StyledErrorText href={`#field-${targetName}`}>
+              <StyledErrorText
+                href={`#field-${targetName}`}
+                onClick={(e) => {
+                  e.preventDefault()
+                  const wrapper = document.getElementById(`field-${targetName}`)
+                  const input = wrapper?.querySelector('input,textarea,select')
+                  input?.focus()
+                }}
+              >
                 {text}
               </StyledErrorText>
             </ListItem>
