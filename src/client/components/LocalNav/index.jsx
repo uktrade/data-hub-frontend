@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import { FONT_SIZE } from '@govuk-react/constants'
 
 import deprecated from '../../utils/deprecated'
+import { FOCUS_MIXIN } from '../../utils/styles'
 
 import {
   DARK_BLUE_LEGACY,
@@ -24,6 +25,7 @@ const StyledActiveLink = styled('a')({
     textDecoration: 'none',
     fontWeight: 600,
   },
+  ...FOCUS_MIXIN,
 })
 
 const StyledInactiveLink = styled('a')({
@@ -38,6 +40,7 @@ const StyledInactiveLink = styled('a')({
     color: BLACK,
     backgroundColor: GREY_4,
   },
+  ...FOCUS_MIXIN,
 })
 
 const _LocalNav = ({ children, dataTest = 'local-nav' }) => {
