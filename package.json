@@ -142,7 +142,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.26.10",
-    "@babel/eslint-parser": "^7.26.10",
+    "@babel/eslint-parser": "^7.27.1",
     "@babel/helper-call-delegate": "^7.12.13",
     "@babel/plugin-syntax-import-assertions": "^7.26.0",
     "@babel/plugin-transform-class-properties": "^7.25.9",
