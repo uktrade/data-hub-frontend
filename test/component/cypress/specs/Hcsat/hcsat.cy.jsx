@@ -169,7 +169,6 @@ describe('HCSAT', () => {
           .find('[data-test="hcsat-send-additional-feedback"]')
           .click()
 
-        // No additional feedback given but allow empty submit
         cy.wait('@submitAdditionalHcsatFeedback')
           .its('request.body')
           .should('include', {
