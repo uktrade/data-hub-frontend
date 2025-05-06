@@ -4,6 +4,7 @@ import BusinessPotential from './BusinessPotential'
 import Contact from './Contact'
 import Company from './Company'
 import CompanyContacts from './CompanyContacts'
+import CompanyKingsAwards from './CompanyKingsAwards'
 import Countries from './Countries'
 import Interactions from './Interactions'
 import InteractionsV3 from './InteractionsV3'
@@ -109,6 +110,7 @@ export default {
   ...BusinessPotential.tasks,
   ...Company.tasks,
   ...CompanyContacts.tasks,
+  ...CompanyKingsAwards.tasks,
   ...CompanyOneListTeam.tasks,
   ...Contact.tasks,
   ...ContactAuditHistory.tasks,

@@ -12,6 +12,7 @@ import companyActivityListFaker, {
   companyActivityOrderListFaker,
 } from '../../fakers/company-activity'
 import { truncateData } from '../../../../../src/client/utils/truncate'
+import { assertSummaryTable } from '../../support/assertions'
 
 const fixtures = require('../../fixtures')
 const urls = require('../../../../../src/lib/urls')
@@ -851,4 +852,166 @@ describe('Company overview page', () => {
       })
     }
   )
+  context('Accolades card', () => {
+    const KINGS_AWARDS_ENDPOINT = `/api-proxy/v4/company/${companyGlobalUltimateAllDetails.id}/kings-awards`
+    const COMPANY_ENDPOINT = `/api-proxy/v4/company/${companyGlobalUltimateAllDetails.id}`
+    const OVERVIEW_URL = urls.companies.overview.index(
+      companyGlobalUltimateAllDetails.id
+    )
+
+    const noAwards = []
+
+    const singleAward = [
+      {
+        id: 'award-1',
+        yearAwarded: 2025,
+        category: 'International Trade',
+        citation: 'For outstanding achievement in international trade.',
+        yearExpired: 2030,
+      },
+    ]
+
+    const multipleAwards = [
+      {
+        id: 'award-1',
+        yearAwarded: 2025,
+        category: 'International Trade',
+        citation: 'For outstanding achievement in international trade.',
+        yearExpired: 2030,
+      },
+      {
+        id: 'award-2',
+        yearAwarded: 2024,
+        category: 'Innovation',
+        citation: 'For groundbreaking innovation in widget technology.',
+        yearExpired: 2029,
+      },
+    ]
+
+    context("when the company has no King's Awards", () => {
+      beforeEach(() => {
+        cy.intercept(
+          'GET',
+          COMPANY_ENDPOINT,
+          companyGlobalUltimateAllDetails
+        ).as('getCompany')
+        cy.intercept('GET', KINGS_AWARDS_ENDPOINT, {
+          statusCode: 200,
+          body: noAwards,
+        }).as('getKingsAwards')
+        cy.visit(OVERVIEW_URL)
+        cy.wait(['@getCompany', '@getKingsAwards'])
+      })
+
+      it('should not display the Accolades card', () => {
+        cy.get('[data-test="accolades-container"]').should('not.exist')
+      })
+    })
+
+    context("when the company has one King's Award", () => {
+      beforeEach(() => {
+        cy.intercept(
+          'GET',
+          COMPANY_ENDPOINT,
+          companyGlobalUltimateAllDetails
+        ).as('getCompany')
+        cy.intercept('GET', KINGS_AWARDS_ENDPOINT, {
+          statusCode: 200,
+          body: singleAward,
+        }).as('getKingsAwards')
+        cy.visit(OVERVIEW_URL)
+        cy.wait(['@getCompany', '@getKingsAwards'])
+      })
+
+      it('should display the Accolades card', () => {
+        cy.get('[data-test="accolades-container"]').should('exist')
+      })
+
+      it('should display the Accolades summary table with the correct number of accolades', () => {
+        assertSummaryTable({
+          dataTest: 'accolades-container',
+          content: {
+            'Number of accolades': '1',
+          },
+        })
+      })
+
+      it("should display the King's Award details table correctly", () => {
+        cy.get('[data-test="kings-award-container"]').should('exist')
+        assertSummaryTable({
+          dataTest: 'kings-award-container',
+          content: {
+            'Year awarded': singleAward[0].yearAwarded.toString(),
+            'Award category': singleAward[0].category,
+            Reason: singleAward[0].citation,
+            'Award expiry year': singleAward[0].yearExpired.toString(),
+          },
+        })
+      })
+    })
+
+    context("when the company has multiple King's Awards", () => {
+      const award1 = multipleAwards[0]
+      const award2 = multipleAwards[1]
+      beforeEach(() => {
+        cy.intercept(
+          'GET',
+          COMPANY_ENDPOINT,
+          companyGlobalUltimateAllDetails
+        ).as('getCompany')
+        cy.intercept('GET', KINGS_AWARDS_ENDPOINT, {
+          statusCode: 200,
+          body: multipleAwards,
+        }).as('getKingsAwards')
+        cy.visit(OVERVIEW_URL)
+        cy.wait(['@getCompany', '@getKingsAwards'])
+      })
+
+      it('should display the Accolades card', () => {
+        cy.get('[data-test="accolades-container"]').should('exist')
+      })
+
+      it('should display the Accolades summary table with the correct number of accolades', () => {
+        assertSummaryTable({
+          dataTest: 'accolades-container',
+          content: {
+            'Number of accolades': multipleAwards.length.toString(),
+          },
+        })
+      })
+
+      it("should display details tables for all King's Awards", () => {
+        cy.get('[data-test="kings-award-container"]').should(
+          'have.length',
+          multipleAwards.length
+        )
+
+        cy.get('[data-test="kings-award-container"]')
+          .eq(0)
+          .within(() => {
+            cy.contains('Year awarded')
+              .parent()
+              .contains(award1.yearAwarded.toString())
+            cy.contains('Award category').parent().contains(award1.category)
+            cy.contains('Reason').parent().contains(award1.citation)
+            cy.contains('Award expiry year')
+              .parent()
+              .contains(award1.yearExpired.toString())
+          })
+
+        cy.get('[data-test="kings-award-container"]')
+          .eq(1)
+          .within(() => {
+            cy.contains('Year awarded')
+              .parent()
+              .contains(award2.yearAwarded.toString())
+            cy.contains('Award category').parent().contains(award2.category)
+            cy.contains('Reason').parent().contains(award2.citation)
+            cy.contains('Award expiry year')
+              .parent()
+              .contains(award2.yearExpired.toString())
+          })
+      })
+    })
+  })
 })
