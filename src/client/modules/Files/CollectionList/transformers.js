@@ -60,7 +60,7 @@ export const transformFileToListItem = () => (file) => {
         {
           text: 'Delete',
           // TODO: implement delete
-          // url: `${urls.companies.files.delete(file.id)}?related_object_id=${file.related_object_id}&related_object_type=${file.related_object_type}&document_type=${file.document_type}`,
+          url: `${urls.companies.files.delete(file.id)}?related_object_id=${file.related_object_id}&related_object_type=${file.related_object_type}&document_type=${file.document_type}`,
         }
       )
 

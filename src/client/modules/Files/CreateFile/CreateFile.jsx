@@ -134,9 +134,10 @@ const CreateFile = () => {
 
   if (relatedObjectType === RELATED_OBJECT_TYPES.COMPANY) {
     pageTitle =
+      // TODO: fix company name ref in page title
       documentType === DOCUMENT_TYPES.SHAREPOINT.type
-        ? `${DOCUMENT_TYPES.SHAREPOINT.label} - Files - ${(<CompanyName id={relatedObjectId} />)} - Companies`
-        : `${DOCUMENT_TYPES.UPLOADABLE.label} - Files - ${(<CompanyName id={relatedObjectId} />)} - Companies`
+        ? `${documentTypeText.sharePoint} - Files - ${(<CompanyName id={relatedObjectId} />)} - Companies`
+        : `${documentTypeText.uploadable} - Files - ${(<CompanyName id={relatedObjectId} />)} - Companies`
     heading =
       documentType === DOCUMENT_TYPES.SHAREPOINT.type
         ? documentTypeText.sharePoint

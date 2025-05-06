@@ -10,7 +10,7 @@ export const DOCUMENT_TYPES = {
   },
   UPLOADABLE: {
     type: 'documents.uploadabledocument',
-    label: 'Upload a new document',
+    label: 'Uploaded file',
   },
 }
 

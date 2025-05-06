@@ -16,7 +16,6 @@ export const createFile = async (values) => {
 }
 
 const uploadFile = async (values) => {
-  //   const uploadableDocumentData = values.document_data
   const {
     /* eslint-disable-next-line no-unused-vars */
     original_filename: originalFilename,
@@ -37,8 +36,8 @@ const uploadFile = async (values) => {
   const { id: genericDocumentID, signed_upload_url: signedUploadURL } =
     response.data
 
-  // Step 2: Upload the extracted file to the signed url
   try {
+    // Step 2: Upload the extracted file to the signed url
     await axios.put(signedUploadURL, {
       method: 'PUT',
       data: fileObject,
