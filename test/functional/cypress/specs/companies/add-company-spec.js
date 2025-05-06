@@ -96,12 +96,15 @@ describe('Add company form', () => {
         cy.get('[data-test="typeahead-menu-option"]')
           .find('span')
           .should('contain', 'Some matched company')
-          .find('[data-test="metadata-item"]')
-          .should(
-            'contain',
-            'Trading name(s) Some matched company trading name'
-          )
-          .should('contain', 'Location at 123 Fake Street, Brighton, BN1 4SE')
+          .find('[data-test="metadata-label"]')
+          .should('contain', 'Trading name(s)')
+          .should('contain', 'Location at')
+        cy.get('[data-test="typeahead-menu-option"]')
+          .find('span')
+          .should('contain', 'Some matched company')
+          .find('[data-test="metadata-value"]')
+          .should('contain', 'Some matched company trading name')
+          .should('contain', '123 Fake Street, Brighton, BN1 4SE')
         cy.get('[data-test="company-already-on-datahub"]')
           .should(
             'contain',
