@@ -466,6 +466,7 @@ export const tasks = {
   'Create company': createCompany,
   'Edit company list': companyListTasks.editCompanyList,
   'Match confirmation': matchCompanyTasks.onMatchSubmit,
+  'Company Found': matchCompanyTasks.onCompanyFound,
   'Cannot find match': cannotFindMatchSubmit,
   'Submit merge request': matchCompanyTasks.submitMergeRequest,
   'Company lists': companyListsTasks.fetchCompanyLists,

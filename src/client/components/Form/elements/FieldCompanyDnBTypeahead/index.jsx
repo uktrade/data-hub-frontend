@@ -35,6 +35,7 @@ const FieldCompanyDnBTypeahead = ({
   apiEndpoint,
   postcode,
   country,
+  allResultsSelectable,
   ...props
 }) => {
   return (
@@ -45,7 +46,7 @@ const FieldCompanyDnBTypeahead = ({
       noOptionsMessage="No company found, try adding postcode or manually create company"
       required={required}
       showMetaData={true}
-      showInsetText={true}
+      showInsetText={allResultsSelectable ? false : true}
       isMulti={false}
       loadOptions={(searchString) => {
         if (searchString.length > 1) {
@@ -71,9 +72,10 @@ const FieldCompanyDnBTypeahead = ({
                   result.dnb_company.is_out_of_business,
                   result.dnb_company.primary_name
                 ),
-                isDisabled:
-                  result.datahub_company?.id ||
-                  result.dnb_company.is_out_of_business
+                isDisabled: allResultsSelectable
+                  ? false
+                  : result.datahub_company?.id ||
+                      result.dnb_company.is_out_of_business
                     ? true
                     : false,
               }))
@@ -102,6 +104,9 @@ FieldCompanyDnBTypeahead.propTypes = {
   label: PropTypes.string.isRequired,
   required: PropTypes.string,
   placeholder: PropTypes.string,
+  // When true, allows all results to be selected whether they are out of business or already on
+  // datahub. Also stops showing additional metadata on the typeahead items.
+  allResultsSelectable: PropTypes.bool.isRequired,
 }
 
 export default FieldCompanyDnBTypeahead

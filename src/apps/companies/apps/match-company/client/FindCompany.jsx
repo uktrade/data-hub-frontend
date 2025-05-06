@@ -4,7 +4,11 @@ import { H4 } from '@govuk-react/heading'
 import InsetText from '@govuk-react/inset-text'
 
 import urls from '../../../../../lib/urls'
-import { SummaryList, FieldDnbCompany } from '../../../../../client/components'
+import {
+  SummaryList,
+  FieldDnbCompany,
+  Step,
+} from '../../../../../client/components'
 import Form from '../../../../../client/components/Form'
 
 function FindCompany({ company, csrfToken }) {
@@ -26,20 +30,33 @@ function FindCompany({ company, csrfToken }) {
         />
       </InsetText>
 
-      <H4 as="h2">Search third party supplier for business details</H4>
-      <FieldDnbCompany
-        apiEndpoint={`${urls.companies.match.index(
-          company.id
-        )}?_csrf=${csrfToken}`}
-        queryParams={{ address_country: company.countryCode }}
-        name="dnbCompany"
-        onCannotFind={() => {
-          window.location.assign(urls.companies.match.cannotFind(company.id))
-        }}
-        searchResultsMessage="Choose the business details that best match this
+      <Step name="companySearch" forwardButton={null} backButton={null}>
+        <H4 as="h2">Search third party supplier for business details</H4>
+
+        <FieldDnbCompany
+          allResultsSelectable={true}
+          apiEndpoint={`${urls.companies.match.index(
+            company.id
+          )}?_csrf=${csrfToken}`}
+          queryParams={{ address_country: company.countryCode }}
+          name="dnbCompany"
+          onCompanySelect={(dnb_company) =>
+            window.location.assign(
+              urls.companies.match.confirmation(
+                company.id,
+                dnb_company.duns_number
+              )
+            )
+          }
+          onCannotFind={(e) => {
+            e.preventDefault()
+            window.location.assign(urls.companies.match.cannotFind(company.id))
+          }}
+          searchResultsMessage="Choose the business details that best match this
          company. You'll be given a chance to review the new business details
           before you verify."
-      />
+        />
+      </Step>
     </Form>
   )
 }

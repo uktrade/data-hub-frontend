@@ -35,6 +35,7 @@ const FieldDnbCompany = ({
   onCannotFind,
   csrfToken,
   queryParams,
+  allResultsSelectable,
 }) => {
   const { values, goBack } = useFormContext()
 
@@ -60,9 +61,10 @@ const FieldDnbCompany = ({
 
         <FieldCompanyDnBTypeahead
           name="companyDnB"
+          allResultsSelectable={allResultsSelectable}
           apiEndpoint={apiEndpoint}
           aria-label="Search a company"
-          label="Company Name"
+          label="Company name"
           required="Search for and select a company."
           postcode={values.dnbPostalCode}
           country={queryParams.address_country}
@@ -79,7 +81,7 @@ const FieldDnbCompany = ({
               onCompanySelect(values.companyDnB.dnb_company)
             }}
           >
-            Select company
+            Submit
           </Button>
         </FormActions>
 
@@ -121,6 +123,9 @@ FieldDnbCompany.propTypes = {
   onCompanySelect: PropTypes.func,
   onCannotFind: PropTypes.func,
   searchResultsMessage: PropTypes.string,
+  // When true, allows all results to be selected whether they are out of business or already on
+  // datahub. Also stops showing additional metadata on the typeahead items.
+  allResultsSelectable: PropTypes.bool.isRequired,
 }
 
 export default FieldDnbCompany

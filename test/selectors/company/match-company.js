@@ -1,12 +1,12 @@
 module.exports = {
   form: 'form',
   find: {
-    companyNameInput: 'input[name="dnbCompanyName"]',
+    companyNameInput: 'input[name="companyDnB"]',
     postcodeField: 'input[name="dnbPostalCode"]',
-    button: 'form button:contains("Find company")',
+    button: '[data-test="select-company-button"]',
     results: {
-      someCompany: 'form ol li:nth-child(1)',
-      someOtherCompany: 'form ol li:nth-child(2)',
+      someCompany: '[data-test="typeahead-menu-option"]:nth-child(1)',
+      someOtherCompany: '[data-test="typeahead-menu-option"]:nth-child(2)',
     },
   },
 }

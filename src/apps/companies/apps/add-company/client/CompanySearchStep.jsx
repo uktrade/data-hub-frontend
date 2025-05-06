@@ -40,6 +40,7 @@ function CompanySearchStep({ countryName, countryIsoCode, csrfToken }) {
       <H3>Find the company</H3>
 
       <FieldDnbCompany
+        allResultsSelectable={false}
         apiEndpoint={`/companies/create/dnb/company-search?_csrf=${csrfToken}`}
         queryParams={{ address_country: countryIsoCode }}
         name="dnbCompany"
