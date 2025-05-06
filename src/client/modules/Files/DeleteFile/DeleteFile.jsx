@@ -89,15 +89,14 @@ const DeleteFile = () => {
   const documentType = searchParams.get('document_type')
 
   const breadcrumbs = [{ link: '/', text: 'Home' }]
-  let pageTitle = null
+  let pageTitlePrefix = null
   let heading = null
 
   if (relatedObjectType === RELATED_OBJECT_TYPES.COMPANY) {
-    pageTitle =
-      // TODO: fix company name ref in page title
+    pageTitlePrefix =
       documentType === DOCUMENT_TYPES.SHAREPOINT.type
-        ? `${documentTypeText.sharePoint} - Files - ${(<CompanyName id={relatedObjectId} />)} - Companies`
-        : `${documentTypeText.uploadable} - Files - ${(<CompanyName id={relatedObjectId} />)} - Companies`
+        ? documentTypeText.sharePoint
+        : documentTypeText.uploadable
     heading =
       documentType === DOCUMENT_TYPES.SHAREPOINT.type
         ? documentTypeText.sharePoint
@@ -123,7 +122,12 @@ const DeleteFile = () => {
 
   return (
     <DefaultLayout
-      pageTitle={pageTitle}
+      pageTitle={
+        <>
+          {pageTitlePrefix} - Files - <CompanyName id={relatedObjectId} /> -
+          Companies
+        </>
+      }
       heading={heading}
       breadcrumbs={breadcrumbs}
     >
