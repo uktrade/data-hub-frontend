@@ -108,7 +108,6 @@ import * as overviewCardTasks from './modules/Companies/CompanyOverview/TableCar
 
 import { TASK_GET_COMPANY_OVERVIEW_ACTIVITY } from './modules/Companies/CompanyOverview/TableCards/ActivityCards/state'
 import { getCompanyOverviewActivities } from './modules/Companies/CompanyOverview/TableCards/ActivityCards/tasks'
-
 import {
   TASK_SEARCH_COMPANY,
   TASK_CREATE_INVESTMENT_PROJECT,

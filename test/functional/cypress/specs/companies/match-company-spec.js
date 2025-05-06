@@ -320,7 +320,7 @@ describe('Match a company', () => {
     () => {
       beforeEach(() => {
         cy.visit(urls.companies.match.cannotFind(company.id))
-        cy.get('main button').click()
+        cy.get('main button[data-test="submit-button"]').click()
       })
 
       it('should display two error message', () => {

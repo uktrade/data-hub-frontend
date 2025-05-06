@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { MEDIA_QUERIES, SPACING, SITE_WIDTH } from '@govuk-react/constants'
 
+import Hcsat from '../Hcsat'
+
 const OuterContainer = styled('main')({
   paddingTop: SPACING.SCALE_5,
   textAlign: 'center',
@@ -36,6 +38,7 @@ const Main = ({ children, ...props }) => (
     data-test="bodyMainContent"
   >
     <InnerContainer>{children}</InnerContainer>
+    <Hcsat />
   </OuterContainer>
 )
 
