@@ -1,9 +1,12 @@
+import React from 'react'
+
 import {
   formatDate,
   DATE_FORMAT_MEDIUM_WITH_TIME,
 } from '../../../utils/date-utils'
 import { DOCUMENT_TYPES } from './constants'
 import urls from '../../../../lib/urls'
+import DownloadLink from '../../../components/DownloadLink'
 
 export const transformFileToListItem = () => (file) => {
   let title = ''
@@ -53,9 +56,9 @@ export const transformFileToListItem = () => (file) => {
       // Add links for Uploadable document
       links.push(
         {
-          text: 'Download file',
-          // TODO: fix download
-          // url: urls.companies.files.download(file.id),
+          component: (
+            <DownloadLink statusLabel={file.document.status} fileId={file.id} />
+          ),
         },
         {
           text: 'Delete',
