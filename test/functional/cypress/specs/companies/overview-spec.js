@@ -271,7 +271,7 @@ describe('Company overview page', () => {
     })
     it('the card should contain three activities', () => {
       cy.get('[data-test="recent-activity-card-container"]')
-        .find('ol')
+        .find('ul')
         .children()
         .should('have.length', 3)
     })
@@ -305,7 +305,7 @@ describe('Company overview page', () => {
     })
     it('the card should contain two activities', () => {
       cy.get('[data-test="upcoming-activity-card-container"]')
-        .find('ol')
+        .find('ul')
         .children()
         .should('have.length', 2)
     })
