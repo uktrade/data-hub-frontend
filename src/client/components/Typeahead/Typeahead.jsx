@@ -98,7 +98,7 @@ const StyledInsetText = styled(InsetText)((props) => ({
     color: props.active ? WHITE : TEXT_COLOUR,
   },
   'div > a': {
-    color: props.active ? `${GREY_2} !important` : `${LINK_COLOUR} !important`,
+    color: props.active ? `${WHITE} !important` : `${LINK_COLOUR} !important`,
   },
 }))
 
