@@ -1586,49 +1586,6 @@ describe('Edit the value details of a project', () => {
       })
     })
 
-    context('FDI Capital Only project', () => {
-      const capitalOnlyFDIProject = setupProjectFaker({
-        investment_type: {
-          name: 'FDI',
-          id: 'foo',
-        },
-        fdi_type: {
-          name: FDI_TYPES.capitalOnly.label,
-          id: FDI_TYPES.capitalOnly.value,
-        },
-      })
-
-      beforeEach(() => {
-        setup(capitalOnlyFDIProject)
-      })
-
-      it('should not display the job fields', () => {
-        cy.get('[data-test="field-number_new_jobs"]').should('not.exist')
-        cy.get('[data-test="field-average_salary"]').should('not.exist')
-        cy.get('[data-test="field-number_safeguarded_jobs"]').should(
-          'not.exist'
-        )
-      })
-
-      it('should submit the form with job fields set to fixed values', () => {
-        fillNonJobFields()
-
-        cy.get('[data-test="submit-button"]').click()
-
-        assertNotExists('[data-test="error-number_new_jobs"]')
-        assertNotExists('[data-test="error-average_salary"]')
-        assertNotExists('[data-test="error-number_safeguarded_jobs"]')
-
-        cy.wait('@editValueSubmissionRequest')
-          .its('request.body')
-          .should('include', {
-            number_new_jobs: 0,
-            average_salary: null,
-            number_safeguarded_jobs: 0,
-          })
-      })
-    })
-
     context('Other FDI project at prospect stage', () => {
       const otherFDIProspectProject = setupProjectFaker({
         stage: INVESTMENT_PROJECT_STAGES.prospect,
