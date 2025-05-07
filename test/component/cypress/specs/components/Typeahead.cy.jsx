@@ -33,6 +33,28 @@ const asyncOptions = [
     value: 'eecd2bb8-dc73-4a42-8655-4ae42d4d3cff',
     label: 'Denzil Lincoln',
   },
+  {
+    value: '126b5bf8-4849-4c15-acbf-5d0b2e78d87c',
+    label: 'Disabled option',
+    isDisabled: true,
+  },
+  {
+    value: 'c223db47-cde2-42a3-8e0e-3bf3373e989f',
+    label: 'This has metadata',
+    meta: [
+      { label: 'Trading name', value: 'This is an example' },
+      { label: 'Address', value: 'An address' },
+    ],
+  },
+  {
+    value: 'd4108ff1-328d-4b7c-afeb-6e0fe8d1a0a4',
+    label: 'This has metadata and inset text',
+    meta: [
+      { label: 'Trading name', value: 'This is an example' },
+      { label: 'Address', value: 'An address' },
+    ],
+    insetText: 'This is some additional inset text',
+  },
 ]
 
 export const mockLoadOptions = (query = '') =>
@@ -347,6 +369,28 @@ describe('Typeahead', () => {
         .find('[data-test="typeahead-input"]')
         .should('have.value', 'An')
     })
+
+    it('Should show options which are disabled as disabled', () => {
+      cy.get('@component')
+        .find('[data-test="typeahead-input"]')
+        .clear()
+        .type('disabled')
+
+      cy.get('@component')
+        .find('[data-test="typeahead-menu"]')
+        .should('be.visible')
+        .find('[data-test="typeahead-menu-option"]')
+        .should('have.length', 1)
+        .first()
+        .should('have.text', 'Disabled option')
+        .should('have.attr', 'aria-disabled', 'true')
+        .click()
+
+      // Should not be updated as not clickable
+      cy.get('@component')
+        .find('[data-test="typeahead-input"]')
+        .should('have.attr', 'value', 'disabled')
+    })
   })
 
   context('async multi-select', () => {
@@ -443,6 +487,129 @@ describe('Typeahead', () => {
         .find('[data-test="typeahead-menu-option"]')
         .eq(1)
         .should('have.attr', 'aria-selected', 'false')
+    })
+  })
+
+  context('with different props', () => {
+    function mountComponent(props) {
+      cy.mountWithProvider(
+        <Typeahead
+          id="typeahead-async-single"
+          isMulti={false}
+          closeMenuOnSelect={true}
+          name="typeahead"
+          loadOptions={mockLoadOptions}
+          placeholder="Search..."
+          label="Pick an adviser"
+          data-test="test-component"
+          {...props}
+        />,
+        {
+          tasks: typeaheadTasks,
+        }
+      )
+      cy.get('[data-test="test-component"]').as('component')
+    }
+
+    it('should show metadata if showMetaData is true', () => {
+      mountComponent({ showMetaData: true })
+
+      cy.get('@component')
+        .find('[data-test="typeahead-input"]')
+        .clear()
+        .type('This has metadata')
+
+      cy.get('@component')
+        .find('[data-test="typeahead-menu"]')
+        .should('be.visible')
+        .find('[data-test="typeahead-menu-option"]')
+        .should('have.length', 2)
+        .first()
+        .as('metadataOption')
+
+      cy.get('@metadataOption').contains('This has metadata')
+
+      cy.get('@metadataOption')
+        .find('[data-test="metadata-label"]')
+        .should('have.length', 2)
+        .first()
+        .should('have.text', 'Trading name')
+        .next()
+        .should('have.text', 'This is an example')
+        .next()
+        .should('have.text', 'Address')
+        .next()
+        .should('have.text', 'An address')
+        .click()
+    })
+
+    it('should not show metadata if showMetaData is false', () => {
+      mountComponent({ showMetaData: false })
+
+      cy.get('@component')
+        .find('[data-test="typeahead-input"]')
+        .clear()
+        .type('This has metadata')
+
+      cy.get('@component')
+        .find('[data-test="typeahead-menu"]')
+        .should('be.visible')
+        .find('[data-test="typeahead-menu-option"]')
+        .should('have.length', 2)
+        .first()
+        .as('metadataOption')
+
+      cy.get('@metadataOption').contains('This has metadata')
+
+      cy.get('@metadataOption')
+        .find('[data-test="metadata-label"]')
+        .should('not.exist')
+    })
+
+    it('should show inset text if showInsetText is true', () => {
+      mountComponent({ showInsetText: true })
+
+      cy.get('@component')
+        .find('[data-test="typeahead-input"]')
+        .clear()
+        .type('This has metadata and inset text')
+
+      cy.get('@component')
+        .find('[data-test="typeahead-menu"]')
+        .should('be.visible')
+        .find('[data-test="typeahead-menu-option"]')
+        .should('have.length', 1)
+        .first()
+        .as('metadataOption')
+
+      cy.get('@metadataOption').contains('This has metadata and inset text')
+
+      cy.get('@metadataOption')
+        .find('[data-test="typeahead-inset-text"]')
+        .should('have.text', 'This is some additional inset text')
+    })
+
+    it('should not show inset text if showInsetText is false', () => {
+      mountComponent({ showInsetText: false })
+
+      cy.get('@component')
+        .find('[data-test="typeahead-input"]')
+        .clear()
+        .type('This has metadata and inset text')
+
+      cy.get('@component')
+        .find('[data-test="typeahead-menu"]')
+        .should('be.visible')
+        .find('[data-test="typeahead-menu-option"]')
+        .should('have.length', 1)
+        .first()
+        .as('metadataOption')
+
+      cy.get('@metadataOption').contains('This has metadata and inset text')
+
+      cy.get('@metadataOption')
+        .find('[data-test="typeahead-inset-text"]')
+        .should('not.exist')
     })
   })
 })

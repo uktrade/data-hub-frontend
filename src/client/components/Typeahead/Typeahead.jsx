@@ -402,6 +402,7 @@ const Typeahead = ({
                         ) : null}
                         {showInsetText && option.insetText ? (
                           <StyledInsetText
+                            data-test="typeahead-inset-text"
                             active={index === activeIndex}
                             key={label}
                           >
