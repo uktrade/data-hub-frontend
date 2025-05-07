@@ -35,14 +35,105 @@ import {
 } from './validators'
 import {
   isFieldOptionalForStageLabel,
+  isFieldRequiredForStage,
   validateFieldForStage,
 } from '../validators'
+import { FDI_TYPES } from '../constants'
 
 // For projects landing after 01/04/2020, the FDI value field is not needed
 const showFDIValueField = (project) =>
   [project.estimatedLandDate, project.actualLandDate].some(
     (date) => date !== null && new Date(date) < new Date('2020-04-01')
   )
+
+const shouldShowJobFields = (project) => {
+  // Capital only FDI project will always have 0 jobs so don't show the job-related fields
+  return project.fdiType?.name !== FDI_TYPES.capitalOnly.label
+}
+
+const NUMBER_NEW_JOBS_REQUIRED_MESSAGE =
+  'Value for number of new jobs is required'
+const AVERAGE_SALARY_REQUIRED_MESSAGE =
+  'Value for average salary of new jobs is required'
+const NUMBER_SAFEGUARDED_JOBS_REQUIRED_MESSAGE =
+  'Value for number of safeguarded jobs is required'
+
+const isJobFieldRequired = (project, fieldName) => {
+  // If it's an FDI project with no involvement, it's not required
+  if (
+    project.investmentType.name === 'FDI' &&
+    project.levelOfInvolvement?.name === 'No Involvement'
+  ) {
+    return false
+  }
+
+  // If it's a non-FDI or a commitment to invest project, it's not required
+  if (project.investmentType.name !== 'FDI') {
+    return false
+  }
+
+  // If it's an expansion FDI project, it's required
+  if (
+    project.fdiType?.name === FDI_TYPES.expansionOfExistingSiteOrActivity.label
+  ) {
+    return true
+  }
+
+  // For all other cases, check if the field is required for the current stage
+  return isFieldRequiredForStage(fieldName, project)
+}
+
+const isNumberNewJobsRequired = (project) => {
+  return isJobFieldRequired(project, 'number_new_jobs')
+}
+
+const isAverageSalaryRequired = (project) => {
+  return isJobFieldRequired(project, 'average_salary')
+}
+
+const isNumberSafeguardedJobsRequired = (project) => {
+  return isJobFieldRequired(project, 'number_safeguarded_jobs')
+}
+
+const validateNumberNewJobs = (project, value) => {
+  if (!isNumberNewJobsRequired(project)) {
+    return null
+  }
+  if (!value) {
+    return NUMBER_NEW_JOBS_REQUIRED_MESSAGE
+  }
+
+  // For expansion projects, ensure at least 1 new job
+  if (
+    project.fdiType?.name ==
+      FDI_TYPES.expansionOfExistingSiteOrActivity.label &&
+    value < 1
+  ) {
+    return 'Number of new jobs must be greater than 0'
+  }
+
+  return null
+}
+
+const validateAverageSalary = (project, value) => {
+  if (!isAverageSalaryRequired(project)) {
+    return null
+  }
+  if (!value) {
+    return AVERAGE_SALARY_REQUIRED_MESSAGE
+  }
+  return null
+}
+
+const validateNumberSafeguardedJobs = (project, value) => {
+  if (!isNumberSafeguardedJobsRequired(project)) {
+    return null
+  }
+  if (!value) {
+    return NUMBER_SAFEGUARDED_JOBS_REQUIRED_MESSAGE
+  }
+  return null
+}
 
 const EditProjectValue = () => {
   const { projectId } = useParams()
@@ -60,9 +151,6 @@ const EditProjectValue = () => {
     >
       <InvestmentResource id={projectId}>
         {(project) => {
-          const isNumberNewJobsOptional =
-            project.investmentType.name === 'FDI' && !project.levelOfInvolvement
-
           return (
             <>
               <H2 size={LEVEL_SIZE[3]}>Edit value</H2>
@@ -128,7 +216,7 @@ const EditProjectValue = () => {
                               field,
                               formFields,
                               project,
-                              'Value for number of new jobs is required'
+                              NUMBER_NEW_JOBS_REQUIRED_MESSAGE
                             )
                             return result
                               ? result
@@ -176,7 +264,8 @@ const EditProjectValue = () => {
                             type="text"
                             required="Enter the capital expenditure"
                             validate={(value) => {
-                              return project.fdiType?.name === 'Capital only'
+                              return project.fdiType?.name ===
+                                FDI_TYPES.capitalOnly.label
                                 ? capitalExpenditureValidator(value)
                                 : null
                             }}
@@ -201,26 +290,33 @@ const EditProjectValue = () => {
                     }),
                   }))}
                 />
-                {project.fdiType?.name === 'Capital only' ? null : (
+                {!shouldShowJobFields(project) ? null : (
                   <>
                     <FieldInput
                       label={
                         'Number of new jobs' +
-                        (isNumberNewJobsOptional ? '' : ' (required)')
+                        (isNumberNewJobsRequired(project)
+                          ? isFieldOptionalForStageLabel(
+                              'number_new_jobs',
+                              project
+                            )
+                          : ' (optional)')
                       }
                       name="number_new_jobs"
                       type="number"
-                      {...(!isNumberNewJobsOptional && {
-                        required: 'Value for number of new jobs is required',
-                        hint: 'An expansion project must always have at least 1 new job',
+                      {...(isNumberNewJobsRequired(project) && {
+                        required: NUMBER_NEW_JOBS_REQUIRED_MESSAGE,
+                        hint:
+                          project.fdiType?.name ===
+                          FDI_TYPES.expansionOfExistingSiteOrActivity.label
+                            ? 'An expansion project must always have at least 1 new job'
+                            : undefined,
                       })}
                       validate={(value) =>
-                        !isNumberNewJobsOptional &&
-                        value < 1 &&
-                        'Number of new jobs must be greater than 0'
+                        validateNumberNewJobs(project, value)
                       }
                       initialValue={project.numberNewJobs}
-                    />
+                    ></FieldInput>
                     {project.investmentType.name === 'FDI' &&
                       project.gvaMultiplier
                         ?.sectorClassificationGvaMultiplier === 'labour' && (
@@ -239,7 +335,12 @@ const EditProjectValue = () => {
                       name="average_salary"
                       label={
                         'Average salary of new jobs' +
-                        isFieldOptionalForStageLabel('average_salary', project)
+                        (isAverageSalaryRequired(project)
+                          ? isFieldOptionalForStageLabel(
+                              'average_salary',
+                              project
+                            )
+                          : ' (optional)')
                       }
                       resource={SalaryRangeResource}
                       field={FieldRadios}
@@ -254,34 +355,26 @@ const EditProjectValue = () => {
                           )
                         )
                       }
-                      validate={(values, field, formFields) => {
-                        return validateFieldForStage(
-                          field,
-                          formFields,
-                          project,
-                          'Value for average salary of new jobs is required'
-                        )
-                      }}
+                      validate={(value) =>
+                        validateAverageSalary(project, value)
+                      }
                     />
                     <FieldInput
                       name="number_safeguarded_jobs"
                       label={
                         'Number of safeguarded jobs' +
-                        isFieldOptionalForStageLabel(
-                          'number_safeguarded_jobs',
-                          project
-                        )
+                        (isNumberSafeguardedJobsRequired(project)
+                          ? isFieldOptionalForStageLabel(
+                              'number_safeguarded_jobs',
+                              project
+                            )
+                          : ' (optional)')
                       }
                       type="number"
                       initialValue={project.numberSafeguardedJobs?.toString()}
-                      validate={(values, field, formFields) => {
-                        return validateFieldForStage(
-                          field,
-                          formFields,
-                          project,
-                          'Value for number of safeguarded jobs is required'
-                        )
-                      }}
+                      validate={(value) =>
+                        validateNumberSafeguardedJobs(project, value)
+                      }
                     />
                   </>
                 )}
