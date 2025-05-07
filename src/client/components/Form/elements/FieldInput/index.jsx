@@ -59,10 +59,11 @@ const FieldInput = ({
     required,
     initialValue,
   })
+  const errorId = `${name}-error`
   return (
     <FieldWrapper {...{ name, label, legend, hint, error, reduced }}>
       <StyledInputWrapper error={error}>
-        {touched && error && <ErrorText>{error}</ErrorText>}
+        {touched && error && <ErrorText id={errorId}>{error}</ErrorText>}
         <Input
           key={name}
           error={touched && Boolean(error)}
@@ -70,6 +71,8 @@ const FieldInput = ({
           type={type}
           name={name}
           value={value}
+          aria-invalid={!!error}
+          aria-describedby={error ? errorId : undefined}
           onChange={onChange}
           onBlur={onBlur}
           onWheel={(event) => {
