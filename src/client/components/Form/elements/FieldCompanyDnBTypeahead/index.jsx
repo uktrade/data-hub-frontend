@@ -30,7 +30,7 @@ const FieldCompanyDnBTypeahead = ({
   name,
   label,
   required,
-  placeholder = 'Type to search for companies',
+  placeholder = 'Type two or more characters to search for companies',
   loadOptions,
   apiEndpoint,
   postcode,
