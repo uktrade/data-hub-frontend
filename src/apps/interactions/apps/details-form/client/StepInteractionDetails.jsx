@@ -221,7 +221,7 @@ const StepInteractionDetails = ({
         emptyOption="-- Select service --"
         options={secondTierServices}
         validate={validateSecondTierServices}
-        aria-label="service second level"
+        aria-label="Select service category"
       />
 
       {selectedService?.interaction_questions?.map((question) => (
