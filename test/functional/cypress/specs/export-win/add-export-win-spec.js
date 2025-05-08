@@ -7,7 +7,11 @@ import {
 import { exportWinsFaker } from '../../fakers/export-wins'
 import { contactFaker } from '../../fakers/contacts'
 import urls from '../../../../../src/lib/urls'
-import { clickBackButton, clickContinueButton } from '../../support/actions'
+import {
+  clickBackButton,
+  clickContinueButton,
+  clickSaveButton,
+} from '../../support/actions'
 import {
   assertBreadcrumbs,
   assertFieldError,
@@ -77,6 +81,9 @@ describe('Adding an export win', () => {
     cy.intercept('POST', '/api-proxy/v4/export-win', {
       statusCode: 201,
     }).as('apiPostExportWin')
+    cy.intercept('PATCH', '/api-proxy/v4/export-win/*', {}).as(
+      'apiPatchExportWin'
+    )
     cy.intercept('GET', '/api-proxy/v4/export-win/*', exportWin).as(
       'apiGetExportWin'
     )
@@ -357,6 +364,19 @@ describe('Adding an export win', () => {
       })
     }
   )
+
+  context('When the export win is updated', { testIsolation: false }, () => {
+    it('should not change values that have not been changed in the UI', () => {
+      cy.visit(
+        `/companies/${company.id}/exportwins/${exportWin.id}/edit?step=summary`
+      )
+      clickSaveButton()
+      cy.wait('@apiPatchExportWin').then(({ request }) => {
+        assert.isTrue(omit(request.body, '_csrf').is_personally_confirmed)
+        assert.isTrue(omit(request.body, '_csrf').is_line_manager_confirmed)
+      })
+    })
+  })
 
   context('When the export win form has errors and is submitted', () => {
     beforeEach(() => cy.visit(officerDetailsStep))

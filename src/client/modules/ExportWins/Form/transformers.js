@@ -166,11 +166,11 @@ export const transformExportWinForForm = (exportWin) => ({
   type_of_support: exportWin.type_of_support.map(idNameToValueLabel),
   associated_programme: exportWin.associated_programme.map(idNameToValueLabel),
   is_personally_confirmed: exportWin.is_personally_confirmed
-    ? OPTION_YES
-    : OPTION_NO,
+    ? [OPTION_YES]
+    : [OPTION_NO],
   is_line_manager_confirmed: exportWin.is_line_manager_confirmed
-    ? OPTION_YES
-    : OPTION_NO,
+    ? [OPTION_YES]
+    : [OPTION_NO],
   // Summary page
   company: exportWin.company,
   customer_response: exportWin.customer_response,
