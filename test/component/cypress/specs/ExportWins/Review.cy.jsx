@@ -124,8 +124,6 @@ const assertReviewForm = ({ agree }) => {
     .should('match', 'h2')
     .should('have.text', 'Details of your recent success')
 
-  cy.contains(DBT_HEADING + 'Step 1 of 6' + HEADING)
-
   assertSummaryTableStrict({
     rows: [
       ['Destination country', EXPORT_WIN.country.name],
@@ -149,20 +147,23 @@ const assertReviewForm = ({ agree }) => {
     selectIndex: agree ? 0 : 1,
   })
 
-  cy.contains('button', 'Continue').as('continue').click()
-
-  // Assert that the step info is between the headings
-  cy.contains(DBT_HEADING + 'Step 2 of 6' + HEADING)
-
-  assertFieldRadiosStrict({
-    inputName: 'expected_portion_without_help',
-    legend:
-      'What value do you estimate you would have achieved without our support?',
-    options: WITHOUT_OUR_SUPPORT.map((x) => x.name),
-    selectIndex: 1,
-  })
-
   if (agree) {
+    cy.contains(DBT_HEADING + 'Step 1 of 6' + HEADING)
+
+    // Continue next step
+    cy.contains('button', 'Continue').as('continue').click()
+
+    cy.contains(DBT_HEADING + 'Step 2 of 6' + HEADING)
+    cy.contains('h1', 'Tell us what made a difference')
+
+    assertFieldRadiosStrict({
+      inputName: 'expected_portion_without_help',
+      legend:
+        'What value do you estimate you would have achieved without our support?',
+      options: WITHOUT_OUR_SUPPORT.map((x) => x.name),
+      selectIndex: 1,
+    })
+
     cy.get('#field-comments').then((element) => {
       assertFieldTextarea({
         element,
@@ -170,157 +171,162 @@ const assertReviewForm = ({ agree }) => {
         hint: 'Please provide feedback on the help we have provided. If any of the information is incorrect please provide details.',
       })
     })
-  } else {
-    cy.get('#field-comments').then((el) =>
-      assertFieldTextarea({
-        element: el,
-        label: 'Comments',
-        hint: 'Please let us know what information was incorrect',
-      })
-    )
 
+    // Continue next step
     cy.get('@continue').click()
 
+    cy.contains(DBT_HEADING + 'Step 3 of 6' + HEADING)
+    cy.contains('h2', 'The extent our support helped')
+    ;[
+      { inputName: 'our_support', legend: 'Securing the win overall?' },
+      {
+        inputName: 'access_to_contacts',
+        legend: 'Gaining access to contacts?',
+      },
+      {
+        inputName: 'access_to_information',
+        legend: 'Getting information or improved understanding of the country?',
+      },
+      {
+        inputName: 'improved_profile',
+        legend: 'Improving your profile or credibility in the country?',
+      },
+      {
+        inputName: 'gained_confidence',
+        legend: 'Having confidence to explore or expand in the country?',
+      },
+      {
+        inputName: 'developed_relationships',
+        legend: 'Developing or nurturing critical relationships?',
+      },
+      {
+        inputName: 'overcame_problem',
+        legend:
+          'Overcoming a problem in the country (for example legal, regulatory, commercial)',
+      },
+    ].forEach(({ inputName, legend }) => {
+      assertFieldRadiosStrict({
+        inputName,
+        legend,
+        options: RATING.map((x) => x.name),
+        selectIndex: 1,
+      })
+    })
+
+    // Continue next step
+    cy.get('@continue').click()
+
+    cy.contains(DBT_HEADING + 'Step 4 of 6' + HEADING)
+    cy.contains('h2', 'About this win')
+
+    assertFieldCheckboxes({
+      element: '#field-checkboxes1',
+      legend: 'Please tick all that apply to this win:',
+      options: [
+        {
+          label:
+            'The win involved a foreign government or state-owned enterprise (for example as an intermediary or facilitator)',
+        },
+        { label: 'Our support was a prerequisite to generate this value' },
+        { label: 'Our support helped you achieve this win more quickly' },
+      ],
+    })
+
+    assertFieldCheckboxes({
+      element: '#field-checkboxes2',
+      legend: 'Tick any that apply to this win:',
+      options: [
+        { label: 'It enabled you to expand into a new market' },
+        {
+          label: 'It enabled you to maintain or expand in an existing market',
+        },
+        {
+          label:
+            'It enabled you to increase exports as a proportion of your turnover',
+        },
+        {
+          label:
+            "If you hadn't achieved this win, your company might have stopped exporting",
+        },
+        {
+          label:
+            'Apart from this win, you already have plans to export in the next 12 months',
+        },
+      ],
+    })
+
+    // Continue next step
+    cy.get('@continue').click()
+
+    cy.contains(DBT_HEADING + 'Step 5 of 6' + HEADING)
+    cy.contains('h2', 'Your export experience')
+
+    assertFieldRadiosStrict({
+      inputName: 'last_export',
+      legend:
+        'Apart from this win, when did your company last export goods or services?',
+      options: EXPERIENCE.map((x) => x.name),
+      selectIndex: 1,
+    })
+
+    // Continue next step
+    cy.get('@continue').click()
+
+    cy.contains(DBT_HEADING + 'Step 6 of 6' + HEADING)
+    cy.contains('h2', 'Marketing')
+
+    assertFieldRadiosStrict({
+      inputName: 'case_study_willing',
+      legend:
+        'Would you be willing for DBT/Exporting is GREAT to feature your success in marketing materials?',
+      options: ['Yes', 'No'],
+      selectIndex: 1,
+    })
+
+    assertFieldRadiosStrict({
+      inputName: 'marketing_source',
+      legend: 'How did you first hear about DBT (or it predecessor, DIT)?',
+      options: MARKETING_SOURCE.map((x) => x.name),
+      selectIndex: 1,
+    })
+
+    // There should appear an input field
+    cy.get('input#other_marketing_source')
+    cy.get('label[for="other_marketing_source"]').should(
+      'have.text',
+      'Other way you heard about DBT'
+    )
+
+    // The field should be required
+    cy.contains('button', 'Confirm and send').click()
+    assertErrorSummary([
+      'Enter a description of the other way you heard about DBT',
+    ])
+
+    // Fill out the field
+    cy.get('input#other_marketing_source').type('Blah blah blah')
+  } else {
+    cy.contains(DBT_HEADING + 'Step 1 of 2' + HEADING)
+
+    // Continue next step
+    cy.contains('button', 'Continue').as('continue').click()
+
+    cy.contains(DBT_HEADING + 'Step 2 of 2' + HEADING)
+    cy.contains('h1', 'Tell us what made a difference')
+
+    cy.contains('button', 'Confirm and send').click()
+
+    // Show error message when submitted without comments into rejected response
     cy.get('[data-test="textarea-error"]').should(
       'have.text',
       'Please let us know what information was incorrect'
     )
 
+    // Set comments into rejected response
     cy.get('#comments').type('Lorem ipsum dolor sit amet')
   }
 
-  cy.contains('button', 'Back')
-
-  cy.get('@continue').click()
-
-  cy.contains(DBT_HEADING + 'Step 3 of 6' + HEADING)
-  cy.contains('h2', 'The extent our support helped')
-  ;[
-    { inputName: 'our_support', legend: 'Securing the win overall?' },
-    {
-      inputName: 'access_to_contacts',
-      legend: 'Gaining access to contacts?',
-    },
-    {
-      inputName: 'access_to_information',
-      legend: 'Getting information or improved understanding of the country?',
-    },
-    {
-      inputName: 'improved_profile',
-      legend: 'Improving your profile or credibility in the country?',
-    },
-    {
-      inputName: 'gained_confidence',
-      legend: 'Having confidence to explore or expand in the country?',
-    },
-    {
-      inputName: 'developed_relationships',
-      legend: 'Developing or nurturing critical relationships?',
-    },
-    {
-      inputName: 'overcame_problem',
-      legend:
-        'Overcoming a problem in the country (for example legal, regulatory, commercial)',
-    },
-  ].forEach(({ inputName, legend }) => {
-    assertFieldRadiosStrict({
-      inputName,
-      legend,
-      options: RATING.map((x) => x.name),
-      selectIndex: 1,
-    })
-  })
-
-  cy.get('@continue').click()
-
-  cy.contains(DBT_HEADING + 'Step 4 of 6' + HEADING)
-  cy.contains('h2', 'About this win')
-
-  assertFieldCheckboxes({
-    element: '#field-checkboxes1',
-    legend: 'Please tick all that apply to this win:',
-    options: [
-      {
-        label:
-          'The win involved a foreign government or state-owned enterprise (for example as an intermediary or facilitator)',
-      },
-      { label: 'Our support was a prerequisite to generate this value' },
-      { label: 'Our support helped you achieve this win more quickly' },
-    ],
-  })
-
-  assertFieldCheckboxes({
-    element: '#field-checkboxes2',
-    legend: 'Tick any that apply to this win:',
-    options: [
-      { label: 'It enabled you to expand into a new market' },
-      {
-        label: 'It enabled you to maintain or expand in an existing market',
-      },
-      {
-        label:
-          'It enabled you to increase exports as a proportion of your turnover',
-      },
-      {
-        label:
-          "If you hadn't achieved this win, your company might have stopped exporting",
-      },
-      {
-        label:
-          'Apart from this win, you already have plans to export in the next 12 months',
-      },
-    ],
-  })
-
-  cy.get('@continue').click()
-
-  cy.contains(DBT_HEADING + 'Step 5 of 6' + HEADING)
-  cy.contains('h2', 'Your export experience')
-
-  assertFieldRadiosStrict({
-    inputName: 'last_export',
-    legend:
-      'Apart from this win, when did your company last export goods or services?',
-    options: EXPERIENCE.map((x) => x.name),
-    selectIndex: 1,
-  })
-
-  cy.get('@continue').click()
-
-  cy.contains(DBT_HEADING + 'Step 6 of 6' + HEADING)
-  cy.contains('h2', 'Marketing')
-
-  assertFieldRadiosStrict({
-    inputName: 'case_study_willing',
-    legend:
-      'Would you be willing for DBT/Exporting is GREAT to feature your success in marketing materials?',
-    options: ['Yes', 'No'],
-    selectIndex: 1,
-  })
-
-  assertFieldRadiosStrict({
-    inputName: 'marketing_source',
-    legend: 'How did you first hear about DBT (or it predecessor, DIT)?',
-    options: MARKETING_SOURCE.map((x) => x.name),
-    selectIndex: 1,
-  })
-
-  // There should appear an input field
-  cy.get('input#other_marketing_source')
-  cy.get('label[for="other_marketing_source"]').should(
-    'have.text',
-    'Other way you heard about DBT'
-  )
-
-  // The field should be required
-  cy.contains('button', 'Confirm and send').click()
-  assertErrorSummary([
-    'Enter a description of the other way you heard about DBT',
-  ])
-
-  // Fill out the field
-  cy.get('input#other_marketing_source').type('Blah blah blah')
-
+  // Confirm and send customer response
   cy.contains('button', 'Confirm and send').click()
 }
 
