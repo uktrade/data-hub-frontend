@@ -42,7 +42,7 @@ const StyledHeader = styled(H3)`
   font-size: ${HEADING_SIZES.SMALL}px;
 `
 
-const StyledSubheading = styled('h4')`
+const StyledSubheading = styled('p')`
   font-size: ${({ fontSize }) => (fontSize ? `${fontSize}px` : '14px')};
   line-height: 20px;
   color: ${DARK_GREY};
@@ -138,11 +138,13 @@ const CollectionItem = ({
     )}
     {subheading ? (
       subheadingUrl ? (
-        <StyledSubheading fontSize={19}>
+        <StyledSubheading data-test="collection-item-subheading" fontSize={19}>
           <AccessibleLink href={subheadingUrl}>{subheading}</AccessibleLink>
         </StyledSubheading>
       ) : (
-        <StyledSubheading>{subheading}</StyledSubheading>
+        <StyledSubheading data-test="collection-item-subheading">
+          {subheading}
+        </StyledSubheading>
       )
     ) : null}
 

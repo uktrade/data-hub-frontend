@@ -426,7 +426,7 @@ describe('Company Export tab - Export countries history', () => {
           cy.contains(item.subject)
             .as(link)
             .parent()
-            .siblings('h4')
+            .siblings('[data-test="collection-item-subheading"]')
             .as(subHeading)
             .parent()
             .as(interaction)

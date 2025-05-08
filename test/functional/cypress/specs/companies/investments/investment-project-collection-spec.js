@@ -55,7 +55,9 @@ function assertListItem({
   })
 
   it('should render the project code', () => {
-    cy.get(alias).find('h4').should('have.text', `Project code ${project_code}`)
+    cy.get(alias)
+      .find('[data-test="collection-item-subheading"]')
+      .should('have.text', `Project code ${project_code}`)
   })
 
   it('should render the investor name', () => {

@@ -137,7 +137,9 @@ const assertUnarchiveLink = (url) => {
 }
 
 const assertUpdatedOn = (item, text) => {
-  cy.get(item).find('h4').should('have.text', text)
+  cy.get(item)
+    .find('[data-test="collection-item-subheading"]')
+    .should('have.text', text)
 }
 
 const assertRole = (roleType) => {
