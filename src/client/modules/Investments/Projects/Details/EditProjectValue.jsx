@@ -92,7 +92,7 @@ const isNumberSafeguardedJobsRequired = (project) => {
 
 const validateNumberNewJobs = (project, value) => {
   if (!isNumberNewJobsRequired(project)) {
-    return null
+    return
   }
   if (!value) {
     return NUMBER_NEW_JOBS_REQUIRED_MESSAGE
@@ -107,27 +107,7 @@ const validateNumberNewJobs = (project, value) => {
     return 'Number of new jobs must be greater than 0'
   }
 
-  return null
-}
-
-const validateAverageSalary = (project, value) => {
-  if (!isAverageSalaryRequired(project)) {
-    return null
-  }
-  if (!value) {
-    return AVERAGE_SALARY_REQUIRED_MESSAGE
-  }
-  return null
-}
-
-const validateNumberSafeguardedJobs = (project, value) => {
-  if (!isNumberSafeguardedJobsRequired(project)) {
-    return null
-  }
-  if (!value) {
-    return NUMBER_SAFEGUARDED_JOBS_REQUIRED_MESSAGE
-  }
-  return null
+  return
 }
 
 const EditProjectValue = () => {
@@ -310,7 +290,7 @@ const EditProjectValue = () => {
                         validateNumberNewJobs(project, value)
                       }
                       initialValue={project.numberNewJobs}
-                    ></FieldInput>
+                    />
                     {project.investmentType.name === 'FDI' &&
                       project.gvaMultiplier
                         ?.sectorClassificationGvaMultiplier === 'labour' && (
@@ -349,8 +329,9 @@ const EditProjectValue = () => {
                           )
                         )
                       }
-                      validate={(value) =>
-                        validateAverageSalary(project, value)
+                      required={
+                        isAverageSalaryRequired(project) &&
+                        AVERAGE_SALARY_REQUIRED_MESSAGE
                       }
                     />
                     <FieldInput
@@ -366,8 +347,9 @@ const EditProjectValue = () => {
                       }
                       type="number"
                       initialValue={project.numberSafeguardedJobs?.toString()}
-                      validate={(value) =>
-                        validateNumberSafeguardedJobs(project, value)
+                      required={
+                        isNumberSafeguardedJobsRequired(project) &&
+                        NUMBER_SAFEGUARDED_JOBS_REQUIRED_MESSAGE
                       }
                     />
                   </>
