@@ -84,7 +84,7 @@ const CompanyFilesCollection = ({
               ]}
               entityName="file"
               defaultQueryParams={{
-                sortby: 'created_on',
+                sortby: '-created_on',
                 page: 1,
               }}
             />
