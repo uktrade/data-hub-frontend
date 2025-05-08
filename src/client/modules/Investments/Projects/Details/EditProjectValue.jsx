@@ -305,7 +305,6 @@ const EditProjectValue = () => {
                       name="number_new_jobs"
                       type="number"
                       {...(isNumberNewJobsRequired(project) && {
-                        required: NUMBER_NEW_JOBS_REQUIRED_MESSAGE,
                         hint:
                           project.fdiType?.name ===
                           FDI_TYPES.expansionOfExistingSiteOrActivity.label
