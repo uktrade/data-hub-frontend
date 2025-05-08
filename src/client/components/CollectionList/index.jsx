@@ -63,7 +63,7 @@ const CollectionList = ({
               entityNamePlural={entityNamePlural}
             />
           )}
-          <ol aria-live="polite">
+          <ul aria-live="polite">
             {items.map((item, index) =>
               collectionItemTemplate ? (
                 collectionItemTemplate(item)
@@ -82,19 +82,19 @@ const CollectionList = ({
                 />
               )
             )}
-          </ol>
+          </ul>
           {taskProps && (
             <Task.Status {...taskProps}>
               {() =>
                 isComplete && (
                   <>
-                    <ol>
+                    <ul>
                       <li>
                         {results.map((item, i) => (
                           <CollectionItem {...item} key={i} />
                         ))}
                       </li>
-                    </ol>
+                    </ul>
                   </>
                 )
               }

@@ -144,7 +144,7 @@ const FilteredCollectionList = ({
           <Task.Status {...taskProps}>
             {() =>
               isComplete && (
-                <ol aria-live="polite">
+                <ul aria-live="polite">
                   {results.map((item, index) => (
                     <Analytics key={`${item.id}-${index}`}>
                       {(pushAnalytics) =>
@@ -159,7 +159,7 @@ const FilteredCollectionList = ({
                       }
                     </Analytics>
                   ))}
-                </ol>
+                </ul>
               )
             }
           </Task.Status>
