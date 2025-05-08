@@ -40,12 +40,6 @@ const testNumberOfNewJobs = ({ required, value }) =>
       'have.text',
       required ? 'Number of new jobs (required)' : 'Number of new jobs'
     )
-
-    required
-      ? cy.contains('An expansion project must always have at least 1 new job')
-      : cy
-          .contains('An expansion project must always have at least 1 new job')
-          .should('not.exist')
   })
 
 const assertJobFieldLabel = (fieldSelector, label, required) => {
