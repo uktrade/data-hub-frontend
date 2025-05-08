@@ -234,6 +234,33 @@ describe('Add company form', () => {
     })
   })
 
+  context(
+    'when a company is found on data hub and then the country is changed',
+    () => {
+      beforeEach(() => {
+        goToUKCompanySearchResultsPage()
+        cy.get(entitySearch.companyNameField).type('some')
+        cy.contains('Some unmatched company').click()
+      })
+
+      it('should clear the input and prevent users from submitted the previously selected company', () => {
+        cy.get(selectors.companyAdd.form)
+          .find('[data-test="field-dnbCountry"] button')
+          .click()
+
+        cy.get(selectors.companyAdd.form)
+          .find('[type="radio"]')
+          .check('overseas')
+
+        cy.get(selectors.companyAdd.form).find('select').select('United States')
+        cy.get(selectors.companyAdd.continueButton).click()
+
+        cy.get(entitySearch.selectCompanyButton).click()
+        assertErrorSummary(['Search for and select a company.'])
+      })
+    }
+  )
+
   context('when a company is picked that does not exist on Data Hub', () => {
     beforeEach(() => {
       goToOverseasCompanySearchResultsPage()

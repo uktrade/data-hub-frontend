@@ -46,7 +46,13 @@ const FieldDnbCompany = ({
           <FieldUneditable
             legend="Country"
             name="dnbCountry"
-            onChangeClick={goBack}
+            onChangeClick={() => {
+              // Reset the selected company when going "back" to country selection as going forward
+              // again with the same or new country allows the user to submit the previous selected
+              // company without anything in the input.
+              values.companyDnB = null
+              goBack()
+            }}
           >
             {country}
           </FieldUneditable>
