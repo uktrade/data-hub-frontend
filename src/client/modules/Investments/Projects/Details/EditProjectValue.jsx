@@ -67,11 +67,6 @@ const isJobFieldRequired = (project, fieldName) => {
     return false
   }
 
-  // If it's a non-FDI or a commitment to invest project, it's not required
-  if (project.investmentType.name !== 'FDI') {
-    return false
-  }
-
   // If it's an expansion FDI project, it's required
   if (
     project.fdiType?.name === FDI_TYPES.expansionOfExistingSiteOrActivity.label

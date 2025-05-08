@@ -1473,48 +1473,6 @@ describe('Edit the value details of a project', () => {
       }
     )
 
-    context('Non-FDI project', () => {
-      const nonFDIProject = setupProjectFaker({
-        investment_type: {
-          name: 'Non-FDI',
-          id: 'foo',
-        },
-        fdi_type: null,
-      })
-
-      beforeEach(() => {
-        setup(nonFDIProject)
-      })
-
-      it('should mark all job fields as optional', () => {
-        assertJobFieldLabel(
-          '[data-test="field-number_new_jobs"]',
-          'Number of new jobs',
-          false
-        )
-        assertJobFieldLabel(
-          '[data-test="field-average_salary"]',
-          'Average salary of new jobs',
-          false
-        )
-        assertJobFieldLabel(
-          '[data-test="field-number_safeguarded_jobs"]',
-          'Number of safeguarded jobs',
-          false
-        )
-      })
-
-      it('should not show errors for empty job fields', () => {
-        fillNonJobFields()
-
-        cy.get('[data-test="submit-button"]').click()
-
-        assertNotExists('[data-test="error-number_new_jobs"]')
-        assertNotExists('[data-test="error-average_salary"]')
-        assertNotExists('[data-test="error-number_safeguarded_jobs"]')
-      })
-    })
-
     context('FDI Expansion project', () => {
       const expansionFDIProject = setupProjectFaker({
         investment_type: {
