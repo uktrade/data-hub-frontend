@@ -32,6 +32,7 @@ import { formatDate, DATE_FORMAT_MEDIUM } from '../../../utils/date-utils'
 
 import AccesibilityStatement from './AccesibilityStatement'
 import PrivacyNotice from './PrivacyNotice'
+import { OPTION_NO, OPTION_YES } from '../../../../common/constants'
 
 const FORM_ID = 'export-wins-customer-feedback'
 
@@ -195,22 +196,29 @@ const Step1 = ({ win, name }) => {
 }
 
 const Step2 = ({ agree }) => (
-  <Step name="2">
-    <H2>The extent our support helped</H2>
-    <WithoutOurSupport.FieldRadios
-      name="expected_portion_without_help"
-      legend="What value do you estimate you would have achieved without our support?"
-      required="Select the estimated support value"
-    />
+  <Step name="2" submitButtonLabel={agree === OPTION_NO && 'Confirm and send'}>
+    {agree === OPTION_YES && (
+      <>
+        <H2>The extent our support helped</H2>
+        <WithoutOurSupport.FieldRadios
+          name="expected_portion_without_help"
+          legend="What value do you estimate you would have achieved without our support?"
+          required="Select the estimated support value"
+        />
+      </>
+    )}
     <FieldTextarea
       name="comments"
-      label={`Comments${agree ? ' (optional)' : ''}`}
+      label={`Comments${agree === OPTION_YES ? ' (optional)' : ''}`}
       hint={
         agree
           ? 'Please provide feedback on the help we have provided. If any of the information is incorrect please provide details.'
           : 'Please let us know what information was incorrect'
       }
-      required={!agree && 'Please let us know what information was incorrect'}
+      required={
+        agree === OPTION_NO &&
+        'Please let us know what information was incorrect'
+      }
     />
   </Step>
 )
@@ -385,11 +393,17 @@ const ReviewForm = () => {
             {(formData) => (
               <>
                 <Step1 win={review.win} name={review?.companyContact?.name} />
-                <Step2 agree={formData.values.agree_with_win === 'yes'} />
-                <Step3 />
-                <Step4 />
-                <Step5 />
-                <Step6 />
+                {formData.values.agree_with_win === OPTION_YES ? (
+                  <>
+                    <Step2 agree={OPTION_YES} />
+                    <Step3 />
+                    <Step4 />
+                    <Step5 />
+                    <Step6 />
+                  </>
+                ) : (
+                  <Step2 agree={OPTION_NO} />
+                )}
               </>
             )}
           </Form>
