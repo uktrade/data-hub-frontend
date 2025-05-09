@@ -2,14 +2,17 @@ import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { FOCUSABLE, SPACING } from '@govuk-react/constants'
+import InsetText from '@govuk-react/inset-text'
 import Label from '@govuk-react/label'
 
+import Metadata from '../../components/Metadata/'
 import {
   BLACK,
   BLUE,
   FOCUS_COLOUR,
   GREY_1,
   GREY_2,
+  LINK_COLOUR,
   RED,
   TEXT_COLOUR,
   WHITE,
@@ -57,6 +60,7 @@ const ListboxOption = styled('div')((props) => ({
   cursor: 'pointer',
   backgroundColor: props.active ? BLUE : WHITE,
   color: props.active ? WHITE : TEXT_COLOUR,
+  cursor: props.isDisabled ? 'not-allowed' : 'pointer',
 
   '&:last-child': {
     borderBottom: 'none',
@@ -85,6 +89,16 @@ const ListboxOption = styled('div')((props) => ({
     borderRight: `3px solid ${TEXT_COLOUR}`,
     borderBottom: `3px solid ${TEXT_COLOUR}`,
     transform: 'translate(0, -50%) rotate(45deg)',
+  },
+}))
+
+const StyledInsetText = styled(InsetText)((props) => ({
+  '&': {
+    marginTop: SPACING.SCALE_1,
+    color: props.active ? WHITE : TEXT_COLOUR,
+  },
+  'div > a': {
+    color: props.active ? `${WHITE} !important` : `${LINK_COLOUR} !important`,
   },
 }))
 
@@ -175,6 +189,8 @@ const Typeahead = ({
   onOptionsClear,
   onMenuClose,
   onMenuOpen,
+  showMetaData = false,
+  showInsetText = false,
   onChange = () => {},
   'data-test': testId,
   OptionContent = TypeaheadOptionContent,
@@ -223,6 +239,9 @@ const Typeahead = ({
       case menuActions.closeSelect:
         event.preventDefault()
         if (filteredOptions[activeIndex]) {
+          if (filteredOptions[activeIndex].isDisabled) {
+            return
+          }
           onOptionToggle(filteredOptions[activeIndex])
           onChange(
             getNewSelectedOptions({
@@ -272,6 +291,7 @@ const Typeahead = ({
         <AutocompleteInput
           {...inputProps}
           id={name}
+          name={name}
           autoComplete="off"
           autoCorrect="off"
           autoCapitalize="off"
@@ -334,6 +354,8 @@ const Typeahead = ({
                       id={`${name}-${option.value}`}
                       key={option.value}
                       active={index === activeIndex}
+                      isDisabled={option.isDisabled}
+                      aria-disabled={option.isDisabled}
                       focussed={index === focusIndex}
                       isMulti={isMulti}
                       role="option"
@@ -345,6 +367,9 @@ const Typeahead = ({
                       aria-setsize={filteredOptions.length}
                       aria-posinset={index}
                       onClick={() => {
+                        if (option.isDisabled) {
+                          return
+                        }
                         inputRef.current && inputRef.current.select()
                         onOptionToggle(option)
                         onChange(
@@ -368,6 +393,22 @@ const Typeahead = ({
                     >
                       <span>
                         <OptionContent option={option} searchString={input} />
+                        {showMetaData && option.meta ? (
+                          <Metadata
+                            active={index === activeIndex}
+                            key={`${label}-${index}`}
+                            rows={option.meta}
+                          />
+                        ) : null}
+                        {showInsetText && option.insetText ? (
+                          <StyledInsetText
+                            data-test="typeahead-inset-text"
+                            active={index === activeIndex}
+                            key={label}
+                          >
+                            {option.insetText}
+                          </StyledInsetText>
+                        ) : null}
                       </span>
                     </ListboxOption>
                   ))}
@@ -401,6 +442,10 @@ Typeahead.propTypes = {
   error: PropTypes.string,
   closeMenuOnSelect: PropTypes.bool,
   isMulti: PropTypes.bool,
+  // Whether to show extra meta data on each option.
+  showMetaData: PropTypes.bool,
+  // Whether to show inset text for an option.
+  showInsetText: PropTypes.bool,
   noOptionsMessage: PropTypes.string,
   defaultValue: PropTypes.oneOfType([
     keyPairPropType,

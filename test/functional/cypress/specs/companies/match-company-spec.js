@@ -8,6 +8,8 @@ const {
   assertFlashMessage,
 } = require('../../support/assertions')
 
+const companySearchResponse = require('../../../../sandbox/fixtures/v4/dnb/company-search.json')
+
 const DUNS_NUMBER_NOT_MATCHED = '111111111'
 const DUNS_NUMBER_MATCHED = '222222222'
 
@@ -15,7 +17,6 @@ const company = fixtures.company.venusLtd
 
 const performSearch = (companyName = 'some company') => {
   cy.get(selectors.companyMatch.find.companyNameInput).clear().type(companyName)
-  cy.get(selectors.companyMatch.find.button).click()
 }
 
 const assertBreadcrumbs = (crumbText) => {
@@ -52,9 +53,15 @@ describe('Match a company', () => {
       'when an unmatched US company from the search results is clicked',
       () => {
         beforeEach(() => {
+          cy.intercept(
+            'POST',
+            '/companies/create/dnb/company-search*',
+            companySearchResponse
+          )
           cy.visit(urls.companies.match.index(fixtures.company.usCompany.id))
-          performSearch()
+          performSearch('US company')
           cy.contains('Some unmatched US company').click()
+          cy.get(selectors.companyMatch.find.button).click()
         })
 
         it('should display the state', () => {
@@ -142,35 +149,20 @@ describe('Match a company', () => {
       cy.contains('Search third party supplier for business details')
         .and('match', 'h2')
         .first()
-      cy.get('[data-test="field-dnbCompanyName"]').should(
+      cy.get('[data-test="field-companyDnB"] [data-test="field-label"]').should(
         'have.text',
         'Company name'
-      )
-      cy.get('[data-test="dnb-company-name-input"]').should(
-        'have.attr',
-        'type',
-        'search'
       )
       cy.get('[data-test="field-dnbPostalCode"]').should(
         'have.text',
         'Company postcode (optional)'
       )
-      cy.get('[data-test="dnb-postal-code-input"]')
-        .should('have.attr', 'type', 'search')
-        .parent()
-        .parent()
-        .parent()
-        .next()
-        .contains('Find company')
+      cy.get(selectors.companyMatch.find.button)
+        .contains('Submit')
         .and('match', 'button')
     })
 
-    it('should prepopulate company name and postcode text fields', () => {
-      cy.get(selectors.companyMatch.find.companyNameInput).should(
-        'have.attr',
-        'value',
-        company.name
-      )
+    it('should prepopulate postcode text field', () => {
       cy.get(selectors.companyMatch.find.postcodeField).should(
         'have.attr',
         'value',
@@ -191,16 +183,7 @@ describe('Match a company', () => {
         cy.get(selectors.companyMatch.find.button)
           .click()
           .get(selectors.companyMatch.form)
-          .contains('Enter company name')
-      })
-
-      it('should not display the search results', () => {
-        cy.get(selectors.companyMatch.find.results.someCompany).should(
-          'not.exist'
-        )
-        cy.get(selectors.companyMatch.find.results.someOtherCompany).should(
-          'not.exist'
-        )
+          .contains('Search for and select a company.')
       })
     }
   )
@@ -210,7 +193,7 @@ describe('Match a company', () => {
     () => {
       beforeEach(() => {
         cy.visit(urls.companies.match.index(company.id))
-        performSearch()
+        performSearch('some')
       })
 
       it('should display the company search results', () => {
@@ -385,8 +368,9 @@ describe('Match a company', () => {
     () => {
       beforeEach(() => {
         cy.visit(urls.companies.match.index(company.id))
-        performSearch()
+        performSearch('some unmatched')
         cy.contains('Some unmatched company').click()
+        cy.get(selectors.companyMatch.find.button).click()
       })
 
       it('should redirect to the the match confirmation page', () => {
@@ -496,8 +480,9 @@ describe('Match a company', () => {
     () => {
       beforeEach(() => {
         cy.visit(urls.companies.match.index(company.id))
-        performSearch()
+        performSearch('some matched')
         cy.contains('Some matched company').click()
+        cy.get(selectors.companyMatch.find.button).click()
       })
 
       it('should redirect to the the duplicated match page', () => {

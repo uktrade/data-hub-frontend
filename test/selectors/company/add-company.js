@@ -10,12 +10,13 @@ module.exports = {
   sectorSelect: 'form select#sector',
 
   entitySearch: {
-    companyNameField: 'input[name="dnbCompanyName"]',
-    searchButton: 'form button:contains("Find company")',
+    companyNameField: 'input[name="companyDnB"]',
+    selectCompanyButton: '[data-test="select-company-button"]',
     results: {
-      someCompanyName: 'form ol li:nth-child(1)',
-      someOtherCompany: 'form ol li:nth-child(2)',
-      companyUnknownPostcode: 'form ol li:nth-child(3)',
+      someCompanyName: '[data-test="typeahead-menu-option"]:nth-child(1)',
+      someOtherCompany: '[data-test="typeahead-menu-option"]:nth-child(2)',
+      companyUnknownPostcode:
+        '[data-test="typeahead-menu-option"]:nth-child(3)',
     },
     cannotFind: {
       summary: 'details summary span',

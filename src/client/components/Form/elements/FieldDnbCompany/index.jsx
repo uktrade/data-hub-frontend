@@ -1,88 +1,43 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
-import { isEmpty, omitBy } from 'lodash'
 import styled from 'styled-components'
-import pluralize from 'pluralize'
 
 import { WIDTHS, SPACING } from '@govuk-react/constants'
-import { Search } from '@govuk-react/icons'
-import UnorderedList from '@govuk-react/unordered-list'
-import Details from '@govuk-react/details'
 import Button from '@govuk-react/button'
-import Paragraph from '@govuk-react/paragraph'
+import Details from '@govuk-react/details'
 import ListItem from '@govuk-react/list-item'
+import Paragraph from '@govuk-react/paragraph'
+import UnorderedList from '@govuk-react/unordered-list'
 
+import ButtonLink from '../../../ButtonLink'
 import { useFormContext } from '../../hooks'
-import StatusMessage from '../../../StatusMessage'
 import FieldWrapper from '../FieldWrapper'
 import FieldUneditable from '../FieldUneditable'
 import FieldInput from '../FieldInput'
-import ButtonLink from '../../../ButtonLink'
-import useEntitySearch from '../../../EntityList/useEntitySearch'
-import useDnbSearch from '../../../EntityList/useDnbSearch'
+import FieldCompanyDnBTypeahead from '../FieldCompanyDnBTypeahead'
 import FormActions from '../FormActions'
-import EntityList from '../../../EntityList'
 import FormLayout from '../../../Layout/FormLayout'
 import { FORM_LAYOUT } from '../../../../../common/constants'
-
-const COMPANY_NAME_MIN_LENGTH = 2
-const COMPANY_NAME_MAX_LENGTH = 60
 
 const StyledUnorderedList = styled(UnorderedList)`
   list-style-type: disc;
   padding-left: ${SPACING.SCALE_5};
 `
 
-const validateMinLength = (minLength) => (value) =>
-  value && value.length < minLength
-    ? `Enter at least ${pluralize('character', minLength, true)}`
-    : null
-
-const validateMaxLength = (maxLength) => (value) =>
-  value && value.length > maxLength
-    ? `${pluralize('character', value.length - maxLength, true)} too long`
-    : null
-
-const SEARCH_RESULTS_MESSAGE =
-  'The search results below are verified company records from an external and verified source of company information.'
-
 const FieldDnbCompany = ({
   name,
   label,
+  apiEndpoint,
   legend,
   hint,
   country,
-  apiEndpoint,
-  queryParams = {},
-  entityRenderer,
+  onCompanySelect,
   onCannotFind,
-  searchResultsMessage = SEARCH_RESULTS_MESSAGE,
-  features,
+  csrfToken,
+  queryParams,
+  allResultsSelectable,
 }) => {
-  const { values, goBack, validateForm, setIsLoading } = useFormContext()
-  const { findCompany } = useDnbSearch(apiEndpoint, features)
-  const { onEntitySearch, searching, searched, error, entities } =
-    useEntitySearch(findCompany)
-
-  function onSearchClick(e) {
-    e.preventDefault()
-    const noValidationErrors = isEmpty(validateForm())
-    if (noValidationErrors) {
-      return onEntitySearch(
-        omitBy(
-          {
-            ...queryParams,
-            search_term: values.dnbCompanyName,
-            postal_code: values.dnbPostalCode,
-          },
-          isEmpty
-        )
-      )
-    }
-    return null
-  }
-
-  useEffect(() => setIsLoading(searching), [searching])
+  const { values, goBack } = useFormContext()
 
   return (
     <FormLayout setWidth={FORM_LAYOUT.THREE_QUARTERS}>
@@ -91,22 +46,17 @@ const FieldDnbCompany = ({
           <FieldUneditable
             legend="Country"
             name="dnbCountry"
-            onChangeClick={goBack}
+            onChangeClick={() => {
+              // Reset the selected company when going "back" to country selection as going forward
+              // again with the same or new country allows the user to submit the previous selected
+              // company without anything in the input.
+              values.companyDnB = null
+              goBack()
+            }}
           >
             {country}
           </FieldUneditable>
         )}
-
-        <FieldInput
-          label="Company name"
-          name="dnbCompanyName"
-          type="search"
-          required="Enter company name"
-          validate={[
-            validateMinLength(COMPANY_NAME_MIN_LENGTH),
-            validateMaxLength(COMPANY_NAME_MAX_LENGTH),
-          ]}
-        />
 
         <FieldInput
           label="Company postcode (optional)"
@@ -115,66 +65,53 @@ const FieldDnbCompany = ({
           type="search"
         />
 
+        <FieldCompanyDnBTypeahead
+          name="companyDnB"
+          allResultsSelectable={allResultsSelectable}
+          apiEndpoint={apiEndpoint}
+          aria-label="Search a company"
+          label="Company name"
+          required="Search for and select a company."
+          postcode={values.dnbPostalCode}
+          country={queryParams.address_country}
+          csrfToken={csrfToken}
+        />
+
         <FormActions>
-          <Button icon={<Search />} onClick={onSearchClick}>
-            Find company
+          <Button
+            data-test="select-company-button"
+            onClick={() => {
+              if (!values.companyDnB) {
+                return
+              }
+              onCompanySelect(values.companyDnB.dnb_company)
+            }}
+          >
+            Submit
           </Button>
         </FormActions>
 
-        {searched && (
-          <>
-            {entities.length > 0 && (
-              <>
-                {searchResultsMessage && (
-                  <StatusMessage>{searchResultsMessage}</StatusMessage>
-                )}
+        <Details summary="I can't find what I'm looking for">
+          <Paragraph>Try:</Paragraph>
 
-                <EntityList
-                  entities={entities}
-                  entityRenderer={entityRenderer}
-                />
-              </>
+          <StyledUnorderedList>
+            <ListItem>checking or removing the postcode</ListItem>
+            <ListItem>removing &quot;limited&quot; or &quot;ltd&quot;</ListItem>
+            <ListItem>checking for spelling errors</ListItem>
+            {country && (
+              <ListItem>checking if the right country was selected</ListItem>
             )}
+            <ListItem>
+              check you&apos;re using the company&apos;s registered name
+            </ListItem>
+          </StyledUnorderedList>
 
-            {!error && entities.length === 0 && (
-              <StatusMessage>
-                No match found. Try one of the options below.
-              </StatusMessage>
-            )}
-
-            {error && (
-              <StatusMessage>
-                Error occurred while searching for company.
-              </StatusMessage>
-            )}
-
-            <Details summary="I can't find what I'm looking for">
-              <Paragraph>Try:</Paragraph>
-
-              <StyledUnorderedList>
-                <ListItem>checking or removing the postcode</ListItem>
-                <ListItem>
-                  removing &quot;limited&quot; or &quot;ltd&quot;
-                </ListItem>
-                <ListItem>checking for spelling errors</ListItem>
-                {country && (
-                  <ListItem>
-                    checking if the right country was selected
-                  </ListItem>
-                )}
-                <ListItem>
-                  check you&apos;re using the company&apos;s registered name
-                </ListItem>
-              </StyledUnorderedList>
-
-              {onCannotFind && (
-                <ButtonLink onClick={onCannotFind}>
-                  I still can&apos;t find what I&apos;m looking for
-                </ButtonLink>
-              )}
-            </Details>
-          </>
-        )}
+          {onCannotFind && (
+            <ButtonLink onClick={onCannotFind}>
+              I still can&apos;t find what I&apos;m looking for
+            </ButtonLink>
+          )}
+        </Details>
       </FieldWrapper>
     </FormLayout>
   )
@@ -189,8 +126,12 @@ FieldDnbCompany.propTypes = {
   apiEndpoint: PropTypes.string.isRequired,
   queryParams: PropTypes.shape({}),
   entityRenderer: PropTypes.func,
+  onCompanySelect: PropTypes.func,
   onCannotFind: PropTypes.func,
   searchResultsMessage: PropTypes.string,
+  // When true, allows all results to be selected whether they are out of business or already on
+  // datahub. Also stops showing additional metadata on the typeahead items.
+  allResultsSelectable: PropTypes.bool.isRequired,
 }
 
 export default FieldDnbCompany
