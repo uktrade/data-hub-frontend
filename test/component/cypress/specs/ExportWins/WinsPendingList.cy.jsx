@@ -51,7 +51,7 @@ describe('WinsPendingList', () => {
           )
         )
 
-      cy.get('h4 a')
+      cy.get('[data-test="collection-item-subheading"] a')
         .should('have.text', exportWin.company.name)
         .and(
           'have.attr',
@@ -180,8 +180,11 @@ describe('WinsPendingList', () => {
       )
       cy.get('h3 a').should('not.exist')
 
-      cy.get('h4').should('have.text', exportWin.company_name)
-      cy.get('h4 a').should('not.exist')
+      cy.get('[data-test="collection-item-subheading"]').should(
+        'have.text',
+        exportWin.company_name
+      )
+      cy.get('[data-test="collection-item-subheading"] a').should('not.exist')
     })
   })
 })

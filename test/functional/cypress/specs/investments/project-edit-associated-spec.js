@@ -34,7 +34,10 @@ describe('Edit the associated FDI R&D project', () => {
           'href',
           investments.projects.editAssociatedProject(fixture.id, project.id)
         )
-      cy.get('h4').should('contain', `Project code ${project.project_code}`)
+      cy.get('[data-test="collection-item-subheading"]').should(
+        'contain',
+        `Project code ${project.project_code}`
+      )
       cy.get('@metadataLabels').eq(0).should('contain', 'Investor')
       cy.get('@metadataValues')
         .eq(0)

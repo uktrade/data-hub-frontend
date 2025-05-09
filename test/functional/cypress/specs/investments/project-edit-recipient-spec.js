@@ -36,7 +36,7 @@ describe('Edit the recipient company', () => {
           'href',
           investments.projects.editRecipientCompany(fixture.id, company.id)
         )
-      cy.get('h4').should(
+      cy.get('[data-test="collection-item-subheading"]').should(
         'contain',
         `Updated on ${formatDate(company.modified_on, DATE_FORMAT_MEDIUM_WITH_TIME)}`
       )
