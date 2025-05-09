@@ -9,7 +9,7 @@
     "ini": "^5.0.0",
     "json-schema-faker": "^0.5.8",
     "lodash": "^4.17.21",
-    "nodemon": "^3.1.9",
+    "nodemon": "^3.1.10",
     "seedrandom": "^3.0.5"
   },
   "devDependencies": {
