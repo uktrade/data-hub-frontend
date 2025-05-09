@@ -166,6 +166,13 @@ export const clickSubmitButton = () => {
 }
 
 /**
+ * Click on a Save button
+ */
+export const clickSaveButton = () => {
+  cy.get('[data-test="save"]').click()
+}
+
+/**
  * Generic search request for a CollectionList
  * @param {*} endpoint The search endpoint
  * @param {*} fakeList The fake list of items to display
