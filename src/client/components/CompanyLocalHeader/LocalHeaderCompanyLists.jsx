@@ -68,6 +68,7 @@ export const LocalHeaderCompanyLists = ({ results, companyId }) => {
                 key={list}
                 data-test={`list-item-${kebabCase(results[list].name)}-button`}
                 onClick={handleClickAddRemove}
+                aria-label={`${results[list].name}: click to add or remove list`}
               >
                 {results[list].name} <span>x</span>
               </StyledCompanyListItemButton>
