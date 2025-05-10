@@ -387,18 +387,24 @@ const StepInteractionDetails = ({
             required="Enter business intelligence"
             hint={
               <>
-                Please summarise the information the business shared during this
-                interaction, including sufficient detail to convey the meaning
-                and significance of the topics covered.
-                <br />
-                <br />
-                Where available, include:
-                <br />• Opportunities, risks and/or anything affecting business
-                operations (company, sector or market) or investor sentiment
-                <br />• Quantify impacts and timescales (e.g. costs,
-                number/location of jobs created/lost)
-                <br />• Actions the business has or is proposing to take
-                <br />• Comments, questions or requests of HMG
+                <p>
+                  Please summarise the information the business shared during
+                  this interaction, including sufficient detail to convey the
+                  meaning and significance of the topics covered.
+                </p>
+                <p>Where available, include:</p>
+                <ul>
+                  <li>
+                    • Opportunities, risks and/or anything affecting business
+                    operations (company, sector or market) or investor sentiment
+                  </li>
+                  <li>
+                    • Quantify impacts and timescales (e.g. costs,
+                    number/location of jobs created/lost)
+                  </li>
+                  <li>• Actions the business has or is proposing to take</li>
+                  <li>• Comments, questions or requests of HMG</li>
+                </ul>
               </>
             }
           />
