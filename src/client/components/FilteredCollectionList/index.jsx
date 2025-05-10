@@ -46,7 +46,9 @@ const collectionItemTemplateDefault = (
   useReactRouter,
   pushAnalytics,
   selectedFilters,
-  sanitizeFiltersForAnalytics
+  sanitizeFiltersForAnalytics,
+  getLinkText,
+  getAriaLabel
 ) => {
   return (
     <CollectionItem
@@ -64,6 +66,8 @@ const collectionItemTemplateDefault = (
           },
         })
       }}
+      getLinkText={getLinkText}
+      getAriaLabel={getAriaLabel}
     />
   )
 }
@@ -91,6 +95,8 @@ const FilteredCollectionList = ({
   sanitizeFiltersForAnalytics = null,
   useReactRouter = false,
   collectionItemTemplate = collectionItemTemplateDefault,
+  getLinkTextForItem,
+  getAriaLabelForItem,
 }) => {
   const navigate = useNavigate()
   const location = useLocation()
@@ -154,7 +160,9 @@ const FilteredCollectionList = ({
                           useReactRouter,
                           pushAnalytics,
                           selectedFilters,
-                          sanitizeFiltersForAnalytics
+                          sanitizeFiltersForAnalytics,
+                          getLinkTextForItem,
+                          getAriaLabelForItem
                         )
                       }
                     </Analytics>
@@ -217,6 +225,8 @@ FilteredCollectionList.propTypes = {
   titleRenderer: PropTypes.func,
   sanitizeFiltersForAnalytics: PropTypes.func,
   width: PropTypes.string,
+  getLinkTextForItem: PropTypes.func,
+  getAriaLabelForItem: PropTypes.func,
 }
 
 export default FilteredCollectionList

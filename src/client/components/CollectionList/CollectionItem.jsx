@@ -90,82 +90,103 @@ const CollectionItem = ({
   footerRenderer,
   footerdata,
   showTagsInMetadata = false,
-}) => (
-  <ItemWrapper data-test="collection-item">
-    {/* tags take precidence over badges as they are the newer style, however not all components
-     have been updated so the component needs to handle rendering both props */}
-    {tags && tags.length > 0 && !showTagsInMetadata && (
-      <StyledBadgesWrapper data-test="collection-item-tags">
-        {renderTags(tags)}
-      </StyledBadgesWrapper>
-    )}
+  getLinkText,
+  getAriaLabel,
+  ...itemProps
+}) => {
+  const itemDataForCustomFunctions = { headingText, metadata, ...itemProps }
 
-    {!tags && badges && (
-      <StyledBadgesWrapper data-test="collection-item-badges">
-        {badges.map((badge) => (
-          <Badge key={badge.text} borderColour={badge.borderColour}>
-            {badge.text}
-          </Badge>
-        ))}
-      </StyledBadgesWrapper>
-    )}
+  const linkTextToDisplay = getLinkText
+    ? getLinkText(itemDataForCustomFunctions)
+    : headingText
 
-    {titleRenderer ? (
-      titleRenderer(headingText, headingUrl)
-    ) : headingUrl ? (
-      <StyledHeader>
-        {useReactRouter ? (
-          <AccessibleLink
-            showUnderline={false}
-            as={RouterLink}
-            to={headingUrl}
-            onClick={onClick}
-          >
-            {headingText}
-          </AccessibleLink>
-        ) : (
-          <AccessibleLink
-            showUnderline={false}
-            href={headingUrl}
-            onClick={onClick}
-          >
-            {headingText}
-          </AccessibleLink>
-        )}
-      </StyledHeader>
-    ) : (
-      <StyledHeader>{headingText}</StyledHeader>
-    )}
-    {subheading ? (
-      subheadingUrl ? (
-        <StyledSubheading data-test="collection-item-subheading" fontSize={19}>
-          <AccessibleLink href={subheadingUrl}>{subheading}</AccessibleLink>
-        </StyledSubheading>
+  const ariaLabelToUse = getAriaLabel
+    ? getAriaLabel(itemDataForCustomFunctions)
+    : undefined
+
+  return (
+    <ItemWrapper data-test="collection-item">
+      {/* tags take precidence over badges as they are the newer style, however
+      not all components have been updated so the component needs to handle
+      rendering both props */}
+      {tags && tags.length > 0 && !showTagsInMetadata && (
+        <StyledBadgesWrapper data-test="collection-item-tags">
+          {renderTags(tags)}
+        </StyledBadgesWrapper>
+      )}
+
+      {!tags && badges && (
+        <StyledBadgesWrapper data-test="collection-item-badges">
+          {badges.map((badge) => (
+            <Badge key={badge.text} borderColour={badge.borderColour}>
+              {badge.text}
+            </Badge>
+          ))}
+        </StyledBadgesWrapper>
+      )}
+
+      {titleRenderer ? (
+        titleRenderer(linkTextToDisplay, headingUrl)
+      ) : headingUrl ? (
+        <StyledHeader>
+          {useReactRouter ? (
+            <AccessibleLink
+              showUnderline={false}
+              as={RouterLink}
+              to={headingUrl}
+              onClick={onClick}
+              aria-label={ariaLabelToUse}
+            >
+              {linkTextToDisplay}
+            </AccessibleLink>
+          ) : (
+            <AccessibleLink
+              showUnderline={false}
+              href={headingUrl}
+              onClick={onClick}
+              aria-label={ariaLabelToUse}
+            >
+              {linkTextToDisplay}
+            </AccessibleLink>
+          )}
+        </StyledHeader>
       ) : (
-        <StyledSubheading data-test="collection-item-subheading">
-          {subheading}
-        </StyledSubheading>
-      )
-    ) : null}
+        <StyledHeader>{linkTextToDisplay}</StyledHeader>
+      )}
+      {subheading ? (
+        subheadingUrl ? (
+          <StyledSubheading
+            data-test="collection-item-subheading"
+            fontSize={19}
+          >
+            <AccessibleLink href={subheadingUrl}>{subheading}</AccessibleLink>
+          </StyledSubheading>
+        ) : (
+          <StyledSubheading data-test="collection-item-subheading">
+            {subheading}
+          </StyledSubheading>
+        )
+      ) : null}
 
-    {showTagsInMetadata && (
-      <StyledInlineTagWrapper>{renderTags(tags)}</StyledInlineTagWrapper>
-    )}
-    {metadataRenderer ? (
-      metadataRenderer(metadata)
-    ) : (
-      <Metadata rows={metadata} />
-    )}
-    {buttons && <StyledButtonWrapper>{buttons}</StyledButtonWrapper>}
-    {footerRenderer && (
-      <StyledFooterWrapper>{footerRenderer(footerdata)} </StyledFooterWrapper>
-    )}
-  </ItemWrapper>
-)
+      {showTagsInMetadata && (
+        <StyledInlineTagWrapper>{renderTags(tags)}</StyledInlineTagWrapper>
+      )}
+      {metadataRenderer ? (
+        metadataRenderer(metadata)
+      ) : (
+        <Metadata rows={metadata} />
+      )}
+      {buttons && <StyledButtonWrapper>{buttons}</StyledButtonWrapper>}
+      {footerRenderer && (
+        <StyledFooterWrapper>{footerRenderer(footerdata)} </StyledFooterWrapper>
+      )}
+    </ItemWrapper>
+  )
+}
 
 CollectionItem.propTypes = {
   headingUrl: PropTypes.string,
-  headingText: PropTypes.string.isRequired,
+  headingText: PropTypes.string,
   subheading: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
   subheadingUrl: PropTypes.string,
   badges: PropTypes.arrayOf(
@@ -184,7 +205,7 @@ CollectionItem.propTypes = {
     PropTypes.shape({
       label: PropTypes.string,
       key: PropTypes.string,
-      value: PropTypes.node.isRequired,
+      value: PropTypes.node,
     })
   ),
   type: PropTypes.string,
@@ -192,6 +213,8 @@ CollectionItem.propTypes = {
   titleRenderer: PropTypes.func,
   buttonRenderer: PropTypes.func,
   footerRenderer: PropTypes.func,
+  getLinkText: PropTypes.func,
+  getAriaLabel: PropTypes.func,
 }
 
 export default CollectionItem
