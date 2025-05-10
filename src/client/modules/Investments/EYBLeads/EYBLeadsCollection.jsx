@@ -25,6 +25,38 @@ import {
   InputPlaceholder,
 } from '../../../components/SkeletonPlaceholder'
 
+const getEybLeadLinkText = (item) =>
+  item.headingText || 'EYB Lead company name not available'
+
+const getEybLeadAriaLabel = (item) => {
+  const companyName = item.headingText || 'unknown'
+  let valueLabel = 'unknown'
+  let sector = 'unknown'
+  let landDate = 'unknown'
+
+  if (item.tags) {
+    const valueTag = item.tags.find((tag) => tag.dataTest === 'value-label')
+    if (valueTag && valueTag.text) {
+      valueLabel = valueTag.text
+    }
+  }
+
+  if (item.metadata) {
+    const sectorItem = item.metadata.find((meta) => meta.label === 'Sector')
+    if (sectorItem && sectorItem.value) {
+      sector = sectorItem.value
+    }
+    const landDateItem = item.metadata.find(
+      (meta) => meta.label === 'Estimated land date'
+    )
+    if (landDateItem && landDateItem.value) {
+      landDate = landDateItem.value
+    }
+  }
+
+  return `EYB Lead for ${companyName}. Value ${valueLabel}. Sector ${sector}. Estimated land date ${landDate}.`
+}
+
 const EYBLeadCollection = ({
   filterOptions,
   payload,
@@ -120,6 +152,8 @@ const EYBLeadCollection = ({
           sortby: '-triage_created',
         }}
         selectedFilters={selectedFilters}
+        getLinkTextForItem={getEybLeadLinkText}
+        getAriaLabelForItem={getEybLeadAriaLabel}
       >
         <CollectionFilters taskProps={collectionListMetadataTask}>
           &nbsp;

@@ -15,6 +15,7 @@ import {
 } from '../../../components'
 
 import { LABELS } from './constants'
+import labels from './labels'
 
 import {
   ID,
@@ -33,6 +34,32 @@ import {
   companyCollectionListTask,
   companyCollectionListMetadataTask,
 } from '../utils'
+
+const getCompanyLinkText = (item) =>
+  item.headingText || 'DBT doesn’t know the company name yet'
+
+const getCompanyAriaLabel = (item) => {
+  const companyName = item.headingText || 'unknown'
+  let sector = 'unknown'
+  let addressValue = 'unknown'
+
+  if (item.metadata) {
+    const sectorItem = item.metadata.find(
+      (meta) => meta.label === labels.companyDetailsLabels.sector
+    )
+    if (sectorItem && sectorItem.value != null) {
+      sector = sectorItem.value || 'unknown'
+    }
+
+    const addressItem = item.metadata.find(
+      (meta) => meta.label === labels.address.companyAddress
+    )
+    if (addressItem && addressItem.value != null) {
+      addressValue = addressItem.value || 'unknown'
+    }
+  }
+  return `Company ${companyName}. Sector ${sector}. Address ${addressValue}.`
+}
 
 const CompaniesCollection = ({
   payload,
@@ -74,6 +101,8 @@ const CompaniesCollection = ({
         entityName="company"
         entityNamePlural="companies"
         addItemUrl="/companies/create"
+        getLinkTextForItem={getCompanyLinkText}
+        getAriaLabelForItem={getCompanyAriaLabel}
         sanitizeFiltersForAnalytics={({
           name,
           ukPostcode,

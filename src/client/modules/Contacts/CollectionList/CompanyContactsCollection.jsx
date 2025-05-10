@@ -17,6 +17,29 @@ import {
 } from './state'
 import AccessibleLink from '../../../components/Link'
 
+const getContactLinkText = (item) =>
+  item.headingText || 'Contact name not available'
+
+const getContactAriaLabel = (item) => {
+  const contactName = item.headingText || 'unknown'
+  let companyName = 'unknown'
+  let jobTitle = 'unknown'
+
+  if (item.metadata) {
+    const companyItem = item.metadata.find((meta) => meta.label === 'Company')
+    if (companyItem && companyItem.value != null) {
+      companyName = companyItem.value
+    }
+    const jobTitleItem = item.metadata.find(
+      (meta) => meta.label === 'Job title'
+    )
+    if (jobTitleItem && jobTitleItem.value != null) {
+      jobTitle = jobTitleItem.value
+    }
+  }
+  return `Contact ${contactName}. Company ${companyName}. Job title ${jobTitle}.`
+}
+
 const CompanyContactsCollection = ({
   payload,
   optionMetadata,
@@ -76,6 +99,8 @@ const CompanyContactsCollection = ({
                 sortby: 'modified_on:desc',
                 page: 1,
               }}
+              getLinkTextForItem={getContactLinkText}
+              getAriaLabelForItem={getContactAriaLabel}
             />
           </CompanyLayout>
         )}

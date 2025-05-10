@@ -46,6 +46,28 @@ const StyledCheckboxGroup = styled(Filters.CheckboxGroup)`
   margin-bottom: ${SPACING.SCALE_2};
 `
 
+const getInteractionLinkText = (item) =>
+  item.headingText || 'Interaction subject not available'
+
+const getInteractionAriaLabel = (item) => {
+  const subject = item.headingText || 'unknown'
+  let companyName = 'unknown'
+  let date = 'unknown'
+
+  if (item.metadata) {
+    const companyItem = item.metadata.find((meta) => meta.label === 'Company')
+    if (companyItem && companyItem.value != null) {
+      companyName = companyItem.value
+    }
+
+    const dateItem = item.metadata.find((meta) => meta.label === 'Date')
+    if (dateItem && dateItem.value != null) {
+      date = dateItem.value
+    }
+  }
+  return `Interaction ${subject}. Company ${companyName}. Date ${date}.`
+}
+
 const InteractionCollection = ({
   payload,
   optionMetadata,
@@ -132,6 +154,8 @@ const InteractionCollection = ({
           ...sanitizeFilter(advisers),
           ...sanitizeFilter(teams),
         })}
+        getLinkTextForItem={getInteractionLinkText}
+        getAriaLabelForItem={getInteractionAriaLabel}
       >
         <CollectionFilters taskProps={collectionListMetadataTask}>
           <Filters.CheckboxGroup

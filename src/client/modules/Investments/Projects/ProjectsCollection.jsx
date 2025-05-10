@@ -38,6 +38,35 @@ import AccessibleLink from '../../../components/Link'
 const StyledParagraph = styled(Paragraph)`
   font-size: ${FONT_SIZE.SIZE_16};
 `
+
+const getProjectLinkText = (item) =>
+  item.headingText || 'Project name not available'
+
+const getProjectAriaLabel = (item) => {
+  const projectName = item.headingText || 'unknown'
+  let investor = 'unknown'
+  let sector = 'unknown'
+  let landDate = 'unknown'
+
+  if (item.metadata) {
+    const investorItem = item.metadata.find((meta) => meta.label === 'Investor')
+    if (investorItem && investorItem.value) {
+      investor = investorItem.value
+    }
+    const sectorItem = item.metadata.find((meta) => meta.label === 'Sector')
+    if (sectorItem && sectorItem.value) {
+      sector = sectorItem.value
+    }
+    const landDateItem = item.metadata.find(
+      (meta) => meta.label === 'Estimated land date'
+    )
+    if (landDateItem && landDateItem.value) {
+      landDate = landDateItem.value
+    }
+  }
+  return `Project ${projectName}. Investor ${investor}. Sector ${sector}. Estimated land date ${landDate}.`
+}
+
 const StyledDetails = styled(Details)`
   margin-bottom: 0;
   span {
@@ -139,6 +168,8 @@ const ProjectsCollection = ({
           page: 1,
           sortby: 'created_on:desc',
         }}
+        getLinkTextForItem={getProjectLinkText}
+        getAriaLabelForItem={getProjectAriaLabel}
       >
         <CollectionFilters taskProps={collectionListMetadataTask}>
           {company && (
