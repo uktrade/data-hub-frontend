@@ -7,16 +7,16 @@
     "date-fns": "^4.1.0",
     "express": "^5.1.0",
     "ini": "^5.0.0",
-    "json-schema-faker": "^0.5.8",
+    "json-schema-faker": "^0.5.9",
     "lodash": "^4.17.21",
-    "nodemon": "^3.1.9",
+    "nodemon": "^3.1.10",
     "seedrandom": "^3.0.5"
   },
   "devDependencies": {
     "@babel/core": "^7.26.10",
-    "@babel/plugin-syntax-import-assertions": "^7.26.0",
-    "@babel/runtime": "^7.27.0",
-    "@faker-js/faker": "^9.6.0"
+    "@babel/plugin-syntax-import-assertions": "^7.27.1",
+    "@babel/runtime": "^7.27.1",
+    "@faker-js/faker": "^9.7.0"
   },
   "engines": {
     "node": "22.12.0"
