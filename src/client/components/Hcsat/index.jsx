@@ -4,7 +4,7 @@ import styled from 'styled-components'
 
 import { Paragraph } from 'govuk-react'
 
-import { FONT_WEIGHTS, MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
+import { FONT_WEIGHTS } from '@govuk-react/constants'
 
 import { FOOTER_TEXT, FOOTER_BORDER_TOP } from '../../../client/utils/colours'
 
@@ -12,21 +12,11 @@ import Step1 from './step1'
 import Step2 from './step2'
 import { apiProxyAxios } from '../Task/utils'
 
-const StyledHcsat = styled('section')({
+const StyledHcsat = styled('aside')({
   borderTop: `1px solid ${FOOTER_BORDER_TOP}`,
   color: `${FOOTER_TEXT}`,
-  maxWidth: '960px',
   minHeight: '40px',
   padding: '20px 0',
-  marginLeft: SPACING.SCALE_3,
-  marginRight: SPACING.SCALE_3,
-  [MEDIA_QUERIES.LARGESCREEN]: {
-    marginLeft: SPACING.SCALE_5,
-    marginRight: SPACING.SCALE_5,
-  },
-  '@media only screen and (min-width:1020px)': {
-    margin: '0 auto',
-  },
 })
 
 const StyledParagraph = styled(Paragraph)({
@@ -75,7 +65,7 @@ export default function Hcsat() {
   }
 
   return (
-    <StyledHcsat data-test="hcsat">
+    <StyledHcsat data-test="hcsat" aria-label="Is this page useful?">
       {!formComplete ? (
         !showAdditionalFeedback && !submittedFeedbackId ? (
           <Step1 handleUserNo={handleUserNo} handleUserYes={handleUserYes} />
