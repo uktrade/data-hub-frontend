@@ -13,7 +13,7 @@
     "seedrandom": "^3.0.5"
   },
   "devDependencies": {
-    "@babel/core": "^7.26.10",
+    "@babel/core": "^7.27.1",
     "@babel/plugin-syntax-import-assertions": "^7.26.0",
     "@babel/runtime": "^7.27.0",
     "@faker-js/faker": "^9.6.0"
