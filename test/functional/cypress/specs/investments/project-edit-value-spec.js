@@ -1,3 +1,4 @@
+import { FDI_TYPES } from '../../../../../src/client/modules/Investments/Projects/constants'
 import { INVESTMENT_PROJECT_STAGES } from '../../fakers/constants'
 import { clickButton } from '../../support/actions'
 
@@ -39,13 +40,14 @@ const testNumberOfNewJobs = ({ required, value }) =>
       'have.text',
       required ? 'Number of new jobs (required)' : 'Number of new jobs'
     )
-
-    required
-      ? cy.contains('An expansion project must always have at least 1 new job')
-      : cy
-          .contains('An expansion project must always have at least 1 new job')
-          .should('not.exist')
   })
+
+const assertJobFieldLabel = (fieldSelector, label, required) => {
+  cy.get(fieldSelector).should(
+    'have.text',
+    required ? `${label} (required)` : `${label} (optional)`
+  )
+}
 
 const setupProjectFaker = (overrides) =>
   investmentProjectFaker({
@@ -1407,112 +1409,186 @@ describe('Edit the value details of a project', () => {
     }
   )
 
-  context('Number of jobs error handling', () => {
-    context('When editing an FDI project', () => {
-      context('With involvement', () => {
-        const expansionProject = setupProjectFaker({
-          stage: INVESTMENT_PROJECT_STAGES.active,
+  context('Requirement and validation of job-related fields', () => {
+    const fillNonJobFields = () => {
+      cy.get('[data-test="client-cannot-provide-total-investment-yes"]').click()
+      cy.get('[data-test="total-investment-input"]').type(20000000)
+      cy.get(
+        '[data-test="client-cannot-provide-foreign-investment-yes"]'
+      ).click()
+      cy.get('[data-test="foreign-equity-investment-input"]').type(15000000)
+      cy.get('[data-test="foreign-equity-investment-input"]').click()
+      cy.get('[data-test="government-assistance-yes"]').click()
+      cy.get('[data-test="r-and-d-budget-yes"]').click()
+      cy.get('[data-test="non-fdi-r-and-d-budget-yes"]').click()
+      cy.get('[data-test="new-tech-to-uk-yes"]').click()
+      cy.get('[data-test="export-revenue-yes"]').click()
+    }
+
+    context(
+      'when editing the value of an FDI project with no involvement (at any stage)',
+      () => {
+        const fdiNoInvolvementProject = setupProjectFaker({
           investment_type: {
             name: 'FDI',
             id: 'foo',
           },
           level_of_involvement: {
-            name: 'Foo',
+            name: 'No Involvement',
             id: 'bar',
           },
         })
+
         beforeEach(() => {
-          setup(expansionProject)
+          setup(fdiNoInvolvementProject)
         })
-        testNumberOfNewJobs({
-          required: true,
+
+        it('should mark all job fields as optional', () => {
+          assertJobFieldLabel(
+            '[data-test="field-number_new_jobs"]',
+            'Number of new jobs',
+            false
+          )
+          assertJobFieldLabel(
+            '[data-test="field-average_salary"]',
+            'Average salary of new jobs',
+            false
+          )
+          assertJobFieldLabel(
+            '[data-test="field-number_safeguarded_jobs"]',
+            'Number of safeguarded jobs',
+            false
+          )
         })
-        it('should show an error if the number of new jobs is empty', () => {
+
+        it('should not show errors for empty job fields', () => {
+          fillNonJobFields()
+
           cy.get('[data-test="submit-button"]').click()
-          assertErrorSummary(['Value for number of new jobs is required'])
+
+          assertNotExists('[data-test="error-number_new_jobs"]')
+          assertNotExists('[data-test="error-average_salary"]')
+          assertNotExists('[data-test="error-number_safeguarded_jobs"]')
         })
-        it('should show an error if the number of new jobs is 0', () => {
-          cy.get('[data-test="number-new-jobs-input"]').type(0)
-          cy.get('[data-test="submit-button"]').click()
-          assertErrorSummary(['Number of new jobs must be greater than 0'])
-        })
-        it('should not show an error if the number of new jobs is 1', () => {
-          cy.get('[data-test="number-new-jobs-input"]').type(1)
-          cy.get('[data-test="submit-button"]').click()
-          assertNotExists('[data-test="summary-form-errors"]')
-        })
+      }
+    )
+
+    context('FDI Expansion project', () => {
+      const expansionFDIProject = setupProjectFaker({
+        investment_type: {
+          name: 'FDI',
+          id: 'foo',
+        },
+        fdi_type: {
+          name: FDI_TYPES.expansionOfExistingSiteOrActivity.label,
+          id: FDI_TYPES.expansionOfExistingSiteOrActivity.value,
+        },
       })
 
-      context('With no involvement', () => {
-        const expansionProject = setupProjectFaker({
-          stage: INVESTMENT_PROJECT_STAGES.active,
-          investment_type: {
-            name: 'FDI',
-            id: 'foo',
-          },
-          level_of_involvement: null,
-        })
-        beforeEach(() => {
-          setup(expansionProject)
-        })
+      beforeEach(() => {
+        setup(expansionFDIProject)
+      })
 
-        testNumberOfNewJobs({
-          required: false,
-        })
+      it('should mark all job fields as required', () => {
+        cy.get('[data-test="field-number_new_jobs"]').should(
+          'contain.text',
+          'Number of new jobs (required)'
+        )
+        assertJobFieldLabel(
+          '[data-test="field-average_salary"]',
+          'Average salary of new jobs',
+          true
+        )
+        assertJobFieldLabel(
+          '[data-test="field-number_safeguarded_jobs"]',
+          'Number of safeguarded jobs',
+          true
+        )
+      })
 
-        it('should show an error if the number of new jobs is empty', () => {
-          cy.get('[data-test="submit-button"]').click()
-          cy.contains('Value for number of new jobs is required').should(
-            'not.exist'
-          )
-        })
+      it('should show the hint text about requiring at least 1 new job', () => {
+        cy.get('[data-test="field-number_new_jobs"]').contains(
+          'An expansion project must always have at least 1 new job'
+        )
+      })
 
-        it('should not show an error if the number of new jobs is 0', () => {
-          cy.get('[data-test="number-new-jobs-input"]').type(0)
-          cy.get('[data-test="submit-button"]').click()
-          cy.contains('Number of new jobs must be greater than 0').should(
-            'not.exist'
-          )
-        })
+      it('should show error if number of new jobs is 0', () => {
+        cy.get('[data-test="number-new-jobs-input"]').type(0)
 
-        it('should not show an error if the number of new jobs is 1', () => {
-          cy.get('[data-test="number-new-jobs-input"]').type(1)
-          cy.get('[data-test="submit-button"]').click()
-          assertNotExists('[data-test="summary-form-errors"]')
-        })
+        // Fill in other job fields to satisfy requirements
+        cy.get('[data-test="average-salary-below-25-000"]').click()
+        cy.get('[data-test="number-safeguarded-jobs-input"]').type(0)
+
+        cy.get('[data-test="submit-button"]').click()
+
+        assertErrorSummary(['Number of new jobs must be greater than 0'])
+      })
+
+      it('should not show error if number of new jobs is >= 1', () => {
+        fillNonJobFields()
+
+        // Fill in job related fields
+        cy.get('[data-test="number-new-jobs-input"]').type(1)
+        cy.get('[data-test="average-salary-below-25-000"]').click()
+        cy.get('[data-test="number-safeguarded-jobs-input"]').type(0)
+
+        cy.get('[data-test="submit-button"]').click()
+
+        assertNotExists('[data-test="error-number_new_jobs"]')
       })
     })
 
-    context('When editing an non expansion project', () => {
-      it('should show an error or hint text if number of new jobs is empty and it is a non FDI project', () => {
-        const nonFdiProject = setupProjectFaker({
-          stage: INVESTMENT_PROJECT_STAGES.active,
-          investment_type: {
-            name: 'non-FDI',
-            id: '3d2c94e4-7871-465c-a7f7-45651eeffc64',
-          },
-          fdi_type: null,
-          gva_multiplier: null,
-        })
-        setup(nonFdiProject)
-        cy.get('[data-test="field-number_new_jobs"]').should(
-          'not.contain',
-          '[data-test="hint-text"]'
+    context('Other FDI project at prospect stage', () => {
+      const otherFDIProspectProject = setupProjectFaker({
+        stage: INVESTMENT_PROJECT_STAGES.prospect,
+        investment_type: {
+          name: 'FDI',
+          id: 'foo',
+        },
+        fdi_type: {
+          name: ' Other',
+          id: 'bar',
+        },
+      })
+
+      beforeEach(() => {
+        setup(otherFDIProspectProject)
+      })
+
+      it('should mark the fields as required based on stage validation', () => {
+        assertJobFieldLabel(
+          '[data-test="field-number_new_jobs"]',
+          'Number of new jobs',
+          true
         )
+        assertJobFieldLabel(
+          '[data-test="field-average_salary"]',
+          'Average salary of new jobs',
+          false
+        )
+        assertJobFieldLabel(
+          '[data-test="field-number_safeguarded_jobs"]',
+          'Number of safeguarded jobs',
+          false
+        )
+      })
+
+      it('should show errors for only new jobs', () => {
+        fillNonJobFields()
+
         cy.get('[data-test="submit-button"]').click()
+
         assertErrorSummary(['Value for number of new jobs is required'])
       })
-      it('should show an error or hint text if number of new jobs is empty and it is not an expansion FDI project', () => {
-        const nonExpansionFdiProject = setupProjectFaker({
-          stage: INVESTMENT_PROJECT_STAGES.active,
-        })
-        setup(nonExpansionFdiProject)
-        cy.get('[data-test="field-number_new_jobs"]').should(
-          'not.contain',
-          '[data-test="hint-text"]'
-        )
+
+      it('should allow 0 new jobs', () => {
+        fillNonJobFields()
+
+        cy.get('[data-test="number-new-jobs-input"]').type(0)
+
         cy.get('[data-test="submit-button"]').click()
-        assertErrorSummary(['Value for number of new jobs is required'])
+
+        assertNotExists('[data-test="error-number_new_jobs"]')
       })
     })
   })
