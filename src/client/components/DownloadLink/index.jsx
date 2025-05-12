@@ -23,8 +23,8 @@ const DownloadLink = ({ statusLabel, fileId }) => {
     setIsLoading(true)
     try {
       const response = await apiProxyAxios.get(`v4/document/${fileId}/download`)
-      if (response.data && response.data.download_url) {
-        window.open(response.data.download_url, '_blank', 'noopener noreferrer')
+      if (response.data && response.data.document_url) {
+        window.open(response.data.document_url, '_blank', 'noopener noreferrer')
       } else {
         throw new Error('Download URL not found in response')
       }
