@@ -47,7 +47,7 @@ Ensure you have [gcloud CLI installed](https://cloud.google.com/sdk/docs/install
 > If you have authentication issues such as: `Denied: Unauthenticated request. Unauthenticated requests do not have permission "artifactregistry.repositories.uploadArtifacts" on resource "projects/sre-docker-registry/locations/us/repositories/gcr.io" (or it may not exist)`, try running: `gcloud auth configure-docker gcr.io`.
 
 ```bash
-export VERSION=5.1.1 # Increment this version each time when you edit Dockerfile.
+export VERSION=5.2.0 # Increment this version each time when you edit Dockerfile.
 
 docker build -f Dockerfile.dependencies -t data-hub-frontend-dependencies . --platform linux/amd64
 
