@@ -12,7 +12,7 @@ import Step1 from './step1'
 import Step2 from './step2'
 import { apiProxyAxios } from '../Task/utils'
 
-const StyledHcsat = styled('section')({
+const StyledHcsat = styled('aside')({
   borderTop: `1px solid ${FOOTER_BORDER_TOP}`,
   color: `${FOOTER_TEXT}`,
   minHeight: '40px',
@@ -65,7 +65,7 @@ export default function Hcsat() {
   }
 
   return (
-    <StyledHcsat data-test="hcsat">
+    <StyledHcsat data-test="hcsat" aria-label="Is this page useful?">
       {!formComplete ? (
         !showAdditionalFeedback && !submittedFeedbackId ? (
           <Step1 handleUserNo={handleUserNo} handleUserYes={handleUserYes} />
