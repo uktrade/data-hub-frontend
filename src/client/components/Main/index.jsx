@@ -37,8 +37,10 @@ const Main = ({ children, ...props }) => (
     id="main-content"
     data-test="bodyMainContent"
   >
-    <InnerContainer>{children}</InnerContainer>
-    <Hcsat />
+    <InnerContainer>
+      {children}
+      <Hcsat />
+    </InnerContainer>
   </OuterContainer>
 )
 
