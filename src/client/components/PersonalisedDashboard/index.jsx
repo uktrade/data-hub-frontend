@@ -40,6 +40,7 @@ import {
   DataHubFeed,
 } from '../../components'
 import FlashMessages from '../LocalHeader/FlashMessages'
+import Hcsat from '../Hcsat'
 
 const SearchBackground = styled('div')`
   background-color: ${BLUE};
@@ -164,6 +165,7 @@ const PersonalisedDashboard = ({
             )}
           </Task.Status>
         </aside>
+        <Hcsat />
       </CustomContainer>
     </>
   )

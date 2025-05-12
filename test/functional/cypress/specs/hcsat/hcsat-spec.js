@@ -24,4 +24,14 @@ describe('HCSAT', () => {
       cy.get('[data-test="hcsat"]').contains('Is this page useful?')
     })
   })
+
+  context('displays on PersonalisedDashboard page', () => {
+    beforeEach(() => {
+      cy.visit(urls.dashboard.index())
+    })
+
+    it('should show HCSAT fields', () => {
+      cy.get('[data-test="hcsat"]').contains('Is this page useful?')
+    })
+  })
 })
