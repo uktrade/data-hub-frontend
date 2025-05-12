@@ -14,19 +14,12 @@ const exportWin = {
 }
 
 describe('Editing a rejected export win', () => {
-  it('should render a customer feedback link when the win is rejected', () => {
+  it('should not render a customer feedback link when the win is rejected', () => {
     cy.intercept('GET', '/api-proxy/v4/export-win/*', exportWin).as(
       'apiGetExportWin'
     )
     cy.visit(urls.companies.exportWins.editSummary(company.id, exportWin.id))
-    cy.wait('@apiGetExportWin')
-    cy.get('[data-test="customer-feedback"]')
-      .should('exist')
-      .should('have.text', 'Customer feedback')
-      .should(
-        'have.attr',
-        'href',
-        urls.companies.exportWins.customerFeedback(company.id, exportWin.id)
-      )
+    cy.wait(['@apiGetExportWin'])
+    cy.get('[data-test="customer-feedback"]').should('not.exist')
   })
 })
