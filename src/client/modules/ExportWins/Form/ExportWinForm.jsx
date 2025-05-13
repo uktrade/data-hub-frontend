@@ -164,7 +164,7 @@ const ExportWinForm = ({
                 </Form>
                 {currentStepName === steps.SUMMARY && (
                   <VerticalSpacerWithMarginBottom>
-                    {winStatus !== WIN_STATUS.PENDING && (
+                    {winStatus === WIN_STATUS.CONFIRMED && (
                       <AccessibleLink
                         as={ReactRouterLink}
                         data-test="customer-feedback"
