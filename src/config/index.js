@@ -127,7 +127,6 @@ const config = {
       region: envVars.INVESTMENT_DOCUMENT_AWS_REGION,
     },
     documents: {
-      bucket: envVars.DOCUMENT_BUCKET,
       urlRoot: envVars.DOCUMENT_BUCKET_URL_ROOT,
     },
   },

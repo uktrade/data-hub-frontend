@@ -9,7 +9,7 @@ import {
   ProjectDocumentResource,
 } from '../../../../components/Resource'
 import urls from '../../../../../lib/urls'
-import { getVirusStatusDisplayFromLabel } from '../constants'
+import { getVirusStatusDisplayFromValue } from '../constants'
 import ProjectLayoutNew from '../../../../components/Layout/ProjectLayoutNew'
 import InvestmentName from '../InvestmentName'
 import AccessibleLink from '../../../../components/Link'
@@ -71,7 +71,7 @@ const ProjectEvidence = () => {
                             )}
                           </ProjectDocumentResource>
                         ) : (
-                          getVirusStatusDisplayFromLabel(document.status)
+                          getVirusStatusDisplayFromValue(document.status)
                         )
                       ) : (
                         <strong>

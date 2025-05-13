@@ -62,6 +62,13 @@ export const VIRUS_SCAN_STATUSES = {
   },
 }
 
+export const getVirusStatusDisplayFromValue = (value) => {
+  const entry = Object.entries(VIRUS_SCAN_STATUSES).find(
+    ([, statusObject]) => statusObject.value === value
+  )
+  return entry ? (entry[1].display ? entry[1].display : entry[1].label) : null
+}
+
 export const getVirusStatusDisplayFromLabel = (label) => {
   const entry = Object.entries(VIRUS_SCAN_STATUSES).find(
     ([, statusObject]) => statusObject.label === label

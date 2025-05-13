@@ -1,4 +1,4 @@
-const FILE_SIZES = {
+export const FILE_SIZES = {
   '1Mb': 1024 * 1024,
   '50Mb': 50 * 1024 * 1024,
   '5GB': 5000 * 1024 * 1024,

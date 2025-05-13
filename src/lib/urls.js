@@ -180,7 +180,7 @@ module.exports = {
     contacts: url('/companies', '/:companyId/contacts'),
     files: {
       index: url('/companies', '/:companyId/files'),
-      // download: url('/api-proxy/v4/document', '/:fileId/download'),
+      download: url('/api-proxy/v4/document', '/:fileId/download'),
       delete: url('/files', '/:fileId/delete'),
     },
     unarchive: url('/companies', '/:companyId/unarchive'),
