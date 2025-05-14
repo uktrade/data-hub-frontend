@@ -14,10 +14,7 @@ import {
 } from '../../../../../src/client/modules/Files/CollectionList/constants'
 import { companyFaker } from '../../fakers/companies'
 import { uploadableDocumentFaker } from '../../fakers/generic-documents'
-import {
-  FILE_SIZES,
-  MAX_FILE_SIZE_ERR_MSG,
-} from '../../../../../src/client/utils/file-upload-size'
+import { FILE_SIZES } from '../../../../../src/client/utils/file-upload-size'
 
 describe('SharePoint link file create for company', () => {
   const company = companyFaker()
@@ -173,18 +170,18 @@ describe('Upload file for company', () => {
     })
 
     it('should show an error if the file uploaded is greater than the max file size', () => {
-      const moreThanFiftyMb = FILE_SIZES['50Mb'] + 1
-      const bigFile = Cypress.Buffer.alloc(moreThanFiftyMb)
-      bigFile.write('X', moreThanFiftyMb)
+      const moreThanOneMb = FILE_SIZES['1Mb'] + 1
+      const bigFile = Cypress.Buffer.alloc(moreThanOneMb)
+      bigFile.write('X', moreThanOneMb)
       cy.get('input[type=file]').selectFile({
         contents: bigFile,
-        fileName: 'more-than50mb.txt',
+        fileName: 'more-than1mb.txt',
         mimeType: 'text/plain',
       })
       cy.get('[data-test="submit-button"').click()
       cy.get('[data-test="error-dialog')
         .should('exist')
-        .and('contain', [MAX_FILE_SIZE_ERR_MSG])
+        .and('contain', 'File must be no larger than 1Mb')
     })
   })
 })
