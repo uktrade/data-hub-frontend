@@ -188,7 +188,11 @@ const Step1 = ({ win, name }) => {
         required="Select if the information is correct or needs revising"
         options={[
           { label: 'I confirm this information is correct', value: 'yes' },
-          { label: 'Some of this information needs revising', value: 'no' },
+          {
+            label:
+              'Some of the information is incorrect,  please provide details on the next page',
+            value: 'no',
+          },
         ]}
       />
     </Step>
