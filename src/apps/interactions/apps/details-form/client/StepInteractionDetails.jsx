@@ -7,6 +7,7 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import axios from 'axios'
 import { SPACING_POINTS } from '@govuk-react/constants'
+import { ListItem, UnorderedList } from 'govuk-react'
 
 import { idNamesToValueLabels } from '../../../../../client/utils'
 import {
@@ -46,6 +47,9 @@ import urls from '../../../../../lib/urls'
 
 const StyledRelatedTradeAgreementsWrapper = styled.div`
   margin-bottom: ${SPACING_POINTS[6]}px;
+`
+const StyledUnorderedList = styled(UnorderedList)`
+  color: inherit;
 `
 
 const getServiceContext = (theme, kind, investmentProject) => {
@@ -387,18 +391,26 @@ const StepInteractionDetails = ({
             required="Enter business intelligence"
             hint={
               <>
-                Please summarise the information the business shared during this
-                interaction, including sufficient detail to convey the meaning
-                and significance of the topics covered.
-                <br />
-                <br />
-                Where available, include:
-                <br />• Opportunities, risks and/or anything affecting business
-                operations (company, sector or market) or investor sentiment
-                <br />• Quantify impacts and timescales (e.g. costs,
-                number/location of jobs created/lost)
-                <br />• Actions the business has or is proposing to take
-                <br />• Comments, questions or requests of HMG
+                <p>
+                  Please summarise the information the business shared during
+                  this interaction, including sufficient detail to convey the
+                  meaning and significance of the topics covered.
+                </p>
+                <p>Where available, include:</p>
+                <StyledUnorderedList listStyleType="bullet">
+                  <ListItem>
+                    Opportunities, risks and/or anything affecting business
+                    operations (company, sector or market) or investor sentiment
+                  </ListItem>
+                  <ListItem>
+                    Quantify impacts and timescales (e.g. costs, number/location
+                    of jobs created/lost)
+                  </ListItem>
+                  <ListItem>
+                    Actions the business has or is proposing to take
+                  </ListItem>
+                  <ListItem>Comments, questions or requests of HMG</ListItem>
+                </StyledUnorderedList>
               </>
             }
           />
