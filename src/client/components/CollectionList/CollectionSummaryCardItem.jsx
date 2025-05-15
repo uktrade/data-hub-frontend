@@ -16,9 +16,13 @@ const CollectionSummaryCardItem = ({ title, links, rows }) => (
           links.length > 0 &&
           links.map((link, index) => (
             <span key={`link-${index}`}>
-              <AccessibleLink href={link.url} {...link.attrs}>
-                {link.text}
-              </AccessibleLink>
+              {link.component ? (
+                link.component
+              ) : (
+                <AccessibleLink href={link.url} {...link.attrs}>
+                  {link.text}
+                </AccessibleLink>
+              )}
               {index < links.length - 1 && ' | '}
             </span>
           ))}
