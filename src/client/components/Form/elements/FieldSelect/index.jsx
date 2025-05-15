@@ -126,6 +126,15 @@ const FieldSelect = ({
     required,
     initialValue,
   })
+
+  const handleChange = (e) => {
+    onChange(e)
+    requestAnimationFrame(() => {
+      const el = document.getElementById(name)
+      el?.focus()
+    })
+  }
+
   return (
     <FieldWrapper
       {...{ name, label, legend, hint, error, boldLabel, className, style }}
@@ -133,7 +142,7 @@ const FieldSelect = ({
       <StyledSelect
         fullWidth={fullWidth}
         name={name}
-        onChange={onChange}
+        onChange={handleChange}
         onBlur={onBlur}
         meta={{ error, touched }}
         key={Array.isArray(options) && options.length > 0 ? value : undefined}
