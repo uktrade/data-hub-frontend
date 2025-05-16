@@ -1,7 +1,7 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
 
-import { TASK_GET_EXPORT_WIN, TASK_GET_EXPORT_PROJECT } from './state'
+import { TASK_GET_EXPORT_WIN } from './state'
 import ExportWinForm from './ExportWinForm'
 import ExportWin from '../../../components/Resource/ExportWin'
 import { CompanyResource } from '../../../components/Resource'
@@ -51,8 +51,8 @@ export const CreateExportWin = () => {
       subheading={<CompanyName companyId={companyId} />}
       exportId={exportId}
       companyId={companyId}
-      initialValuesTaskName={exportId ? TASK_GET_EXPORT_PROJECT : null}
-      initialValuesPayload={{ id: exportId }}
+      initialValuesTaskName={TASK_GET_EXPORT_WIN}
+      initialValuesPayload={{ exportId }}
       breadcrumbs={[
         {
           link: urls.dashboard.index(),

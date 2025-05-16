@@ -5,6 +5,10 @@ import {
   transformExportProjectForForm,
 } from './transformers'
 
+import getContactFromQuery from '../../../../client/utils/getContactFromQuery'
+
+import { ID as STORE_ID } from './state'
+
 const exportWinEndpoint = '/v4/export-win'
 
 export const getExportProject = ({ id }) =>
@@ -24,6 +28,28 @@ export const saveExportWin = ({ exportWinId, payload }) => {
     : exportWinEndpoint
 
   return request(endpoint, payload)
+}
+
+export const getInitialFormValues = ({ id, exportId }) => {
+  if (id != null) {
+    return getExportWin({ id })
+  }
+  if (exportId != null) {
+    return getExportProject({ id: exportId })
+  }
+  const queryContact = getContactFromQuery()
+
+  const valuesFromStorage = JSON.parse(
+    window.sessionStorage.getItem(STORE_ID) || '{}'
+  )
+  window.sessionStorage.setItem(STORE_ID, '{}')
+  if (queryContact.label && queryContact.value) {
+    valuesFromStorage.company_contacts = {
+      label: queryContact.label,
+      value: queryContact.value,
+    }
+  }
+  return valuesFromStorage
 }
 
 export const resendExportWin = (id) =>

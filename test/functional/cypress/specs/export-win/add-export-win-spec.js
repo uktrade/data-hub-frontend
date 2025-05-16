@@ -8,6 +8,7 @@ import { exportWinsFaker } from '../../fakers/export-wins'
 import { contactFaker } from '../../fakers/contacts'
 import urls from '../../../../../src/lib/urls'
 import {
+  addNewContact,
   clickBackButton,
   clickContinueButton,
   clickSaveButton,
@@ -533,4 +534,143 @@ describe('Adding an export win', () => {
       )
     })
   })
+  context(
+    'When contact is added from the export win form',
+    { testIsolation: false },
+    () => {
+      const newContact = contactFaker()
+      before(() => {
+        cy.visit(officerDetailsStep)
+        cy.intercept('POST', `/api-proxy/v4/contact`, newContact).as(
+          'postContactApiRequest'
+        )
+      })
+
+      it('should not lose data already entered', () => {
+        fillOfficerDetails({
+          leadOfficer: 'David',
+          teamType: 'Investment (ITFG or IG)',
+          hqTeam: 'ITFG - E-Business Projects Team',
+        })
+
+        clickContinueAndAssertUrl(creditForThisWinStep)
+
+        fillCreditForThisWin({
+          contributingOfficer: 'John',
+          teamType: 'Trade (TD or ST)',
+          hqTeam: 'TD - Events - Education',
+        })
+
+        clickContinueAndAssertUrl(customerDetailsStep)
+
+        fillCustomerDetails({
+          location: 'Scotland',
+          potential: 'The company is a Medium Sized Business',
+          experience: 'Never exported',
+        })
+
+        cy.get('[data-test="add-a-new-contact-link"').click()
+        addNewContact(newContact)
+
+        cy.get('#company_contacts').should('have.value', newContact.name)
+        clickContinueAndAssertUrl(winDetailsStep)
+
+        fillWinDetails({
+          country: 'United states',
+          dateMonth: month,
+          dateYear: year,
+          description: 'Foo bar baz',
+          nameOfCustomerConfidential: true,
+          businessType: 'Contract',
+          exportValues: ['1000000', '1000000', '1000000', '1000000', '1000000'],
+          businessSuccessValues: [
+            '2000000',
+            '2000000',
+            '2000000',
+            '2000000',
+            '2000000',
+          ],
+          odiValues: ['3000000', '3000000', '3000000', '3000000', '3000000'],
+          goodsVsServices: 'goods',
+          nameOfExport: 'Biscuits',
+          sector: 'Advanced Engineering',
+        })
+
+        clickContinueAndAssertUrl(supportProvidedStep)
+
+        fillSupportProvided({
+          hvc: 'Aus',
+          typeOfSupport: 'Mar',
+          associatedProgramme: 'Aft',
+          personallyConfirmed: true,
+          lineManagerConfirmed: true,
+        })
+
+        clickContinueAndAssertUrl(summaryStep)
+      })
+
+      it('should POST to the API and redirect to the success page', () => {
+        cy.get('[data-test="confirm-and-send-to-customer"]').should(
+          'have.text',
+          'Confirm and send to customer'
+        )
+        cy.get('[data-test="confirm-and-send-to-customer"]').click()
+        cy.wait('@apiPostExportWin').then(({ request }) => {
+          expect(omit(request.body, '_csrf')).to.deep.equal({
+            lead_officer: '100',
+            team_type: '42bdaf2e-ae19-4589-9840-5dbb67b50add', // Investment (ITFG or IG)
+            hq_team: '1e5aec69-c581-4356-b0ca-1f710d3d077d', // ITFG - E-Business Projects Team
+            team_members: [],
+            contributing_advisers: [
+              {
+                adviser: '101',
+                team_type: 'a4839e09-e30e-492c-93b5-8ab2ef90b891', // Trade (TD or ST)
+                hq_team: '2f883a06-5811-4668-878f-92a1e3de548d', // TD - Events - Education
+              },
+            ],
+            company_contacts: [newContact.id],
+            customer_location: UK_REGIONS.SCOTLAND,
+            business_potential: 'e4d74957-60a4-4eab-a17b-d4c7b792ad25',
+            export_experience: '051a0362-d1a9-41c0-8a58-3171e5f59a8e',
+            country: '81756b9a-5d95-e211-a939-e4115bead28a',
+            date: `${year}-${month}-01`,
+            description: 'Foo bar baz',
+            name_of_customer: 'confidential',
+            name_of_customer_confidential: true,
+            business_type: 'Contract',
+            breakdowns: [
+              ...createBreakdown({
+                type: winTypeId.EXPORT,
+                values: ['1000000', '1000000', '1000000', '1000000', '1000000'],
+              }),
+              ...createBreakdown({
+                type: winTypeId.BUSINESS_SUCCESS,
+                values: ['2000000', '2000000', '2000000', '2000000', '2000000'],
+              }),
+              ...createBreakdown({
+                type: winTypeId.ODI,
+                values: ['3000000', '3000000', '3000000', '3000000', '3000000'],
+              }),
+            ],
+            goods_vs_services: '456e951d-a633-4f21-afde-d41381407efe',
+            name_of_export: 'Biscuits',
+            sector: 'af959812-6095-e211-a939-e4115bead28a',
+            hvc: '0240d283-ec44-4f33-b501-e2bf14e337b5', // Australia Consumer Goods & Retail: E004
+            type_of_support: ['5560d2ee-b75b-48b0-b6ca-36d43653be61'], // Market entry advice and support – DIT/FCO in UK
+            associated_programme: ['b6f5c31a-aa45-4ae0-89bd-2eb3ab943f76'], // Afterburner
+            is_personally_confirmed: true,
+            is_line_manager_confirmed: true,
+            total_expected_export_value: 5000000,
+            total_expected_non_export_value: 10000000,
+            total_expected_odi_value: 15000000,
+            company: company.id,
+            adviser: '7d19d407-9aec-4d06-b190-d3f404627f21',
+          })
+        })
+        cy.location().should(({ pathname }) => {
+          expect(pathname).to.match(successPageRegex)
+        })
+      })
+    }
+  )
 })
