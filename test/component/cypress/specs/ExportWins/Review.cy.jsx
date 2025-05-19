@@ -142,7 +142,7 @@ const assertReviewForm = ({ agree }) => {
     inputName: 'agree_with_win',
     options: [
       'I confirm this information is correct',
-      'Some of this information needs revising',
+      'Some of the information is incorrect,  please provide details on the next page',
     ],
     selectIndex: agree ? 0 : 1,
   })
