@@ -168,7 +168,7 @@
     "@storybook/react": "^8.6.12",
     "@storybook/react-webpack5": "^8.6.12",
     "@storybook/test": "^8.6.12",
-    "babel-loader": "^9.2.1",
+    "babel-loader": "^10.0.0",
     "babel-plugin-istanbul": "7.0.0",
     "chai": "^4.5.0",
     "chai-subset": "^1.6.0",
