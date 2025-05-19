@@ -3,7 +3,6 @@
   "main": "server.js",
   "type": "module",
   "dependencies": {
-    "body-parser": "^2.2.0",
     "date-fns": "^4.1.0",
     "express": "^5.1.0",
     "ini": "^5.0.0",

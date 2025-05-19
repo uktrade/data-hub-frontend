@@ -1,5 +1,4 @@
 import express from 'express'
-import bodyParser from 'body-parser'
 
 import _ from 'lodash'
 
@@ -9,8 +8,8 @@ const config = {
 
 const app = express()
 
-app.use(bodyParser.urlencoded({ extended: true }))
-app.use(bodyParser.json())
+app.use(express.urlencoded({ extended: true }))
+app.use(express.json())
 
 // TODO: Remove these legacy Sandbox vars after all the mocks are refactored
 global.state = {}
