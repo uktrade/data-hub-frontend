@@ -1,9 +1,9 @@
 import { companies } from '../../../../../src/lib/urls'
 import { companyFaker } from '../../fakers/companies'
-import { genericDocumentsListFaker } from '../../fakers/generic-documents'
+import { genericDocumentListFaker } from '../../fakers/generic-documents'
 
 describe('Files Collections Sort', () => {
-  const genericDocumentsList = [...genericDocumentsListFaker(3)]
+  const genericDocumentsList = [...genericDocumentListFaker(3)]
   const company = companyFaker()
   const defaultSortApiUrl = `/api-proxy/v4/document/?related_object_id=${company.id}&limit=10&offset=0&sortby=-created_on`
   const oldestFirstSortApiUrl = `/api-proxy/v4/document/?related_object_id=${company.id}&limit=10&offset=0&sortby=created_on`

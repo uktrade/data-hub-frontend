@@ -33,13 +33,47 @@ export const PROPOSITION_STATUSES = {
 }
 
 export const VIRUS_SCAN_STATUSES = {
-  not_virus_scanned: 'File not virus scanned',
-  virus_scanning_scheduled: 'Virus scanning scheduled',
-  virus_scanning_in_progress:
-    'File is being scanned, try again in a few moments',
-  virus_scanning_failed: (
-    <strong>Virus scanning failed, contact your administrator</strong>
-  ),
+  notVirusScanned: {
+    value: 'not_virus_scanned',
+    label: 'Not virus scanned',
+    display: 'File not virus scanned',
+  },
+  virusScanningScheduled: {
+    value: 'virus_scanning_scheduled',
+    label: 'Virus scanning scheduled',
+  },
+  virusScanningInProgress: {
+    value: 'virus_scanning_in_progress',
+    label: 'Virus scanning in progress',
+    display: 'File is being scanned, try again in a few moments',
+  },
+  virusScanningFailed: {
+    value: 'virus_scanning_failed',
+    label: 'Virus scanning failed.',
+    display: <strong>Virus scanning failed, contact your administrator</strong>,
+  },
+  virusScanned: {
+    value: 'virus_scanned',
+    label: 'Virus scanned',
+  },
+  deletionPending: {
+    value: 'deletion_pending',
+    label: 'Deletion pending',
+  },
+}
+
+export const getVirusStatusDisplayFromValue = (value) => {
+  const entry = Object.entries(VIRUS_SCAN_STATUSES).find(
+    ([, statusObject]) => statusObject.value === value
+  )
+  return entry ? (entry[1].display ? entry[1].display : entry[1].label) : null
+}
+
+export const getVirusStatusDisplayFromLabel = (label) => {
+  const entry = Object.entries(VIRUS_SCAN_STATUSES).find(
+    ([, statusObject]) => statusObject.label === label
+  )
+  return entry ? (entry[1].display ? entry[1].display : entry[1].label) : null
 }
 
 export const LABELS = {

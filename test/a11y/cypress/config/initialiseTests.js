@@ -3,12 +3,12 @@ import {
   RELATED_OBJECT_TYPES,
 } from '../../../../src/client/modules/Files/CollectionList/constants'
 import urls from '../../../../src/lib/urls'
-import { genericDocumentFaker } from '../../../functional/cypress/fakers/generic-documents'
+import { sharePointDocumentFaker } from '../../../functional/cypress/fakers/generic-documents'
 import { testIdentityNumbers } from './testIdentityNumbers'
 
 export const initialiseTests = {
   [`/files/${testIdentityNumbers[':fileId']}/delete`]: () => {
-    const genericDocument = genericDocumentFaker({
+    const genericDocument = sharePointDocumentFaker({
       id: testIdentityNumbers[':fileId'],
       related_object_id: testIdentityNumbers[':companyId'],
       related_object: {

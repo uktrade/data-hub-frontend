@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { formatDateWithYearMonth } from '../../../../utils/date'
-import { VIRUS_SCAN_STATUSES } from '../constants'
+import { getVirusStatusDisplayFromLabel } from '../constants'
 
 import urls from '../../../../../lib/urls'
 import AccessibleLink from '../../../../components/Link'
@@ -103,7 +103,7 @@ export const transformDocumentStatus = (
           projectId,
           originalFilename
         )
-      : VIRUS_SCAN_STATUSES[status]
+      : getVirusStatusDisplayFromLabel(status)
   return documentStatus
 }
 

@@ -8,6 +8,7 @@ const GOOGLE_TAG_MNGR = 'https://*.googletagmanager.com'
 const GOOGLE_ANALYTICS = 'https://*.google-analytics.com'
 const INVESTMENT_DOCUMENT_BUCKET_PROJECT = `https://s3.${config.s3Buckets.investmentDocuments.region}.amazonaws.com/${config.s3Buckets.investmentDocuments.bucket}/evidencedocument/`
 const INVESTMENT_DOCUMENT_BUCKET_PROPOSITION = `https://s3.${config.s3Buckets.investmentDocuments.region}.amazonaws.com/${config.s3Buckets.investmentDocuments.bucket}/propositiondocument/`
+const DOCUMENT_BUCKET_URL_ROOT = config.s3Buckets.documents.urlRoot
 
 module.exports = function headers(
   req,
@@ -28,7 +29,7 @@ module.exports = function headers(
       // Taken from https://developers.google.com/tag-platform/security/guides/csp#google_analytics_4_google_analytics
       `script-src ${selfAndNonce} ${GOOGLE_TAG_MNGR}`,
       `img-src 'self' ${GOOGLE_ANALYTICS} ${GOOGLE_TAG_MNGR}`,
-      `connect-src 'self' ${GOOGLE_ANALYTICS} ${GOOGLE_TAG_MNGR} https://*.analytics.google.com ${INVESTMENT_DOCUMENT_BUCKET_PROJECT} https://raven.ci.uktrade.io ${INVESTMENT_DOCUMENT_BUCKET_PROPOSITION}`,
+      `connect-src 'self' ${GOOGLE_ANALYTICS} ${GOOGLE_TAG_MNGR} https://*.analytics.google.com ${INVESTMENT_DOCUMENT_BUCKET_PROJECT} https://raven.ci.uktrade.io ${INVESTMENT_DOCUMENT_BUCKET_PROPOSITION} ${DOCUMENT_BUCKET_URL_ROOT}`,
     ].join(';'),
     // This is equivalent to `frame-ancestors 'none'` in the above CSP policy,
     // but keeping it here for older browsers

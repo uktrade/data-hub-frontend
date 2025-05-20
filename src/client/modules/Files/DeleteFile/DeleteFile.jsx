@@ -14,6 +14,11 @@ import {
 } from '../CollectionList/constants'
 import { RED } from '../../../utils/colours'
 
+const documentTypeText = {
+  sharePoint: 'Delete SharePoint link',
+  uploadable: 'Delete uploaded file',
+}
+
 const CompanyName = ({ id }) => (
   <CompanyResource.Inline id={id}>
     {(company) => company.name}
@@ -28,7 +33,7 @@ const SharePointForm = ({ file }) => {
       analyticsFormName="deleteSharePointLink"
       redirectTo={() => urls.companies.files.index(file?.relatedObjectId)}
       flashMessage={() => 'SharePoint link successfully deleted'}
-      submitButtonLabel={`Delete ${DOCUMENT_TYPES.SHAREPOINT.label}`}
+      submitButtonLabel={documentTypeText.sharePoint}
       cancelButtonLabel="Cancel"
       submitButtonColour={RED}
       cancelRedirectTo={() => urls.companies.files.index(file?.relatedObjectId)}
@@ -52,6 +57,30 @@ const SharePointForm = ({ file }) => {
   )
 }
 
+const UploadableFileForm = ({ file }) => {
+  return (
+    <Form
+      id="delete-file-form"
+      submissionTaskName={TASK_DELETE_FILE}
+      analyticsFormName="deleteFile"
+      redirectTo={() => urls.companies.files.index(file?.relatedObjectId)}
+      flashMessage={() => 'File successfully deleted'}
+      submitButtonLabel={documentTypeText.uploadable}
+      cancelButtonLabel="Cancel"
+      submitButtonColour={RED}
+      cancelRedirectTo={() => urls.companies.files.index(file?.relatedObjectId)}
+      transformPayload={() => file?.id}
+    >
+      <H2>Are you sure you want to permanently delete this file?</H2>
+      <p>{file.document.title ? ` ${file.document.originalFilename}` : ''}</p>
+      <p>
+        This will permanently remove the file for all Data Hub users. This can
+        not be undone.
+      </p>
+    </Form>
+  )
+}
+
 const DeleteFile = () => {
   const { fileId } = useParams()
   const [searchParams] = useSearchParams()
@@ -60,12 +89,18 @@ const DeleteFile = () => {
   const documentType = searchParams.get('document_type')
 
   const breadcrumbs = [{ link: '/', text: 'Home' }]
-  let pageTitle = null
+  let pageTitlePrefix = null
   let heading = null
 
   if (relatedObjectType === RELATED_OBJECT_TYPES.COMPANY) {
-    pageTitle = `${DOCUMENT_TYPES.SHAREPOINT.label} - Files - ${(<CompanyName id={relatedObjectId} />)} - Companies`
-    heading = `Delete ${DOCUMENT_TYPES.SHAREPOINT.label}`
+    pageTitlePrefix =
+      documentType === DOCUMENT_TYPES.SHAREPOINT.type
+        ? documentTypeText.sharePoint
+        : documentTypeText.uploadable
+    heading =
+      documentType === DOCUMENT_TYPES.SHAREPOINT.type
+        ? documentTypeText.sharePoint
+        : documentTypeText.uploadable
     breadcrumbs.push(
       { link: urls.companies.index(), text: 'Companies' },
       {
@@ -78,22 +113,34 @@ const DeleteFile = () => {
       },
       {
         text:
-          documentType === DOCUMENT_TYPES.SHAREPOINT.type &&
-          `Delete ${DOCUMENT_TYPES.SHAREPOINT.label}`,
+          documentType === DOCUMENT_TYPES.SHAREPOINT.type
+            ? documentTypeText.sharePoint
+            : documentTypeText.uploadable,
       }
     )
   }
 
   return (
     <DefaultLayout
-      pageTitle={pageTitle}
+      pageTitle={
+        <>
+          {pageTitlePrefix} - Files - <CompanyName id={relatedObjectId} /> -
+          Companies
+        </>
+      }
       heading={heading}
       breadcrumbs={breadcrumbs}
     >
       <FormLayout setWidth={FORM_LAYOUT.TWO_THIRDS}>
-        <FileResource id={fileId}>
-          {(file) => <SharePointForm file={file} />}
-        </FileResource>
+        {documentType === DOCUMENT_TYPES.SHAREPOINT.type ? (
+          <FileResource id={fileId}>
+            {(file) => <SharePointForm file={file} />}
+          </FileResource>
+        ) : (
+          <FileResource id={fileId}>
+            {(file) => <UploadableFileForm file={file} />}
+          </FileResource>
+        )}
       </FormLayout>
     </DefaultLayout>
   )

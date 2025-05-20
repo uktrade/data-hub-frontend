@@ -8,7 +8,10 @@ export const DOCUMENT_TYPES = {
     type: 'documents.sharepointdocument',
     label: 'SharePoint link',
   },
-  UPLOADABLE: { type: 'documents.uploadable', label: 'Upload a new doucment' },
+  UPLOADABLE: {
+    type: 'documents.uploadabledocument',
+    label: 'Uploaded file',
+  },
 }
 
 export const RELATED_OBJECT_TYPES = {
