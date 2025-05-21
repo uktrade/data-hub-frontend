@@ -2,13 +2,17 @@ import React from 'react'
 import { useLocation } from 'react-router-dom'
 import styled from 'styled-components'
 
-import { GREEN, WHITE } from '../../../utils/colours'
+import { BLACK, GREEN, WHITE } from '../../../utils/colours'
 import { StatusMessage } from '../../../components'
 
 import Layout from './Layout'
 
 export const StyledStatusMessage = styled(StatusMessage)({
+  color: BLACK,
   background: WHITE,
+  fontWeight: 'normal',
+  padding: '5px 10px',
+
   '& > *:first-child': {
     marginTop: 0,
   },
