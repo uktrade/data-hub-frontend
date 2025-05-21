@@ -29,7 +29,7 @@ router.get(
 )
 
 // Add investment from Companies
-router.get('/create/:companyId?', create.start.renderCreatePage)
+router.get('/create{/:companyId}', create.start.renderCreatePage)
 
 // Add investment from Investments
 router.get('/create', create.start.renderCreatePage)

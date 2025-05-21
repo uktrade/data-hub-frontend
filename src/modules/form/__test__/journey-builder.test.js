@@ -1,5 +1,4 @@
 const express = require('express')
-const bodyParser = require('body-parser')
 const request = require('supertest')
 const { endsWith } = require('lodash')
 
@@ -19,8 +18,8 @@ describe('#build', () => {
     this.journeyBuilder = require('../journey-builder')
 
     this.app = express()
-    this.app.use(bodyParser.json())
-    this.app.use(bodyParser.urlencoded({ extended: true }))
+    this.app.use(express.json())
+    this.app.use(express.urlencoded({ extended: true }))
     this.app.set('views', `${process.cwd()}/src/templates`)
     this.app.set('view engine', 'njk')
     this.app.use((req, res, next) => {

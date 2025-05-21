@@ -239,7 +239,7 @@ describe('urls', () => {
       expect(urls.search.index()).to.equal('/search')
 
       const type = faker.lorem.word()
-      expect(urls.search.type.route).to.equal('/:searchPath?')
+      expect(urls.search.type.route).to.equal('/:searchPath')
       expect(urls.search.type(type)).to.equal(`/search/${type}`)
     })
   })

@@ -3,7 +3,7 @@ export const urlTestExclusions = [
   { url: '/investment-projects/' },
   { url: '/companies/:companyId/investments/large-capital-profile' },
   { url: '/search/' },
-  { url: '/search/:searchPath?' },
+  { url: '/search{/:searchPath}' },
   { url: '/companies/:companyId/overview' },
   // 404 errors and or no sandbox data available
   { url: '/companies/:companyId/audit' },

@@ -1,7 +1,6 @@
 require('dotenv').config()
 
 const path = require('path')
-const bodyParser = require('body-parser')
 const compression = require('compression')
 const express = require('express')
 const flash = require('connect-flash')
@@ -128,8 +127,8 @@ app.use(breadcrumbs.setHome())
 app.use(redisCheck)
 app.use(sessionStore)
 
-app.use(bodyParser.urlencoded({ extended: true, limit: '1mb' }))
-app.use(bodyParser.json())
+app.use(express.urlencoded({ extended: true, limit: '1mb' }))
+app.use(express.json())
 
 app.use(currentJourney())
 

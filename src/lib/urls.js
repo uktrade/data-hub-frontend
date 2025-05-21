@@ -56,7 +56,6 @@ function url(mountPoint, subMountPoint, path) {
 
   getUrl.mountPoint = mountPoint
   getUrl.route = path
-
   return getUrl
 }
 
@@ -396,7 +395,7 @@ module.exports = {
   },
   search: {
     index: url('/search'),
-    type: url('/search', '/:searchPath?'),
+    type: url('/search', '/:searchPath'),
   },
   interactions: {
     ...createInteractionsSubApp('/interactions'),

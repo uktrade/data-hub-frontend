@@ -19,6 +19,6 @@ router.use(
 // TODO: Get rid of this and fetch the event on the client
 router.param('eventId', getEventDetails)
 router.get('/:eventId/attendees/create/:contactId', createAttendee)
-router.get('/:eventId*', renderEventsView)
+router.get('/:eventId/{*splat}', renderEventsView)
 
 module.exports = router
