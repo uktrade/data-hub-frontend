@@ -149,13 +149,13 @@ const Layout = ({ children, title, supertitle, headingContent }) => {
       <MainBar>Department for Business and Trade</MainBar>
       <HeaderBackground />
       <Header>
+        {headingContent}
         <p>{supertitle}</p>
         <Title>{title}</Title>
         <CookieConsentConfirmation
           dismiss={dismiss}
           onDismiss={() => setDismiss(true)}
         />
-        {headingContent}
       </Header>
       <Main>{children}</Main>
       <GridCellFooter
