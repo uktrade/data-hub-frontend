@@ -318,34 +318,45 @@ const WinDetailsTable = ({ values, goToStep, isEditing }) => {
   )
 }
 
-const SupportGivenTable = ({ values, goToStep }) => (
-  <SummaryTable
-    caption="Support given"
-    data-test="support-given"
-    actions={
-      <StyledButtonLink
-        onClick={() => {
-          goToStep(steps.SUPPORT_PROVIDED)
-        }}
-      >
-        Edit
-      </StyledButtonLink>
-    }
-  >
-    <SummaryTable.Row heading="High Value Campaign (HVC) code">
-      {values?.hvc?.label}
-    </SummaryTable.Row>
-    <SummaryTable.ListRow
-      heading="What type of support was given?"
-      value={values.type_of_support}
-      emptyValue="Not set"
-    />
-    <SummaryTable.ListRow
-      heading="Was there a DBT campaign or event that contributed to this win?"
-      value={values.associated_programme}
-      emptyValue="Not set"
-    />
-  </SummaryTable>
+const SupportGivenTable = ({ values, goToStep, isEditing }) => (
+  <>
+    <SummaryTable
+      caption="Support given"
+      data-test="support-given"
+      actions={
+        <StyledButtonLink
+          onClick={() => {
+            goToStep(steps.SUPPORT_PROVIDED)
+          }}
+        >
+          Edit
+        </StyledButtonLink>
+      }
+    >
+      <SummaryTable.Row heading="High Value Campaign (HVC) code">
+        {values?.hvc?.label}
+      </SummaryTable.Row>
+      <SummaryTable.ListRow
+        heading="What type of support was given?"
+        value={values.type_of_support}
+        emptyValue="Not set"
+      />
+      <SummaryTable.ListRow
+        heading="Was there a DBT campaign or event that contributed to this win?"
+        value={values.associated_programme}
+        emptyValue="Not set"
+      />
+    </SummaryTable>
+    {isEditing && (
+      <StyledInsetText data-test="support-given-contact">
+        <ContactLink
+          sections={['Support given']}
+          shouldPluralize={false}
+          hideSectionNames={true}
+        />
+      </StyledInsetText>
+    )}
+  </>
 )
 
 const AdditionalInformation = ({ values, isEditing }) => {
@@ -394,6 +405,15 @@ const AdditionalInformation = ({ values, isEditing }) => {
           </>
         )}
       </StyledSummaryTable>
+      {isEditing && (
+        <StyledInsetText data-test="additional-info-contact">
+          <ContactLink
+            sections={['Additional information']}
+            shouldPluralize={false}
+            hideSectionNames={true}
+          />
+        </StyledInsetText>
+      )}
     </>
   )
 }

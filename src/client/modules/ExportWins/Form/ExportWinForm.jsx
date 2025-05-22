@@ -42,14 +42,20 @@ const StyledParagraph = styled('p')({
   fontWeight: 'bold',
 })
 
-export const ContactLink = ({ sections = [], shouldPluralize = true }) => {
+export const ContactLink = ({
+  sections = [],
+  shouldPluralize = true,
+  hideSectionNames = false,
+}) => {
   const section = shouldPluralize
     ? `${pluralize('section', sections.length)}:`
     : 'section.'
+
   return (
     <>
       Contact <AccessibleLink href={`mailto:${EMAIL}`}>{EMAIL}</AccessibleLink>{' '}
-      if you need to update the {section} {sections.join(', ')}
+      if you need to update the {section}
+      {!hideSectionNames && ` ${sections.join(', ')}`}
     </>
   )
 }
