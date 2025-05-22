@@ -9,6 +9,7 @@ const subApps = fs.readdirSync(__dirname, { withFileTypes: true })
 const appsRouters = []
 const reactRoutes = [
   '/companies',
+  '/companies-htmx',
   '/contacts',
   '/events',
   '/interactions',
