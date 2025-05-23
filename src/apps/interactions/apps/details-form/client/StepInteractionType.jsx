@@ -88,6 +88,30 @@ const StepInteractionType = () => {
             value: THEMES.TRADE_AGREEMENT,
           },
           {
+            label: 'Domestic',
+            value: THEMES.DOMESTIC,
+            children: (
+              <FieldRadios
+                label="What would you like to record?"
+                name="kind"
+                dataTestPrefix="domestic"
+                required="Select interaction type"
+                options={[
+                  {
+                    label: 'A standard interaction',
+                    hint: 'For example, an email, phone call or meeting',
+                    value: KINDS.INTERACTION,
+                  },
+                  {
+                    label: 'A service you have provided',
+                    hint: 'For example, a significant assist or event',
+                    value: KINDS.SERVICE_DELIVERY,
+                  },
+                ]}
+              />
+            ),
+          },
+          {
             label: 'Other',
             value: THEMES.OTHER,
             children: (
