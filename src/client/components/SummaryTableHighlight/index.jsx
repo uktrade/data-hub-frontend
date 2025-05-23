@@ -4,7 +4,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { isEmpty } from 'lodash'
 import { typography } from '@govuk-react/lib'
-import { SPACING, FONT_SIZE } from '@govuk-react/constants'
+import { SPACING, FONT_SIZE, MEDIA_QUERIES } from '@govuk-react/constants'
 
 import { GREY_1, GREY_2 } from '../../utils/colours'
 
@@ -22,17 +22,26 @@ const StyledTable = styled(Table)`
   }
   margin: 0;
   margin-bottom: 34px;
+
   & > tbody {
     display: grid;
-    grid-template-columns: 1fr 1fr;
     grid-auto-rows: auto;
+
+    grid-template-columns: 1fr;
+    ${MEDIA_QUERIES.TABLET} {
+      grid-template-columns: 1fr 1fr;
+    }
   }
 
   .highlight-row:nth-child(odd) {
-    padding-right: 10px;
+    ${MEDIA_QUERIES.TABLET} {
+      padding-right: 10px;
+    }
   }
   .highlight-row:nth-child(even) {
-    padding-left: 10px;
+    ${MEDIA_QUERIES.TABLET} {
+      padding-left: 10px;
+    }
   }
 `
 
@@ -59,7 +68,10 @@ const StyledTableHighlightRow = styled(Table.Row)`
   border-bottom: 1px solid ${GREY_2};
   padding: 20px 0;
   margin-bottom: 25px;
-  grid-column: ${(props) => (props.$isHalf ? 'span 1' : '1/-1')};
+  grid-column: 1/-1;
+  ${MEDIA_QUERIES.TABLET} {
+    grid-column: ${(props) => (props.$isHalf ? 'span 1' : '1/-1')};
+  }
 `
 
 const StyledTableRow = styled(Table.Row)({
