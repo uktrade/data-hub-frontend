@@ -108,6 +108,7 @@
   "some_new_jobs": null,
   "number_new_jobs": 0,
   "will_new_jobs_last_two_years": null,
+  "actual_average_salary": 54321,
   "average_salary": {
     "name": "Below £25,000",
     "id": "2943bf3d-32dd-43be-8ad4-969b006dee7b"

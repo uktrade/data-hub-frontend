@@ -536,36 +536,18 @@ const assertFieldInputWithLegend = ({
         value && cy.wrap($el).should('have.attr', 'value', String(value) || '')
     )
 
-const assertFieldInput = ({
-  element,
-  label,
-  hint = undefined,
-  value = undefined,
-  ignoreHint = false,
-}) =>
-  cy
-    .wrap(element)
-    .find('label')
-    .should('have.text', label)
-    .parent()
-    .next()
-    .then(
-      ($el) =>
-        hint &&
-        cy
-          .wrap($el)
-          .should('have.text', hint || '')
-          .next()
-    )
-    .then(
-      //in the scenario where we don't need to validate what the hint is, but a hint is still
-      //being rendered, skip over the hint without validating it to get to the next element
-      ($el) => (ignoreHint && value ? cy.wrap($el).next() : undefined)
-    )
-    .find('input')
-    .then(($el) => {
-      value && cy.wrap($el).should('have.attr', 'value', String(value) || '')
-    })
+const assertFieldInput = ({ element, label, hint, value }) =>
+  cy.wrap(element).within(() => {
+    cy.get('label').should('have.text', label)
+
+    if (typeof hint === 'string' || hint) {
+      cy.get('[data-test="hint-text"]').should('have.text', hint)
+    }
+
+    if (typeof value === 'string' || value) {
+      cy.get('input').should('have.attr', 'value', value)
+    }
+  })
 
 const assertFieldInputNoLabel = ({ element, value = undefined }) =>
   cy

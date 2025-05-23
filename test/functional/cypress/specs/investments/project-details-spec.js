@@ -174,7 +174,7 @@ describe('Investment project details', () => {
           'Gross Value Added (GVA)': '£34,568',
           'Government assistance': 'Has government assistance',
           'New jobs': '0 new jobs',
-          'Average salary of new jobs': 'Below £25,000',
+          'Average salary of new jobs': '£54,321',
           'Safeguarded jobs': '11234 safeguarded jobs',
           'R&D budget': R_AND_D_FALSE,
           'Non-FDI R&D project': 'Find project',
@@ -212,6 +212,35 @@ describe('Investment project details', () => {
         )
       cy.get('[data-test="value-inset"]').should('not.exist')
       cy.get('[data-test="add-value-button"]').should('not.exist')
+    })
+  })
+
+  it('When actual_average_salary is empty and average_salary is not empty', () => {
+    const AVERAGE_SALARY = 'Average salary band'
+    cy.intercept('GET', '/api-proxy/v3/investment/*', {
+      body: {
+        ...fixtures.investment.investmentWithValue,
+        actual_average_salary: null,
+        average_salary: { name: AVERAGE_SALARY },
+      },
+    })
+    cy.visit('/investments/projects/foo/details')
+    assertSummaryTable({
+      dataTest: 'project-value-table',
+      showEditLink: false,
+      content: {
+        'Total investment': '£1,000,000',
+        'Capital expenditure value': '£200,000',
+        'Gross Value Added (GVA)': '£34,568',
+        'Government assistance': 'Has government assistance',
+        'New jobs': '0 new jobs',
+        'Average salary of new jobs': AVERAGE_SALARY,
+        'Safeguarded jobs': '11234 safeguarded jobs',
+        'R&D budget': R_AND_D_FALSE,
+        'Non-FDI R&D project': 'Find project',
+        'New-to-world tech': NEW_TECH_FALSE,
+        'Export revenue': EXPORT_REVENUE_TRUE,
+      },
     })
   })
 

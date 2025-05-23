@@ -388,11 +388,18 @@ const ProjectDetails = ({ currentAdviserId }) => {
                   value={project.numberNewJobs + ' new jobs'}
                 />
               )}
-              {project.averageSalary && (
-                <SummaryTable.TextRow
+              {typeof project.actualAverageSalary === 'number' ? (
+                <SummaryTable.CurrencyRow
                   heading="Average salary of new jobs"
-                  value={project.averageSalary?.name}
+                  value={project.actualAverageSalary}
                 />
+              ) : (
+                project.averageSalary && (
+                  <SummaryTable.TextRow
+                    heading="Average salary of new jobs"
+                    value={project.averageSalary?.name}
+                  />
+                )
               )}
               {(project.numberSafeguardedJobs ||
                 project.numberSafeguardedJobs === 0) && (
