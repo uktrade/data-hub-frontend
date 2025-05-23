@@ -102,6 +102,7 @@ const StyledTableHeaderCell = styled(Table.Cell)({
   border: 'none',
   fontWeight: 'normal',
   padding: '0',
+  wordBreak: 'break-word',
 })
 
 const StyledTableHighlightHalfCell = styled(Table.Cell)({
@@ -110,6 +111,7 @@ const StyledTableHighlightHalfCell = styled(Table.Cell)({
   lineHeight: '40px',
   padding: '0',
   border: 'none',
+  wordBreak: 'break-word',
 })
 
 SummaryTableHighlight.HighlightRow = ({
