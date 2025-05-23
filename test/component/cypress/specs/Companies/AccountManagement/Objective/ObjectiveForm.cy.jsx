@@ -134,7 +134,6 @@ describe('Objective form', () => {
         assertFieldInput({
           element,
           label: 'Objective subject',
-          ignoreHint: true,
           value: objective.subject,
         })
       })
@@ -143,7 +142,6 @@ describe('Objective form', () => {
         assertFieldTextarea({
           element,
           label: 'Objective detail (optional)',
-          ignoreHint: true,
           value: objective.detail,
         })
       })
@@ -152,7 +150,6 @@ describe('Objective form', () => {
         assertFieldDate({
           element,
           label: 'Target date',
-          ignoreHint: true,
           value: objective.target_date,
         })
       })
@@ -170,7 +167,6 @@ describe('Objective form', () => {
         assertFieldTextarea({
           element,
           label: 'Blocker description',
-          ignoreHint: true,
           value: objective.blocker_description,
         })
       })

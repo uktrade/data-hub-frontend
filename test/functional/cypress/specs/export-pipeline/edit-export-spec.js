@@ -127,7 +127,6 @@ describe('Export pipeline edit', () => {
           assertFieldInput({
             element,
             label: 'Export title',
-            ignoreHint: true,
             value: exportItem.title,
           })
         })
