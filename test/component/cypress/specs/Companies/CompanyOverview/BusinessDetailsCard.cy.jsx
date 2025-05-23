@@ -30,6 +30,13 @@ describe('BusinessDetailsCard', () => {
         assertSummaryTable({
           dataTest: 'business-details-container',
           content: {
+            Turnover: currencyGBP(companyGlobalUltimateAllDetails.turnoverGbp, {
+              maximumSignificantDigits: 2,
+              notation: 'compact',
+              compactDisplay: 'short',
+            }),
+            'Number of Employees':
+              companyGlobalUltimateAllDetails.numberOfEmployees,
             'Companies House': `${companyGlobalUltimateAllDetails.companyNumber} (opens in new tab)`,
             'Trading Address':
               companyGlobalUltimateAllDetails.address.line1 +
@@ -37,11 +44,6 @@ describe('BusinessDetailsCard', () => {
               companyGlobalUltimateAllDetails.address.town +
               companyGlobalUltimateAllDetails.address.postcode,
             Website: `${companyGlobalUltimateAllDetails.website} (opens in new tab)`,
-            Turnover: currencyGBP(companyGlobalUltimateAllDetails.turnoverGbp, {
-              maximumSignificantDigits: 2,
-            }),
-            'Number of Employees':
-              companyGlobalUltimateAllDetails.numberOfEmployees,
             'DBT Sector': companyGlobalUltimateAllDetails.sector.name,
             'Headquarter Location':
               companyGlobalUltimateAllDetails.globalUltimateCountry +
@@ -79,6 +81,16 @@ describe('BusinessDetailsCard', () => {
         assertSummaryTable({
           dataTest: 'business-details-container',
           content: {
+            Turnover: currencyGBP(
+              companyNoGlobalUltimateAllDetails.turnoverGbp,
+              {
+                maximumSignificantDigits: 2,
+                notation: 'compact',
+                compactDisplay: 'short',
+              }
+            ),
+            'Number of Employees':
+              companyNoGlobalUltimateAllDetails.numberOfEmployees,
             'Companies House': `${companyNoGlobalUltimateAllDetails.companyNumber} (opens in new tab)`,
             'Trading Address':
               companyNoGlobalUltimateAllDetails.address.line1 +
@@ -86,14 +98,6 @@ describe('BusinessDetailsCard', () => {
               companyNoGlobalUltimateAllDetails.address.town +
               companyNoGlobalUltimateAllDetails.address.postcode,
             Website: `${companyNoGlobalUltimateAllDetails.website} (opens in new tab)`,
-            Turnover: currencyGBP(
-              companyNoGlobalUltimateAllDetails.turnoverGbp,
-              {
-                maximumSignificantDigits: 2,
-              }
-            ),
-            'Number of Employees':
-              companyNoGlobalUltimateAllDetails.numberOfEmployees,
             'DBT Sector': companyNoGlobalUltimateAllDetails.sector.name,
           },
         })
@@ -123,16 +127,18 @@ describe('BusinessDetailsCard', () => {
       assertSummaryTable({
         dataTest: 'business-details-container',
         content: {
+          Turnover: currencyGBP(companyNonUK.turnoverGbp, {
+            maximumSignificantDigits: 2,
+            notation: 'compact',
+            compactDisplay: 'short',
+          }),
+          'Number of Employees': companyNonUK.numberOfEmployees,
           'Trading Address':
             companyNonUK.address.line1 +
             companyNonUK.address.line2 +
             companyNonUK.address.town +
             companyNonUK.address.postcode,
           Website: `${companyNonUK.website} (opens in new tab)`,
-          Turnover: currencyGBP(companyNonUK.turnoverGbp, {
-            maximumSignificantDigits: 2,
-          }),
-          'Number of Employees': companyNonUK.numberOfEmployees,
           'DBT Sector': companyNonUK.sector.name,
           'Headquarter Location':
             companyNonUK.globalUltimateCountry + 'View company tree',
@@ -163,10 +169,10 @@ describe('BusinessDetailsCard', () => {
       assertSummaryTable({
         dataTest: 'business-details-container',
         content: {
-          'Trading Address': 'Not set',
-          Website: 'Not set',
           Turnover: 'Not set',
           'Number of Employees': 'Not set',
+          'Trading Address': 'Not set',
+          Website: 'Not set',
           'DBT Sector': 'Not set',
         },
       })
@@ -192,13 +198,15 @@ describe('BusinessDetailsCard', () => {
       assertSummaryTable({
         dataTest: 'business-details-container',
         content: {
+          Turnover: currencyGBP(companyRegisteredAddressOnly.turnoverGbp, {
+            maximumSignificantDigits: 2,
+            notation: 'compact',
+            compactDisplay: 'short',
+          }),
+          'Number of Employees': companyRegisteredAddressOnly.numberOfEmployees,
           'Companies House': `${companyRegisteredAddressOnly.companyNumber} (opens in new tab)`,
           'Trading Address': 'Not set',
           Website: `${companyRegisteredAddressOnly.website} (opens in new tab)`,
-          Turnover: currencyGBP(companyRegisteredAddressOnly.turnoverGbp, {
-            maximumSignificantDigits: 2,
-          }),
-          'Number of Employees': companyRegisteredAddressOnly.numberOfEmployees,
           'DBT Sector': companyRegisteredAddressOnly.sector.name,
         },
       })
