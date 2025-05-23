@@ -1355,59 +1355,6 @@ describe('Edit the value details of a project', () => {
     })
   })
 
-  // context(
-  //   'When viewing a project created before a salary range is disabled',
-  //   () => {
-  //     it('should display the salary range for £25,000 - £29,000 when the project was created before the disable date', () => {
-  //       const project = setupProjectFaker({ created_on: '2016-02-05' })
-  //       setup(project)
-  //       cy.get('[data-test="field-actual_average_salary"]').then((element) => {
-  //         assertFieldInput({
-  //           element,
-  //           label: 'Average salary of new jobs (required)',
-  //           value: '54,321',
-  //         })
-  //       })
-  //     })
-  //   }
-  // )
-
-  // context(
-  //   'When viewing a project created on the same day a salary range is disabled',
-  //   () => {
-  //     it('should not display the salary range for £25,000 – £29,000', () => {
-  //       const project = setupProjectFaker({
-  //         created_on: '2016-03-05T12:00:00Z',
-  //       })
-  //       setup(project)
-  //       cy.get('[data-test="field-actual_average_salary"]').then((element) => {
-  //         assertFieldInput({
-  //           element,
-  //           label: 'Average salary of new jobs (required)',
-  //           value: '54,321',
-  //         })
-  //       })
-  //     })
-  //   }
-  // )
-
-  // context(
-  //   'When viewing a project created after a salary range is disabled',
-  //   () => {
-  //     it('should not display the salary range for £25,000 – £29,000', () => {
-  //       const project = setupProjectFaker({ created_on: '2016-04-02' })
-  //       setup(project)
-  //       cy.get('[data-test="field-actual_average_salary"]').then((element) => {
-  //         assertFieldInput({
-  //           element,
-  //           label: 'Average salary of new jobs (required)',
-  //           value: '54,321',
-  //         })
-  //       })
-  //     })
-  //   }
-  // )
-
   context('Requirement and validation of job-related fields', () => {
     const fillNonJobFields = () => {
       cy.get('[data-test="client-cannot-provide-total-investment-yes"]').click()
