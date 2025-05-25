@@ -209,7 +209,7 @@
     "reqres": "^3.0.1",
     "rewire": "^6.0.0",
     "seedrandom": "^3.0.5",
-    "sharp": "^0.34.0",
+    "sharp": "^0.34.2",
     "sinon": "^20.0.0",
     "sinon-chai": "^3.7.0",
     "std-mocks": "^2.0.0",
