@@ -63,7 +63,7 @@
   "dependencies": {
     "@govuk-react/constants": "^0.10.7",
     "@redux-devtools/extension": "^3.3.0",
-    "@reduxjs/toolkit": "^2.6.1",
+    "@reduxjs/toolkit": "^2.8.2",
     "@sentry/browser": "^9.10.1",
     "@sentry/node": "^9.6.0",
     "@sentry/react": "^9.6.0",
