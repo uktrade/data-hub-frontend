@@ -175,7 +175,7 @@
     "cypress": "^14.3.3",
     "cypress-axe": "^1.6.0",
     "eslint": "^9.23.0",
-    "eslint-config-prettier": "^10.1.1",
+    "eslint-config-prettier": "^10.1.5",
     "eslint-formatter-junit": "^8.40.0",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-jsx-a11y": "^6.10.2",
