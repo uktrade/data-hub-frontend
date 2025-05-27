@@ -30,26 +30,27 @@ export const saveExportWin = ({ exportWinId, payload }) => {
   return request(endpoint, payload)
 }
 
-export const getInitialFormValues = ({ id, exportId }) => {
-  if (id != null) {
-    return getExportWin({ id })
-  }
-  if (exportId != null) {
-    return getExportProject({ id: exportId })
-  }
-  const queryContact = getContactFromQuery()
+export const getInitialFormValues = async ({ id, exportId }) => {
+  const formValues = id != null ? await getExportWin({ id }) : {}
+  const exportProject =
+    exportId != null ? await getExportProject({ id: exportId }) : {}
 
-  const valuesFromStorage = JSON.parse(
-    window.sessionStorage.getItem(STORE_ID) || '{}'
-  )
-  window.sessionStorage.setItem(STORE_ID, '{}')
+  const valuesFromStorage =
+    JSON.parse(window.sessionStorage.getItem(STORE_ID)) || {}
+  window.sessionStorage.removeItem(STORE_ID)
+
+  const queryContact = getContactFromQuery()
   if (queryContact.label && queryContact.value) {
     valuesFromStorage.company_contacts = {
       label: queryContact.label,
       value: queryContact.value,
     }
   }
-  return valuesFromStorage
+  return {
+    ...formValues,
+    ...exportProject,
+    ...valuesFromStorage,
+  }
 }
 
 export const resendExportWin = (id) =>

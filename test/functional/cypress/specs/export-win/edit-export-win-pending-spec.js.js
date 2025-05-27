@@ -1,6 +1,9 @@
 import { exportWinsFaker } from '../../fakers/export-wins'
 import urls from '../../../../../src/lib/urls'
 import { company, formFields } from './constants'
+import { contactFaker } from '../../fakers/contacts'
+import { addNewContact } from '../../support/actions'
+import { assertUrl } from '../../support/assertions'
 
 const exportWin = exportWinsFaker()
 
@@ -37,33 +40,40 @@ describe('Editing a pending export win', () => {
 
   context('Officer details', () => {
     it('should render an edit status message', () => {
-      cy.visit(
-        urls.companies.exportWins.editOfficerDetails(company.id, exportWin.id)
-      )
+      cy.visit(urls.companies.exportWins.editSummary(company.id, exportWin.id))
       cy.wait(['@apiGetExportWin', '@apiTeamType', '@apiHqTeam'])
+      cy.get('[data-test="edit-officer-details"]').click()
       cy.get('[data-test="status-message"]').should(
         'have.text',
         'Contact exportwins@businessandtrade.gov.uk if you need to update the section: lead officer name'
+      )
+      assertUrl(
+        urls.companies.exportWins.editOfficerDetails(company.id, exportWin.id)
       )
     })
   })
 
   context('Credit for this win', () => {
     it('should not render an edit status message', () => {
-      cy.visit(
+      cy.visit(urls.companies.exportWins.editSummary(company.id, exportWin.id))
+      cy.wait(['@apiGetExportWin', '@apiTeamType', '@apiHqTeam'])
+      cy.get('[data-test="edit-credit-for-this-win"]').click()
+      cy.get('[data-test="status-message"]').should('not.exist')
+      assertUrl(
         urls.companies.exportWins.editCreditForThisWin(company.id, exportWin.id)
       )
-      cy.wait(['@apiGetExportWin', '@apiTeamType', '@apiHqTeam'])
-      cy.get('[data-test="status-message"]').should('not.exist')
     })
   })
 
   context('Customer details', () => {
+    const newContact = contactFaker()
     beforeEach(() => {
-      cy.visit(
-        urls.companies.exportWins.editCustomerDetails(company.id, exportWin.id)
+      cy.intercept('POST', `/api-proxy/v4/contact`, newContact).as(
+        'postContactApiRequest'
       )
+      cy.visit(urls.companies.exportWins.editSummary(company.id, exportWin.id))
       cy.wait(['@apiGetExportWin', '@apiTeamType', '@apiHqTeam'])
+      cy.get('[data-test="edit-customer-details"]').click()
     })
 
     it('should render an edit status message', () => {
@@ -73,10 +83,22 @@ describe('Editing a pending export win', () => {
           'have.text',
           'Contact exportwins@businessandtrade.gov.uk if you need to update the section: export experience'
         )
+      assertUrl(
+        urls.companies.exportWins.editCustomerDetails(company.id, exportWin.id)
+      )
     })
 
     it('should not render Export experience', () => {
       cy.get(formFields.customerDetails.experience).should('not.exist')
+    })
+
+    it('should allow adding new contact', () => {
+      cy.get('[data-test="add-a-new-contact-link"]').click()
+      addNewContact(newContact)
+      cy.get('#company_contacts').should('have.value', newContact.name)
+      assertUrl(
+        urls.companies.exportWins.editCustomerDetails(company.id, exportWin.id)
+      )
     })
   })
 
@@ -84,10 +106,9 @@ describe('Editing a pending export win', () => {
     const { winDetails } = formFields
 
     beforeEach(() => {
-      cy.visit(
-        urls.companies.exportWins.editWinDetails(company.id, exportWin.id)
-      )
+      cy.visit(urls.companies.exportWins.editSummary(company.id, exportWin.id))
       cy.wait(['@apiGetExportWin', '@apiTeamType', '@apiHqTeam'])
+      cy.get('[data-test="edit-win-details"]').click()
     })
 
     it('should render an edit status message', () => {
@@ -98,6 +119,9 @@ describe('Editing a pending export win', () => {
           'Contact exportwins@businessandtrade.gov.uk if you need to update the sections: ' +
             'summary of the support given, destination country, date won, type of win and value.'
         )
+      assertUrl(
+        urls.companies.exportWins.editWinDetails(company.id, exportWin.id)
+      )
     })
 
     it('should not render a hint', () => {
@@ -133,11 +157,13 @@ describe('Editing a pending export win', () => {
 
   context('Support provided', () => {
     it('should not render an edit status message', () => {
-      cy.visit(
+      cy.visit(urls.companies.exportWins.editSummary(company.id, exportWin.id))
+      cy.wait(['@apiGetExportWin'])
+      cy.get('[data-test="edit-support-given"]').click()
+      cy.get('[data-test="status-message"]').should('not.exist')
+      assertUrl(
         urls.companies.exportWins.editSupportProvided(company.id, exportWin.id)
       )
-      cy.wait(['@apiGetExportWin'])
-      cy.get('[data-test="status-message"]').should('not.exist')
     })
   })
 
@@ -151,6 +177,7 @@ describe('Editing a pending export win', () => {
           'Edit each section that needs changing then return to the summary page. ' +
           'When you are happy with all the changes save the page.'
       )
+      assertUrl(urls.companies.exportWins.editSummary(company.id, exportWin.id))
     })
 
     it('should render a lead officer name contact link', () => {

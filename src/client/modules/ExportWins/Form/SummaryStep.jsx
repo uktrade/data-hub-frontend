@@ -93,6 +93,8 @@ const OfficerDetailsTable = ({ values, goToStep, isEditing }) => (
       isEditing={isEditing}
       actions={
         <StyledButtonLink
+          type="button"
+          data-test="edit-officer-details"
           onClick={() => {
             goToStep(steps.OFFICER_DETAILS)
           }}
@@ -147,6 +149,8 @@ const CreditForThisWinTable = ({ values, goToStep }) => {
       data-test="credit-for-this-win"
       actions={
         <StyledButtonLink
+          type="button"
+          data-test="edit-credit-for-this-win"
           onClick={() => {
             goToStep(steps.CREDIT_FOR_THIS_WIN)
           }}
@@ -173,6 +177,8 @@ const CustomerDetailsTable = ({ values, goToStep, isEditing, companyId }) => (
       data-test="customer-details"
       actions={
         <StyledButtonLink
+          type="button"
+          data-test="edit-customer-details"
           onClick={() => {
             goToStep(steps.CUSTOMER_DETAILS)
           }}
@@ -246,6 +252,8 @@ const WinDetailsTable = ({ values, goToStep, isEditing }) => {
         data-test="win-details"
         actions={
           <StyledButtonLink
+            type="button"
+            data-test="edit-win-details"
             onClick={() => {
               goToStep(steps.WIN_DETAILS)
             }}
@@ -325,6 +333,8 @@ const SupportGivenTable = ({ values, goToStep, isEditing }) => (
       data-test="support-given"
       actions={
         <StyledButtonLink
+          type="button"
+          data-test="edit-support-given"
           onClick={() => {
             goToStep(steps.SUPPORT_PROVIDED)
           }}

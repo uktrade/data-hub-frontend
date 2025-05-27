@@ -120,6 +120,21 @@ const _Form = ({
     }
   }, [showStepInUrl, qsParams.step, steps])
 
+  useEffect(() => {
+    if (
+      showStepInUrl &&
+      props.currentStepName &&
+      props.currentStepName != qsParams.step
+    ) {
+      navigate({
+        search: qs.stringify({
+          ...qsParams,
+          step: props.currentStepName,
+        }),
+      })
+    }
+  }, [props.currentStepName])
+
   // Update form errors after getting a response from API
   useEffect(() => {
     if (result?.errors) {
