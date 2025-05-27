@@ -947,6 +947,100 @@ describe('Trade Agreement theme', () => {
   })
 })
 
+describe('Domestic theme - standard interaction', () => {
+  context('when viewing the form', () => {
+    beforeEach(() => {
+      spyOnRequest()
+      cy.visit(urls.companies.interactions.create(company.id))
+    })
+
+    testBreadcrumbs({
+      Home: urls.dashboard.index(),
+      Companies: urls.companies.index(),
+      [company.name]: urls.companies.detail(company.id),
+      ['Add interaction']: null,
+    })
+  })
+
+  context('when creating an domestic interaction', () => {
+    beforeEach(() => {
+      spyOnRequest()
+      cy.visit(urls.companies.interactions.create(company.id))
+
+      cy.contains('label', 'Domestic').click()
+      cy.contains('label', 'A standard interaction').click()
+      cy.contains('button', 'Continue').click()
+    })
+
+    it('should render all form fields', () => {
+      assertFormFields(cy.get('#interaction-details-form form'), [
+        ELEMENT_SERVICE_HEADER,
+        ELEMENT_SERVICE,
+        ELEMENT_SERVICE,
+        ELEMENT_RELATED_TRADE_AGREEMENT,
+        ELEMENT_PARTICIPANTS_HEADER,
+        ELEMENT_CONTACT,
+        ELEMENT_ADD_CONTACT_LINK,
+        ELEMENT_CONTACT_INFO_DETAILS,
+        ELEMENT_ADVISER,
+        ELEMENT_DETAILS_HEADER,
+        ELEMENT_DATE,
+        ELEMENT_COMMUNICATION_CHANNEL,
+        ELEMENT_SUMMARY,
+        ELEMENT_NOTES,
+        ELEMENT_BUSINESS_INTELLIGENCE_INFO,
+        ELEMENT_FEEDBACK_POLICY,
+        ELEMENT_COUNTRIES,
+        ELEMENT_STEP2_BUTTONS,
+      ])
+    })
+
+    const domestic_standard_theme_error_messages = [
+      'Select a service',
+      'Select at least one contact',
+      'Select a communication channel',
+      'Enter a summary',
+      'Select if the contact provided business intelligence',
+    ]
+
+    it('should validate the form', () => {
+      cy.contains('button', 'Add interaction').click()
+      assertErrorSummary(domestic_standard_theme_error_messages)
+    })
+
+    it('should validate the second tier service form field', () => {
+      fillSelect('[data-test=field-service]', 'Account management')
+      cy.contains('button', 'Add interaction').click()
+      assertErrorSummary(domestic_standard_theme_error_messages)
+    })
+
+    it('should save the interaction', () => {
+      submitForm(KINDS.INTERACTION, THEMES.DOMESTIC, {
+        service: 'Account management',
+        subservice: 'General',
+      })
+    })
+
+    it('should not persist form fields after navigating back', () => {
+      cy.url().should('include', '?step=interaction_details')
+      cy.contains(ELEMENT_SUMMARY.label)
+        .parent()
+        .next()
+        .find('input')
+        .type('Persisting summary')
+      cy.go('back')
+      cy.url().should('include', '?step=interaction_type')
+      cy.contains('button', 'Continue').click()
+      cy.url().should('include', '?step=interaction_details')
+      cy.contains(ELEMENT_SUMMARY.label)
+        .parent()
+        .next()
+        .find('input')
+        .should('have.attr', 'value', '')
+    })
+  })
+})
+
 describe('Contact loop', () => {
   context('when a contact does not exist and user wants to add one', () => {
     beforeEach(() => {
