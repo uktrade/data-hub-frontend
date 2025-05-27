@@ -65,7 +65,7 @@ const InvestmentStatusCard = ({
             caption="Investment status"
             data-test="investmentsStatusContainer"
           >
-            <SummaryTableHighlight.Row heading="Last Project won">
+            <SummaryTableHighlight.Row heading="Last project won">
               {summary?.won?.last_won_project?.id != null ? (
                 <AccessibleLink
                   href={urls.investments.projects.details(
