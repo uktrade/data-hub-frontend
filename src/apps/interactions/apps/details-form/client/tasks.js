@@ -137,6 +137,9 @@ const transformInteractionToValues = (
   const exportCountries = get(interaction, 'export_countries') || []
   const groupExportCountries =
     transformExportCountriesToGroupStatus(exportCountries)
+  if (interaction.theme == THEMES.DOMESTIC) {
+    interaction.theme = THEMES.OTHER
+  }
 
   return {
     theme: interaction.theme || THEMES.OTHER,

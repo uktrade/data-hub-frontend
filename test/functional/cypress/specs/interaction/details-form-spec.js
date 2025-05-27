@@ -1194,6 +1194,34 @@ describe('Filtering services based on theme & kind', () => {
       ].join('')
     )
   })
+  it('should show filtered services for Domestic => Interaction', () => {
+    selectInteractionType('Domestic', 'A standard interaction')
+    cy.get('#field-service').should(
+      'have.text',
+      [
+        '-- Select service --',
+        'Account management',
+        'Enquiry or referral',
+        'Other advice and information',
+        'Other introductions',
+        'Specific service',
+      ].join('')
+    )
+  })
+
+  it('should show filtered services for Domestic => Service delivery', () => {
+    selectInteractionType('Domestic', 'A service you have provided')
+
+    cy.get('#field-service').should(
+      'have.text',
+      [
+        '-- Select service --',
+        'Account management',
+        'Events',
+        'Specific service',
+      ].join('')
+    )
+  })
 })
 
 describe('Editing an interaction without a theme', () => {
