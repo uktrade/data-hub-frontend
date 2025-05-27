@@ -35,7 +35,7 @@ const BusinessDetailsCard = ({ company }) => (
             : company.turnoverRange?.name
         )}
       </SummaryTableHighlight.HighlightRow>
-      <SummaryTableHighlight.HighlightRow heading="Number of Employees">
+      <SummaryTableHighlight.HighlightRow heading="Number of employees">
         {buildCellContents(
           shortNumber(company.numberOfEmployees),
           shortNumber(company.numberOfEmployees, 9999)
@@ -43,7 +43,7 @@ const BusinessDetailsCard = ({ company }) => (
       </SummaryTableHighlight.HighlightRow>
       {(company.registeredAddress?.country?.id == UNITED_KINGDOM_ID ||
         company.address?.country?.id == UNITED_KINGDOM_ID) && (
-        <SummaryTableHighlight.Row heading="Companies House">
+        <SummaryTableHighlight.Row heading="Companies house">
           {buildCellContents(
             company.companyNumber,
             <NewWindowLink
@@ -56,7 +56,7 @@ const BusinessDetailsCard = ({ company }) => (
           )}
         </SummaryTableHighlight.Row>
       )}
-      <SummaryTableHighlight.Row heading="Trading Address">
+      <SummaryTableHighlight.Row heading="Trading address">
         {buildCellContents(
           company.address,
           <StyledAddressList>
@@ -75,11 +75,11 @@ const BusinessDetailsCard = ({ company }) => (
           </NewWindowLink>
         )}
       </SummaryTableHighlight.Row>
-      <SummaryTableHighlight.Row heading="DBT Sector">
+      <SummaryTableHighlight.Row heading="DBT sector">
         {buildCellContents(company.sector, company.sector?.name)}
       </SummaryTableHighlight.Row>
       {company.globalUltimateCountry && (
-        <SummaryTableHighlight.Row heading="Headquarter Location">
+        <SummaryTableHighlight.Row heading="Headquarter location">
           {company.globalUltimateCountry}
           <AccessibleLink
             href={urls.companies.dnbHierarchy.tree(company.id)}

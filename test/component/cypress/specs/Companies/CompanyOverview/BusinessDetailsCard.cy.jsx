@@ -35,17 +35,17 @@ describe('BusinessDetailsCard', () => {
               notation: 'compact',
               compactDisplay: 'short',
             }),
-            'Number of Employees':
+            'Number of employees':
               companyGlobalUltimateAllDetails.numberOfEmployees,
-            'Companies House': `${companyGlobalUltimateAllDetails.companyNumber} (opens in new tab)`,
-            'Trading Address':
+            'Companies house': `${companyGlobalUltimateAllDetails.companyNumber} (opens in new tab)`,
+            'Trading address':
               companyGlobalUltimateAllDetails.address.line1 +
               companyGlobalUltimateAllDetails.address.line2 +
               companyGlobalUltimateAllDetails.address.town +
               companyGlobalUltimateAllDetails.address.postcode,
             Website: `${companyGlobalUltimateAllDetails.website} (opens in new tab)`,
-            'DBT Sector': companyGlobalUltimateAllDetails.sector.name,
-            'Headquarter Location':
+            'DBT sector': companyGlobalUltimateAllDetails.sector.name,
+            'Headquarter location':
               companyGlobalUltimateAllDetails.globalUltimateCountry +
               'View company tree',
           },
@@ -89,16 +89,16 @@ describe('BusinessDetailsCard', () => {
                 compactDisplay: 'short',
               }
             ),
-            'Number of Employees':
+            'Number of employees':
               companyNoGlobalUltimateAllDetails.numberOfEmployees,
-            'Companies House': `${companyNoGlobalUltimateAllDetails.companyNumber} (opens in new tab)`,
-            'Trading Address':
+            'Companies house': `${companyNoGlobalUltimateAllDetails.companyNumber} (opens in new tab)`,
+            'Trading address':
               companyNoGlobalUltimateAllDetails.address.line1 +
               companyNoGlobalUltimateAllDetails.address.line2 +
               companyNoGlobalUltimateAllDetails.address.town +
               companyNoGlobalUltimateAllDetails.address.postcode,
             Website: `${companyNoGlobalUltimateAllDetails.website} (opens in new tab)`,
-            'DBT Sector': companyNoGlobalUltimateAllDetails.sector.name,
+            'DBT sector': companyNoGlobalUltimateAllDetails.sector.name,
           },
         })
       })
@@ -132,15 +132,15 @@ describe('BusinessDetailsCard', () => {
             notation: 'compact',
             compactDisplay: 'short',
           }),
-          'Number of Employees': companyNonUK.numberOfEmployees,
-          'Trading Address':
+          'Number of employees': companyNonUK.numberOfEmployees,
+          'Trading address':
             companyNonUK.address.line1 +
             companyNonUK.address.line2 +
             companyNonUK.address.town +
             companyNonUK.address.postcode,
           Website: `${companyNonUK.website} (opens in new tab)`,
-          'DBT Sector': companyNonUK.sector.name,
-          'Headquarter Location':
+          'DBT sector': companyNonUK.sector.name,
+          'Headquarter location':
             companyNonUK.globalUltimateCountry + 'View company tree',
         },
       })
@@ -170,10 +170,10 @@ describe('BusinessDetailsCard', () => {
         dataTest: 'business-details-container',
         content: {
           Turnover: 'Not set',
-          'Number of Employees': 'Not set',
-          'Trading Address': 'Not set',
+          'Number of employees': 'Not set',
+          'Trading address': 'Not set',
           Website: 'Not set',
-          'DBT Sector': 'Not set',
+          'DBT sector': 'Not set',
         },
       })
     })
@@ -203,11 +203,11 @@ describe('BusinessDetailsCard', () => {
             notation: 'compact',
             compactDisplay: 'short',
           }),
-          'Number of Employees': companyRegisteredAddressOnly.numberOfEmployees,
-          'Companies House': `${companyRegisteredAddressOnly.companyNumber} (opens in new tab)`,
-          'Trading Address': 'Not set',
+          'Number of employees': companyRegisteredAddressOnly.numberOfEmployees,
+          'Companies house': `${companyRegisteredAddressOnly.companyNumber} (opens in new tab)`,
+          'Trading address': 'Not set',
           Website: `${companyRegisteredAddressOnly.website} (opens in new tab)`,
-          'DBT Sector': companyRegisteredAddressOnly.sector.name,
+          'DBT sector': companyRegisteredAddressOnly.sector.name,
         },
       })
     })
