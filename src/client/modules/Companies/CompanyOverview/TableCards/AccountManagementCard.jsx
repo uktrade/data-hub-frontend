@@ -3,15 +3,12 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import pluralize from 'pluralize'
 
-import { SummaryTable } from '../../../../components'
+import { FONT_SIZE } from '@govuk-react/constants'
+
+import { SummaryTableHighlight } from '../../../../components'
 import { isItaTierDAccount } from '../../utils'
 import urls from '../../../../../lib/urls'
 import { buildCellContents } from './transformers'
-import {
-  StyledLastTableCell,
-  StyledSummaryTable,
-  StyledTableRow,
-} from './components'
 import AccessibleLink from '../../../../components/Link'
 
 const Button = styled('button')`
@@ -24,6 +21,10 @@ const Button = styled('button')`
   color: #069;
   text-decoration: underline;
   cursor: pointer;
+`
+
+const StyledAccessibleLink = styled(AccessibleLink)`
+  font-size: ${FONT_SIZE.SIZE_16};
 `
 
 const StyledAddressList = styled('ol')`
@@ -57,75 +58,73 @@ const AccountManagementCard = ({ company }) => {
     )
 
   return (
-    <StyledSummaryTable
-      caption="Account management"
-      data-test="account-management-container"
-    >
-      <SummaryTable.Row heading="DBT Region">
-        {buildCellContents(
-          company?.ukRegion,
-          <span>{company.ukRegion?.name}</span>
-        )}
-      </SummaryTable.Row>
-      <SummaryTable.Row
-        heading={
-          isItaTierDAccount(company.oneListGroupTier)
-            ? 'Lead ITA'
-            : 'Account Manager'
-        }
+    <>
+      <SummaryTableHighlight
+        caption="Account management"
+        data-test="account-management-container"
       >
-        {buildCellContents(
-          company?.oneListGroupGlobalAccountManager,
-          <AccessibleLink
-            data-test="account-manager-link"
-            href={urls.companies.accountManagement.index(company.id)}
-          >
-            {company.oneListGroupGlobalAccountManager?.name}
-          </AccessibleLink>
-        )}
-      </SummaryTable.Row>
-      <SummaryTable.Row heading="One List">
-        {buildCellContents(
-          company?.oneListGroupTier?.name,
-          <span>{company.oneListGroupTier?.name}</span>
-        )}
-      </SummaryTable.Row>
-      <SummaryTable.Row heading="Primary Contact(s)">
-        {buildCellContents(
-          viewablePrimaryContacts.length > 0,
-          <StyledAddressList>
-            {viewablePrimaryContacts.map((contact, index) => (
-              <li key={`${contact.id}-${index}`}>
-                <AccessibleLink
-                  data-test={`contact-${contact.id}-link`}
-                  href={urls.contacts.details(contact.id)}
-                >
-                  {contact.name}
-                </AccessibleLink>
-              </li>
-            ))}
-          </StyledAddressList>
-        )}
-        {viewablePrimaryContacts.length < maxNumberOfContacts && (
-          <Button onClick={onViewMore}>
-            <span>
-              View {hiddenContactCount} more{' '}
-              {pluralize('contact', hiddenContactCount)}
-            </span>
-          </Button>
-        )}
-      </SummaryTable.Row>
-      <StyledTableRow>
-        <StyledLastTableCell colSpan={2}>
-          <AccessibleLink
-            href={urls.companies.accountManagement.index(company.id)}
-            data-test="account-management-page-link"
-          >
-            View full account management
-          </AccessibleLink>
-        </StyledLastTableCell>
-      </StyledTableRow>
-    </StyledSummaryTable>
+        <SummaryTableHighlight.HighlightRow heading="DBT region" isHalf={false}>
+          {buildCellContents(
+            company?.ukRegion,
+            <span>{company.ukRegion?.name}</span>
+          )}
+        </SummaryTableHighlight.HighlightRow>
+        <SummaryTableHighlight.Row
+          heading={
+            isItaTierDAccount(company.oneListGroupTier)
+              ? 'Lead ITA'
+              : 'Account manager'
+          }
+        >
+          {buildCellContents(
+            company?.oneListGroupGlobalAccountManager,
+            <AccessibleLink
+              data-test="account-manager-link"
+              href={urls.companies.accountManagement.index(company.id)}
+            >
+              {company.oneListGroupGlobalAccountManager?.name}
+            </AccessibleLink>
+          )}
+        </SummaryTableHighlight.Row>
+        <SummaryTableHighlight.Row heading="Primary contact(s)">
+          {buildCellContents(
+            viewablePrimaryContacts.length > 0,
+            <StyledAddressList>
+              {viewablePrimaryContacts.map((contact, index) => (
+                <li key={`${contact.id}-${index}`}>
+                  <AccessibleLink
+                    data-test={`contact-${contact.id}-link`}
+                    href={urls.contacts.details(contact.id)}
+                  >
+                    {contact.name}
+                  </AccessibleLink>
+                </li>
+              ))}
+            </StyledAddressList>
+          )}
+          {viewablePrimaryContacts.length < maxNumberOfContacts && (
+            <Button onClick={onViewMore}>
+              <span>
+                View {hiddenContactCount} more{' '}
+                {pluralize('contact', hiddenContactCount)}
+              </span>
+            </Button>
+          )}
+        </SummaryTableHighlight.Row>
+        <SummaryTableHighlight.Row heading="One list">
+          {buildCellContents(
+            company?.oneListGroupTier?.name,
+            <span>{company.oneListGroupTier?.name}</span>
+          )}
+        </SummaryTableHighlight.Row>
+      </SummaryTableHighlight>
+      <StyledAccessibleLink
+        href={urls.companies.accountManagement.index(company.id)}
+        data-test="account-management-page-link"
+      >
+        View full account management
+      </StyledAccessibleLink>
+    </>
   )
 }
 
