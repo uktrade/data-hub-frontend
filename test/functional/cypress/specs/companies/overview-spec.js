@@ -143,7 +143,7 @@ describe('Company overview page', () => {
           .next()
           .children()
         cy.get('th')
-          .contains('Last Project won')
+          .contains('Last project won')
           .siblings()
           .contains('td', '07 Jun 2022')
         cy.get('[data-test="latest-won-project-link"]').click()
