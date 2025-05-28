@@ -33,7 +33,7 @@ const ThankYou = () => {
             Thank you for taking time to review this export win.
           </StyledStatusMessage>
         ) : (
-          <StyledStatusMessage>
+          <StyledStatusMessage colour={GREEN}>
             <p>Thank you for reviewing this export win.</p>
             <p>
               As you have asked for some changes to be made, we will review your
