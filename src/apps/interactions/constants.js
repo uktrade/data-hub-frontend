@@ -50,6 +50,7 @@ const THEMES = {
   EXPORT: 'export',
   INVESTMENT: 'investment',
   TRADE_AGREEMENT: 'trade_agreement',
+  DOMESTIC: 'domestic',
   OTHER: 'other',
 }
 
