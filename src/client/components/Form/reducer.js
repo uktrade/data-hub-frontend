@@ -129,18 +129,24 @@ export default (
         ),
         errorStatus: action.httpStatusCode,
       }
-    case FORM__FORWARD:
+    case FORM__FORWARD: {
+      const newStep = state.currentStep + 1
       return {
         ...state,
-        currentStep: state.currentStep + 1,
+        currentStep: newStep,
+        currentStepName: state.steps[newStep],
         previousValues: state.values,
       }
-    case FORM__BACK:
+    }
+    case FORM__BACK: {
+      const newStep = state.currentStep - 1
       return {
         ...state,
-        currentStep: state.currentStep - 1,
+        currentStep: newStep,
+        currentStepName: state.steps[newStep],
         previousValues: state.values,
       }
+    }
     case FORM__GO_TO_STEP:
       const nextCurrentStep = action.stepName
         ? state.steps.indexOf(action.stepName)
