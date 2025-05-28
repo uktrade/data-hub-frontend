@@ -30,20 +30,22 @@ describe('BusinessDetailsCard', () => {
         assertSummaryTable({
           dataTest: 'business-details-container',
           content: {
-            'Companies House': `${companyGlobalUltimateAllDetails.companyNumber} (opens in new tab)`,
-            'Trading Address':
+            Turnover: currencyGBP(companyGlobalUltimateAllDetails.turnoverGbp, {
+              maximumSignificantDigits: 2,
+              notation: 'compact',
+              compactDisplay: 'short',
+            }),
+            'Number of employees':
+              companyGlobalUltimateAllDetails.numberOfEmployees,
+            'Companies house': `${companyGlobalUltimateAllDetails.companyNumber} (opens in new tab)`,
+            'Trading address':
               companyGlobalUltimateAllDetails.address.line1 +
               companyGlobalUltimateAllDetails.address.line2 +
               companyGlobalUltimateAllDetails.address.town +
               companyGlobalUltimateAllDetails.address.postcode,
             Website: `${companyGlobalUltimateAllDetails.website} (opens in new tab)`,
-            Turnover: currencyGBP(companyGlobalUltimateAllDetails.turnoverGbp, {
-              maximumSignificantDigits: 2,
-            }),
-            'Number of Employees':
-              companyGlobalUltimateAllDetails.numberOfEmployees,
-            'DBT Sector': companyGlobalUltimateAllDetails.sector.name,
-            'Headquarter Location':
+            'DBT sector': companyGlobalUltimateAllDetails.sector.name,
+            'Headquarter location':
               companyGlobalUltimateAllDetails.globalUltimateCountry +
               'View company tree',
           },
@@ -79,22 +81,24 @@ describe('BusinessDetailsCard', () => {
         assertSummaryTable({
           dataTest: 'business-details-container',
           content: {
-            'Companies House': `${companyNoGlobalUltimateAllDetails.companyNumber} (opens in new tab)`,
-            'Trading Address':
+            Turnover: currencyGBP(
+              companyNoGlobalUltimateAllDetails.turnoverGbp,
+              {
+                maximumSignificantDigits: 2,
+                notation: 'compact',
+                compactDisplay: 'short',
+              }
+            ),
+            'Number of employees':
+              companyNoGlobalUltimateAllDetails.numberOfEmployees,
+            'Companies house': `${companyNoGlobalUltimateAllDetails.companyNumber} (opens in new tab)`,
+            'Trading address':
               companyNoGlobalUltimateAllDetails.address.line1 +
               companyNoGlobalUltimateAllDetails.address.line2 +
               companyNoGlobalUltimateAllDetails.address.town +
               companyNoGlobalUltimateAllDetails.address.postcode,
             Website: `${companyNoGlobalUltimateAllDetails.website} (opens in new tab)`,
-            Turnover: currencyGBP(
-              companyNoGlobalUltimateAllDetails.turnoverGbp,
-              {
-                maximumSignificantDigits: 2,
-              }
-            ),
-            'Number of Employees':
-              companyNoGlobalUltimateAllDetails.numberOfEmployees,
-            'DBT Sector': companyNoGlobalUltimateAllDetails.sector.name,
+            'DBT sector': companyNoGlobalUltimateAllDetails.sector.name,
           },
         })
       })
@@ -123,18 +127,20 @@ describe('BusinessDetailsCard', () => {
       assertSummaryTable({
         dataTest: 'business-details-container',
         content: {
-          'Trading Address':
+          Turnover: currencyGBP(companyNonUK.turnoverGbp, {
+            maximumSignificantDigits: 2,
+            notation: 'compact',
+            compactDisplay: 'short',
+          }),
+          'Number of employees': companyNonUK.numberOfEmployees,
+          'Trading address':
             companyNonUK.address.line1 +
             companyNonUK.address.line2 +
             companyNonUK.address.town +
             companyNonUK.address.postcode,
           Website: `${companyNonUK.website} (opens in new tab)`,
-          Turnover: currencyGBP(companyNonUK.turnoverGbp, {
-            maximumSignificantDigits: 2,
-          }),
-          'Number of Employees': companyNonUK.numberOfEmployees,
-          'DBT Sector': companyNonUK.sector.name,
-          'Headquarter Location':
+          'DBT sector': companyNonUK.sector.name,
+          'Headquarter location':
             companyNonUK.globalUltimateCountry + 'View company tree',
         },
       })
@@ -163,11 +169,11 @@ describe('BusinessDetailsCard', () => {
       assertSummaryTable({
         dataTest: 'business-details-container',
         content: {
-          'Trading Address': 'Not set',
-          Website: 'Not set',
           Turnover: 'Not set',
-          'Number of Employees': 'Not set',
-          'DBT Sector': 'Not set',
+          'Number of employees': 'Not set',
+          'Trading address': 'Not set',
+          Website: 'Not set',
+          'DBT sector': 'Not set',
         },
       })
     })
@@ -192,14 +198,16 @@ describe('BusinessDetailsCard', () => {
       assertSummaryTable({
         dataTest: 'business-details-container',
         content: {
-          'Companies House': `${companyRegisteredAddressOnly.companyNumber} (opens in new tab)`,
-          'Trading Address': 'Not set',
-          Website: `${companyRegisteredAddressOnly.website} (opens in new tab)`,
           Turnover: currencyGBP(companyRegisteredAddressOnly.turnoverGbp, {
             maximumSignificantDigits: 2,
+            notation: 'compact',
+            compactDisplay: 'short',
           }),
-          'Number of Employees': companyRegisteredAddressOnly.numberOfEmployees,
-          'DBT Sector': companyRegisteredAddressOnly.sector.name,
+          'Number of employees': companyRegisteredAddressOnly.numberOfEmployees,
+          'Companies house': `${companyRegisteredAddressOnly.companyNumber} (opens in new tab)`,
+          'Trading address': 'Not set',
+          Website: `${companyRegisteredAddressOnly.website} (opens in new tab)`,
+          'DBT sector': companyRegisteredAddressOnly.sector.name,
         },
       })
     })
