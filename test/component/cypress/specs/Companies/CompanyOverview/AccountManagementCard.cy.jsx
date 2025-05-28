@@ -24,14 +24,14 @@ describe('AccountManagementCard', () => {
       assertSummaryTable({
         dataTest: 'account-management-container',
         content: {
-          'DBT Region': companyGlobalUltimateAllDetails.ukRegion.name,
-          'Account Manager':
+          'DBT region': companyGlobalUltimateAllDetails.ukRegion.name,
+          'Account manager':
             companyGlobalUltimateAllDetails.oneListGroupGlobalAccountManager
               .name,
-          'One List': companyGlobalUltimateAllDetails.oneListGroupTier.name,
-          'Primary Contact(s)':
+          'Primary contact(s)':
             companyGlobalUltimateAllDetails.contacts[0].name +
             companyGlobalUltimateAllDetails.contacts[1].name,
+          'One list': companyGlobalUltimateAllDetails.oneListGroupTier.name,
         },
       })
     })
@@ -68,14 +68,14 @@ describe('AccountManagementCard', () => {
       assertSummaryTable({
         dataTest: 'account-management-container',
         content: {
-          'DBT Region': companyNoGlobalUltimateAllDetails.ukRegion.name,
+          'DBT region': companyNoGlobalUltimateAllDetails.ukRegion.name,
           'Lead ITA':
             companyNoGlobalUltimateAllDetails.oneListGroupGlobalAccountManager
               .name,
-          'One List': companyNoGlobalUltimateAllDetails.oneListGroupTier.name,
-          'Primary Contact(s)':
+          'Primary contact(s)':
             companyNoGlobalUltimateAllDetails.contacts[0].name +
             companyNoGlobalUltimateAllDetails.contacts[1].name,
+          'One list': companyNoGlobalUltimateAllDetails.oneListGroupTier.name,
         },
       })
     })
@@ -112,10 +112,10 @@ describe('AccountManagementCard', () => {
       assertSummaryTable({
         dataTest: 'account-management-container',
         content: {
-          'DBT Region': 'Not set',
-          'Account Manager': 'Not set',
-          'One List': 'Not set',
-          'Primary Contact(s)': 'Not set',
+          'DBT region': 'Not set',
+          'Account manager': 'Not set',
+          'Primary contact(s)': 'Not set',
+          'One list': 'Not set',
         },
       })
     })
