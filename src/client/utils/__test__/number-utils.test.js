@@ -27,6 +27,7 @@ describe('shortNumber', () => {
       expect(shortNumber(12566)).to.be.equal('12.56K')
       expect(shortNumber(987534)).to.be.equal('987.53K')
       expect(shortNumber(8567876)).to.be.equal('8.56M')
+      expect(shortNumber(9868567876)).to.be.equal('9.86B')
     })
   })
 
