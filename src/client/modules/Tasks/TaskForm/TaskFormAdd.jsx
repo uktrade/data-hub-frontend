@@ -34,7 +34,7 @@ const getTitle = (task) => {
     return `Add task for ${task.interaction.subject}`
   }
   if (task.company) {
-    return `Add task for ${task.company}`
+    return `Add task for ${task.company.label}`
   }
   return `Add task`
 }

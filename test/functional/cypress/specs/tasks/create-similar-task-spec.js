@@ -48,6 +48,10 @@ describe('Copy task from task with company', () => {
     })
 
     it('should save the task with the expected values', () => {
+      cy.get('h1').should(
+        'have.text',
+        `Add task for ${taskWithCompany.company.name}`
+      )
       assertTaskForm(taskWithCompany, taskWithCompany.company.id)
     })
   })
