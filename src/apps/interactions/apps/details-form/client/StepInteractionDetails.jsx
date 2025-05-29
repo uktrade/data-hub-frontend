@@ -68,10 +68,7 @@ const getServiceContext = (theme, kind, investmentProject) => {
       [KINDS.INTERACTION]: SERVICE_CONTEXTS.OTHER_INTERACTION,
       [KINDS.SERVICE_DELIVERY]: SERVICE_CONTEXTS.OTHER_SERVICE_DELIVERY,
     },
-    [THEMES.DOMESTIC]: {
-      [KINDS.INTERACTION]: SERVICE_CONTEXTS.OTHER_INTERACTION,
-      [KINDS.SERVICE_DELIVERY]: SERVICE_CONTEXTS.OTHER_SERVICE_DELIVERY,
-    },
+    [THEMES.DOMESTIC]: SERVICE_CONTEXTS.OTHER_INTERACTION,
   }
   return kind && mapping[theme][kind] ? mapping[theme][kind] : mapping[theme]
 }

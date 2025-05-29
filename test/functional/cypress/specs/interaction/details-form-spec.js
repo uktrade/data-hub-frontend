@@ -968,7 +968,6 @@ describe('Domestic theme - standard interaction', () => {
       cy.visit(urls.companies.interactions.create(company.id))
 
       cy.contains('label', 'Domestic').click()
-      cy.contains('label', 'A standard interaction').click()
       cy.contains('button', 'Continue').click()
     })
 
@@ -1288,8 +1287,9 @@ describe('Filtering services based on theme & kind', () => {
       ].join('')
     )
   })
-  it('should show filtered services for Domestic => Interaction', () => {
-    selectInteractionType('Domestic', 'A standard interaction')
+
+  it('should show filtered services for Domestic', () => {
+    selectInteractionType('Domestic')
     cy.get('#field-service').should(
       'have.text',
       [
@@ -1298,20 +1298,6 @@ describe('Filtering services based on theme & kind', () => {
         'Enquiry or referral',
         'Other advice and information',
         'Other introductions',
-        'Specific service',
-      ].join('')
-    )
-  })
-
-  it('should show filtered services for Domestic => Service delivery', () => {
-    selectInteractionType('Domestic', 'A service you have provided')
-
-    cy.get('#field-service').should(
-      'have.text',
-      [
-        '-- Select service --',
-        'Account management',
-        'Events',
         'Specific service',
       ].join('')
     )

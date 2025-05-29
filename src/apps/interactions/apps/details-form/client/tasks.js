@@ -328,6 +328,11 @@ export function saveInteraction({ values, companyIds, referralId }) {
     ...(values.theme == THEMES.TRADE_AGREEMENT && {
       kind: KINDS.INTERACTION,
     }),
+    // If the user has selected Domestic the
+    // API endpoint still requires a kind.
+    ...(values.theme == THEMES.DOMESTIC && {
+      kind: KINDS.INTERACTION,
+    }),
 
     // Added to ensure were_countries_discussed has a valid value
     were_countries_discussed: transformToYesNo(
