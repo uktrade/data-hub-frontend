@@ -5,6 +5,7 @@ import Contact from './Contact'
 import Company from './Company'
 import CompanyContacts from './CompanyContacts'
 import CompanyKingsAwards from './CompanyKingsAwards'
+import PromptPayments from './PromptPayments'
 import Countries from './Countries'
 import Interactions from './Interactions'
 import InteractionsV3 from './InteractionsV3'
@@ -111,6 +112,7 @@ export default {
   ...Company.tasks,
   ...CompanyContacts.tasks,
   ...CompanyKingsAwards.tasks,
+  ...PromptPayments.tasks,
   ...CompanyOneListTeam.tasks,
   ...Contact.tasks,
   ...ContactAuditHistory.tasks,

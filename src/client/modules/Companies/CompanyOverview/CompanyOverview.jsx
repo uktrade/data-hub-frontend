@@ -16,6 +16,7 @@ import {
 import { CompanyResource } from '../../../components/Resource/index'
 import CompanyLayout from '../../../components/Layout/CompanyLayout'
 import DefaultLayoutBase from '../../../components/Layout/DefaultLayoutBase'
+import PromptPaymentsCard from './TableCards/PromptPaymentsCard'
 
 const CardContainer = styled('div')`
   border: 1px solid #b1b4b6;
@@ -48,6 +49,7 @@ const CompanyOverview = () => {
                 <CardContainer>
                   <InvestmentStatusCard companyId={companyId} />
                 </CardContainer>
+                <PromptPaymentsCard companyId={companyId} />
               </GridCol>
               <GridCol columnOneHalf={true}>
                 <AccoladesCard companyId={companyId} />
