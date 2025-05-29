@@ -246,6 +246,7 @@ export const transformProjectValueForApi = ({
 }) => {
   const {
     average_salary,
+    actual_average_salary,
     client_cannot_provide_foreign_investment,
     client_cannot_provide_total_investment,
     export_revenue,
@@ -264,6 +265,7 @@ export const transformProjectValueForApi = ({
   const valuePayload = {
     id: projectId,
     average_salary: checkIfItemHasValue(average_salary),
+    actual_average_salary,
     client_cannot_provide_foreign_investment:
       transformRadioOptionToInvertedBool(
         client_cannot_provide_foreign_investment

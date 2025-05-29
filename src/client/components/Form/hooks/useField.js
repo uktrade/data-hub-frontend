@@ -21,7 +21,13 @@ function useField({
     const validators = castArray(validate).filter((v) => v)
 
     if (required) {
-      validators.unshift((value) => (isEmpty(value) ? required : null))
+      validators.unshift((value) => {
+        if (typeof value === 'number') {
+          return
+        }
+
+        return isEmpty(value) ? required : null
+      })
     }
 
     return validators

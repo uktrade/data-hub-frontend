@@ -133,7 +133,7 @@ export const FIELDS = {
     message: 'Value for number of new jobs is required',
   },
   AVERAGE_SALARY: {
-    name: 'average_salary',
+    name: 'actual_average_salary',
     message: 'Value for average salary of new jobs is required',
   },
   NUMBER_SAFEGUARDED_JOBS: {

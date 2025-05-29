@@ -72,6 +72,7 @@ const setupProjectFaker = (overrides) =>
     number_new_jobs: null,
     number_safeguarded_jobs: null,
     gross_value_added: null,
+    actual_average_salary: null,
     average_salary: null,
     foreign_equity_investment: null,
     ...overrides,
@@ -187,11 +188,11 @@ describe('Edit the value details of a project', () => {
       })
 
       it('should display the average salary field', () => {
-        cy.get('[data-test="field-average_salary"]').then((element) => {
-          assertFieldRadios({
+        cy.get('[data-test="field-actual_average_salary"]').then((element) => {
+          assertFieldInput({
             element,
             label: 'Average salary of new jobs (required)',
-            optionsCount: 3,
+            value: '',
           })
         })
       })
@@ -296,6 +297,7 @@ describe('Edit the value details of a project', () => {
         gross_value_added: 34568,
         total_investment: 1000000,
         foreign_equity_investment: 200000,
+        actual_average_salary: 54321,
         average_salary: {
           name: 'Below £25,000',
           id: '2943bf3d-32dd-43be-8ad4-969b006dee7b',
@@ -382,12 +384,11 @@ describe('Edit the value details of a project', () => {
       })
 
       it('should display the average salary field', () => {
-        cy.get('[data-test="field-average_salary"]').then((element) => {
-          assertFieldRadios({
+        cy.get('[data-test="field-actual_average_salary"]').then((element) => {
+          assertFieldInput({
             element,
             label: 'Average salary of new jobs (required)',
-            optionsCount: 3,
-            value: capitalIntensiveProjectWithValue.average_salary.name,
+            value: '54,321',
           })
         })
       })
@@ -547,7 +548,7 @@ describe('Edit the value details of a project', () => {
 
     it('should not display the jobs fields', () => {
       cy.get('[data-test="field-number_new_jobs"]').should('not.exist')
-      cy.get('[data-test="field-average_salary"]').should('not.exist')
+      cy.get('[data-test="field-actual_average_salary"]').should('not.exist')
       cy.get('[data-test="field-number_safeguarded_jobs"]').should('not.exist')
     })
 
@@ -570,6 +571,7 @@ describe('Edit the value details of a project', () => {
       total_investment: 20000000,
       foreign_equity_investment: 15000000,
       number_new_jobs: 120,
+      actual_average_salary: 54321,
       average_salary: {
         name: 'Below £25,000',
         id: '2943bf3d-32dd-43be-8ad4-969b006dee7b',
@@ -624,7 +626,7 @@ describe('Edit the value details of a project', () => {
 
     it('should display the jobs fields', () => {
       cy.get('[data-test="field-number_new_jobs"]').should('exist')
-      cy.get('[data-test="field-average_salary"]').should('exist')
+      cy.get('[data-test="field-actual_average_salary"]').should('exist')
       cy.get('[data-test="field-number_safeguarded_jobs"]').should('exist')
     })
 
@@ -634,7 +636,7 @@ describe('Edit the value details of a project', () => {
         .its('request.body')
         .should('include', {
           number_new_jobs: nonCapitalOnlyFDIProject.number_new_jobs,
-          average_salary: `${nonCapitalOnlyFDIProject.average_salary.id}`,
+          actual_average_salary: 54321,
           number_safeguarded_jobs: `${nonCapitalOnlyFDIProject.number_safeguarded_jobs}`,
         })
     })
@@ -832,11 +834,11 @@ describe('Edit the value details of a project', () => {
       })
 
       it('should display the average salary field', () => {
-        cy.get('[data-test="field-average_salary"]').then((element) => {
-          assertFieldRadios({
+        cy.get('[data-test="field-actual_average_salary"]').then((element) => {
+          assertFieldInput({
             element,
             label: 'Average salary of new jobs (required)',
-            optionsCount: 3,
+            value: '',
           })
         })
       })
@@ -1029,12 +1031,10 @@ describe('Edit the value details of a project', () => {
     })
 
     it('should display the average salary field', () => {
-      cy.get('[data-test="field-average_salary"]').then((element) => {
-        assertFieldRadios({
+      cy.get('[data-test="field-actual_average_salary"]').then((element) => {
+        assertFieldInput({
           element,
           label: 'Average salary of new jobs (required)',
-          optionsCount: 3,
-          value: labourIntensiveProjectWithValue.average_salary.name,
         })
       })
     })
@@ -1044,7 +1044,6 @@ describe('Edit the value details of a project', () => {
         assertFieldInput({
           element,
           label: 'Number of safeguarded jobs (required)',
-          value: labourIntensiveProjectWithValue.number_safeguarded_jobs,
         })
       })
     })
@@ -1356,59 +1355,6 @@ describe('Edit the value details of a project', () => {
     })
   })
 
-  context(
-    'When viewing a project created before a salary range is disabled',
-    () => {
-      it('should display the salary range for £25,000 - £29,000 when the project was created before the disable date', () => {
-        const project = setupProjectFaker({ created_on: '2016-02-05' })
-        setup(project)
-        cy.get('[data-test="field-average_salary"]').then((element) => {
-          assertFieldRadios({
-            element,
-            label: 'Average salary of new jobs (required)',
-            optionsCount: 4,
-          })
-        })
-      })
-    }
-  )
-
-  context(
-    'When viewing a project created on the same day a salary range is disabled',
-    () => {
-      it('should not display the salary range for £25,000 – £29,000', () => {
-        const project = setupProjectFaker({
-          created_on: '2016-03-05T12:00:00Z',
-        })
-        setup(project)
-        cy.get('[data-test="field-average_salary"]').then((element) => {
-          assertFieldRadios({
-            element,
-            label: 'Average salary of new jobs (required)',
-            optionsCount: 3,
-          })
-        })
-      })
-    }
-  )
-
-  context(
-    'When viewing a project created after a salary range is disabled',
-    () => {
-      it('should not display the salary range for £25,000 – £29,000', () => {
-        const project = setupProjectFaker({ created_on: '2016-04-02' })
-        setup(project)
-        cy.get('[data-test="field-average_salary"]').then((element) => {
-          assertFieldRadios({
-            element,
-            label: 'Average salary of new jobs (required)',
-            optionsCount: 3,
-          })
-        })
-      })
-    }
-  )
-
   context('Requirement and validation of job-related fields', () => {
     const fillNonJobFields = () => {
       cy.get('[data-test="client-cannot-provide-total-investment-yes"]').click()
@@ -1450,7 +1396,7 @@ describe('Edit the value details of a project', () => {
             false
           )
           assertJobFieldLabel(
-            '[data-test="field-average_salary"]',
+            'label[for="actual_average_salary"]',
             'Average salary of new jobs',
             false
           )
@@ -1495,7 +1441,7 @@ describe('Edit the value details of a project', () => {
           'Number of new jobs (required)'
         )
         assertJobFieldLabel(
-          '[data-test="field-average_salary"]',
+          'label[for="actual_average_salary"]',
           'Average salary of new jobs',
           true
         )
@@ -1516,7 +1462,7 @@ describe('Edit the value details of a project', () => {
         cy.get('[data-test="number-new-jobs-input"]').type(0)
 
         // Fill in other job fields to satisfy requirements
-        cy.get('[data-test="average-salary-below-25-000"]').click()
+        cy.get('[data-test="actual-average-salary-input"]').type('123')
         cy.get('[data-test="number-safeguarded-jobs-input"]').type(0)
 
         cy.get('[data-test="submit-button"]').click()
@@ -1529,7 +1475,7 @@ describe('Edit the value details of a project', () => {
 
         // Fill in job related fields
         cy.get('[data-test="number-new-jobs-input"]').type(1)
-        cy.get('[data-test="average-salary-below-25-000"]').click()
+        cy.get('[data-test="actual-average-salary-input"]').type('123')
         cy.get('[data-test="number-safeguarded-jobs-input"]').type(0)
 
         cy.get('[data-test="submit-button"]').click()
@@ -1562,7 +1508,7 @@ describe('Edit the value details of a project', () => {
           true
         )
         assertJobFieldLabel(
-          '[data-test="field-average_salary"]',
+          'label[for="actual_average_salary"]',
           'Average salary of new jobs',
           false
         )

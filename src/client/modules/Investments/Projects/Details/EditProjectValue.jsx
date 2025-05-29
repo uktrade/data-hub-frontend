@@ -14,7 +14,6 @@ import ResourceOptionsField from '../../../../components/Form/elements/ResourceO
 import {
   FDIValuesResource,
   InvestmentResource,
-  SalaryRangeResource,
 } from '../../../../components/Resource'
 import urls from '../../../../../lib/urls'
 import { TASK_EDIT_INVESTMENT_PROJECT_VALUE } from './state'
@@ -26,7 +25,6 @@ import {
 } from './transformers'
 import { OPTIONS_YES_NO, OPTION_YES } from '../../../../../common/constants'
 import { currencyGBP } from '../../../../utils/number-utils'
-import { idNamesToValueLabels } from '../../../../utils'
 import ProjectLayoutNew from '../../../../components/Layout/ProjectLayoutNew'
 import InvestmentName from '../InvestmentName'
 import {
@@ -305,8 +303,8 @@ const EditProjectValue = () => {
                           </>
                         </FieldUneditable>
                       )}
-                    <ResourceOptionsField
-                      name="average_salary"
+                    <FieldCurrency
+                      name="actual_average_salary"
                       label={
                         'Average salary of new jobs' +
                         (isAverageSalaryRequired(project)
@@ -316,19 +314,12 @@ const EditProjectValue = () => {
                             )
                           : ' (optional)')
                       }
-                      resource={SalaryRangeResource}
-                      field={FieldRadios}
-                      initialValue={project.averageSalary?.id}
-                      resultToOptions={(result) =>
-                        idNamesToValueLabels(
-                          result.filter((option) =>
-                            option.disabledOn
-                              ? new Date(option.disabledOn) >
-                                new Date(project.createdOn)
-                              : true
-                          )
-                        )
+                      hint={
+                        project.actualAverageSalary === null &&
+                        project.averageSalary &&
+                        `The current value is "${project.averageSalary?.name}"`
                       }
+                      initialValue={project.actualAverageSalary}
                       required={
                         isAverageSalaryRequired(project) &&
                         AVERAGE_SALARY_REQUIRED_MESSAGE
