@@ -2,6 +2,7 @@ import React from 'react'
 import { useRoutes } from 'react-router-dom'
 
 import CompaniesCollectionList from './modules/Companies/CollectionList'
+import CompaniesCollectionHtmx from './modules/Companies/CollectionListHtmx'
 import ContactsCollectionList from './modules/Contacts/CollectionList'
 import EventsCollectionList from './modules/Events/CollectionList'
 import EventDetails from './modules/Events/EventDetails'
@@ -124,6 +125,14 @@ function Routes() {
       element: (
         <ProtectedRoute module={'datahub:companies'}>
           <CompaniesCollectionList />
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: '/companies-htmx',
+      element: (
+        <ProtectedRoute module={'datahub:companies'}>
+          <CompaniesCollectionHtmx />
         </ProtectedRoute>
       ),
     },
